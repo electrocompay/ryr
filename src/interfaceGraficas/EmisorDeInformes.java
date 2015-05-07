@@ -230,7 +230,7 @@ public class EmisorDeInformes extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         DecimalFormat fr=new DecimalFormat("00");
-        DecimalFormat formato=new DecimalFormat("####.##");
+        DecimalFormat formato=new DecimalFormat("####.####");
         //SiderconCapaatos.listaPedidos.clear();
         SimpleDateFormat dia=new SimpleDateFormat("dd/mm/yyyy");
         //Date mes=Calendar.getInstance().getTime();
@@ -265,7 +265,7 @@ public class EmisorDeInformes extends javax.swing.JInternalFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         DecimalFormat fr=new DecimalFormat("00");
-        DecimalFormat formato=new DecimalFormat("####.##");
+        DecimalFormat formato=new DecimalFormat("####.####");
         //SiderconCapaatos.listaPedidos.clear();
         SimpleDateFormat dia=new SimpleDateFormat("dd/mm/yyyy");
         //Date mes=Calendar.getInstance().getTime();
@@ -297,7 +297,7 @@ public class EmisorDeInformes extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
              DecimalFormat fr=new DecimalFormat("00");
-        DecimalFormat formato=new DecimalFormat("####.##");
+        DecimalFormat formato=new DecimalFormat("####.####");
         //SiderconCapaatos.listaPedidos.clear();
         SimpleDateFormat dia=new SimpleDateFormat("dd/mm/yyyy");
         //Date mes=Calendar.getInstance().getTime();

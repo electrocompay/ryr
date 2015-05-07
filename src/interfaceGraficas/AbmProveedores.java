@@ -295,7 +295,7 @@ public class AbmProveedores extends javax.swing.JInternalFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         DecimalFormat fr=new DecimalFormat("00");
-        DecimalFormat formato=new DecimalFormat("####.##");
+        DecimalFormat formato=new DecimalFormat("####.####");
         //SiderconCapaatos.listaPedidos.clear();
         SimpleDateFormat dia=new SimpleDateFormat("dd/mm/yyyy");
         //Date mes=Calendar.getInstance().getTime();

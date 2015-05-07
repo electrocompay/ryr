@@ -59,10 +59,19 @@ public class ClientesTango implements Busquedas,Facturar,Adeudable{
         private Integer codigoId;
         private Double cupoDeCredito;
         private Double saldoActual;
+        private Integer tipoIva;
         private static Integer numeroRecibo;
         private static ConcurrentHashMap listadoClientes=new ConcurrentHashMap();
         private static ConcurrentHashMap listadoPorNom=new ConcurrentHashMap();
         private static int signal=0;
+
+    public Integer getTipoIva() {
+        return tipoIva;
+    }
+
+    public void setTipoIva(Integer tipoIva) {
+        this.tipoIva = tipoIva;
+    }
         
         
         
@@ -574,8 +583,10 @@ public class ClientesTango implements Busquedas,Facturar,Adeudable{
         ClientesTango cli=(ClientesTango)cliente;
         Boolean resultado=false;
         Transaccionable tra=new Conecciones();
-        String sql="insert into clientes (COD_CLIENT,RAZON_SOCI,DOMICILIO,TELEFONO_1,TIPO_IVA,IDENTIFTRI,COND_VTA,NRO_LISTA,empresa) values ('"+cli.getCodigoCliente()+"','"+cli.getRazonSocial()+"','"+cli.getDireccion()+"','"+cli.getTelefono()+"','"+cli.getCondicionIva()+"','"+cli.getNumeroDeCuit()+"',1,1,'"+cli.getEmpresa()+"')";
+        String sql="insert into clientes (COD_CLIENT,RAZON_SOCI,DOMICILIO,TELEFONO_1,TIPO_IVA,NUMERODECUIT,COND_VTA,LISTADEPRECIO,empresa) values ('"+cli.getCodigoCliente()+"','"+cli.getRazonSocial()+"','"+cli.getDireccion()+"','"+cli.getTelefono()+"','"+cli.getTipoIva()+"','"+cli.getNumeroDeCuit()+"',1,1,'"+cli.getEmpresa()+"')";
+        System.out.println(sql);
         resultado=tra.guardarRegistro(sql);
+        cargarMap();
         return resultado;
     }
 

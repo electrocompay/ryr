@@ -15,7 +15,10 @@ import Sucursales.ListasDePrecios;
 import Sucursales.Sucursales;
 import Sucursales.Usuarios;
 import facturacion.clientes.ClientesTango;
+import facturacion.pantallas.IngresoDeCotizacion;
+import facturacion.pantallas.IngresoDeFacturas;
 import facturacion.pantallas.IngresoDePedidos;
+import facturacion.pantallas.IngresoDeRemitos;
 import interfacesPrograma.Cajeables;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -174,9 +177,9 @@ public class Inicio extends javax.swing.JFrame {
         jMenuItem22 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem17 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem17 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenu6 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
@@ -314,22 +317,41 @@ public class Inicio extends javax.swing.JFrame {
 
         jMenuItem22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/List.png"))); // NOI18N
         jMenuItem22.setText("Cotizaciones");
+        jMenuItem22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem22ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem22);
 
         jMenuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Task.png"))); // NOI18N
         jMenuItem11.setText("Ingreso de Pedidos");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem11);
 
         jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/delete_ticket.png"))); // NOI18N
         jMenuItem2.setText("Facturacion");
-        jMenuItem2.setEnabled(false);
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);
             }
         });
         jMenu3.add(jMenuItem2);
+
+        jMenuItem17.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/stuff_black.png"))); // NOI18N
+        jMenuItem17.setText("Generar Remito");
+        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem17ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem17);
 
         jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/comment_edit.png"))); // NOI18N
@@ -350,15 +372,6 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
         jMenu3.add(jMenuItem4);
-
-        jMenuItem17.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem17.setText("Recibir Remito Interno");
-        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem17ActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jMenuItem17);
 
         jMenuBar1.add(jMenu3);
 
@@ -459,7 +472,7 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jDesktopPane1ComponentShown
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        IngresoDePedidos ingPed=new IngresoDePedidos();
+        IngresoDeFacturas ingPed=new IngresoDeFacturas();
         jDesktopPane1.add(ingPed);
         ingPed.setVisible(true);
         ingPed.toFront();
@@ -591,7 +604,7 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
-        RecepcionDeRemitoInterno nuevoRemito=new RecepcionDeRemitoInterno();
+        IngresoDeRemitos nuevoRemito=new IngresoDeRemitos();
         jDesktopPane1.add(nuevoRemito);
         nuevoRemito.setVisible(true);
         nuevoRemito.toFront();
@@ -661,6 +674,20 @@ public class Inicio extends javax.swing.JFrame {
         abmP.setVisible(true);
         abmP.toFront();
     }//GEN-LAST:event_jMenu4MouseClicked
+
+    private void jMenuItem22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem22ActionPerformed
+        IngresoDeCotizacion cotizacion=new IngresoDeCotizacion();
+        jDesktopPane1.add(cotizacion);
+        cotizacion.setVisible(true);
+        cotizacion.toFront();
+    }//GEN-LAST:event_jMenuItem22ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        IngresoDePedidos pedido=new IngresoDePedidos();
+        jDesktopPane1.add(pedido);
+        pedido.setVisible(true);
+        pedido.toFront();
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     /**
      * @param args the command line arguments

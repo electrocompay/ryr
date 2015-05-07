@@ -7,6 +7,7 @@ package interfaceGraficas;
 import Conversores.Numeros;
 import Excel.InformesClientes;
 import facturacion.clientes.ClientesTango;
+import facturacion.pantallas.NuevoCliente;
 import interfacesPrograma.Busquedas;
 import interfacesPrograma.Facturar;
 import java.sql.SQLException;
@@ -67,6 +68,38 @@ public class AbmClientes extends javax.swing.JInternalFrame {
         setClosable(true);
         setMaximizable(true);
         setTitle("Clientes");
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameActivated(evt);
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
+        addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                formFocusGained(evt);
+            }
+        });
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         MiModeloTablaArticulos miTabla=new MiModeloTablaArticulos();
         Busquedas bus=new ClientesTango();
@@ -226,6 +259,16 @@ public class AbmClientes extends javax.swing.JInternalFrame {
 
         jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/folder_new.png"))); // NOI18N
         jMenu1.setText("Nuevo Cliente");
+        jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu1MouseClicked(evt);
+            }
+        });
+        jMenu1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu1ActionPerformed(evt);
+            }
+        });
         jMenuBar1.add(jMenu1);
 
         jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/currency_black_dollar.png"))); // NOI18N
@@ -295,7 +338,7 @@ public class AbmClientes extends javax.swing.JInternalFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         DecimalFormat fr=new DecimalFormat("00");
-        DecimalFormat formato=new DecimalFormat("####.##");
+        DecimalFormat formato=new DecimalFormat("####.####");
         //SiderconCapaatos.listaPedidos.clear();
         SimpleDateFormat dia=new SimpleDateFormat("dd/mm/yyyy");
         //Date mes=Calendar.getInstance().getTime();
@@ -332,6 +375,63 @@ public class AbmClientes extends javax.swing.JInternalFrame {
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
+        
+    }//GEN-LAST:event_jMenu1ActionPerformed
+
+    private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
+        NuevoCliente clienteNuevo=new NuevoCliente();
+        Inicio.jDesktopPane1.add(clienteNuevo);
+        clienteNuevo.setVisible(true);
+        clienteNuevo.toFront();
+    }//GEN-LAST:event_jMenu1MouseClicked
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+       
+    }//GEN-LAST:event_formComponentShown
+
+    private void formFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusGained
+
+    }//GEN-LAST:event_formFocusGained
+
+    private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
+                 this.jTable1.removeAll();
+        MiModeloTablaArticulos miTabla=new MiModeloTablaArticulos();
+Busquedas bus=new ClientesTango();
+listadoClientes=bus.listar("");
+Iterator listC=listadoClientes.listIterator();
+miTabla.addColumn("COD CLIENTE");
+miTabla.addColumn("RAZON SOCIAL");
+miTabla.addColumn("DIRECCION");
+miTabla.addColumn("TELEFONO");
+miTabla.addColumn("LOCALIDAD");
+miTabla.addColumn("CONTACTO");
+miTabla.addColumn("CUIT");
+Object[] fila=new Object[7];
+ClientesTango cliente=new ClientesTango();
+while(listC.hasNext()){
+    cliente=(ClientesTango)listC.next();
+    fila[0]=cliente.getCodigoId();
+fila[1]=cliente.getRazonSocial();
+fila[2]=cliente.getDireccion();
+fila[3]=cliente.getTelefono();
+fila[4]=cliente.getCupoDeCredito();
+fila[5]=cliente.getSaldo();
+fila[6]=cliente.getListaDePrecios();
+miTabla.addRow(fila);
+}
+jTable1.setModel(miTabla);
+
+    }//GEN-LAST:event_formInternalFrameActivated
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        // TODO add your handling code here:
+        /*
+        ACA VAN A IR LOS DISTINTOS EVENTOS SI SE PRESIONAN LAS F
+        
+        */
+    }//GEN-LAST:event_formKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private datechooser.beans.DateChooserCombo dateChooserCombo3;

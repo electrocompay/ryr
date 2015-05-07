@@ -6,17 +6,20 @@ package facturacion.pantallas;
 
 import facturacion.clientes.ClientesTango;
 import facturacion.clientes.ListasDePrecios;
+import interfaceGraficas.AbmClientes;
+import interfaceGraficas.Inicio;
 import interfaces.Personalizable;
 import interfacesPrograma.Facturar;
 import java.util.ArrayList;
 import java.util.Iterator;
+import javax.swing.JInternalFrame;
 
 /**
  *
  * @author hernan
  */
 public class NuevoCliente extends javax.swing.JInternalFrame {
-
+    private JInternalFrame clientes;
     /**
      * Creates new form NuevoCliente
      */
@@ -58,7 +61,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Cond Iva:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Responsable Inscripto", "Exento", "Consumidor Final", "BU" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Consumidor Final", "Responsable Inscripto", "Exento" }));
 
         jLabel4.setText("N° de CUIT:");
 
@@ -155,7 +158,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         pack();
@@ -167,18 +170,23 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
        cli.setRazonSocial(this.jTextField1.getText());
        cli.setDireccion(this.jTextField2.getText());
        String condicion=null;
+       Integer tipo=0;
        switch (this.jComboBox1.getSelectedIndex()){
+           case 0:
+               condicion="CF ";
+               tipo=1;
+               break;
            case 1:
                condicion="RI ";
+               tipo=2;
                break;
            case 2:
                condicion="EX ";
+               tipo=3;
                break;
-           case 3:
+           default:
                condicion="CF ";
-               break;
-           case 4:
-               condicion="BU ";
+               tipo=1;
                break;
        }
        if(this.jComboBox1.getSelectedIndex() < 4){
@@ -186,18 +194,35 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
        }else{
            cli.setEmpresa("bu");
        }
+       cli.setTipoIva(tipo);
        cli.setCondicionIva(condicion);
        cli.setNumeroDeCuit(this.jTextField3.getText());
        cli.setTelefono(this.jTextField4.getText());
        Facturar fact=new ClientesTango();
         fact.guardarNuevoCliente(cli);
-       IngresoDePedidos.jCheckBox2.setSelected(true);
-       IngresoDePedidos.jCheckBox2.setEnabled(false);
-       IngresoDePedidos.cliT=cli;
-       IngresoDePedidos.jLabel6.setText(cli.getRazonSocial());
+      try{  
+       IngresoDeCotizacion.jCheckBox2.setSelected(true);
+       IngresoDeCotizacion.jCheckBox2.setEnabled(false);
+       IngresoDeCotizacion.cliT=cli;
+       IngresoDeCotizacion.jLabel6.setText(cli.getRazonSocial());
+      }catch (java.lang.NullPointerException exx){
+           //JInternalFrame AbmClientes = null;
+          //ControlaInstancia(AbmClientes);
+      }
        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    private void ControlaInstancia(JInternalFrame inter){
+        /*
+        boolean mostrar=true;
+        //String nombre=inter.getTitle();
+        for(int a =0;a < Inicio.jDesktopPane1.getComponentCount();a++){
+            if(inter.getClass().isInstance(Inicio.jDesktopPane1.getComponent(a))){
+                inter.toFront();
+                Inicio.jDesktopPane1.moveToFront(inter);
+            }
+        }
+        */
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox jComboBox1;

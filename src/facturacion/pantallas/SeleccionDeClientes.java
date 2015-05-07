@@ -276,15 +276,15 @@ public class SeleccionDeClientes extends javax.swing.JInternalFrame {
         desc=desc / 100;
         desc= 1 - desc;
         int condicionVta=Integer.parseInt(this.jTextField4.getText());
-        if(condicionVta==2)IngresoDePedidos.jCheckBox2.setSelected(false);
+        if(condicionVta==2)IngresoDeCotizacion.jCheckBox2.setSelected(false);
         int listaDePrecio=Integer.parseInt(this.jTextField2.getText());
         cliT.setDescuento(desc);
         cliT.setCondicionDeVenta(condicionVta);
         cliT.setListaDePrecios(listaDePrecio);
         //System.out.println(" DESCUENTO PANTALLA CLIENTE"+desc);
-        IngresoDePedidos.cliT=cliT;
-        IngresoDePedidos.jLabel6.setText(cliT.getRazonSocial());
-        IngresoDePedidos.jTextField1.requestFocus();
+        IngresoDeCotizacion.cliT=cliT;
+        IngresoDeCotizacion.jLabel6.setText(cliT.getRazonSocial());
+        IngresoDeCotizacion.jTextField1.requestFocus();
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 private void cargarTabla(){

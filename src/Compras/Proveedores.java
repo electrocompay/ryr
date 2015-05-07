@@ -149,7 +149,7 @@ public class Proveedores implements Personalizable{
             ResultSet rr=tra.leerConjuntoDeRegistros(sql);
             while(rr.next()){
                 Proveedores prov=new Proveedores();
-                prov.setNumero(rr.getInt("numero"));
+                prov.setNumero(rr.getInt("ID"));
                 prov.setNombre(rr.getString("NOMBRE"));
                 prov.setDireccion(rr.getString("DOMICILIO"));
                 prov.setLocalidad(rr.getString("LOCALIDAD"));

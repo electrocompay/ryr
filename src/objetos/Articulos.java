@@ -43,6 +43,7 @@ public class Articulos implements Facturar,Editables{
     private Double precioServicio=0.00;
     private Boolean confirmado;
     private Double recargo;
+    private Integer proveedorId;
     private Boolean modificaPrecio;
     private static ConcurrentHashMap listadoBarr=new ConcurrentHashMap();
     private static ConcurrentHashMap listadoNom=new ConcurrentHashMap();
@@ -57,7 +58,26 @@ public class Articulos implements Facturar,Editables{
     private Integer idCombo;
     private static ArrayList listCombo=new ArrayList();
     private Integer idDeposito;
+    private Integer rubroId;
 
+    public Integer getRubroId() {
+        return rubroId;
+    }
+
+    public void setRubroId(Integer rubroId) {
+        this.rubroId = rubroId;
+    }
+    
+    
+    public Integer getProveedorId() {
+        return proveedorId;
+    }
+
+    public void setProveedorId(Integer proveedorId) {
+        this.proveedorId = proveedorId;
+    }
+
+    
     public Integer getIdDeposito() {
         return idDeposito;
     }
@@ -854,6 +874,7 @@ public class Articulos implements Facturar,Editables{
         Boolean ch=false;
         //String sql="insert into articulos (NOMBRE='"+articulo.getDescripcionArticulo()+"',SERVICIO="+articulo.getPrecioServicio()+",COSTO="+articulo.getPrecioDeCosto()+",PRECIO="+articulo.getPrecioUnitarioNeto()+",MINIMO="+articulo.getStockMinimo()+",BARRAS ='"+articulo.getCodigoDeBarra()+"',modificaPrecio="+articulo.getModificaPrecio()+" where ID="+articulo.getNumeroId();
         String sql="insert into articulos (NOMBRE,SERVICIO,COSTO,PRECIO,MINIMO,BARRAS,modificaPrecio,modificaServicio,SERVICIO1,idcombo,actualizacion) values ('"+articulo.getDescripcionArticulo()+"',"+articulo.getPrecioServicio()+","+articulo.getPrecioDeCosto()+","+articulo.getPrecioUnitarioNeto()+","+articulo.getStockMinimo()+",'"+articulo.getCodigoDeBarra()+"',"+articulo.getModificaPrecio()+","+articulo.getModificaServicio()+","+articulo.getPrecioServicio1()+","+articulo.getIdCombo()+",3)";
+        System.out.println(sql);
         Transaccionable tra=new Conecciones();
         ch=tra.guardarRegistro(sql);
         sql="select last_insert_id()";
