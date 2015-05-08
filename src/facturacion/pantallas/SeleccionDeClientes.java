@@ -298,7 +298,7 @@ private void cargarTabla(){
         busC.addColumn("DIRECCION");
         busC.addColumn("CUIT");
         busC.addColumn("TELEFONO");
-        busC.addColumn("EMPRESA");
+        busC.addColumn("LOCALIDAD");
         busC.addColumn("LISTA DE PRECIOS");
         busC.addColumn("FORMA DE PAGO");
         Object[] fila=new Object[8];
@@ -308,11 +308,11 @@ private void cargarTabla(){
             fila[0]=pedidos.getCodigoCliente();
             fila[1]=pedidos.getRazonSocial();
             fila[2]=pedidos.getDireccion();
-            fila[3]=pedidos;
+            fila[3]=pedidos.getNumeroDeCuit();
             fila[4]=pedidos.getTelefono();
-            fila[5]=pedidos.getEmpresa();
-            fila[6]=13;
-            fila[7]=2;
+            fila[5]=pedidos.getLocalidad();
+            fila[6]=pedidos.getListaDePrecios();
+            fila[7]=pedidos.getCondicionDeVenta();
             busC.addRow(fila);
         }
         

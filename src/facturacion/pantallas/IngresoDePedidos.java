@@ -62,7 +62,23 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
         //this.jPanel2.requestFocus();
         
     }
-
+    public IngresoDePedidos(Object cliente) {
+        //Articulos.CargarMap();
+        cliT=new ClientesTango();
+        cliT=(ClientesTango)cliente;
+        
+//cliT=(ClientesTango)oob;
+        //comp.setCliente(cliT);
+        initComponents();
+        this.jLabel6.setText(cliT.getRazonSocial());
+        this.jLabel7.setVisible(false);
+        this.jTextField4.setVisible(false);
+        this.jCheckBox1.setVisible(false);
+        this.jCheckBox2.setEnabled(false);
+        this.jTextField1.requestFocus();
+        //this.jPanel2.requestFocus();
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

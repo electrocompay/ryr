@@ -115,6 +115,7 @@ public class Conecciones implements Transaccionable{
         } catch (SQLException ex) {
             Logger.getLogger(Conecciones.class.getName()).log(Level.SEVERE, null, ex);
             System.err.println(ex);
+            /*
             coneccion=false;
             FileWriter fichero=null;
             PrintWriter pw=null;
@@ -139,7 +140,7 @@ public class Conecciones implements Transaccionable{
               e2.printStackTrace();
            }
             }
-            
+            */
         }
         return coneccion;
     }

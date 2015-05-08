@@ -14,6 +14,8 @@ public interface Busquedas {
     public ArrayList buscar(String nombre);
     public ArrayList filtrar(String numeroCliente,String nombreCliente);
     public ArrayList listar(String cliente);
+    public ArrayList listarPorContacto(String cliente);
+    public ArrayList listarPorFantasia(String cliente);
     public void marcarContactado(Integer item);
     public void modificarDatosCliente(Object cliente);    
 }

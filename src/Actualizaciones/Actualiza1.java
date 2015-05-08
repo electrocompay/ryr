@@ -44,6 +44,7 @@ public class Actualiza1 extends Thread{
         
             //carga la lista remota
             //Proveedores.cargarListadoProv1();
+        /*
         Integer idDep=Inicio.usuario.getEquipo() / 1000000;
         String sql="select * from actualizaciones where iddeposito="+idDep+" and estado < 4 and idobjeto=1 order by estado";
         Transaccionable tra=new Conecciones();
@@ -90,7 +91,7 @@ public class Actualiza1 extends Thread{
                     tat.guardarRegistro(sql);
                 }
         
-        /*
+        
          * Usuarios
          * Sucursales
          * Depositos

@@ -20,12 +20,41 @@ import javax.swing.JInternalFrame;
  */
 public class NuevoCliente extends javax.swing.JInternalFrame {
     private JInternalFrame clientes;
+    private int modificacion;
+    private ClientesTango cliTa=new ClientesTango();
+    private ArrayList listadoL=new ArrayList();
     /**
      * Creates new form NuevoCliente
      */
     public NuevoCliente() {
         initComponents();
     }
+    public NuevoCliente(Object client) {
+        initComponents();
+        cliTa=(ClientesTango)client;
+        this.jTextField1.setText(cliTa.getRazonSocial());
+        this.jTextField2.setText(cliTa.getDireccion());
+        switch (cliTa.getTipoIva()){
+           case 1:
+               this.jComboBox1.setSelectedIndex(0);
+               break;
+           case 2:
+               this.jComboBox1.setSelectedIndex(1);
+               break;
+           case 3:
+               this.jComboBox1.setSelectedIndex(2);
+               break;
+           default:
+               this.jComboBox1.setSelectedIndex(0);
+               break;
+       }
+        this.jTextField3.setText(cliTa.getNumeroDeCuit());
+        this.jTextField4.setText(cliTa.getTelefono());
+        this.jComboBox2.setSelectedIndex(cliTa.getListaDePrecios()-1);
+        modificacion=1;
+        this.setTitle("MODIFICACION DATOS DEL CLIENTE");
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -76,7 +105,6 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Lista de precios :");
 
-        ArrayList listadoL=new ArrayList();
         Personalizable per=new ListasDePrecios();
         ListasDePrecios listaP=new ListasDePrecios();
         listadoL=per.listar();
@@ -167,6 +195,9 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        ClientesTango cli=new ClientesTango();
        //cli.setCodigoCliente(title);
+       if(modificacion==1){
+           cli=cliTa;
+       }
        cli.setRazonSocial(this.jTextField1.getText());
        cli.setDireccion(this.jTextField2.getText());
        String condicion=null;
@@ -194,12 +225,21 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
        }else{
            cli.setEmpresa("bu");
        }
+       ListasDePrecios lista=new ListasDePrecios();
+       lista=(ListasDePrecios)listadoL.get(this.jComboBox2.getSelectedIndex());
+       cli.setListaDePrecios(lista.getNumeroLista());
        cli.setTipoIva(tipo);
        cli.setCondicionIva(condicion);
        cli.setNumeroDeCuit(this.jTextField3.getText());
        cli.setTelefono(this.jTextField4.getText());
        Facturar fact=new ClientesTango();
+       if(modificacion==1){
+          
+        fact.modificarDatosDelCliente(cli); 
+       }else{
+       
         fact.guardarNuevoCliente(cli);
+       }
       try{  
        IngresoDeCotizacion.jCheckBox2.setSelected(true);
        IngresoDeCotizacion.jCheckBox2.setEnabled(false);
