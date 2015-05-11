@@ -679,6 +679,7 @@ public class ClientesTango implements Busquedas,Facturar,Adeudable{
         //String sql="insert into clientes (COD_CLIENT,RAZON_SOCI,DOMICILIO,LOCALIDAD,TELEFONO_1,TIPO_IVA,IDENTIFTRI,COND_VTA,NRO_LISTA,empresa) values ('"+cli.getCodigoCliente()+"','"+cli.getRazonSocial()+"','"+cli.getDireccion()+"','SANTA FE','"+cli.getTelefono()+"',"+cli.getCondicionIva()+",'"+cli.getNumeroDeCuit()+"',1,1,'"+cli.getEmpresa()+"')";
         String sql="update clientes set RAZON_SOCI='"+cli.getRazonSocial()+"',listadeprecio="+cli.getListaDePrecios()+",DOMICILIO='"+cli.getDireccion()+"',TELEFONO_1='"+cli.getTelefono()+"',localidad='"+cli.getLocalidad()+"',responsable='"+cli.getResponsable()+"',numerodecuit='"+cli.getNumeroDeCuit()+"',tipo_iva="+cli.getTipoIva()+" where id ="+cli.getCodigoId();
         resultado=tra.guardarRegistro(sql);
+        cargarMap();
         return resultado;
     }
 

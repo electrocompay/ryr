@@ -97,6 +97,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
         jTextField3 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jCheckBox2 = new javax.swing.JCheckBox();
+        jButton6 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -178,6 +179,14 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
         jCheckBox2.setSelected(true);
         jCheckBox2.setText("PAGADO");
 
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/currency_black_dollar.png"))); // NOI18N
+        jButton6.setText("Modificar Precio");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -202,7 +211,9 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 773, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
+                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -211,7 +222,10 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton2)
+                        .addGap(3, 3, 3)
+                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -708,7 +722,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
         //comp.setFechaComprobante(fecha2);
         //comp.setFechaComprobante(fecha);
         int comprobanteTipo=(int) Inicio.sucursal.getTipoComprobantes().get(0);
-        if(cliT.getCondicionIva().equals("RI "))comprobanteTipo=(int)Inicio.sucursal.getTipoComprobantes().get(1);
+        if(cliT.getTipoIva()==2)comprobanteTipo=(int)Inicio.sucursal.getTipoComprobantes().get(1);
         Comprobantes comprobante=new Comprobantes();
         comprobante.setCliente(cliT);
         comprobante.setTipoMovimiento(1);
@@ -897,6 +911,22 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    //MODIFICAR PRECIO
+      int posicion=this.jTable1.getSelectedRow();
+      Articulos pedidos;
+        pedidos=(Articulos)detalleDelPedido.get(posicion);
+        Double precio=Double.parseDouble(JOptionPane.showInputDialog("Ingrese el nuevo valor unitario s/iva",pedidos.getPrecioUnitarioNeto()));
+        pedidos.setPrecioUnitarioNeto(precio);
+//detalleDelPedido.clear();
+        agregarRenglonTabla();
+        System.out.println("total "+montoTotal);
+        montrarMonto();
+        jTextField1.setText("");
+        jTextField1.requestFocus();
+          
+    }//GEN-LAST:event_jButton6ActionPerformed
 private void cargarLista(ArrayList lista){
     DefaultListModel modelo=new DefaultListModel();
     Iterator il=lista.listIterator();
@@ -941,6 +971,7 @@ private void agregarRenglonTabla(){
             pedidos.setPrecioUnitario(valor);
             String val=String.valueOf(valor);
             montoTotal=montoTotal + valor;
+            montoTotal=montoTotal * 1.21;
             fila[3]=val;
             busC.addRow(fila);
         }
@@ -989,6 +1020,7 @@ private void verificar(){
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JCheckBox jCheckBox1;
     public static javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JLabel jLabel1;

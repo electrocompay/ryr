@@ -70,10 +70,10 @@ public class Sucursales extends Administracion implements Personalizable{
                 this.telefono=rs.getString("telefono");
                             
             }
-            sql="select * from tipocomprobantes where numeroSucursal="+this.numero;
+            sql="select * from tipocomprobantes where numeroSucursal=1";
             rs=tra.leerConjuntoDeRegistros(sql);
             while(rs.next()){
-                tipoComprobantes.add(rs.getInt("numero"));
+                tipoComprobantes.add(rs.getInt("id"));
             }
             rs.close();
         } catch (SQLException ex) {
