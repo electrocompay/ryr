@@ -10,7 +10,7 @@ import Sucursales.Cajas;
 import Sucursales.ListasDePrecios;
 import Sucursales.Sucursales;
 import Sucursales.Usuarios;
-import facturacion.clientes.ClientesTango;
+import facturacion.clientes.Clientes;
 import interfaceGraficas.Inicio;
 import interfaces.Transaccionable;
 import java.awt.event.ActionEvent;
@@ -54,7 +54,7 @@ public class Actualiza extends Thread{
             //Articulos.RecargarMap();
         
         Proveedores.BackapearProveedores();
-        ClientesTango.BackapearClientes();
+        Clientes.BackapearClientes();
         ListasDePrecios.BackapearListasDePrecios();
         //Cajas.BackapearCajas();
         //Cajas.LeerCajaAdministradora();
@@ -64,7 +64,7 @@ public class Actualiza extends Thread{
         
         
         Proveedores.cargarListadoProv();
-        ClientesTango.cargarMap();
+        Clientes.cargarMap();
         ListasDePrecios.cargarMap();
         Inicio.actualizable=0;
         }
@@ -80,7 +80,7 @@ public class Actualiza extends Thread{
          */
       
      } 
-}); 
+        }); 
         timer.start();
         
         

@@ -4,7 +4,7 @@
  */
 package objetos;
 
-import facturacion.clientes.ClientesTango;
+import facturacion.clientes.Clientes;
 import interfaceGraficas.Inicio;
 import interfaces.Transaccionable;
 import interfacesPrograma.Facturar;
@@ -25,7 +25,7 @@ public class Comprobantes implements Facturar{
     private String descripcion;
     private int destinatarioCondicion;
     private int descargaStock;
-    private ClientesTango cliente;
+    private Clientes cliente;
     private ArrayList listadoDeArticulos;
     private int tipoComprobante;
     private Date fechaEmision;
@@ -85,11 +85,11 @@ public class Comprobantes implements Facturar{
     }
     
 
-    public ClientesTango getCliente() {
+    public Clientes getCliente() {
         return cliente;
     }
 
-    public void setCliente(ClientesTango cliente) {
+    public void setCliente(Clientes cliente) {
         this.cliente = cliente;
     }
 

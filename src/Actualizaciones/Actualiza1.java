@@ -10,7 +10,7 @@ import Sucursales.Cajas;
 import Sucursales.ListasDePrecios;
 import Sucursales.Sucursales;
 import Sucursales.Usuarios;
-import facturacion.clientes.ClientesTango;
+import facturacion.clientes.Clientes;
 import interfaceGraficas.Inicio;
 import interfaces.Transaccionable;
 import java.awt.event.ActionEvent;

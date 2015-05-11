@@ -4,8 +4,9 @@
  */
 package facturacion.pantallas;
 
+import Pedidos.IngresoDePedidos;
 import Conversores.Numeros;
-import facturacion.clientes.ClientesTango;
+import facturacion.clientes.Clientes;
 
 import interfaceGraficas.Inicio;
 import interfacesPrograma.Facturar;
@@ -40,7 +41,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
     /**
      * Creates new form IngresoDePedidos
      */
-    public static ClientesTango cliT;
+    public static Clientes cliT;
     private ArrayList detalleDelPedido=new ArrayList();
     private Articulos arti;
     private static ArrayList listadoDeBusqueda=new ArrayList();
@@ -49,7 +50,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
     
     public IngresoDeFacturas() {
         //Articulos.CargarMap();
-        cliT=new ClientesTango("1");
+        cliT=new Clientes("1");
         //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
         initComponents();
@@ -63,8 +64,8 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
         
     }
     public IngresoDeFacturas(Object clienteTango){
-        cliT=new ClientesTango();
-        cliT=(ClientesTango)clienteTango;
+        cliT=new Clientes();
+        cliT=(Clientes)clienteTango;
         
 //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
@@ -610,7 +611,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
         this.jList1.removeAll();
         listadoDeBusqueda.clear();
         cargarLista(listadoDeBusqueda);
-        cliT=new ClientesTango("999999");
+        cliT=new Clientes("999999");
         this.jLabel6.setText(cliT.getRazonSocial());
         this.jTextField2.setText("");
         jTextField1.setText("");
@@ -789,7 +790,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
         this.jList1.removeAll();
         listadoDeBusqueda.clear();
         cargarLista(listadoDeBusqueda);
-        cliT=new ClientesTango("999999");
+        cliT=new Clientes("999999");
         this.jLabel6.setText(cliT.getRazonSocial());
         this.jTextField2.setText("");
         jTextField1.setText("");

@@ -5,7 +5,7 @@
  */
 package Excel;
 
-import facturacion.clientes.ClientesTango;
+import facturacion.clientes.Clientes;
 import interfaces.Transaccionable;
 import interfacesPrograma.Busquedas;
 import java.io.FileNotFoundException;
@@ -67,7 +67,7 @@ public class InformesClientes {
         ResultSet rs=null;
         HSSFCellStyle titulo=libro.createCellStyle();
         Iterator iCli=listadoClientes.listIterator();
-        ClientesTango cliente=new ClientesTango();
+        Clientes cliente=new Clientes();
         titulo.setFont(fuente);
         //titulo.setFillBackgroundColor((short)22);
         titulo.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
@@ -97,7 +97,7 @@ public class InformesClientes {
             celda5.setCellValue("Saldo");
             }
             while(iCli.hasNext()){
-                cliente=(ClientesTango)iCli.next();
+                cliente=(Clientes)iCli.next();
             a++;
             //col=rs.getInt("tipoMovimiento");
             switch(col){
@@ -138,7 +138,7 @@ public class InformesClientes {
           /*
            * segunda hoja
            */  
-           Busquedas bus=new ClientesTango();
+           Busquedas bus=new Clientes();
             sql="select numeroProveedor,fecha,monto,numeroComprobante,idUsuario,idCaja,tipoComprobante,idSucursal,(select clientes.razon_soci from clientes where clientes.id=numeroProveedor)as nombreP from movimientosclientes where numeroProveedor > 1 and fecha between '"+desde+"' and '"+hasta+"' order by numeroProveedor";
             System.out.println(sql);
         //fuente.setFontHeight((short)21);

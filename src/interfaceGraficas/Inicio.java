@@ -14,11 +14,11 @@ import Sucursales.Cajas;
 import Sucursales.ListasDePrecios;
 import Sucursales.Sucursales;
 import Sucursales.Usuarios;
-import facturacion.clientes.ClientesTango;
-import facturacion.pantallas.IngresoDeCotizacion;
+import facturacion.clientes.Clientes;
+import Cotizaciones.IngresoDeCotizacion;
 import facturacion.pantallas.IngresoDeFacturas;
-import facturacion.pantallas.IngresoDePedidos;
-import facturacion.pantallas.IngresoDeRemitos;
+import Pedidos.IngresoDePedidos;
+import Remitos.IngresoDeRemitos;
 import interfacesPrograma.Cajeables;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -81,7 +81,7 @@ public class Inicio extends javax.swing.JFrame {
         }else{
             Proveedores.cargarListadoProv();
         }
-        ClientesTango.cargarMap();
+        Clientes.cargarMap();
         actualizacionesClientes=2;
         ListasDePrecios.cargarMap();
         //Cajas.BackapearCajas();
@@ -631,7 +631,7 @@ public class Inicio extends javax.swing.JFrame {
             Articulos.RecargarMap(1);
         
         Proveedores.BackapearProveedores();
-        ClientesTango.BackapearClientes();
+        Clientes.BackapearClientes();
         ListasDePrecios.BackapearListasDePrecios();
         Cajas.BackapearCajas();
         Cajas.LeerCajaAdministradora();
@@ -641,7 +641,7 @@ public class Inicio extends javax.swing.JFrame {
         
         
         Proveedores.cargarListadoProv();
-        ClientesTango.cargarMap();
+        Clientes.cargarMap();
         ListasDePrecios.cargarMap();
         BkDeConeccion bk=new BkDeConeccion();
         bk.procesosDeCierre();

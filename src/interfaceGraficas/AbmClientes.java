@@ -5,11 +5,12 @@
 package interfaceGraficas;
 
 import Conversores.Numeros;
+import Cotizaciones.IngresoDeCotizacion;
 import Excel.InformesClientes;
 import Excel.LeerExcelClientes;
-import facturacion.clientes.ClientesTango;
+import facturacion.clientes.Clientes;
 import facturacion.pantallas.IngresoDeFacturas;
-import facturacion.pantallas.IngresoDePedidos;
+import Pedidos.IngresoDePedidos;
 import facturacion.pantallas.NuevoCliente;
 import interfacesPrograma.Busquedas;
 import interfacesPrograma.Facturar;
@@ -22,6 +23,7 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.TableColumn;
 import tablas.MiModeloTablaArticulos;
 import tablas.MiModeloTablaBuscarCliente;
 
@@ -111,7 +113,7 @@ public class AbmClientes extends javax.swing.JInternalFrame {
         });
 
         MiModeloTablaArticulos miTabla=new MiModeloTablaArticulos();
-        Busquedas bus=new ClientesTango();
+        Busquedas bus=new facturacion.clientes.Clientes();
         listadoClientes=bus.listar("");
         Iterator listC=listadoClientes.listIterator();
         miTabla.addColumn("COD CLIENTE");
@@ -124,9 +126,9 @@ public class AbmClientes extends javax.swing.JInternalFrame {
         miTabla.addColumn("ID IVA");
         miTabla.addColumn("COND IVA");
         Object[] fila=new Object[9];
-        ClientesTango cliente=new ClientesTango();
+        facturacion.clientes.Clientes cliente=new facturacion.clientes.Clientes();
         while(listC.hasNext()){
-            cliente=(ClientesTango)listC.next();
+            cliente=(facturacion.clientes.Clientes)listC.next();
             fila[0]=cliente.getCodigoId();
             fila[1]=cliente.getRazonSocial();
             fila[2]=cliente.getDireccion();
@@ -135,18 +137,7 @@ public class AbmClientes extends javax.swing.JInternalFrame {
             fila[5]=cliente.getResponsable();
             fila[6]=cliente.getNumeroDeCuit();
             fila[7]=cliente.getTipoIva();
-            switch (cliente.getTipoIva()){
-                case 1:
-                fila[8]="CONS FINAL";
-                break;
-                case 2:
-                fila[8]="RESP INSC";
-                break;
-                case 3:
-                fila[8]="EXENTO";
-                break;
-            }
-
+            fila[8]=cliente.getCondicionIva();
             miTabla.addRow(fila);
         }
         jTable1.setModel(miTabla);
@@ -332,10 +323,20 @@ public class AbmClientes extends javax.swing.JInternalFrame {
 
         jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/documents_black.png"))); // NOI18N
         jMenu3.setText("Cotizaciones");
+        jMenu3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu3MouseClicked(evt);
+            }
+        });
         jMenuBar1.add(jMenu3);
 
         jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/library_black.png"))); // NOI18N
         jMenu4.setText("Pedidos");
+        jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu4MouseClicked(evt);
+            }
+        });
         jMenuBar1.add(jMenu4);
 
         jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/metacontact_offline.png"))); // NOI18N
@@ -379,8 +380,8 @@ public class AbmClientes extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int posicion=this.jTable1.getSelectedRow();
-        ClientesTango cliente=new ClientesTango();
-        cliente=(ClientesTango)listadoClientes.get(posicion);
+        Clientes cliente=new Clientes();
+        cliente=(Clientes)listadoClientes.get(posicion);
         cliente.setRazonSocial(String.valueOf(this.jTable1.getValueAt(posicion,1)));
         cliente.setDireccion(String.valueOf(this.jTable1.getValueAt(posicion, 2)));
         cliente.setTelefono(String.valueOf(this.jTable1.getValueAt(posicion,3)));
@@ -405,9 +406,9 @@ public class AbmClientes extends javax.swing.JInternalFrame {
         //cliente.setSaldo(Numeros.ConvertirStringADouble(String.valueOf(this.jTable1.getValueAt(posicion,5))));
         cliente.setListaDePrecios((Integer.parseInt(String.valueOf(this.jTable1.getValueAt(posicion,6)))));
         */
-        Facturar fact=new ClientesTango();
+        Facturar fact=new Clientes();
         fact.modificarDatosDelCliente(cliente);
-        ClientesTango.cargarMap();
+        Clientes.cargarMap();
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -473,7 +474,7 @@ public class AbmClientes extends javax.swing.JInternalFrame {
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
                  this.jTable1.removeAll();
         MiModeloTablaArticulos miTabla=new MiModeloTablaArticulos();
-Busquedas bus=new ClientesTango();
+Busquedas bus=new Clientes();
 listadoClientes=bus.listar("");
 Iterator listC=listadoClientes.listIterator();
 miTabla.addColumn("COD CLIENTE");
@@ -483,12 +484,16 @@ miTabla.addColumn("TELEFONO");
 miTabla.addColumn("LOCALIDAD");
 miTabla.addColumn("CONTACTO");
 miTabla.addColumn("NOM. FANTASIA");
-miTabla.addColumn("ID IVA");
+miTabla.addColumn("CELULAR");
 miTabla.addColumn("COND IVA");
+TableColumn codigoC=jTable1.getColumn("COD CLIENTE");
+codigoC.setMinWidth(10);
+codigoC.setMaxWidth(10);
+
 Object[] fila=new Object[9];
-ClientesTango cliente=new ClientesTango();
+Clientes cliente=new Clientes();
 while(listC.hasNext()){
-    cliente=(ClientesTango)listC.next();
+    cliente=(Clientes)listC.next();
     fila[0]=cliente.getCodigoId();
 fila[1]=cliente.getRazonSocial();
 fila[2]=cliente.getDireccion();
@@ -496,20 +501,11 @@ fila[3]=cliente.getTelefono();
 fila[4]=cliente.getLocalidad();
 fila[5]=cliente.getResponsable();
 fila[6]=cliente.getFantasia();
-fila[7]=cliente.getTipoIva();
-switch (cliente.getTipoIva()){
-    case 1:
-        fila[8]="CONS FINAL";
-        break;
-    case 2:
-        fila[8]="RESP INSC";
-        break;
-    case 3:
-        fila[8]="EXENTO";
-       break;
-}
+fila[7]=cliente.getCelular();
+fila[8]=cliente.getCondicionIva();
 miTabla.addRow(fila);
 }
+
 jTable1.setModel(miTabla);
 
     }//GEN-LAST:event_formInternalFrameActivated
@@ -523,8 +519,8 @@ jTable1.setModel(miTabla);
     }//GEN-LAST:event_formKeyPressed
 
     private void jMenu6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu6MouseClicked
-        ClientesTango clienteTango=new ClientesTango();
-        clienteTango=(ClientesTango)listadoClientes.get(this.jTable1.getSelectedRow());
+        Clientes clienteTango=new Clientes();
+        clienteTango=(Clientes)listadoClientes.get(this.jTable1.getSelectedRow());
         IngresoDeFacturas pedidos=new IngresoDeFacturas(clienteTango);
         Inicio.jDesktopPane1.add(pedidos);
         pedidos.setVisible(true);
@@ -533,8 +529,8 @@ jTable1.setModel(miTabla);
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
                 String nombre=jTextField1.getText();
-        ClientesTango resCli=new ClientesTango();
-        Busquedas mcli=new ClientesTango();
+        Clientes resCli=new Clientes();
+        Busquedas mcli=new Clientes();
         listadoClientes.clear();
         //ArrayList resultado=new ArrayList();
         listadoClientes=mcli.listar(nombre.toUpperCase());
@@ -548,8 +544,8 @@ jTable1.setModel(miTabla);
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         String nombre=jTextField2.getText();
-        ClientesTango resCli=new ClientesTango();
-        Busquedas mcli=new ClientesTango();
+        Clientes resCli=new Clientes();
+        Busquedas mcli=new Clientes();
         listadoClientes.clear();
         //ArrayList resultado=new ArrayList();
         listadoClientes=mcli.listarPorContacto(nombre.toUpperCase());
@@ -562,8 +558,8 @@ jTable1.setModel(miTabla);
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         String nombre=jTextField3.getText();
-        ClientesTango resCli=new ClientesTango();
-        Busquedas mcli=new ClientesTango();
+        Clientes resCli=new Clientes();
+        Busquedas mcli=new Clientes();
         listadoClientes.clear();
         //ArrayList resultado=new ArrayList();
         listadoClientes=mcli.listarPorFantasia(nombre.toUpperCase());
@@ -575,19 +571,37 @@ jTable1.setModel(miTabla);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
-        ClientesTango clienteTango=new ClientesTango();
-        clienteTango=(ClientesTango)listadoClientes.get(this.jTable1.getSelectedRow());
+        Clientes clienteTango=new Clientes();
+        clienteTango=(Clientes)listadoClientes.get(this.jTable1.getSelectedRow());
         NuevoCliente clienteNuevo=new NuevoCliente(clienteTango);
         Inicio.jDesktopPane1.add(clienteNuevo);
         clienteNuevo.setVisible(true);
         clienteNuevo.toFront();
     }//GEN-LAST:event_jMenu5MouseClicked
+
+    private void jMenu3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MouseClicked
+        Clientes clienteTango=new Clientes();
+        clienteTango=(Clientes)listadoClientes.get(this.jTable1.getSelectedRow());
+        IngresoDeCotizacion pedidos=new IngresoDeCotizacion(clienteTango);
+        Inicio.jDesktopPane1.add(pedidos);
+        pedidos.setVisible(true);
+        pedidos.toFront();
+    }//GEN-LAST:event_jMenu3MouseClicked
+
+    private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
+        Clientes clienteTango=new Clientes();
+        clienteTango=(Clientes)listadoClientes.get(this.jTable1.getSelectedRow());
+        IngresoDePedidos pedidos=new IngresoDePedidos(clienteTango);
+        Inicio.jDesktopPane1.add(pedidos);
+        pedidos.setVisible(true);
+        pedidos.toFront();
+    }//GEN-LAST:event_jMenu4MouseClicked
 private void cargarTabla(){
         MiModeloTablaBuscarCliente busC=new MiModeloTablaBuscarCliente();
         this.jTable1.removeAll();
         //ArrayList listadoPedidos=new ArrayList();
         this.jTable1.setModel(busC);
-        ClientesTango pedidos=new ClientesTango();
+        Clientes pedidos=new Clientes();
         busC.addColumn("CODIGO CLIENTE");
         busC.addColumn("RAZON SOCIAL");
         busC.addColumn("DIRECCION");
@@ -599,7 +613,7 @@ private void cargarTabla(){
         Object[] fila=new Object[8];
         Iterator irP=listadoClientes.listIterator();
         while(irP.hasNext()){
-            pedidos=(ClientesTango) irP.next();
+            pedidos=(Clientes) irP.next();
             fila[0]=pedidos.getCodigoCliente();
             fila[1]=pedidos.getRazonSocial();
             fila[2]=pedidos.getDireccion();

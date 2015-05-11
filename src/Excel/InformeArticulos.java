@@ -5,7 +5,7 @@
  */
 package Excel;
 
-import facturacion.clientes.ClientesTango;
+import facturacion.clientes.Clientes;
 import interfaces.Transaccionable;
 import interfacesPrograma.Busquedas;
 import java.io.FileNotFoundException;

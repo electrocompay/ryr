@@ -32,7 +32,7 @@ import objetos.Conecciones;
  *
  * @author Administrador
  */
-public class ClientesTango implements Busquedas,Facturar,Adeudable{
+public class Clientes implements Busquedas,Facturar,Adeudable{
         private String codigoCliente;
         private String razonSocial;
         private Double saldo;
@@ -60,6 +60,8 @@ public class ClientesTango implements Busquedas,Facturar,Adeudable{
         private Double cupoDeCredito;
         private Double saldoActual;
         private Integer tipoIva;
+        private String celular;
+        private String fax;
         private static Integer numeroRecibo;
         private String fantasia;
         private static ConcurrentHashMap listadoClientes=new ConcurrentHashMap();
@@ -69,6 +71,23 @@ public class ClientesTango implements Busquedas,Facturar,Adeudable{
         private static int signal=0;
         private String responsable;
 
+    public String getCelular() {
+        return celular;
+    }
+
+    public void setCelular(String celular) {
+        this.celular = celular;
+    }
+
+    public String getFax() {
+        return fax;
+    }
+
+    public void setFax(String fax) {
+        this.fax = fax;
+    }
+
+        
     public String getFantasia() {
         return fantasia;
     }
@@ -139,7 +158,7 @@ public class ClientesTango implements Busquedas,Facturar,Adeudable{
             }else{
              
                 tra=new Conecciones();
-                sql="select id,clientes.COD_CLIENT,clientes.fantasia,clientes.RAZON_SOCI,clientes.DOMICILIO,clientes.COND_VTA,(clientes.LISTADEPRECIO)as NRO_LISTA,(select coeficienteslistas.coeficiente from coeficienteslistas where coeficienteslistas.id=clientes.listadeprecio)as descuento,(clientes.NUMERODECUIT)as IDENTIFTRI,clientes.empresa,clientes.TELEFONO_1,clientes.coeficiente,(clientes.CUPODECREDITO) AS CUPO_CREDI,clientes.saldo,clientes.TIPO_IVA,clientes.localidad,clientes.responsable from clientes order by RAZON_SOCI";
+                sql="select id,clientes.fax,clientes.celular,clientes.COD_CLIENT,clientes.fantasia,clientes.RAZON_SOCI,clientes.DOMICILIO,clientes.COND_VTA,(clientes.LISTADEPRECIO)as NRO_LISTA,(select coeficienteslistas.coeficiente from coeficienteslistas where coeficienteslistas.id=clientes.listadeprecio)as descuento,(clientes.NUMERODECUIT)as IDENTIFTRI,clientes.empresa,clientes.TELEFONO_1,clientes.coeficiente,(clientes.CUPODECREDITO) AS CUPO_CREDI,clientes.saldo,clientes.TIPO_IVA,(select condicionesiva.descripcion from condicionesiva where id=clientes.tipo_iva)as tipo_iva2,(select localidades.localidad from localidades where id=clientes.localidad)as localidad1,clientes.responsable from clientes order by RAZON_SOCI";
             }
             //sql="select *,(select coeficienteslistas.coeficiente from coeficienteslistas where coeficienteslistas.id=clientes.NRO_LISTA)as coeficiente,(select sum(movimientosclientes.monto) from movimientosclientes where pagado=0 and movimientosclientes.numeroProveedor=clientes.id)as saldo from clientes";
             //System.out.println("CLIENTES "+sql);
@@ -159,7 +178,7 @@ public class ClientesTango implements Busquedas,Facturar,Adeudable{
                 
                 ResultSet rr=null;
             while(rs.next()){               
-                ClientesTango cli=new ClientesTango();
+                Clientes cli=new Clientes();
                 cli.setCodigoId(rs.getInt("id"));
                 cli.setCodigoCliente(rs.getString("id"));
                 cli.setRazonSocial(rs.getString("RAZON_SOCI"));
@@ -171,14 +190,16 @@ public class ClientesTango implements Busquedas,Facturar,Adeudable{
                 //cli.setDescuento(descuento);
                 cli.setNumeroDeCuit(rs.getString("IDENTIFTRI"));
                 cli.setEmpresa(rs.getString("empresa"));
-                cli.setCondicionIva(rs.getString("TIPO_IVA"));
+                cli.setCondicionIva(rs.getString("TIPO_IVA2"));
                 cli.setTipoIva(rs.getInt("tipo_iva"));
                 cli.setTelefono(rs.getString("TELEFONO_1"));
-                cli.setLocalidad(rs.getString("localidad"));
+                cli.setLocalidad(rs.getString("localidad1"));
                 cli.setCoeficienteListaDeprecios(rs.getDouble("coeficiente"));
                 cli.setCupoDeCredito(rs.getDouble("CUPO_CREDI"));
                 cli.setResponsable(rs.getString("responsable"));
                 cli.setFantasia(rs.getString("fantasia"));
+                cli.setCelular(rs.getString("celular"));
+                cli.setFax(rs.getString("fax"));
                // if(Inicio.usuario.getNivelDeAutorizacion()==1){
                 System.out.println("ACTUALIZACION :"+Inicio.actualizacionesClientes);
                 try{
@@ -225,7 +246,7 @@ public class ClientesTango implements Busquedas,Facturar,Adeudable{
             }
             rs.close();
         } catch (SQLException ex) {
-            Logger.getLogger(ClientesTango.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
         }
             if(signal==1){
             //if(Inicio.coneccionRemota)BackapearClientes();
@@ -236,8 +257,8 @@ public class ClientesTango implements Busquedas,Facturar,Adeudable{
             }
     }   
 
-    public ClientesTango(String codigoCliente) {
-        ClientesTango clientesTango=(ClientesTango)listadoClientes.get(codigoCliente);
+    public Clientes(String codigoCliente) {
+        Clientes clientesTango=(Clientes)listadoClientes.get(codigoCliente);
                     
                     this.codigoId=clientesTango.getCodigoId();
                     this.codigoCliente=clientesTango.getCodigoCliente();
@@ -263,7 +284,7 @@ public class ClientesTango implements Busquedas,Facturar,Adeudable{
             
     }
 
-    public ClientesTango() {
+    public Clientes() {
     }
     
 
@@ -458,7 +479,7 @@ public class ClientesTango implements Busquedas,Facturar,Adeudable{
     public void setSaldo(Double saldo) {
         this.saldo = saldo;
     }
-    public void agregarNuevo(ClientesTango cli) throws SQLException{
+    public void agregarNuevo(Clientes cli) throws SQLException{
         Transaccionable tra=new Conecciones();
         String sql="insert into clientes (COD_CLIENT,RAZON_SOCI,DOMICILIO,LOCALIDAD,TELEFONO_1,TIPO_IVA,IDENTIFTRI,COND_VTA,NRO_LISTA,empresa) values ('"+cli.getCodigoCliente()+"','"+cli.getRazonSocial()+"','"+cli.getDireccion()+"','SANTA FE','"+cli.getTelefono()+"',"+cli.getCondicionIva()+",'"+cli.getNumeroDeCuit()+"',1,1,'"+cli.getEmpresa()+"')";
         if(tra.guardarRegistro(sql)){
@@ -468,7 +489,7 @@ public class ClientesTango implements Busquedas,Facturar,Adeudable{
         }
         
     }
-    public void ajustarSaldo(ClientesTango cli,Double ajuste){
+    public void ajustarSaldo(Clientes cli,Double ajuste){
         numeroActualRecibo();
        numeroRecibo++;
         Transaccionable tra=new Conecciones();
@@ -493,15 +514,15 @@ public class ClientesTango implements Busquedas,Facturar,Adeudable{
         }
         //}
         ArrayList listado=new ArrayList();
-        Busquedas bus=new ClientesTango();
-        ClientesTango cli=new ClientesTango();
+        Busquedas bus=new Clientes();
+        Clientes cli=new Clientes();
         listado=bus.listar("");
         Iterator ilC=listado.listIterator();
         Transaccionable tt=new Conecciones();
         String sql="delete from clientes";
         tt.guardarRegistro(sql);
         while(ilC.hasNext()){
-            cli=(ClientesTango)ilC.next();
+            cli=(Clientes)ilC.next();
             
             sql="insert into clientes (id,cod_client,razon_soci,domicilio,telefono_1,cond_vta,listadeprecio,numerodecuit,empresa,coeficiente,cupodecredito,saldo,saldoactual,tipo_iva) values ("+cli.getCodigoId()+",'"+cli.getCodigoCliente()+"','"+cli.getRazonSocial()+"','"+cli.getDireccion()+"','"+cli.getTelefono()+"',"+cli.getCondicionDeVenta()+","+cli.getListaDePrecios()+",'"+cli.getNumeroDeCuit()+"','"+cli.getEmpresa()+"',"+cli.getCoeficienteListaDeprecios()+","+cli.getCupoDeCredito()+","+cli.getSaldo()+","+cli.getSaldoActual()+",1)";
             //System.out.println("CLIENTES TANGO - "+sql);
@@ -519,7 +540,7 @@ public class ClientesTango implements Busquedas,Facturar,Adeudable{
             }
             rs.close();
         } catch (SQLException ex) {
-            Logger.getLogger(ClientesTango.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     private void GuardarNumeroRecibo(){
@@ -530,13 +551,13 @@ public class ClientesTango implements Busquedas,Facturar,Adeudable{
     @Override
     public ArrayList listar(String cliente) {
         ArrayList ped=new ArrayList();
-            ClientesTango rs=null;
+            Clientes rs=null;
             Transaccionable tra=new Conecciones();
             cliente=cliente.toUpperCase();
-            Enumeration<ClientesTango> elementos=listadoPorNom.elements();
+            Enumeration<Clientes> elementos=listadoPorNom.elements();
             while(elementos.hasMoreElements()){
-                rs=(ClientesTango)elementos.nextElement();
-                ClientesTango cli=new ClientesTango();
+                rs=(Clientes)elementos.nextElement();
+                Clientes cli=new Clientes();
                  int pos=rs.getRazonSocial().indexOf(cliente);
                 if(pos==-1){
                     
@@ -553,13 +574,13 @@ public class ClientesTango implements Busquedas,Facturar,Adeudable{
         @Override
     public ArrayList listarPorContacto(String cliente) {
         ArrayList ped=new ArrayList();
-            ClientesTango rs=null;
+            Clientes rs=null;
             Transaccionable tra=new Conecciones();
             cliente=cliente.toUpperCase();
-            Enumeration<ClientesTango> elementos=listadoPorContacto.elements();
+            Enumeration<Clientes> elementos=listadoPorContacto.elements();
             while(elementos.hasMoreElements()){
-                rs=(ClientesTango)elementos.nextElement();
-                ClientesTango cli=new ClientesTango();
+                rs=(Clientes)elementos.nextElement();
+                Clientes cli=new Clientes();
                  int pos=rs.getRazonSocial().indexOf(cliente);
                 if(pos==-1){
                     
@@ -576,13 +597,13 @@ public class ClientesTango implements Busquedas,Facturar,Adeudable{
         @Override
     public ArrayList listarPorFantasia(String cliente) {
         ArrayList ped=new ArrayList();
-            ClientesTango rs=null;
+            Clientes rs=null;
             Transaccionable tra=new Conecciones();
             cliente=cliente.toUpperCase();
-            Enumeration<ClientesTango> elementos=listadoPorFantasia.elements();
+            Enumeration<Clientes> elementos=listadoPorFantasia.elements();
             while(elementos.hasMoreElements()){
-                rs=(ClientesTango)elementos.nextElement();
-                ClientesTango cli=new ClientesTango();
+                rs=(Clientes)elementos.nextElement();
+                Clientes cli=new Clientes();
                  int pos=rs.getRazonSocial().indexOf(cliente);
                 if(pos==-1){
                     
@@ -604,7 +625,7 @@ public class ClientesTango implements Busquedas,Facturar,Adeudable{
 
     @Override
     public void modificarDatosCliente(Object cliente) {
-        ClientesTango cli=(ClientesTango)cliente;
+        Clientes cli=(Clientes)cliente;
         Boolean resultado=false;
         Transaccionable tra=new Conecciones();
         String sql="insert into clientes (COD_CLIENT,RAZON_SOCI,DOMICILIO,LOCALIDAD,TELEFONO_1,TIPO_IVA,IDENTIFTRI,COND_VTA,NRO_LISTA,empresa) values ('"+cli.getCodigoCliente()+"','"+cli.getRazonSocial()+"','"+cli.getDireccion()+"','SANTA FE','"+cli.getTelefono()+"',"+cli.getCondicionIva()+",'"+cli.getNumeroDeCuit()+"',1,2,'"+cli.getEmpresa()+"')";
@@ -660,7 +681,7 @@ public class ClientesTango implements Busquedas,Facturar,Adeudable{
 
     @Override
     public Boolean guardarNuevoCliente(Object cliente) {
-        ClientesTango cli=(ClientesTango)cliente;
+        Clientes cli=(Clientes)cliente;
         Boolean resultado=false;
         Transaccionable tra=new Conecciones();
         String sql="insert into clientes (COD_CLIENT,RAZON_SOCI,DOMICILIO,TELEFONO_1,TIPO_IVA,NUMERODECUIT,COND_VTA,LISTADEPRECIO,empresa) values ('"+cli.getCodigoCliente()+"','"+cli.getRazonSocial()+"','"+cli.getDireccion()+"','"+cli.getTelefono()+"','"+cli.getTipoIva()+"','"+cli.getNumeroDeCuit()+"',1,"+cli.getListaDePrecios()+",'"+cli.getEmpresa()+"')";
@@ -672,7 +693,7 @@ public class ClientesTango implements Busquedas,Facturar,Adeudable{
 
     @Override
     public Boolean modificarDatosDelCliente(Object cliente) {
-        ClientesTango cli=(ClientesTango)cliente;
+        Clientes cli=(Clientes)cliente;
         Boolean resultado=false;
         Transaccionable tra=new Conecciones();
         
@@ -686,13 +707,13 @@ public class ClientesTango implements Busquedas,Facturar,Adeudable{
     @Override
     public ArrayList listarClientes(String nombre) {
              ArrayList ped=new ArrayList();
-            ClientesTango rs=null;
+            Clientes rs=null;
             Transaccionable tra=new Conecciones();
             nombre=nombre.toUpperCase();
-            Enumeration<ClientesTango> elementos=listadoPorNom.elements();
+            Enumeration<Clientes> elementos=listadoPorNom.elements();
             while(elementos.hasMoreElements()){
-                rs=(ClientesTango)elementos.nextElement();
-                ClientesTango cli=new ClientesTango();
+                rs=(Clientes)elementos.nextElement();
+                Clientes cli=new Clientes();
                  int pos=rs.getRazonSocial().indexOf(nombre);
                 if(pos==-1){
                     

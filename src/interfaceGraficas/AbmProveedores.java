@@ -7,7 +7,7 @@ package interfaceGraficas;
 import Conversores.Numeros;
 import Excel.InformesClientes;
 import Excel.LeerExcelProveedores;
-import facturacion.clientes.ClientesTango;
+import facturacion.clientes.Clientes;
 import interfacesPrograma.Busquedas;
 import interfacesPrograma.Facturar;
 import java.io.File;
@@ -72,7 +72,7 @@ public class AbmProveedores extends javax.swing.JInternalFrame {
         setTitle("Proveedores");
 
         MiModeloTablaArticulos miTabla=new MiModeloTablaArticulos();
-        Busquedas bus=new ClientesTango();
+        Busquedas bus=new Clientes();
         listadoClientes=bus.listar("");
         Iterator listC=listadoClientes.listIterator();
         miTabla.addColumn("COD PROVEEDOR");
@@ -83,9 +83,9 @@ public class AbmProveedores extends javax.swing.JInternalFrame {
         miTabla.addColumn("CONTACTO");
         miTabla.addColumn("CUIT");
         Object[] fila=new Object[7];
-        ClientesTango cliente=new ClientesTango();
+        Clientes cliente=new Clientes();
         while(listC.hasNext()){
-            cliente=(ClientesTango)listC.next();
+            cliente=(Clientes)listC.next();
             fila[0]=cliente.getCodigoId();
             fila[1]=cliente.getRazonSocial();
             fila[2]=cliente.getDireccion();
@@ -281,8 +281,8 @@ public class AbmProveedores extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int posicion=this.jTable1.getSelectedRow();
-        ClientesTango cliente=new ClientesTango();
-        cliente=(ClientesTango)listadoClientes.get(posicion);
+        Clientes cliente=new Clientes();
+        cliente=(Clientes)listadoClientes.get(posicion);
         cliente.setRazonSocial(String.valueOf(this.jTable1.getValueAt(posicion,1)));
         cliente.setDireccion(String.valueOf(this.jTable1.getValueAt(posicion, 2)));
         cliente.setTelefono(String.valueOf(this.jTable1.getValueAt(posicion,3)));
@@ -302,7 +302,7 @@ public class AbmProveedores extends javax.swing.JInternalFrame {
         }
         //cliente.setSaldo(Numeros.ConvertirStringADouble(String.valueOf(this.jTable1.getValueAt(posicion,5))));
         cliente.setListaDePrecios((Integer.parseInt(String.valueOf(this.jTable1.getValueAt(posicion,6)))));
-        Facturar fact=new ClientesTango();
+        Facturar fact=new Clientes();
         fact.modificarDatosDelCliente(cliente);
         //this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed

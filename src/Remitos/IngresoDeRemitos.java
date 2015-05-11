@@ -2,10 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package facturacion.pantallas;
+package Remitos;
 
+import Pedidos.IngresoDePedidos;
 import Conversores.Numeros;
-import facturacion.clientes.ClientesTango;
+import facturacion.clientes.Clientes;
+import facturacion.pantallas.NuevoCliente;
+import facturacion.pantallas.SeleccionDeClientes;
 
 import interfaceGraficas.Inicio;
 import interfacesPrograma.Facturar;
@@ -40,7 +43,7 @@ public class IngresoDeRemitos extends javax.swing.JInternalFrame {
     /**
      * Creates new form IngresoDePedidos
      */
-    public static ClientesTango cliT;
+    public static Clientes cliT;
     private ArrayList detalleDelPedido=new ArrayList();
     private Articulos arti;
     private static ArrayList listadoDeBusqueda=new ArrayList();
@@ -49,7 +52,7 @@ public class IngresoDeRemitos extends javax.swing.JInternalFrame {
     
     public IngresoDeRemitos() {
         //Articulos.CargarMap();
-        cliT=new ClientesTango("1");
+        cliT=new Clientes("1");
         //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
         initComponents();
@@ -562,7 +565,7 @@ public class IngresoDeRemitos extends javax.swing.JInternalFrame {
         this.jList1.removeAll();
         listadoDeBusqueda.clear();
         cargarLista(listadoDeBusqueda);
-        cliT=new ClientesTango("999999");
+        cliT=new Clientes("999999");
         this.jLabel6.setText(cliT.getRazonSocial());
         this.jTextField2.setText("");
         jTextField1.setText("");
@@ -740,7 +743,7 @@ public class IngresoDeRemitos extends javax.swing.JInternalFrame {
         this.jList1.removeAll();
         listadoDeBusqueda.clear();
         cargarLista(listadoDeBusqueda);
-        cliT=new ClientesTango("999999");
+        cliT=new Clientes("999999");
         this.jLabel6.setText(cliT.getRazonSocial());
         this.jTextField2.setText("");
         jTextField1.setText("");

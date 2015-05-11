@@ -9,7 +9,7 @@ import Compras.Proveedores;
 import Conversores.Numeros;
 import Impresiones.Impresora;
 import Sucursales.Cajas;
-import facturacion.clientes.ClientesTango;
+import facturacion.clientes.Clientes;
 import interfaces.Adeudable;
 import interfaces.Personalizable;
 import interfacesPrograma.Busquedas;
@@ -376,8 +376,8 @@ public class CajaAbm extends javax.swing.JInternalFrame {
                 this.jTextField1.setText(String.valueOf(fact.getSaldo()));
                 break;
             case 13:
-                ClientesTango cliente=new ClientesTango();
-                cliente=(ClientesTango)listadoP.get(posicion);
+                Clientes cliente=new Clientes();
+                cliente=(Clientes)listadoP.get(posicion);
                 this.jTextField1.setText(String.valueOf(cliente.getSaldo()));
                 break;
             default:
@@ -436,9 +436,9 @@ public class CajaAbm extends javax.swing.JInternalFrame {
                 //ModificarLabels();
            case 13:
                Comprobantes comprobantes=new Comprobantes();
-               Adeudable adeu=new ClientesTango();
-               ClientesTango cliente=new ClientesTango();
-               cliente=(ClientesTango)listadoP.get(this.jComboBox2.getSelectedIndex());
+               Adeudable adeu=new Clientes();
+               Clientes cliente=new Clientes();
+               cliente=(Clientes)listadoP.get(this.jComboBox2.getSelectedIndex());
                comprobantes.setCliente(cliente);
                comprobantes.setMontoTotal(Double.parseDouble(this.jTextField1.getText()));
                comprobantes.setFechaEmision(Date.valueOf(Inicio.fechaDia));
@@ -512,14 +512,14 @@ public class CajaAbm extends javax.swing.JInternalFrame {
         this.jTextField2.setVisible(false);
     }
     private void ListarClientes(){
-      ClientesTango fact=new ClientesTango();
+      Clientes fact=new Clientes();
         listadoP=new ArrayList();
         //Adeudable ade=new FacturaProveedor();
-        Busquedas ade=new ClientesTango();
+        Busquedas ade=new Clientes();
         listadoP=ade.listar("");
         Iterator ilP=listadoP.listIterator();
         while(ilP.hasNext()){
-            fact=(ClientesTango)ilP.next();
+            fact=(Clientes)ilP.next();
             this.jComboBox2.addItem(fact.getRazonSocial());
         }
         this.jLabel2.setText("Seleccione Proveedor");

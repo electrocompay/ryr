@@ -4,15 +4,18 @@
  */
 package facturacion.pantallas;
 
-import facturacion.clientes.ClientesTango;
+import Cotizaciones.IngresoDeCotizacion;
+import facturacion.clientes.Clientes;
 import facturacion.clientes.ListasDePrecios;
 import interfaceGraficas.AbmClientes;
 import interfaceGraficas.Inicio;
 import interfaces.Personalizable;
+import interfacesPrograma.Busquedas;
 import interfacesPrograma.Facturar;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JInternalFrame;
+import objetos.CondicionesIva;
 
 /**
  *
@@ -21,8 +24,11 @@ import javax.swing.JInternalFrame;
 public class NuevoCliente extends javax.swing.JInternalFrame {
     private JInternalFrame clientes;
     private int modificacion;
-    private ClientesTango cliTa=new ClientesTango();
+    private Clientes cliTa=new Clientes();
     private ArrayList listadoL=new ArrayList();
+    private ArrayList listadoIva=new ArrayList();
+    private ArrayList listadoLoc=new ArrayList();
+    
     /**
      * Creates new form NuevoCliente
      */
@@ -31,7 +37,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
     }
     public NuevoCliente(Object client) {
         initComponents();
-        cliTa=(ClientesTango)client;
+        cliTa=(Clientes)client;
         this.jTextField1.setText(cliTa.getRazonSocial());
         this.jTextField2.setText(cliTa.getDireccion());
         switch (cliTa.getTipoIva()){
@@ -90,7 +96,14 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Cond Iva:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Consumidor Final", "Responsable Inscripto", "Exento" }));
+        CondicionesIva condicion=new CondicionesIva();
+        Busquedas bus=new CondicionesIva();
+        listadoIva=bus.listar("");
+        Iterator iIva=listadoIva.listIterator();
+        while(iIva.hasNext()){
+            condicion=(CondicionesIva)iIva.next();
+            jComboBox1.addItem(condicion.getDescripcion());
+        }
 
         jLabel4.setText("N° de CUIT:");
 
@@ -193,7 +206,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       ClientesTango cli=new ClientesTango();
+       Clientes cli=new Clientes();
        //cli.setCodigoCliente(title);
        if(modificacion==1){
            cli=cliTa;
@@ -232,7 +245,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
        cli.setCondicionIva(condicion);
        cli.setNumeroDeCuit(this.jTextField3.getText());
        cli.setTelefono(this.jTextField4.getText());
-       Facturar fact=new ClientesTango();
+       Facturar fact=new Clientes();
        if(modificacion==1){
           
         fact.modificarDatosDelCliente(cli); 
