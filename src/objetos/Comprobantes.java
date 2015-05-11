@@ -41,7 +41,17 @@ public class Comprobantes implements Facturar{
     private Integer pagado;
     private static Integer numeroComprobante;
     private static Integer idComp;
+    private Date vencimiento;
 
+    public Date getVencimiento() {
+        return vencimiento;
+    }
+
+    public void setVencimiento(Date vencimiento) {
+        this.vencimiento = vencimiento;
+    }
+    
+    
     public Integer getPagado() {
         return pagado;
     }

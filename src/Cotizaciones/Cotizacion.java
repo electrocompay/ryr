@@ -141,7 +141,7 @@ public class Cotizacion implements Cotizable{
     }
 
     @Override
-    public void nuevaCotizacion(Object coti) {
+    public Integer nuevaCotizacion(Object coti) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

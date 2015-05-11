@@ -22,7 +22,7 @@ public interface Cotizable {
     public ArrayList listarPorVencimiento(Date fechaDesde,Date fechaHasta);
     public ArrayList listarPorArticulo(Integer idArticulo,Integer idCliente);
     public ArrayList listarPorPedido(Integer idPedido,Integer idCliente);
-    public void nuevaCotizacion(Object coti);
+    public Integer nuevaCotizacion(Object coti);
     public Object modificarCotizacion(Object coti);
     public void eliminarCotizacion(Integer id);
     
