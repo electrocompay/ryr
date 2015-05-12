@@ -743,7 +743,7 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
             detalle.setIdCotizacion(nuevaCotizacion);
             detalle.setCantidad(articulo.getCantidad());
             detalle.setPrecioUnitario(articulo.getPrecioUnitarioNeto());
-            det.nuevaCotizacion(detalle);
+            //det.nuevaCotizacion(detalle);
             
         }
         // A PARTIR DE ACA DEBO CARGAR LA IMPRESION LO ANTERIOR ES PARA GUARDAR EL MOVIMIENTO
@@ -768,10 +768,13 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
         comprobante.setMontoTotal(montoTotal);
         int noFacturar=0;
         
-        
+        pdfsJavaGenerador pdf=new pdfsJavaGenerador();
+        pdf.setDoc(comprobante1);
+        pdf.run();
+        /*
         Facturar fat=new Comprobantes();
         fat.guardar(comprobante);
-        
+        */
          // ACA DEVO LIMPIAR TODOS LOS CAMPOS Y VARIABLES DE LA PANTALLA
          
         //comp.setTipoComprobante(comprobanteTipo);

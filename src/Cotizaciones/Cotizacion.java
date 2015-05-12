@@ -5,8 +5,14 @@
  */
 package Cotizaciones;
 
+import interfaces.Transaccionable;
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import objetos.Conecciones;
 
 /**
  *
@@ -142,7 +148,23 @@ public class Cotizacion implements Cotizable{
 
     @Override
     public Integer nuevaCotizacion(Object coti) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Cotizacion cotizacion=new Cotizacion();
+        cotizacion=(Cotizacion)coti;
+        String sql="insert into cotizaciones (idcliente,fecha,vencimiento,total,idusuario) values ("+cotizacion.getIdCliente()+",'"+cotizacion.getFecha()+"','"+cotizacion.getVencimiento()+"',"+cotizacion.getTotal()+","+cotizacion.getIdUsuario()+")";
+        Transaccionable tra=new Conecciones();
+        tra.guardarRegistro(sql);
+        int ultimo=0;
+        sql="select LAST_INSERT_ID()";
+        
+        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        try {
+            while(rs.next()){
+                ultimo=rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Cotizacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ultimo;
     }
 
     @Override
