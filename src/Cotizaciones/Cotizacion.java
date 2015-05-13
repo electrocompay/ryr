@@ -5,13 +5,16 @@
  */
 package Cotizaciones;
 
+import interfaceGraficas.Inicio;
 import interfaces.Transaccionable;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 import objetos.Conecciones;
 
 /**
@@ -103,7 +106,29 @@ public class Cotizacion implements Cotizable{
 
     @Override
     public Object cargarEncabezado(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        String sql="select * from cotizaciones where id="+id;
+        Transaccionable tra=new Conecciones();
+        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        Cotizacion cotizacion=new Cotizacion();
+        try {
+            while(rs.next()){
+                
+                cotizacion.setId(rs.getInt("id"));
+                cotizacion.setIdCliente(rs.getInt("idcliente"));
+                cotizacion.setIdPedido(rs.getInt("idpedido"));
+                cotizacion.setArchivo(rs.getString("archivo"));
+                cotizacion.setEstado(rs.getInt("estado"));
+                cotizacion.setFecha(rs.getDate("fecha"));
+                cotizacion.setIdUsuario(rs.getInt("idusuario"));
+                cotizacion.setTotal(rs.getDouble("total"));
+                cotizacion.setVencimiento(rs.getDate("vencimiento"));
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Cotizacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return cotizacion;
     }
 
     @Override
@@ -113,17 +138,83 @@ public class Cotizacion implements Cotizable{
 
     @Override
     public ArrayList listar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList listado=new ArrayList();
+        String sql="select * from cotizaciones order by id desc";
+        Transaccionable tra=new Conecciones();
+        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        Cotizacion cotizacion;
+        try {
+            while(rs.next()){
+                cotizacion=new Cotizacion();
+                cotizacion.setId(rs.getInt("id"));
+                cotizacion.setIdCliente(rs.getInt("idcliente"));
+                cotizacion.setIdPedido(rs.getInt("idpedido"));
+                cotizacion.setArchivo(rs.getString("archivo"));
+                cotizacion.setEstado(rs.getInt("estado"));
+                cotizacion.setFecha(rs.getDate("fecha"));
+                cotizacion.setIdUsuario(rs.getInt("idusuario"));
+                cotizacion.setTotal(rs.getDouble("total"));
+                cotizacion.setVencimiento(rs.getDate("vencimiento"));
+                listado.add(cotizacion);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Cotizacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listado;
     }
 
     @Override
     public ArrayList listarPorCliente(Integer idCliente) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList listado=new ArrayList();
+        String sql="select * from cotizaciones where idcliente="+idCliente+" and estado =0 order by id desc";
+        Transaccionable tra=new Conecciones();
+        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        Cotizacion cotizacion;
+        try {
+            while(rs.next()){
+                cotizacion=new Cotizacion();
+                cotizacion.setId(rs.getInt("id"));
+                cotizacion.setIdCliente(rs.getInt("idcliente"));
+                cotizacion.setIdPedido(rs.getInt("idpedido"));
+                cotizacion.setArchivo(rs.getString("archivo"));
+                cotizacion.setEstado(rs.getInt("estado"));
+                cotizacion.setFecha(rs.getDate("fecha"));
+                cotizacion.setIdUsuario(rs.getInt("idusuario"));
+                cotizacion.setTotal(rs.getDouble("total"));
+                cotizacion.setVencimiento(rs.getDate("vencimiento"));
+                listado.add(cotizacion);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Cotizacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listado;
     }
 
     @Override
     public ArrayList listarPorEstado(Integer idCliente, int estado) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       ArrayList listado=new ArrayList();
+        String sql="select * from cotizaciones where idcliente="+idCliente+" and estado="+estado+" and vencimiento > '"+Inicio.fechaDia+"' order by id desc";
+        Transaccionable tra=new Conecciones();
+        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        Cotizacion cotizacion;
+        try {
+            while(rs.next()){
+                cotizacion=new Cotizacion();
+                cotizacion.setId(rs.getInt("id"));
+                cotizacion.setIdCliente(rs.getInt("idcliente"));
+                cotizacion.setIdPedido(rs.getInt("idpedido"));
+                cotizacion.setArchivo(rs.getString("archivo"));
+                cotizacion.setEstado(rs.getInt("estado"));
+                cotizacion.setFecha(rs.getDate("fecha"));
+                cotizacion.setIdUsuario(rs.getInt("idusuario"));
+                cotizacion.setTotal(rs.getDouble("total"));
+                cotizacion.setVencimiento(rs.getDate("vencimiento"));
+                listado.add(cotizacion);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Cotizacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listado;
     }
 
     @Override
@@ -174,6 +265,44 @@ public class Cotizacion implements Cotizable{
 
     @Override
     public void eliminarCotizacion(Integer id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public DefaultTableModel mostrarListado(ArrayList listadoC) {
+        MiModeloTablaArticulos listado=new MiModeloTablaArticulos();
+        Cotizacion cotizacion;
+        Iterator iL=listadoC.listIterator();
+        listado.addColumn("Numero");
+        listado.addColumn("Fecha");
+        listado.addColumn("Vencimiento");
+        listado.addColumn("Monto");
+        listado.addColumn("Estado");
+        Object[] fila=new Object[5];
+        while(iL.hasNext()){
+            cotizacion=(Cotizacion)iL.next();
+            fila[0]=String.valueOf(cotizacion.getId());
+            fila[1]=String.valueOf(cotizacion.getFecha());
+            fila[2]=String.valueOf(cotizacion.getVencimiento());
+            fila[3]=String.valueOf(cotizacion.getTotal());
+            if(cotizacion.getEstado()==0){
+                fila[4]="Pendiente";
+            }else{
+                fila[4]="Finalizada";
+            }
+            listado.addRow(fila);
+        }
+        
+        return listado;
+    }
+
+    @Override
+    public void transformarEnPedido(Object coti, ArrayList detalle) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void transformarEnFactura(Object coti, ArrayList detalle) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

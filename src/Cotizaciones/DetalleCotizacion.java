@@ -5,8 +5,15 @@
  */
 package Cotizaciones;
 
+import interfaces.Transaccionable;
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import objetos.Conecciones;
 
 /**
  *
@@ -20,7 +27,7 @@ public class DetalleCotizacion implements Cotizable{
     private Integer idCliente;
     private Double cantidad;
     private Double precioUnitario;
-    private Double descuento;
+    private int  descuento;
     private String observaciones;
 
     public Integer getId() {
@@ -79,11 +86,11 @@ public class DetalleCotizacion implements Cotizable{
         this.precioUnitario = precioUnitario;
     }
 
-    public Double getDescuento() {
+    public int getDescuento() {
         return descuento;
     }
 
-    public void setDescuento(Double descuento) {
+    public void setDescuento(int descuento) {
         this.descuento = descuento;
     }
 
@@ -102,7 +109,28 @@ public class DetalleCotizacion implements Cotizable{
 
     @Override
     public ArrayList cargarDetalle(Integer idCotizacion) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList detalle=new ArrayList();
+        String sql="select * from detallecotizaciones where idcotizacion="+idCotizacion+" order by id";
+        Transaccionable tra=new Conecciones();
+        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        DetalleCotizacion cotizacionD;
+        try {
+            while(rs.next()){
+                cotizacionD=new DetalleCotizacion();
+                cotizacionD.setId(rs.getInt("id"));
+                cotizacionD.setIdArticulo(rs.getInt("idArticulo"));
+                cotizacionD.setDescripcionArticulo(rs.getString("descripcionarticulo"));
+                cotizacionD.setCantidad(rs.getDouble("cantidad"));
+                cotizacionD.setIdCliente(rs.getInt("idcliente"));
+                cotizacionD.setIdCotizacion(rs.getInt("idcotizacion"));
+                cotizacionD.setPrecioUnitario(rs.getDouble("preciounitario"));
+                detalle.add(cotizacionD);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DetalleCotizacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return detalle;
     }
 
     @Override
@@ -142,7 +170,14 @@ public class DetalleCotizacion implements Cotizable{
 
     @Override
     public Integer nuevaCotizacion(Object coti) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       DetalleCotizacion detalle=new DetalleCotizacion();
+       detalle=(DetalleCotizacion)coti;
+       int dev=0;
+       String sql="insert into detallecotizaciones (idcotizacion,idarticulo,descripcionarticulo,idcliente,cantidad,preciounitario,descuento,observaciones) values ("+detalle.getIdCotizacion()+","+detalle.getIdArticulo()+",'"+detalle.getDescripcionArticulo()+"',"+detalle.getIdCliente()+","+detalle.getCantidad()+","+detalle.getPrecioUnitario()+","+detalle.getDescuento()+",'xx')";
+       Transaccionable tra=new Conecciones();
+       tra.guardarRegistro(sql);
+       
+       return dev;
     }
 
     @Override
@@ -152,6 +187,21 @@ public class DetalleCotizacion implements Cotizable{
 
     @Override
     public void eliminarCotizacion(Integer id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public DefaultTableModel mostrarListado(ArrayList listadoC) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void transformarEnPedido(Object coti, ArrayList detalle) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void transformarEnFactura(Object coti, ArrayList detalle) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

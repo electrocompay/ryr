@@ -12,12 +12,14 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
+import facturacion.clientes.Clientes;
 import interfaceGraficas.Inicio;
 import java.io.File;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -30,7 +32,13 @@ import javax.swing.JOptionPane;
  */
 public class pdfsJavaGenerador {
     private Cotizacion doc=new Cotizacion();
+    private Clientes cliente=new Clientes();
 
+    public void setCliente(Clientes cliente) {
+        this.cliente = cliente;
+    }
+    
+    
     public void setDoc(Cotizacion doc) {
         this.doc = doc;
     }
@@ -41,6 +49,7 @@ public class pdfsJavaGenerador {
         Document documento=new Document();
         int i=1;
         String arch=doc.getIdCliente()+"_"+doc.getId()+"_Cotizacion.pdf";
+        
         
         File fich=new File(arch);
         while(fich.exists()){
@@ -53,30 +62,42 @@ public class pdfsJavaGenerador {
             DetalleCotizacion saldo=new DetalleCotizacion();
             Cotizable cotizable=new DetalleCotizacion();
             ArrayList listado=new ArrayList();
-            //listado=cotizable.cargarDetalle(doc.getId());
+            listado=cotizable.cargarDetalle(doc.getId());
             fichero=new FileOutputStream(arch);
             PdfWriter writer=PdfWriter.getInstance(documento, fichero);
             documento.open();
             PdfContentByte cb=writer.getDirectContent();
             BaseFont bf = BaseFont.createFont(BaseFont.COURIER_BOLD,BaseFont.CP1252,BaseFont.NOT_EMBEDDED);
-            cb.setFontAndSize(bf,14);
+            cb.setFontAndSize(bf,16);
             cb.beginText();
-            cb.setTextMatrix(120,750);
-            cb.showText("COTIZACION N° : doc.getid");
+            cb.setTextMatrix(100,750);
+            cb.showText("eR&Re");
+            
+            cb.setFontAndSize(bf,10);
+            cb.setTextMatrix(100, 740);
+            cb.showText("PAPELES");
+            bf = BaseFont.createFont(BaseFont.COURIER,BaseFont.CP1252,BaseFont.NOT_EMBEDDED);
+            cb.setFontAndSize(bf,8);
+            cb.setTextMatrix(40,720);
+            cb.showText("de Rivadeneira Enrique y Rivadeneira Jorge S.H.");
+            bf = BaseFont.createFont(BaseFont.COURIER_BOLD,BaseFont.CP1252,BaseFont.NOT_EMBEDDED);
+            cb.setFontAndSize(bf,14);
+            cb.setTextMatrix(300,750);
+            cb.showText("COTIZACION N°: "+doc.getId());
             bf = BaseFont.createFont(BaseFont.COURIER,BaseFont.CP1252,BaseFont.NOT_EMBEDDED);
             cb.setFontAndSize(bf,10);
             cb.setTextMatrix(40,690);
-            cb.showText("Razon Social : doc.getrazonsocial");
+            cb.showText("Razon Social :"+cliente.getRazonSocial());
             cb.setTextMatrix(410,690);
-            cb.showText("Fecha "+Inicio.fechaDia);
+            cb.showText("Fecha "+Numeros.ConvertirFecha(doc.getFecha()));
             cb.setTextMatrix(40,670);
-            cb.showText("Direccion : doc.domiciocliente");
+            cb.showText("Direccion: "+cliente.getDireccion());
             cb.setTextMatrix(380,670);
-            cb.showText("Mail : mailcliente");
+            cb.showText("Mail :"+cliente.getCelular());
             cb.setTextMatrix(40,650);
-            cb.showText("Telefono : telefonocliente");
+            cb.showText("Telefono: "+cliente.getTelefono());
             cb.setTextMatrix(380,650);
-            cb.showText("Cuit : cuitcliente");
+            cb.showText("Cuit: "+cliente.getNumeroDeCuit());
             
             int renglon=610;
             String vencimiento;
@@ -87,12 +108,32 @@ public class pdfsJavaGenerador {
             String totalFinal;
             Double tot=0.00;
             //aca empieza la iteracion
-            Iterator itl=listado.listIterator();
             
+            //encabezados
+            bf = BaseFont.createFont(BaseFont.COURIER_BOLD,BaseFont.CP1252,BaseFont.NOT_EMBEDDED);
+            cb.setFontAndSize(bf,10);
+            cb.setTextMatrix(40,renglon);
+                cb.showText("COD");
+                cb.setTextMatrix(70,renglon);
+                cb.showText("DESCRIPCION");
+                cb.setTextMatrix(330,renglon);
+                cb.showText("P. UNIT.");
+                cb.setTextMatrix(380,renglon);
+                cb.showText("CANT.");
+                cb.setTextMatrix(440,renglon);
+                //tot=saldo.getCantidad() * saldo.getPrecioUnitario();
+                cb.showText("TOTAL");
+                renglon=renglon - 20;
+            
+            //fin encabezados
+            bf = BaseFont.createFont(BaseFont.COURIER,BaseFont.CP1252,BaseFont.NOT_EMBEDDED);
+            cb.setFontAndSize(bf,10);
+            Iterator itl=listado.listIterator();
+            vencimiento="Esta cotización tendrá vigencia 30 días ";
             while(itl.hasNext()){
                 saldo=(DetalleCotizacion)itl.next();
                 //vencimiento=saldo.getVencimientoString();
-                vencimiento="30 dias";
+                
                 descripcion="Numero Resumen de cta ";
                 monto=String.valueOf(saldo.getPrecioUnitario());
                 recargo="10%";
@@ -101,26 +142,27 @@ public class pdfsJavaGenerador {
                 //tot=tot + saldo.getTotal();
                 //total=String.valueOf(saldo.getTotal());
                 cb.setTextMatrix(40,renglon);
-                cb.showText(vencimiento);
-                cb.setTextMatrix(110,renglon);
-                cb.showText(descripcion);
-                cb.setTextMatrix(280,renglon);
+                cb.showText(String.valueOf(saldo.getIdArticulo()));
+                cb.setTextMatrix(70,renglon);
+                cb.showText(saldo.getDescripcionArticulo());
+                cb.setTextMatrix(330,renglon);
                 cb.showText(monto);
-                cb.setTextMatrix(340,renglon);
-                cb.showText(recargo);
-                cb.setTextMatrix(420,renglon);
-                cb.showText(total);
+                cb.setTextMatrix(380,renglon);
+                cb.showText(String.valueOf(saldo.getCantidad()));
+                cb.setTextMatrix(440,renglon);
+                tot=saldo.getCantidad() * saldo.getPrecioUnitario();
+                cb.showText(String.valueOf(tot));
                 renglon=renglon - 20;
                 
             }
-            totalFinal=String.valueOf(tot);
+            totalFinal=String.valueOf(doc.getTotal());
             cb.setTextMatrix(380,renglon);
             cb.showText("TOTAL "+totalFinal);
             
             //pie de documento
             renglon=renglon - 60;
             cb.setTextMatrix(40,renglon);
-            cb.showText("Generado");
+            cb.showText(vencimiento);
             cb.endText();
             documento.close();
             
@@ -130,6 +172,7 @@ public class pdfsJavaGenerador {
                 Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+arch);
             }
             int confirmacion=0;
+            /*
             if(doc.getArchivo().isEmpty()){
                 
             }else{
@@ -139,6 +182,7 @@ public class pdfsJavaGenerador {
                 
             }
             }
+                    */
             System.out.println("eligio "+confirmacion);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(pdfsJavaGenerador.class.getName()).log(Level.SEVERE, null, ex);

@@ -6,6 +6,7 @@ package objetos;
 
 import com.mysql.jdbc.CommunicationsException;
 import interfaceGraficas.Inicio;
+import interfaces.Comparables;
 import interfaces.Editables;
 import interfaces.Transaccionable;
 import interfacesPrograma.Facturar;
@@ -25,7 +26,7 @@ import javax.swing.JOptionPane;
  *
  * @author mauro
  */
-public class Articulos implements Facturar,Editables{
+public class Articulos implements Facturar,Editables,Comparables{
     private String codigoDeBarra;
     private String codigoAsignado;
     private Integer rubro;
@@ -59,6 +60,17 @@ public class Articulos implements Facturar,Editables{
     private static ArrayList listCombo=new ArrayList();
     private Integer idDeposito;
     private Integer rubroId;
+    private int descuento;
+
+    public int getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(int descuento) {
+        this.descuento = descuento;
+    }
+    
+    
 
     public Integer getRubroId() {
         return rubroId;
@@ -987,6 +999,40 @@ public class Articulos implements Facturar,Editables{
         }
         
         return listado;
+    }
+
+    
+
+    @Override
+    public Double comparaConCotizaciones(Integer idCliente, Integer idArticulo) {
+        Double precio=0.00;
+        String sql="select detallecotizaciones.preciounitario from detallecotizaciones where idcliente="+idCliente+" and idarticulo="+idArticulo+" and descuento=1 order by id desc limit 0,1";
+        Transaccionable tra=new Conecciones();
+        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        try {
+            while(rs.next()){
+                precio=rs.getDouble("preciounitario");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return precio;
+    }
+
+    @Override
+    public Double comparaConPedidos(Integer idCliente, Integer idArticulo) {
+        Double precio=0.00;
+        String sql="select detallepedidos.preciounitario from detallepedidos where idcliente="+idCliente+" and idarticulo="+idArticulo+" and descuento=1 order by id desc limit 0,1";
+        Transaccionable tra=new Conecciones();
+        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        try {
+            while(rs.next()){
+                precio=rs.getDouble("preciounitario");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return precio;
     }
     
     

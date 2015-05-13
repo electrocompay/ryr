@@ -10,6 +10,7 @@ import facturacion.pantallas.NuevoCliente;
 import facturacion.pantallas.SeleccionDeClientes;
 
 import interfaceGraficas.Inicio;
+import interfaces.Comparables;
 import interfacesPrograma.Facturar;
 import java.awt.event.KeyEvent;
 import java.io.FileWriter;
@@ -60,6 +61,7 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
         this.jTextField4.setVisible(false);
         this.jCheckBox1.setVisible(false);
         this.jCheckBox2.setEnabled(false);
+        this.jCheckBox2.setVisible(false);
         this.jTextField1.requestFocus();
         //this.jPanel2.requestFocus();
         
@@ -72,11 +74,14 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
 //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
         initComponents();
+        this.jButton3.setVisible(false);
+        this.jButton5.setVisible(false);
         this.jLabel6.setText(cliT.getRazonSocial());
         this.jLabel7.setVisible(false);
         this.jTextField4.setVisible(false);
         this.jCheckBox1.setVisible(false);
         this.jCheckBox2.setEnabled(false);
+        this.jCheckBox2.setVisible(false);
         this.jTextField1.requestFocus();
         
     }
@@ -160,7 +165,7 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 153));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/printer32.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/pdf.png"))); // NOI18N
         jButton1.setText("IMPRIMIR");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -208,7 +213,11 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGap(131, 131, 131)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(87, 87, 87)
@@ -217,18 +226,17 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 773, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 12, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(131, 131, 131)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButton7, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -330,12 +338,6 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -359,7 +361,13 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
                                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton4)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -638,7 +646,7 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
     private void jTextField2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyPressed
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
             Double cantt=Double.parseDouble(this.jTextField2.getText());
-            if(cantt < 1000){
+            
             if(arti.getModificaPrecio()){
                 this.jTextField4.requestFocus();
             }else{
@@ -646,15 +654,30 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
                  this.jTextField4.requestFocus();   
                 }else{
                     Articulos articul=new Articulos();
+                    Comparables comparar=new Articulos();
+                    
                     articul.setCantidad(cantt);
                     articul.setCodigoAsignado(arti.getCodigoAsignado());
-                    
+                    articul.setDescuento(0);
                     articul.setCodigoDeBarra(arti.getCodigoDeBarra());
                     articul.setDescripcionArticulo(arti.getDescripcionArticulo());
                     articul.setNumeroId(arti.getNumeroId());
+                    Double precio=comparar.comparaConCotizaciones(cliT.getCodigoId(),arti.getNumeroId());
+                    Double precio2=comparar.comparaConPedidos(cliT.getCodigoId(),arti.getNumeroId());
+                    articul.setPrecioUnitarioNeto(arti.getPrecioUnitarioNeto());
+                    
+                    if(precio > 0){
+                        String cartel="confirma el precio unitario ultimo cotizado ???? :"+precio;
+                        if(JOptionPane.showConfirmDialog(this, cartel)==0)articul.setPrecioUnitarioNeto(precio);
+                    }
+                    
+                    if(precio2 > 0){
+                            String cartel="confirma el precio unitario ultimo en pedido ???? :"+precio2;
+                        if(JOptionPane.showConfirmDialog(this, cartel)==0)articul.setPrecioUnitarioNeto(precio2);
+                    }
                     articul.setPrecioDeCosto(arti.getPrecioDeCosto());
                     articul.setPrecioUnitario(arti.getPrecioUnitarioNeto());
-                    articul.setPrecioUnitarioNeto(arti.getPrecioUnitarioNeto());
+                    
                     articul.setIdCombo(arti.getIdCombo());
                     articul.setCombo(arti.getCombo());
             detalleDelPedido.add(articul);
@@ -671,9 +694,7 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
             this.jTextField1.requestFocus();
                 }
                 }
-            }else{
-                JOptionPane.showMessageDialog(this,"LA CANTIDAD INGRESADA ES EXCESIVA, POR FAVOR VERIFÍQUELA");
-            }
+            
         }
     }//GEN-LAST:event_jTextField2KeyPressed
 
@@ -732,6 +753,7 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
         Cotizable det=new DetalleCotizacion();
         DetalleCotizacion detalle;
         Integer nuevaCotizacion=cCoti.nuevaCotizacion(comprobante1);
+        comprobante1.setId(nuevaCotizacion);
         Iterator iArt=detalleDelPedido.listIterator();
         Articulos articulo=new Articulos();
         while(iArt.hasNext()){
@@ -743,7 +765,8 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
             detalle.setIdCotizacion(nuevaCotizacion);
             detalle.setCantidad(articulo.getCantidad());
             detalle.setPrecioUnitario(articulo.getPrecioUnitarioNeto());
-            //det.nuevaCotizacion(detalle);
+            detalle.setDescuento(articulo.getDescuento());
+            det.nuevaCotizacion(detalle);
             
         }
         // A PARTIR DE ACA DEBO CARGAR LA IMPRESION LO ANTERIOR ES PARA GUARDAR EL MOVIMIENTO
@@ -770,6 +793,7 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
         
         pdfsJavaGenerador pdf=new pdfsJavaGenerador();
         pdf.setDoc(comprobante1);
+        pdf.setCliente(cliT);
         pdf.run();
         /*
         Facturar fat=new Comprobantes();
@@ -781,16 +805,7 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
         //comp.setMontoTotal(montoTotal);
         detalleDelPedido.clear();
         agregarRenglonTabla();
-        this.jCheckBox2.setSelected(true);
-        this.jCheckBox2.setEnabled(false);
-        this.jList1.removeAll();
-        listadoDeBusqueda.clear();
-        cargarLista(listadoDeBusqueda);
-        cliT=new Clientes("999999");
-        this.jLabel6.setText(cliT.getRazonSocial());
-        this.jTextField2.setText("");
-        jTextField1.setText("");
-        jTextField1.requestFocus();
+        this.dispose();
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -905,6 +920,7 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
         pedidos=(Articulos)detalleDelPedido.get(posicion);
         Double precio=Double.parseDouble(JOptionPane.showInputDialog("Ingrese el nuevo valor unitario s/iva",pedidos.getPrecioUnitarioNeto()));
         pedidos.setPrecioUnitarioNeto(precio);
+        pedidos.setDescuento(1);
         //detalleDelPedido.clear();
         agregarRenglonTabla();
         System.out.println("total "+montoTotal);
@@ -918,6 +934,7 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
         int cod=0;
         String descripcion=JOptionPane.showInputDialog("Ingrese aclaracion del articulo ","");
         Articulos pedidos=new Articulos();
+        pedidos.setNumeroId(0);
         pedidos.setCantidad(0.00);
         pedidos.setPrecioUnitarioNeto(0.00);
         pedidos.setPrecioDeCosto(0.00);
@@ -951,8 +968,10 @@ private void agregarRenglonTabla(){
         busC.addColumn("CODIGO");
         busC.addColumn("DESCRIPCION");
         busC.addColumn("CANTIDAD");
-        busC.addColumn("PRECIO UNITARIO");
-        Object[] fila=new Object[4];
+        busC.addColumn("PRECIO TOTAL");
+        busC.addColumn("PRECIO UNITARIO S/IVA");
+        busC.addColumn("COSTO");
+        Object[] fila=new Object[6];
         Iterator irP=detalleDelPedido.listIterator();
         while(irP.hasNext()){
             pedidos=new Articulos();
@@ -974,6 +993,8 @@ private void agregarRenglonTabla(){
             String val=String.valueOf(valor);
             montoTotal=montoTotal + valor;
             fila[3]=val;
+            fila[4]=String.valueOf(precioUnitario);
+            fila[5]=String.valueOf(pedidos.getPrecioDeCosto());
             busC.addRow(fila);
         }
         String total=String.valueOf(montoTotal);

@@ -7,6 +7,7 @@ package Cotizaciones;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -25,5 +26,8 @@ public interface Cotizable {
     public Integer nuevaCotizacion(Object coti);
     public Object modificarCotizacion(Object coti);
     public void eliminarCotizacion(Integer id);
+    public DefaultTableModel mostrarListado(ArrayList listadoC);
+    public void transformarEnPedido(Object coti,ArrayList detalle);
+    public void transformarEnFactura(Object coti,ArrayList detalle);
     
 }
