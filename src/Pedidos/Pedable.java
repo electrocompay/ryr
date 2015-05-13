@@ -7,6 +7,7 @@ package Pedidos;
 
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -21,7 +22,7 @@ public interface Pedable {
     public ArrayList listarPorEstado(Integer idClient,int estado);
     public Boolean modificarPedido(Object ped);
     public void eliminarPedido(Integer idPed);
-    public DefaultListModel mostrarListado(ArrayList lista);
+    public DefaultTableModel mostrarListado(ArrayList lista);
     public void transformarEnFactura(Object ped,ArrayList detalle);
     public void transformarEnCotizacion(Object ped,ArrayList detalle);
     public void transformarEnRemito(Object ped,ArrayList detalle);

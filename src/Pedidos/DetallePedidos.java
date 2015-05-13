@@ -8,6 +8,7 @@ package Pedidos;
 import interfaces.Transaccionable;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
 import objetos.Conecciones;
 
 /**
@@ -164,7 +165,7 @@ public class DetallePedidos implements Pedable{
     }
 
     @Override
-    public DefaultListModel mostrarListado(ArrayList lista) {
+    public DefaultTableModel mostrarListado(ArrayList lista) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

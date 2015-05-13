@@ -7,6 +7,8 @@ package facturacion.pantallas;
 import Cotizaciones.Cotizable;
 import Cotizaciones.Cotizacion;
 import Cotizaciones.IngresoDeCotizacion;
+import Pedidos.Pedable;
+import Pedidos.Pedidos;
 import facturacion.clientes.Clientes;
 import facturacion.clientes.ListasDePrecios;
 import interfaceGraficas.AbmClientes;
@@ -33,6 +35,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
     private ArrayList listadoLoc=new ArrayList();
     private Cotizacion cotizacionT=new Cotizacion();
     private ArrayList listadoCot=new ArrayList();
+    private ArrayList listadoPed=new ArrayList();
     DefaultTableModel modelo=new DefaultTableModel();
     DefaultTableModel modelo1=new DefaultTableModel();
     
@@ -73,6 +76,12 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
         modelo=cotizable.mostrarListado(listadoCot);
         
         this.jTable1.setModel(modelo);
+        Pedable pedable=new Pedidos();
+        Pedidos pedidos=new Pedidos();
+        listadoPed=pedable.listarPorCliente(cliTa.getCodigoId());
+        modelo1=pedable.mostrarListado(listadoPed);
+        this.jTable2.setModel(modelo1);
+        
     }
     
 

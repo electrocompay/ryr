@@ -10,9 +10,11 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
 import objetos.Conecciones;
 
 /**
@@ -144,17 +146,86 @@ public class Pedidos implements Pedable{
 
     @Override
     public ArrayList listar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Pedidos pedido;
+        ArrayList listado=new ArrayList();
+        String sql="select * from pedidos order by id desc";
+        Transaccionable tra=new Conecciones();
+        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        try {
+            while(rs.next()){
+                pedido=new Pedidos();
+                pedido.setId(rs.getInt("id"));
+                pedido.setEstado(rs.getInt("estado"));
+                pedido.setFecha(rs.getDate("fecha"));
+                pedido.setIdCliente(rs.getInt("idcliente"));
+                pedido.setIdCotizacion(rs.getInt("idcotizacion"));
+                pedido.setIdFactura(rs.getInt("idfactura"));
+                pedido.setIdRemito(rs.getInt("idremito"));
+                pedido.setIdUsuario(rs.getInt("idusuario"));
+                pedido.setTotal(rs.getDouble("total"));
+                listado.add(pedido);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Pedidos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return listado;
     }
 
     @Override
     public ArrayList listarPorCliente(Integer idClient) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Pedidos pedido;
+        ArrayList listado=new ArrayList();
+        String sql="select * from pedidos where idcliente="+idClient+" order by id desc";
+        Transaccionable tra=new Conecciones();
+        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        try {
+            while(rs.next()){
+                pedido=new Pedidos();
+                pedido.setId(rs.getInt("id"));
+                pedido.setEstado(rs.getInt("estado"));
+                pedido.setFecha(rs.getDate("fecha"));
+                pedido.setIdCliente(rs.getInt("idcliente"));
+                pedido.setIdCotizacion(rs.getInt("idcotizacion"));
+                pedido.setIdFactura(rs.getInt("idfactura"));
+                pedido.setIdRemito(rs.getInt("idremito"));
+                pedido.setIdUsuario(rs.getInt("idusuario"));
+                pedido.setTotal(rs.getDouble("total"));
+                listado.add(pedido);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Pedidos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return listado;
     }
 
     @Override
     public ArrayList listarPorEstado(Integer idClient, int estado) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Pedidos pedido;
+        ArrayList listado=new ArrayList();
+        String sql="select * from pedidos where idcliente="+idClient+" and estado="+estado+" order by id desc";
+        Transaccionable tra=new Conecciones();
+        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        try {
+            while(rs.next()){
+                pedido=new Pedidos();
+                pedido.setId(rs.getInt("id"));
+                pedido.setEstado(rs.getInt("estado"));
+                pedido.setFecha(rs.getDate("fecha"));
+                pedido.setIdCliente(rs.getInt("idcliente"));
+                pedido.setIdCotizacion(rs.getInt("idcotizacion"));
+                pedido.setIdFactura(rs.getInt("idfactura"));
+                pedido.setIdRemito(rs.getInt("idremito"));
+                pedido.setIdUsuario(rs.getInt("idusuario"));
+                pedido.setTotal(rs.getDouble("total"));
+                listado.add(pedido);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Pedidos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return listado;
     }
 
     @Override
@@ -168,8 +239,33 @@ public class Pedidos implements Pedable{
     }
 
     @Override
-    public DefaultListModel mostrarListado(ArrayList lista) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public DefaultTableModel mostrarListado(ArrayList lista) {
+        MiModeloTablaArticulos listado1=new MiModeloTablaArticulos();
+        Pedidos cotizacion;
+        Iterator iL=lista.listIterator();
+        listado1.addColumn("Numero");
+        listado1.addColumn("Fecha");
+        listado1.addColumn("Factura");
+        listado1.addColumn("Remito");
+        listado1.addColumn("Monto");
+        listado1.addColumn("Estado");
+        Object[] fila=new Object[6];
+        while(iL.hasNext()){
+            cotizacion=(Pedidos)iL.next();
+            fila[0]=String.valueOf(cotizacion.getId());
+            fila[1]=String.valueOf(cotizacion.getFecha());
+            fila[2]=String.valueOf(cotizacion.getIdFactura());
+            fila[3]=String.valueOf(cotizacion.getIdRemito());
+            fila[4]=String.valueOf(cotizacion.getTotal());
+            if(cotizacion.getEstado()==0){
+                fila[5]="Pendiente";
+            }else{
+                fila[5]="Finalizada";
+            }
+            listado1.addRow(fila);
+        }
+        
+        return listado1;
     }
 
     @Override
