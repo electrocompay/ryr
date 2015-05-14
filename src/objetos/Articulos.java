@@ -61,6 +61,17 @@ public class Articulos implements Facturar,Editables,Comparables{
     private Integer idDeposito;
     private Integer rubroId;
     private int descuento;
+    private int idRenglon;
+
+    public int getIdRenglon() {
+        return idRenglon;
+    }
+
+    public void setIdRenglon(int idRenglon) {
+        this.idRenglon = idRenglon;
+    }
+    
+    
 
     public int getDescuento() {
         return descuento;
@@ -956,9 +967,58 @@ public class Articulos implements Facturar,Editables,Comparables{
 
     @Override
     public Object cargarPorCodigoAsignado(Integer id) {
-        Articulos articulo;
-        String idd=String.valueOf(id);
-        articulo=(Articulos)listadoCodigo.get(idd);
+        //Articulos articulo;
+        //String idd=String.valueOf(id);
+        //articulo=(Articulos)listadoCodigo.get(idd);
+        
+        Transaccionable tra;
+        //ArrayList resultado=new ArrayList();
+        String sql="";
+        Articulos articulo=null;
+        /*
+        if(listadoBarr.size()==0){
+            tra=new Conecciones();
+            sql="select *,(select stockart.stock from stockart where stockart.id=articulos.ID)as stock,(select rubros.recargo from rubros where rubros.id=articulos.idRubro)as recargo from articulos where INHABILITADO=0";
+            
+        }else{
+         */
+            tra=new Conecciones();
+            
+            sql="select articulos.ID,articulos.NOMBRE,articulos.BARRAS,articulos.recargo,articulos.PRECIO,articulos.equivalencia,articulos.COSTO,articulos.MINIMO,(articulos.STOCK) as stock,articulos.SERVICIO, articulos.modificaPrecio,articulos.modificaServicio,articulos.SERVICIO1,articulos.idcombo from articulos where INHABILITADO=0 and id="+id;
+            
+        //}
+        
+        
+        ResultSet rr=tra.leerConjuntoDeRegistros(sql);
+        String codA="";
+        try {
+            while(rr.next()){
+                articulo=new Articulos();
+                articulo.setCodigoAsignado(rr.getString("ID"));
+                articulo.setDescripcionArticulo(rr.getString("NOMBRE"));
+                articulo.setNumeroId(rr.getInt("ID"));
+                articulo.setCodigoDeBarra(rr.getString("BARRAS"));
+                articulo.setRecargo(rr.getDouble("recargo"));
+                articulo.setPrecioUnitarioNeto(rr.getDouble("PRECIO"));
+                articulo.setEquivalencia(rr.getDouble("equivalencia"));
+                articulo.setPrecioDeCosto(rr.getDouble("COSTO"));
+                articulo.setStockMinimo(rr.getDouble("MINIMO"));
+                articulo.setStockActual(rr.getDouble("stock"));
+                articulo.setPrecioServicio(rr.getDouble("SERVICIO"));
+                articulo.setModificaPrecio(rr.getBoolean("modificaPrecio"));
+                articulo.setModificaServicio(rr.getBoolean("modificaServicio"));
+                articulo.setPrecioServicio1(rr.getDouble("servicio1"));
+                articulo.setIdCombo(rr.getInt("idcombo"));
+                
+                
+                //resultado.add(articulo);
+            }
+                  } catch (SQLException ex) {
+            Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
+            //System.out.println("ACA DEBE LEER EN LE ARCHIVO");
+            
+        }
+        
         return articulo;
     }
 

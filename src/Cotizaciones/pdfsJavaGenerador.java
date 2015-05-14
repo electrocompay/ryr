@@ -151,6 +151,7 @@ public class pdfsJavaGenerador {
                 cb.showText(String.valueOf(saldo.getCantidad()));
                 cb.setTextMatrix(440,renglon);
                 tot=saldo.getCantidad() * saldo.getPrecioUnitario();
+                tot=tot * 1.21;
                 cb.showText(String.valueOf(tot));
                 renglon=renglon - 20;
                 

@@ -29,5 +29,6 @@ public interface Cotizable {
     public DefaultTableModel mostrarListado(ArrayList listadoC);
     public void transformarEnPedido(Object coti,ArrayList detalle);
     public void transformarEnFactura(Object coti,ArrayList detalle);
+    public ArrayList convertirAArticulos(ArrayList listado);
     
 }

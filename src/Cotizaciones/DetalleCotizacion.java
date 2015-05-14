@@ -6,13 +6,16 @@
 package Cotizaciones;
 
 import interfaces.Transaccionable;
+import interfacesPrograma.Facturar;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import objetos.Articulos;
 import objetos.Conecciones;
 
 /**
@@ -182,12 +185,20 @@ public class DetalleCotizacion implements Cotizable{
 
     @Override
     public Object modificarCotizacion(Object coti) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        DetalleCotizacion detalle=new DetalleCotizacion();
+        detalle=(DetalleCotizacion)coti;
+        String sql="update detallecotizaciones set descripcionarticulo='"+detalle.getDescripcionArticulo()+"',cantidad="+detalle.getCantidad()+", preciounitario="+detalle.getPrecioUnitario()+",descuento="+detalle.getDescuento()+" where id="+detalle.getId();
+        Transaccionable tra=new Conecciones();
+        tra.guardarRegistro(sql);
+        return detalle;
     }
 
     @Override
     public void eliminarCotizacion(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       String sql="delete from detallecotizaciones where id="+id;
+       Transaccionable tra=new Conecciones();
+       tra.guardarRegistro(sql);
+       
     }
 
     @Override
@@ -203,6 +214,31 @@ public class DetalleCotizacion implements Cotizable{
     @Override
     public void transformarEnFactura(Object coti, ArrayList detalle) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList convertirAArticulos(ArrayList listado) {
+        Articulos articulo;
+        Facturar fact=new Articulos(); 
+        DetalleCotizacion detalle=new DetalleCotizacion();
+        ArrayList listadoA=new ArrayList();
+        Iterator it=listado.listIterator();
+        while(it.hasNext()){
+            detalle=(DetalleCotizacion)it.next();
+            articulo=new Articulos();
+            if(detalle.getIdArticulo()==0){
+             articulo.setNumeroId(detalle.getIdArticulo());
+             articulo.setDescripcionArticulo(detalle.getDescripcionArticulo());
+            }else{
+            articulo=(Articulos) fact.cargarPorCodigoAsignado(detalle.getIdArticulo());
+            }
+            articulo.setPrecioUnitarioNeto(detalle.getPrecioUnitario());
+            articulo.setCantidad(detalle.getCantidad());
+            articulo.setIdRenglon(detalle.getId());
+            listadoA.add(articulo);
+        }
+        
+        return listadoA;
     }
     
     

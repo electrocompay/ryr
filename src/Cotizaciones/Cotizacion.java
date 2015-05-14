@@ -260,7 +260,13 @@ public class Cotizacion implements Cotizable{
 
     @Override
     public Object modificarCotizacion(Object coti) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Cotizacion cotizacion=new Cotizacion();
+        cotizacion=(Cotizacion)coti;
+        String sql="update cotizaciones set total="+cotizacion.getTotal()+", estado="+cotizacion.getEstado()+",idpedido="+cotizacion.getIdPedido()+" where id="+cotizacion.getId();
+        Transaccionable tra=new Conecciones();
+        tra.guardarRegistro(sql);
+        
+        return cotizacion;
     }
 
     @Override
@@ -303,6 +309,11 @@ public class Cotizacion implements Cotizable{
 
     @Override
     public void transformarEnFactura(Object coti, ArrayList detalle) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList convertirAArticulos(ArrayList listado) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

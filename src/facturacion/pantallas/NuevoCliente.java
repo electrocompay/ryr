@@ -7,6 +7,7 @@ package facturacion.pantallas;
 import Cotizaciones.Cotizable;
 import Cotizaciones.Cotizacion;
 import Cotizaciones.IngresoDeCotizacion;
+import Cotizaciones.ModificacionDeCotizacion;
 import Pedidos.Pedable;
 import Pedidos.Pedidos;
 import facturacion.clientes.Clientes;
@@ -229,7 +230,12 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
         jLabel8.setText("Pedidos Pendientes");
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/pdf.png"))); // NOI18N
-        jButton2.setText("reimprimir");
+        jButton2.setText("Modificar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Cart.png"))); // NOI18N
         jButton3.setText("Pedido");
@@ -354,6 +360,16 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
       }
        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        Cotizable cotizable=new Cotizacion();
+        Cotizacion cotizacion=new Cotizacion();
+        cotizacion=(Cotizacion)listadoCot.get(this.jTable1.getSelectedRow());
+        ModificacionDeCotizacion modificar=new ModificacionDeCotizacion(cliTa,cotizacion);
+        Inicio.jDesktopPane1.add(modificar);
+        modificar.setVisible(true);
+        modificar.toFront();
+    }//GEN-LAST:event_jButton2ActionPerformed
     private void ControlaInstancia(JInternalFrame inter){
         /*
         boolean mostrar=true;
