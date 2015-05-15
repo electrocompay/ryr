@@ -14,6 +14,7 @@ import Pedidos.IngresoDePedidos;
 import facturacion.pantallas.NuevoCliente;
 import interfacesPrograma.Busquedas;
 import interfacesPrograma.Facturar;
+import java.beans.PropertyVetoException;
 import java.io.File;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -459,6 +460,11 @@ public class AbmClientes extends javax.swing.JInternalFrame {
     private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
         NuevoCliente clienteNuevo=new NuevoCliente();
         Inicio.jDesktopPane1.add(clienteNuevo);
+        try {
+            clienteNuevo.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(AbmClientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
         clienteNuevo.setVisible(true);
         clienteNuevo.toFront();
     }//GEN-LAST:event_jMenu1MouseClicked
@@ -523,6 +529,11 @@ jTable1.setModel(miTabla);
         clienteTango=(Clientes)listadoClientes.get(this.jTable1.getSelectedRow());
         IngresoDeFacturas pedidos=new IngresoDeFacturas(clienteTango);
         Inicio.jDesktopPane1.add(pedidos);
+        try {
+            pedidos.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(AbmClientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
         pedidos.setVisible(true);
         pedidos.toFront();
     }//GEN-LAST:event_jMenu6MouseClicked
@@ -575,6 +586,11 @@ jTable1.setModel(miTabla);
         clienteTango=(Clientes)listadoClientes.get(this.jTable1.getSelectedRow());
         NuevoCliente clienteNuevo=new NuevoCliente(clienteTango);
         Inicio.jDesktopPane1.add(clienteNuevo);
+        try {
+            clienteNuevo.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(AbmClientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
         clienteNuevo.setVisible(true);
         clienteNuevo.toFront();
     }//GEN-LAST:event_jMenu5MouseClicked
@@ -584,6 +600,11 @@ jTable1.setModel(miTabla);
         clienteTango=(Clientes)listadoClientes.get(this.jTable1.getSelectedRow());
         IngresoDeCotizacion pedidos=new IngresoDeCotizacion(clienteTango);
         Inicio.jDesktopPane1.add(pedidos);
+        try {
+            pedidos.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(AbmClientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
         pedidos.setVisible(true);
         pedidos.toFront();
     }//GEN-LAST:event_jMenu3MouseClicked
@@ -593,6 +614,11 @@ jTable1.setModel(miTabla);
         clienteTango=(Clientes)listadoClientes.get(this.jTable1.getSelectedRow());
         IngresoDePedidos pedidos=new IngresoDePedidos(clienteTango);
         Inicio.jDesktopPane1.add(pedidos);
+        try {
+            pedidos.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(AbmClientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
         pedidos.setVisible(true);
         pedidos.toFront();
     }//GEN-LAST:event_jMenu4MouseClicked

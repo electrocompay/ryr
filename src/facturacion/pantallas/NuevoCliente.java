@@ -17,8 +17,11 @@ import interfaceGraficas.Inicio;
 import interfaces.Personalizable;
 import interfacesPrograma.Busquedas;
 import interfacesPrograma.Facturar;
+import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
 import javax.swing.table.DefaultTableModel;
 import objetos.CondicionesIva;
@@ -367,6 +370,11 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
         cotizacion=(Cotizacion)listadoCot.get(this.jTable1.getSelectedRow());
         ModificacionDeCotizacion modificar=new ModificacionDeCotizacion(cliTa,cotizacion);
         Inicio.jDesktopPane1.add(modificar);
+        try {
+            modificar.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(NuevoCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
         modificar.setVisible(true);
         modificar.toFront();
     }//GEN-LAST:event_jButton2ActionPerformed
