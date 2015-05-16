@@ -6,9 +6,16 @@
 package Pedidos;
 
 import interfaces.Transaccionable;
+import interfacesPrograma.Facturar;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
+import objetos.Articulos;
 import objetos.Conecciones;
 
 /**
@@ -131,7 +138,32 @@ public class DetallePedidos implements Pedable{
 
     @Override
     public ArrayList cargarDetallePedido(Integer idPed) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList listadoP=new ArrayList();
+        DetallePedidos detalle;
+        String sql="select * from detallepedidos where idpedido="+idPed;
+        Transaccionable tra=new Conecciones();
+        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        try {
+            while(rs.next()){
+                detalle=new DetallePedidos();
+                detalle.setId(rs.getInt("id"));
+                detalle.setCantidad(rs.getDouble("cantidad"));
+                detalle.setCantidadFacturada(0.00);
+                detalle.setCantidadRemitida(0.00);
+                detalle.setDescripcionArticulo(rs.getString("descripcionarticulo"));
+                detalle.setDescuento(rs.getInt("descuento"));
+                detalle.setIdArticulo(rs.getInt("idarticulo"));
+                detalle.setIdCliente(rs.getInt("idcliente"));
+                detalle.setIdPedido(rs.getInt("idpedido"));
+                detalle.setObservaciones(rs.getString("observaciones"));
+                detalle.setPrecioUnitario(rs.getDouble("preciounitario"));
+                listadoP.add(detalle);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DetallePedidos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return listadoP;
     }
 
     @Override
@@ -182,6 +214,31 @@ public class DetallePedidos implements Pedable{
     @Override
     public void transformarEnRemito(Object ped, ArrayList detalle) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList convertirAArticulos(ArrayList listado) {
+        Articulos articulo;
+        Facturar fact=new Articulos(); 
+        DetallePedidos detalle=new DetallePedidos();
+        ArrayList listadoA=new ArrayList();
+        Iterator it=listado.listIterator();
+        while(it.hasNext()){
+            detalle=(DetallePedidos)it.next();
+            articulo=new Articulos();
+            if(detalle.getIdArticulo()==0){
+             articulo.setNumeroId(detalle.getIdArticulo());
+             articulo.setDescripcionArticulo(detalle.getDescripcionArticulo());
+            }else{
+            articulo=(Articulos) fact.cargarPorCodigoAsignado(detalle.getIdArticulo());
+            }
+            articulo.setPrecioUnitarioNeto(detalle.getPrecioUnitario());
+            articulo.setCantidad(detalle.getCantidad());
+            articulo.setIdRenglon(detalle.getId());
+            listadoA.add(articulo);
+        }
+        
+        return listadoA;
     }
     
     

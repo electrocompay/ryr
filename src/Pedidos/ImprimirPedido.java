@@ -5,11 +5,14 @@ package Pedidos;
  * and open the template in the editor.
  */
 
-import Cotizaciones.*;
+
+import Conversores.Numeros;
 import Impresiones.*;
 import Depositos.RemitosInternos;
 import Sucursales.Cajas;
+import facturacion.clientes.Clientes;
 import interfaceGraficas.Inicio;
+import interfacesPrograma.Facturar;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Frame;
@@ -36,7 +39,7 @@ import objetos.Articulos;
 public class ImprimirPedido {
 
     Font fuente = new Font("Arial", Font.PLAIN, 9);
-    Font fuente1=new Font("Arial",Font.BOLD,16);
+    Font fuente1=new Font("Arial",Font.BOLD,12);
     Font fuente3 = new Font("Arial", Font.PLAIN, 7);
     Font fuente4 = new Font("Arial", Font.BOLD,7);
     Font fuente5=new Font("Arial",Font.PLAIN,16);
@@ -68,15 +71,17 @@ public class ImprimirPedido {
         
 
     
-    public void ImprimirCotizacion(Integer idCotizacion) throws IOException{
-        Cotizable cotizable=new Cotizacion();
-        Cotizacion cotizacion=new Cotizacion();
-        cotizacion=(Cotizacion)cotizable.cargarEncabezado(idCotizacion);
+    public void ImprimirOrdenDeTrabajo(Integer idCotizacion) throws IOException{
+        Pedable cotizable=new Pedidos();
+        Pedidos cotizacion=new Pedidos();
+        cotizacion=(Pedidos)cotizable.cargarEncabezadoPedido(idCotizacion);
         ArrayList listadoDetalle=new ArrayList();
-        DetalleCotizacion detalleDeCotizacion=new DetalleCotizacion();
-        Cotizable cotiz=new DetalleCotizacion();
-        listadoDetalle=cotiz.cargarDetalle(cotizacion.getId());
-        
+        DetallePedidos detalleDeCotizacion=new DetallePedidos();
+        Pedable cotiz=new DetallePedidos();
+        listadoDetalle=cotiz.cargarDetallePedido(cotizacion.getId());
+        Clientes cliente=new Clientes();
+        Facturar factu=new Clientes();
+        cliente=(Clientes)factu.cargarPorCodigoAsignado(cotizacion.getIdCliente());
         Calendar fecha=new GregorianCalendar();
         int dia=fecha.get(Calendar.DAY_OF_MONTH);
         int mes=fecha.get(Calendar.MONTH);
@@ -91,40 +96,34 @@ public class ImprimirPedido {
         
         pagina = pj.getGraphics();
         try{
-        BufferedImage imagen= ImageIO.read(new File("C://Gestion//imagen//logo.png"));
-        pagina.drawImage(imagen,63,20,174,93,null);
+        //BufferedImage imagen= ImageIO.read(new File("C://Gestion//imagen//logo.png"));
+        //pagina.drawImage(imagen,63,20,174,93,null);
         pagina.setFont(fuente6);
         pagina.setColor(Color.black);
-        pagina.drawString("COMPROBANTE N° 00"+Inicio.sucursal.getNumero()+"-000"+cotizacion.getId(),20,130);
+        pagina.drawString("PEDIDO N° 00"+Inicio.sucursal.getNumero()+"-000"+cotizacion.getId(),20,20);
         pagina.setFont(fuente);
-        pagina.drawString("FECHA IMPRESION:"+fec, 20,140);
-        pagina.drawString("SUCURSAL :"+Inicio.sucursal.getDescripcion(),20,150);
-        pagina.drawString("CAJERO :"+Inicio.usuario.getNombre(),20,160);
+        pagina.drawString("FECHA IMPRESION:"+fec, 20,30);
+        //pagina.drawString(" :"+Inicio.sucursal.getDescripcion(),20,150);
+        pagina.drawString("USUARIO :"+Inicio.usuario.getNombre(),320,20);
         pagina.setFont(fuente6);
         Double monto=0.00; //caja.getMontoMovimiento()* -1;
-        pagina.drawString("MONTO : $ "+monto,20,190);
+        pagina.drawString("CLIENTE: "+cliente.getRazonSocial(),320,30);
         pagina.setFont(fuente);
-        pagina.drawString("CAJA N°: "+Inicio.caja.getNumero(),20,200);
-        pagina.drawString("HORA :"+hrs,20,210);
-        pagina.setFont(fuente1);
-        pagina.drawString("RETIRO DE EFECTIVO ", 50,280);
+        pagina.drawString("CODIGO",20,50);
+        pagina.drawString("DESCRIPCION",100,50);
+        pagina.drawString("CANTIDAD", 350,50);
+        int renglon=60;
+        Iterator it=listadoDetalle.listIterator();
+        while(it.hasNext()){
+            detalleDeCotizacion=(DetallePedidos)it.next();
+            pagina.drawString(String.valueOf(detalleDeCotizacion.getIdArticulo()),40,renglon);
+            pagina.drawString(detalleDeCotizacion.getDescripcionArticulo(),80,renglon);
+            pagina.drawString(String.valueOf(detalleDeCotizacion.getCantidad()),370,renglon);
+            renglon=renglon + 10;
+        }
         //formulario derecho
         
-        pagina.drawImage(imagen,363,20,174,93,null);
-        pagina.setFont(fuente6);
-        pagina.setColor(Color.black);
-        pagina.drawString("COMPROBANTE N° 00"+Inicio.sucursal.getNumero()+"-00010",320,130);
-        pagina.setFont(fuente);
-        pagina.drawString("FECHA :"+fec, 320,140);
-        pagina.drawString("SUCURSAL :"+Inicio.sucursal.getDescripcion(),320,150);
-        pagina.drawString("CAJERO :"+Inicio.usuario.getNombre(),320,160);
-        pagina.setFont(fuente6);
-        pagina.drawString("MONTO : $ "+monto,320,190);
-        pagina.setFont(fuente);
-        pagina.drawString("CAJA N°: "+Inicio.caja.getNumero(),320,200);
-        pagina.drawString("HORA :"+hrs,320,210);
-        pagina.setFont(fuente1);
-        pagina.drawString("RETIRO DE EFECTIVO ", 350,280);
+        //pagina.drawImage(imagen,363,20,174,93,null);
         
         
         pagina.dispose();
@@ -135,7 +134,79 @@ public class ImprimirPedido {
 	}
 
     }
-    					
+    public void ImprimirOrdenDetallada(Pedidos idCotizacion) throws IOException{
+        Pedable cotizable=new Pedidos();
+        Pedidos cotizacion=new Pedidos();
+        cotizacion=(Pedidos)idCotizacion;
+        ArrayList listadoDetalle=new ArrayList();
+        DetallePedidos detalleDeCotizacion=new DetallePedidos();
+        Pedable cotiz=new DetallePedidos();
+        listadoDetalle=cotiz.cargarDetallePedido(cotizacion.getId());
+        Clientes cliente=new Clientes();
+        Facturar factu=new Clientes();
+        cliente=(Clientes)factu.cargarPorCodigoAsignado(cotizacion.getIdCliente());
+        Calendar fecha=new GregorianCalendar();
+        int dia=fecha.get(Calendar.DAY_OF_MONTH);
+        int mes=fecha.get(Calendar.MONTH);
+        mes++;
+        int ano=fecha.get(Calendar.YEAR);
+        int hora=fecha.get(Calendar.HOUR_OF_DAY);
+        int minuto=fecha.get(Calendar.MINUTE);
+        int segundo=fecha.get(Calendar.SECOND);
+        String fec=dia+"/"+mes+"/"+ano;
+        String hrs=hora+","+minuto+":"+segundo;
+        // formulario izquierdo
+        
+        pagina = pj.getGraphics();
+        try{
+        //BufferedImage imagen= ImageIO.read(new File("C://Gestion//imagen//logo.png"));
+        //pagina.drawImage(imagen,63,20,174,93,null);
+        pagina.setFont(fuente6);
+        pagina.setColor(Color.black);
+        pagina.drawString("PEDIDO N° 00"+Inicio.sucursal.getNumero()+"-000"+cotizacion.getId(),20,20);
+        pagina.setFont(fuente);
+        pagina.drawString("FECHA IMPRESION:"+fec, 20,30);
+        //pagina.drawString(" :"+Inicio.sucursal.getDescripcion(),20,150);
+        pagina.drawString("USUARIO :"+Inicio.usuario.getNombre(),320,20);
+        pagina.setFont(fuente6);
+        Double monto=0.00; //caja.getMontoMovimiento()* -1;
+        pagina.drawString("CLIENTE: "+cliente.getRazonSocial(),320,30);
+        pagina.setFont(fuente);
+        pagina.drawString("CODIGO",20,50);
+        pagina.drawString("DESCRIPCION",100,50);
+        pagina.drawString("CANTIDAD", 350,50);
+        pagina.drawString("PRECIO U",400,50);
+        pagina.drawString("PRECIO",450,50);
+        int renglon=60;
+        Iterator it=listadoDetalle.listIterator();
+        Double generalT=0.00;
+        while(it.hasNext()){
+            detalleDeCotizacion=(DetallePedidos)it.next();
+            pagina.drawString(String.valueOf(detalleDeCotizacion.getIdArticulo()),40,renglon);
+            pagina.drawString(detalleDeCotizacion.getDescripcionArticulo(),80,renglon);
+            pagina.drawString(String.valueOf(detalleDeCotizacion.getCantidad()),370,renglon);
+            pagina.drawString(Numeros.ConvertirNumero(detalleDeCotizacion.getPrecioUnitario() * 1.21),410,renglon);
+            Double total=detalleDeCotizacion.getCantidad() * (detalleDeCotizacion.getPrecioUnitario() * 1.21);
+            generalT=generalT + total;
+            pagina.drawString(Numeros.ConvertirNumero(total),460,renglon);
+            renglon=renglon + 10;
+        }
+        renglon=renglon + 10;
+        pagina.setFont(fuente1);
+        pagina.drawString("TOTAL: "+String.valueOf(generalT),40,renglon);
+        //formulario derecho
+        
+        //pagina.drawImage(imagen,363,20,174,93,null);
+        
+        
+        pagina.dispose();
+        pj.end();
+        }catch(Exception e)
+	{
+		System.out.println("LA IMPRESION HA SIDO CANCELADA..."+e);
+	}
+
+    }					
 }//FIN DE LA CLASE Impresora
 
  

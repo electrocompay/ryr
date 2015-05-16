@@ -141,7 +141,30 @@ public class Pedidos implements Pedable{
 
     @Override
     public Object cargarEncabezadoPedido(Integer idPed) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Pedidos pedido=new Pedidos();
+        //ArrayList listado=new ArrayList();
+        String sql="select * from pedidos where id="+idPed;
+        Transaccionable tra=new Conecciones();
+        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        try {
+            while(rs.next()){
+                
+                pedido.setId(rs.getInt("id"));
+                pedido.setEstado(rs.getInt("estado"));
+                pedido.setFecha(rs.getDate("fecha"));
+                pedido.setIdCliente(rs.getInt("idcliente"));
+                pedido.setIdCotizacion(rs.getInt("idcotizacion"));
+                pedido.setIdFactura(rs.getInt("idfactura"));
+                pedido.setIdRemito(rs.getInt("idremito"));
+                pedido.setIdUsuario(rs.getInt("idusuario"));
+                pedido.setTotal(rs.getDouble("total"));
+                //listado.add(pedido);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Pedidos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return pedido;
     }
 
     @Override
@@ -280,6 +303,11 @@ public class Pedidos implements Pedable{
 
     @Override
     public void transformarEnRemito(Object ped, ArrayList detalle) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList convertirAArticulos(ArrayList detalle) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

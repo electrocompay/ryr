@@ -6,7 +6,7 @@ package facturacion.clientes;
 
 /**
  *
- * @author hernan
+ * @author mauro di
  */
 public class FormasDePago {
     private int numeroFormaDePago;

@@ -39,7 +39,7 @@ import tablas.MiModeloTablaFacturacion;
  *
  * @author hernan
  */
-public class IngresoDePedidos extends javax.swing.JInternalFrame {
+public class ModificacionDePedidos extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form IngresoDePedidos
@@ -50,8 +50,10 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
     private static ArrayList listadoDeBusqueda=new ArrayList();
     private static Double montoTotal=0.00;
     private static Comprobantes comp=new Comprobantes();
+    private Pedidos pedido=new Pedidos();
+    private ArrayList listadoPed=new ArrayList();
     
-    public IngresoDePedidos() {
+    public ModificacionDePedidos() {
         //Articulos.CargarMap();
         cliT=new Clientes("1");
         //cliT=(ClientesTango)oob;
@@ -68,9 +70,16 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
         
     }
 
-    public IngresoDePedidos(Clientes clienteTango) {
+    public ModificacionDePedidos(Pedidos ped) {
+        pedido=(Pedidos)ped;
+        Facturar fact=new Clientes();
+        Pedable peda=new Pedidos();
+        DetallePedidos detallePedido=new DetallePedidos();
+        Pedable detP=new DetallePedidos();
         cliT=new Clientes();
-        cliT=(Clientes)clienteTango;
+        cliT=(Clientes)fact.cargarPorCodigoAsignado(pedido.getIdCliente());
+        listadoPed=detP.cargarDetallePedido(pedido.getId());
+        detalleDelPedido=detP.convertirAArticulos(listadoPed);
         
 //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
@@ -83,6 +92,7 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
         this.jCheckBox1.setVisible(false);
         this.jCheckBox2.setEnabled(false);
         this.jCheckBox2.setVisible(false);
+        agregarRenglonTabla();
         this.jTextField1.requestFocus();
         
     }
@@ -575,7 +585,7 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
                 pw=new PrintWriter(fichero);
                 pw.println(sqM);
             } catch (IOException ex1) {
-                Logger.getLogger(IngresoDePedidos.class.getName()).log(Level.SEVERE, null, ex1);
+                Logger.getLogger(ModificacionDePedidos.class.getName()).log(Level.SEVERE, null, ex1);
             }finally{
                          try {
            // Nuevamente aprovechamos el finally para 
@@ -804,7 +814,7 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
             pdf.run();
             */
         } catch (IOException ex) {
-            Logger.getLogger(IngresoDePedidos.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ModificacionDePedidos.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         /*
