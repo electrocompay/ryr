@@ -15,7 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
-import objetos.Articulos;
+import Articulos.Articulos;
 import objetos.Conecciones;
 
 /**
@@ -188,12 +188,20 @@ public class DetallePedidos implements Pedable{
 
     @Override
     public Boolean modificarPedido(Object ped) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        DetallePedidos detalle=new DetallePedidos();
+        detalle=(DetallePedidos)ped;
+        String sql="update detallepedidos set descripcionarticulo='"+detalle.getDescripcionArticulo()+"',cantidad="+detalle.getCantidad()+",preciounitario="+detalle.getPrecioUnitario()+", descuento="+detalle.getDescuento()+" where id="+detalle.getId();
+        Transaccionable tra=new Conecciones();
+        tra.guardarRegistro(sql);
+        return true;
+        
     }
 
     @Override
     public void eliminarPedido(Integer idPed) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql="delete from detallepedidos where id="+idPed;
+        Transaccionable tra=new Conecciones();
+       tra.guardarRegistro(sql);
     }
 
     @Override

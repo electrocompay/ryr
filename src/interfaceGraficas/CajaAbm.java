@@ -22,7 +22,7 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import objetos.Articulos;
+import Articulos.Articulos;
 import objetos.Comprobantes;
 import objetos.Operaciones;
 import tablas.MiModeloTablaArticulos;

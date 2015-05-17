@@ -253,7 +253,14 @@ public class Pedidos implements Pedable{
 
     @Override
     public Boolean modificarPedido(Object ped) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Boolean verif=true;
+        Pedidos pedido=new Pedidos();
+        pedido=(Pedidos)ped;
+        String sql="update pedidos set total="+pedido.getTotal()+",idcotizacion="+pedido.getIdCotizacion()+",idfactura="+pedido.getIdFactura()+",idremito="+pedido.getIdRemito()+",idremito="+pedido.getIdRemito()+",estado="+pedido.getEstado()+" where id="+pedido.getId();
+        Transaccionable tra=new Conecciones();
+        tra.guardarRegistro(sql);
+        
+        return true;
     }
 
     @Override

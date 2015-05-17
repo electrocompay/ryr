@@ -16,7 +16,7 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import objetos.Articulos;
+import Articulos.Articulos;
 import objetos.ConeccionLocal;
 import objetos.Conecciones;
 

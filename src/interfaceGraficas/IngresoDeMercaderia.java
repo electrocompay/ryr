@@ -22,7 +22,7 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import objetos.Articulos;
+import Articulos.Articulos;
 import objetos.Comprobantes;
 import tablas.MiModeloTablaFacturacion;
 

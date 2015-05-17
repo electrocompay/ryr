@@ -28,7 +28,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import objetos.Articulos;
+import Articulos.Articulos;
 import objetos.Comprobantes;
 import objetos.Conecciones;
 import tablas.MiModeloTablaBuscarCliente;
@@ -758,30 +758,48 @@ public class ModificacionDePedidos extends javax.swing.JInternalFrame {
         //if(cliT.getCondicionIva().equals("RI "))comprobanteTipo=(int)Inicio.sucursal.getTipoComprobantes().get(1);
         
         Pedidos comprobante1=new Pedidos();
+        comprobante1=(Pedidos)pedido;
         comprobante1.setIdCliente(cliT.getCodigoId());
         comprobante1.setFecha(Date.valueOf(fecha2));
         comprobante1.setIdCotizacion(0);
         comprobante1.setIdUsuario(Inicio.usuario.getNumero());
+        comprobante1.setEstado(0);
+        comprobante1.setIdFactura(0);
+        comprobante1.setIdRemito(0);
         comprobante1.setTotal(montoTotal);
         Pedable cCoti=new Pedidos();
         Pedable det=new DetallePedidos();
         DetallePedidos detalle;
-        Integer nuevaCotizacion=cCoti.nuevoPedido(comprobante1);
-        comprobante1.setId(nuevaCotizacion);
+        Integer nuevaCotizacion=comprobante1.getId();
+                cCoti.modificarPedido(comprobante1);
+        //comprobante1.setId(nuevaCotizacion);
         Iterator iArt=detalleDelPedido.listIterator();
+        int reng=0;
         Articulos articulo=new Articulos();
         while(iArt.hasNext()){
             articulo=(Articulos)iArt.next();
             detalle=new DetallePedidos();
+            if(articulo.getIdRenglon()> 0){
+                detalle=(DetallePedidos)listadoPed.get(reng);
+                detalle.setDescripcionArticulo(articulo.getDescripcionArticulo());
+                detalle.setCantidad(articulo.getCantidad());
+                detalle.setPrecioUnitario(articulo.getPrecioUnitarioNeto());
+            detalle.setDescuento(articulo.getDescuento());
+            
+            det.modificarPedido(detalle);
+            
+            }else{
             detalle.setIdArticulo(articulo.getNumeroId());
             detalle.setDescripcionArticulo(articulo.getDescripcionArticulo());
             detalle.setIdCliente(cliT.getCodigoId());
-            detalle.setIdPedido(nuevaCotizacion);
+            detalle.setIdPedido(comprobante1.getId());
             detalle.setCantidad(articulo.getCantidad());
             detalle.setPrecioUnitario(articulo.getPrecioUnitarioNeto());
             detalle.setDescuento(articulo.getDescuento());
-            det.nuevoPedido(detalle);
             
+            det.nuevoPedido(detalle);
+            }
+            reng++;
         }
         // A PARTIR DE ACA DEBO CARGAR LA IMPRESION LO ANTERIOR ES PARA GUARDAR EL MOVIMIENTO
         
@@ -833,8 +851,13 @@ public class ModificacionDePedidos extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         int posicion=this.jTable1.getSelectedRow();
+        Articulos aarti=new Articulos();
+        aarti=(Articulos)detalleDelPedido.get(posicion);
+        int idDetalle=aarti.getIdRenglon();
         detalleDelPedido.remove(posicion);
         //detalleDelPedido.clear();
+        Pedable peda=new DetallePedidos();
+        peda.eliminarPedido(idDetalle);
         agregarRenglonTabla();
         jTextField1.setText("");
         jTextField1.requestFocus();

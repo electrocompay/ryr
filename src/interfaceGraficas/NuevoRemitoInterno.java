@@ -18,7 +18,7 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import objetos.Articulos;
+import Articulos.Articulos;
 import tablas.MiModeloTablaArticulos;
 import tablas.MiModeloTablaFacturacion;
 

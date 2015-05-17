@@ -12,7 +12,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.DefaultListModel;
-import objetos.Articulos;
+import Articulos.Articulos;
 
 /**
  *

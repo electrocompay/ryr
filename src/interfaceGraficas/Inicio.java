@@ -41,7 +41,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
-import objetos.Articulos;
+import Articulos.Articulos;
 import objetos.GastosF;
 
 /**
@@ -584,6 +584,11 @@ public class Inicio extends javax.swing.JFrame {
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
         ArticulosAbm artt=new ArticulosAbm();
         jDesktopPane1.add(artt);
+        try {
+            artt.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
         artt.setVisible(true);
         artt.toFront();
     }//GEN-LAST:event_jMenuItem12ActionPerformed

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package objetos;
+package Articulos;
 
 import com.mysql.jdbc.CommunicationsException;
 import interfaceGraficas.Inicio;
@@ -21,6 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import objetos.Conecciones;
 
 /**
  *
@@ -338,7 +339,7 @@ public class Articulos implements Facturar,Editables,Comparables{
          */
             tra=new Conecciones();
             
-            sql="select articulos.ID,articulos.NOMBRE,articulos.BARRAS,articulos.recargo,articulos.PRECIO,articulos.equivalencia,articulos.COSTO,articulos.MINIMO,(articulos.STOCK) as stock,articulos.SERVICIO, articulos.modificaPrecio,articulos.modificaServicio,articulos.SERVICIO1,articulos.idcombo from articulos where INHABILITADO=0";
+            sql="select articulos.ID,articulos.idrubro,articulos.NOMBRE,articulos.BARRAS,articulos.recargo,articulos.PRECIO,articulos.equivalencia,articulos.COSTO,articulos.MINIMO,(articulos.STOCK) as stock,articulos.SERVICIO, articulos.modificaPrecio,articulos.modificaServicio,articulos.SERVICIO1,articulos.idcombo from articulos where INHABILITADO=0";
             
         //}
         
@@ -363,6 +364,7 @@ public class Articulos implements Facturar,Editables,Comparables{
                 articulo.setModificaServicio(rr.getBoolean("modificaServicio"));
                 articulo.setPrecioServicio1(rr.getDouble("servicio1"));
                 articulo.setIdCombo(rr.getInt("idcombo"));
+                articulo.setRubroId(rr.getInt("idrubro"));
                 listadoBarr.putIfAbsent(articulo.getCodigoDeBarra(),articulo);
                 codA=articulo.getCodigoAsignado();
                 listadoCodigo.putIfAbsent(codA,articulo);
@@ -753,6 +755,7 @@ public class Articulos implements Facturar,Editables,Comparables{
                 articulo.setPrecioDeCosto(rr.getDouble("COSTO"));
                 articulo.setStockMinimo(rr.getDouble("MINIMO"));
                 articulo.setStockActual(rr.getDouble("stock"));
+                articulo.setRubroId(rr.getInt("idrubro"));
                 try{
                     if(Inicio.sucursal.getDireccion().equals("1")){
                         articulo.setPrecioServicio(rr.getDouble("SERVICIO"));

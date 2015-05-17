@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import objetos.Articulos;
+import Articulos.Articulos;
 import objetos.Conecciones;
 
 /**

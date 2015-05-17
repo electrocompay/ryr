@@ -5,6 +5,9 @@
  */
 package Cotizaciones;
 
+import Pedidos.DetallePedidos;
+import Pedidos.Pedable;
+import Pedidos.Pedidos;
 import interfaceGraficas.Inicio;
 import interfaces.Transaccionable;
 import java.sql.Date;
@@ -304,7 +307,46 @@ public class Cotizacion implements Cotizable{
 
     @Override
     public void transformarEnPedido(Object coti, ArrayList detalle) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Pedidos pedido=new Pedidos();
+        DetallePedidos detallePedido;
+        DetalleCotizacion detalleCotizacion=new DetalleCotizacion();
+        Cotizacion cotizacion=new Cotizacion();
+        Iterator it=detalle.listIterator();
+        Pedable pedPedido=new Pedidos();
+        Pedable detPedido=new DetallePedidos();
+        cotizacion=(Cotizacion)coti;
+        Cotizable cotiza=new Cotizacion();
+        
+        pedido.setFecha(cotizacion.getFecha());
+        pedido.setIdCliente(cotizacion.getIdCliente());
+        pedido.setIdCotizacion(cotizacion.getId());
+        pedido.setIdFactura(0);
+        pedido.setIdRemito(0);
+        pedido.setIdUsuario(Inicio.usuario.getNumeroId());
+        pedido.setTotal(cotizacion.getTotal());
+        pedido.setId(pedPedido.nuevoPedido(pedido));
+        cotizacion.setEstado(1);
+        cotiza.modificarCotizacion(cotizacion);
+        
+        while(it.hasNext()){
+            detallePedido=new DetallePedidos();
+            detalleCotizacion=(DetalleCotizacion)it.next();
+            detallePedido.setCantidad(detalleCotizacion.getCantidad());
+            detallePedido.setCantidadFacturada(0.00);
+            detallePedido.setCantidadRemitida(0.00);
+            detallePedido.setDescripcionArticulo(detalleCotizacion.getDescripcionArticulo());
+            detallePedido.setDescuento(detalleCotizacion.getDescuento());
+            detallePedido.setIdArticulo(detalleCotizacion.getIdArticulo());
+            detallePedido.setIdCliente(detalleCotizacion.getIdCliente());
+            detallePedido.setObservaciones(detalleCotizacion.getObservaciones());
+            detallePedido.setPrecioUnitario(detalleCotizacion.getPrecioUnitario());
+            detallePedido.setIdPedido(pedido.getId());
+            detPedido.nuevoPedido(detallePedido);
+            
+            
+        }
+        
+        
     }
 
     @Override

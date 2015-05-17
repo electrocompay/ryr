@@ -6,6 +6,7 @@ package facturacion.pantallas;
 
 import Cotizaciones.Cotizable;
 import Cotizaciones.Cotizacion;
+import Cotizaciones.DetalleCotizacion;
 import Cotizaciones.IngresoDeCotizacion;
 import Cotizaciones.ModificacionDeCotizacion;
 import Pedidos.ImprimirPedido;
@@ -85,7 +86,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
         this.jTable1.setModel(modelo);
         Pedable pedable=new Pedidos();
         Pedidos pedidos=new Pedidos();
-        listadoPed=pedable.listarPorCliente(cliTa.getCodigoId());
+        listadoPed=pedable.listarPorEstado(cliTa.getCodigoId(),0);
         modelo1=pedable.mostrarListado(listadoPed);
         this.jTable2.setModel(modelo1);
         
@@ -249,6 +250,11 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Cart.png"))); // NOI18N
         jButton3.setText("Pedido");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Print.png"))); // NOI18N
         jButton4.setText("Modificar");
@@ -462,6 +468,23 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
         modificar.setVisible(true);
         modificar.toFront();
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        Cotizacion cotizacion=new Cotizacion();
+        cotizacion=(Cotizacion)listadoCot.get(this.jTable1.getSelectedRow());
+        Cotizable coti=new Cotizacion();
+        ArrayList detalleC=new ArrayList();
+        Cotizable detC=new DetalleCotizacion();
+        detalleC=detC.cargarDetalle(cotizacion.getId());
+        coti.transformarEnPedido(cotizacion, detalleC);
+        this.jTable2.removeAll();
+        Pedable pedable=new Pedidos();
+        listadoPed.clear();
+         listadoPed=pedable.listarPorEstado(cliTa.getCodigoId(),0);
+        modelo1=pedable.mostrarListado(listadoPed);
+        this.jTable2.setModel(modelo1);
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
     private void ControlaInstancia(JInternalFrame inter){
         /*
         boolean mostrar=true;

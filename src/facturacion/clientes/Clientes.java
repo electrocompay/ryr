@@ -819,7 +819,7 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
                     cli.setTelefono(rs.getString("TELEFONO_1"));
                     cli.setLocalidad(rs.getString("localidad"));
                     cli.setCoeficienteListaDeprecios(rs.getDouble("coeficiente"));
-                    cli.setCupoDeCredito(rs.getDouble("CUPO_CREDI"));
+                    cli.setCupoDeCredito(rs.getDouble("cupodecredito"));
                     cli.setResponsable(rs.getString("responsable"));
                     cli.setFantasia(rs.getString("fantasia"));
                     cli.setCelular(rs.getString("celular"));

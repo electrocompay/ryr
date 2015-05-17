@@ -11,7 +11,7 @@ import interfaces.Comprobable;
 import interfacesPrograma.Facturar;
 import java.util.ArrayList;
 import java.util.Iterator;
-import objetos.Articulos;
+import Articulos.Articulos;
 import tablas.MiTablaRemitosInternos;
 
 /**

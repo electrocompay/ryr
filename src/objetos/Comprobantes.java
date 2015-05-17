@@ -4,6 +4,7 @@
  */
 package objetos;
 
+import Articulos.Articulos;
 import facturacion.clientes.Clientes;
 import interfaceGraficas.Inicio;
 import interfaces.Transaccionable;
