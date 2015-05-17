@@ -18,7 +18,7 @@ import objetos.Conecciones;
  *
  * @author mauro di
  */
-public class Rubros implements Personalizable{
+public class Rubros implements Personalizable,Rubrable{
     private Integer id;
     private String descripcion;
 
@@ -45,7 +45,12 @@ public class Rubros implements Personalizable{
 
     @Override
     public Boolean modificar(Object objeto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Rubros rubro=new Rubros();
+        rubro=(Rubros)objeto;
+        String sql="update rubros set descripcion='"+rubro.getDescripcion()+"' where id="+rubro.getId();
+        Transaccionable tra=new Conecciones();
+        tra.guardarRegistro(sql);
+        return true;
     }
 
     @Override
@@ -95,6 +100,62 @@ public class Rubros implements Personalizable{
     @Override
     public ArrayList listarPorCuit(String cuit) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Integer nuevo(Object rubro) {
+        Rubros rubros=new Rubros();
+        rubros=(Rubros)rubro;
+        String sql="insert into rubros (descripcion) values ('"+rubros.getDescripcion()+"')";
+        Transaccionable tra=new Conecciones();
+        tra.guardarRegistro(sql);
+        int ultimo=0;
+        sql="select LAST_INSERT_ID()";
+        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        try {
+            while(rs.next()){
+                ultimo=rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ultimo;
+    }
+
+    @Override
+    public void modificarPrecioRubro(Integer idRubro, Double precio) {
+        Double coe=precio / 100;
+        coe=coe + 1;
+        System.out.println("resultado :"+coe);
+        String sql="update articulos set precio=round((precio * "+coe+"),4) where idrubro="+idRubro;
+        Transaccionable tra=new Conecciones();
+        tra.guardarRegistro(sql);
+        
+    }
+
+    @Override
+    public ArrayList listarPorRubro(Integer idRubro) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList listarPorSubRubro(Integer idSubRubro) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void eliminar(Integer idRubro) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void modificarCostoPorRubro(Integer idRubro, Double precio) {
+        Double coe=precio / 100;
+        coe=coe + 1;
+        System.out.println("resultado :"+coe);
+        String sql="update articulos set costo=round((costo * "+coe+"),4) where idrubro="+idRubro;
+        Transaccionable tra=new Conecciones();
+        tra.guardarRegistro(sql);
     }
     
     

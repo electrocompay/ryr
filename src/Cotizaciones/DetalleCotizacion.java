@@ -176,7 +176,7 @@ public class DetalleCotizacion implements Cotizable{
        DetalleCotizacion detalle=new DetalleCotizacion();
        detalle=(DetalleCotizacion)coti;
        int dev=0;
-       String sql="insert into detallecotizaciones (idcotizacion,idarticulo,descripcionarticulo,idcliente,cantidad,preciounitario,descuento,observaciones) values ("+detalle.getIdCotizacion()+","+detalle.getIdArticulo()+",'"+detalle.getDescripcionArticulo()+"',"+detalle.getIdCliente()+","+detalle.getCantidad()+","+detalle.getPrecioUnitario()+","+detalle.getDescuento()+",'xx')";
+       String sql="insert into detallecotizaciones (idcotizacion,idarticulo,descripcionarticulo,idcliente,cantidad,preciounitario,descuento,observaciones) values ("+detalle.getIdCotizacion()+","+detalle.getIdArticulo()+",'"+detalle.getDescripcionArticulo()+"',"+detalle.getIdCliente()+","+detalle.getCantidad()+",round("+detalle.getPrecioUnitario()+",4),"+detalle.getDescuento()+",'xx')";
        Transaccionable tra=new Conecciones();
        tra.guardarRegistro(sql);
        
@@ -187,7 +187,7 @@ public class DetalleCotizacion implements Cotizable{
     public Object modificarCotizacion(Object coti) {
         DetalleCotizacion detalle=new DetalleCotizacion();
         detalle=(DetalleCotizacion)coti;
-        String sql="update detallecotizaciones set descripcionarticulo='"+detalle.getDescripcionArticulo()+"',cantidad="+detalle.getCantidad()+", preciounitario="+detalle.getPrecioUnitario()+",descuento="+detalle.getDescuento()+" where id="+detalle.getId();
+        String sql="update detallecotizaciones set descripcionarticulo='"+detalle.getDescripcionArticulo()+"',cantidad="+detalle.getCantidad()+", preciounitario=round("+detalle.getPrecioUnitario()+",4),descuento="+detalle.getDescuento()+" where id="+detalle.getId();
         Transaccionable tra=new Conecciones();
         tra.guardarRegistro(sql);
         return detalle;

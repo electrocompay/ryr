@@ -135,7 +135,7 @@ public class pdfsJavaGenerador {
                 //vencimiento=saldo.getVencimientoString();
                 
                 descripcion="Numero Resumen de cta ";
-                monto=String.valueOf(saldo.getPrecioUnitario());
+                monto=Numeros.ConvertirNumero(saldo.getPrecioUnitario());
                 recargo="10%";
                 total="nada";
                 //recargo=String.valueOf(saldo.getRecargo());
@@ -152,11 +152,11 @@ public class pdfsJavaGenerador {
                 cb.setTextMatrix(440,renglon);
                 tot=saldo.getCantidad() * saldo.getPrecioUnitario();
                 tot=tot * 1.21;
-                cb.showText(String.valueOf(tot));
+                cb.showText(Numeros.ConvertirNumero(tot));
                 renglon=renglon - 20;
                 
             }
-            totalFinal=String.valueOf(doc.getTotal());
+            totalFinal=Numeros.ConvertirNumero(doc.getTotal());
             cb.setTextMatrix(380,renglon);
             cb.showText("TOTAL "+totalFinal);
             

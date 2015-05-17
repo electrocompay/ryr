@@ -18,4 +18,5 @@ public interface Rubrable {
     public ArrayList listarPorRubro(Integer idRubro);
     public ArrayList listarPorSubRubro(Integer idSubRubro);
     public void eliminar(Integer idRubro);
+    public void modificarCostoPorRubro(Integer idRubro,Double precio);
 }

@@ -13,7 +13,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JTextField;
 import Articulos.Articulos;
+import Articulos.Rubrable;
 import Articulos.Rubros;
+import Articulos.SubRubros;
 import tablas.MiModeloTablaArticulos;
 
 /**
@@ -28,6 +30,7 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
     private ArrayList lstPorSuc=new ArrayList();
     private ArrayList lstProveedores=new ArrayList();
     private ArrayList lstRubros=new ArrayList();
+    private ArrayList lstSubRubros=new ArrayList();
 
     public ArticulosMod(Articulos art) {
         arti=art;
@@ -59,6 +62,22 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
             rengl++;
         }
         this.jComboBox1.setSelectedIndex(posicion);
+        Iterator itSr=lstSubRubros.listIterator();
+        SubRubros sub=new SubRubros();
+        rengl=0;
+        posicion=0;
+        rubroI=0;
+        artI=arti.getIdSubRubro();
+        while(itSr.hasNext()){
+            sub=(SubRubros)itSr.next();
+            rubroI=sub.getId();
+            if(rubroI==artI){
+                posicion=rengl;
+            }
+            rengl++;
+        }
+        System.out.println("posicion "+posicion+"cantidad "+lstSubRubros.size());
+        this.jComboBox3.setSelectedIndex(posicion);
         this.jTextField1.setText(arti.getDescripcionArticulo());
         
         //this.jTextField2.setText(String.valueOf(totalActual));
@@ -212,6 +231,15 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
 
         jLabel8.setText("Sub Rubro");
 
+        Rubrable perRu=new SubRubros();
+        SubRubros subRubro=new SubRubros();
+        lstSubRubros=perRu.listarPorRubro(0);
+        Iterator iRu=lstSubRubros.listIterator();
+        while(iRu.hasNext()){
+            subRubro=(SubRubros)iRu.next();
+            jComboBox3.addItem(subRubro.getDescripcion());
+        }
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -339,7 +367,10 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
         arti.setProveedorId(proveedor.getNumero());
         Rubros rubro=new Rubros();
         rubro=(Rubros)lstRubros.get(this.jComboBox1.getSelectedIndex());
-        arti.setRubro(rubro.getId());
+        arti.setRubroId(rubro.getId());
+        SubRubros sub=new SubRubros();
+        sub=(SubRubros)lstSubRubros.get(this.jComboBox3.getSelectedIndex());
+        arti.setIdSubRubro(sub.getId());
         if(this.jCheckBox3.isSelected()){
             arti.setIdCombo(1);
         }else{

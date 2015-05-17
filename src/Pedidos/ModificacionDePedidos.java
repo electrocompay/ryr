@@ -29,6 +29,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import Articulos.Articulos;
+import Sucursales.ListasDePrecios;
 import objetos.Comprobantes;
 import objetos.Conecciones;
 import tablas.MiModeloTablaBuscarCliente;
@@ -52,10 +53,12 @@ public class ModificacionDePedidos extends javax.swing.JInternalFrame {
     private static Comprobantes comp=new Comprobantes();
     private Pedidos pedido=new Pedidos();
     private ArrayList listadoPed=new ArrayList();
+    private ListasDePrecios lista;
     
     public ModificacionDePedidos() {
         //Articulos.CargarMap();
         cliT=new Clientes("1");
+        lista=new ListasDePrecios(cliT.getListaDePrecios());
         //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
         initComponents();
@@ -77,6 +80,7 @@ public class ModificacionDePedidos extends javax.swing.JInternalFrame {
         DetallePedidos detallePedido=new DetallePedidos();
         Pedable detP=new DetallePedidos();
         cliT=new Clientes();
+        lista=new ListasDePrecios(cliT.getListaDePrecios());
         cliT=(Clientes)fact.cargarPorCodigoAsignado(pedido.getIdCliente());
         listadoPed=detP.cargarDetallePedido(pedido.getId());
         detalleDelPedido=detP.convertirAArticulos(listadoPed);
@@ -676,7 +680,9 @@ public class ModificacionDePedidos extends javax.swing.JInternalFrame {
                     articul.setNumeroId(arti.getNumeroId());
                     Double precio=comparar.comparaConCotizaciones(cliT.getCodigoId(),arti.getNumeroId());
                     Double precio2=comparar.comparaConPedidos(cliT.getCodigoId(),arti.getNumeroId());
-                    articul.setPrecioUnitarioNeto(arti.getPrecioUnitarioNeto());
+                    Double precioU=arti.getPrecioUnitarioNeto() * lista.getCoeficiente();
+                    precioU= precioU * cliT.getCoeficienteListaDeprecios();
+                    articul.setPrecioUnitarioNeto(precioU);
                     
                     if(precio > 0){
                         String cartel="confirma el precio unitario ultimo cotizado ???? :"+precio;
@@ -1042,8 +1048,9 @@ private void agregarRenglonTabla(){
             fila[5]=String.valueOf(pedidos.getPrecioDeCosto());
             busC.addRow(fila);
         }
+        montoTotal=montoTotal * 1.21;
         String total=String.valueOf(montoTotal);
-        this.jLabel2.setText(total);
+        this.jLabel1.setText("TOTAL PEDIDO  "+total);
         listadoDeBusqueda.clear();
         cargarLista(listadoDeBusqueda);
         this.jCheckBox1.setSelected(true);
@@ -1059,7 +1066,7 @@ private void montrarMonto(){
     Double total=montoTotal;
     //Double total=montoTotal * cliT.getDescuento();
     //comp.setMontoTotal(total);
-    this.jLabel2.setText(String.valueOf(total));
+    this.jLabel1.setText("TOTAL PEDIDO  "+String.valueOf(total));
 }
 private void verificar(){
     int cantidad=this.jTable1.getRowCount();

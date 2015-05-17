@@ -28,6 +28,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import Articulos.Articulos;
+import Sucursales.ListasDePrecios;
 import objetos.Comprobantes;
 import objetos.Conecciones;
 import tablas.MiModeloTablaBuscarCliente;
@@ -49,10 +50,12 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
     private static ArrayList listadoDeBusqueda=new ArrayList();
     private static Double montoTotal=0.00;
     private static Comprobantes comp=new Comprobantes();
+    private ListasDePrecios lista;
     
     public IngresoDeCotizacion() {
         //Articulos.CargarMap();
         cliT=new Clientes("1");
+        lista=new ListasDePrecios(cliT.getListaDePrecios());
         //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
         initComponents();
@@ -70,7 +73,7 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
     public IngresoDeCotizacion(Clientes clienteTango) {
         cliT=new Clientes();
         cliT=(Clientes)clienteTango;
-        
+        lista=new ListasDePrecios(cliT.getListaDePrecios());
 //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
         initComponents();
@@ -664,7 +667,10 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
                     articul.setNumeroId(arti.getNumeroId());
                     Double precio=comparar.comparaConCotizaciones(cliT.getCodigoId(),arti.getNumeroId());
                     Double precio2=comparar.comparaConPedidos(cliT.getCodigoId(),arti.getNumeroId());
-                    articul.setPrecioUnitarioNeto(arti.getPrecioUnitarioNeto());
+                    // aca tengo que modificar el precio unitario segun el coeficiente del cliente y la lista
+                    Double precioU=arti.getPrecioUnitarioNeto() * lista.getCoeficiente();
+                    precioU= precioU * cliT.getCoeficienteListaDeprecios();
+                    articul.setPrecioUnitarioNeto(precioU);
                     
                     if(precio > 0){
                         String cartel="confirma el precio unitario ultimo cotizado ???? :"+precio;
@@ -918,7 +924,8 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
         int posicion=this.jTable1.getSelectedRow();
         Articulos pedidos;
         pedidos=(Articulos)detalleDelPedido.get(posicion);
-        Double precio=Double.parseDouble(JOptionPane.showInputDialog("Ingrese el nuevo valor unitario s/iva",pedidos.getPrecioUnitarioNeto()));
+        Double precioU=pedidos.getPrecioUnitarioNeto();
+        Double precio=Double.parseDouble(JOptionPane.showInputDialog("Ingrese el nuevo valor unitario s/iva",precioU));
         pedidos.setPrecioUnitarioNeto(precio);
         pedidos.setDescuento(1);
         //detalleDelPedido.clear();
@@ -985,20 +992,25 @@ private void agregarRenglonTabla(){
             fila[1]=desc;
             fila[2]=cant;
             Double precioUnitario=pedidos.getPrecioUnitarioNeto();
+            
+            //precioUnitario=precioUnitario * cliT.getCoeficienteListaDeprecios();
+            
             Double valor=precioUnitario * pedidos.getCantidad();
             //precioUnitario= pedidos.getPrecioUnitario() * cliT.getCoeficienteListaDeprecios();
             //Double valor=(pedidos.getCantidad() * precioUnitario);
-            valor=valor * cliT.getCoeficienteListaDeprecios();
+            //valor=valor * cliT.getCoeficienteListaDeprecios();
             pedidos.setPrecioUnitario(valor);
             String val=String.valueOf(valor);
             montoTotal=montoTotal + valor;
+            //precioUnitario=precioUnitario * cliT.getCoeficienteListaDeprecios();
             fila[3]=val;
             fila[4]=String.valueOf(precioUnitario);
             fila[5]=String.valueOf(pedidos.getPrecioDeCosto());
             busC.addRow(fila);
         }
+        montoTotal=montoTotal * 1.21;
         String total=String.valueOf(montoTotal);
-        this.jLabel2.setText(total);
+        this.jLabel1.setText("TOTAL COTIZACION:  "+total);
         listadoDeBusqueda.clear();
         cargarLista(listadoDeBusqueda);
         this.jCheckBox1.setSelected(true);
@@ -1014,7 +1026,7 @@ private void montrarMonto(){
     Double total=montoTotal;
     //Double total=montoTotal * cliT.getDescuento();
     //comp.setMontoTotal(total);
-    this.jLabel2.setText(String.valueOf(total));
+    this.jLabel1.setText("TOTAL COTIZACION:  "+String.valueOf(total));
 }
 private void verificar(){
     int cantidad=this.jTable1.getRowCount();

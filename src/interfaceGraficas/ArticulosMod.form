@@ -273,6 +273,9 @@
               <StringArray count="0"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="Rubrable perRu=new SubRubros();&#xa;SubRubros subRubro=new SubRubros();&#xa;lstSubRubros=perRu.listarPorRubro(0);&#xa;Iterator iRu=lstSubRubros.listIterator();&#xa;while(iRu.hasNext()){&#xa;    subRubro=(SubRubros)iRu.next();&#xa;    jComboBox3.addItem(subRubro.getDescripcion());&#xa;}"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

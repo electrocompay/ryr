@@ -244,7 +244,7 @@ public class Cotizacion implements Cotizable{
     public Integer nuevaCotizacion(Object coti) {
         Cotizacion cotizacion=new Cotizacion();
         cotizacion=(Cotizacion)coti;
-        String sql="insert into cotizaciones (idcliente,fecha,vencimiento,total,idusuario) values ("+cotizacion.getIdCliente()+",'"+cotizacion.getFecha()+"','"+cotizacion.getVencimiento()+"',"+cotizacion.getTotal()+","+cotizacion.getIdUsuario()+")";
+        String sql="insert into cotizaciones (idcliente,fecha,vencimiento,total,idusuario) values ("+cotizacion.getIdCliente()+",'"+cotizacion.getFecha()+"','"+cotizacion.getVencimiento()+"',round("+cotizacion.getTotal()+",4),"+cotizacion.getIdUsuario()+")";
         Transaccionable tra=new Conecciones();
         tra.guardarRegistro(sql);
         int ultimo=0;
@@ -265,7 +265,7 @@ public class Cotizacion implements Cotizable{
     public Object modificarCotizacion(Object coti) {
         Cotizacion cotizacion=new Cotizacion();
         cotizacion=(Cotizacion)coti;
-        String sql="update cotizaciones set total="+cotizacion.getTotal()+", estado="+cotizacion.getEstado()+",idpedido="+cotizacion.getIdPedido()+" where id="+cotizacion.getId();
+        String sql="update cotizaciones set total=round("+cotizacion.getTotal()+",4), estado="+cotizacion.getEstado()+",idpedido="+cotizacion.getIdPedido()+" where id="+cotizacion.getId();
         Transaccionable tra=new Conecciones();
         tra.guardarRegistro(sql);
         
