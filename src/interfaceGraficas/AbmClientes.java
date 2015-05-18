@@ -586,6 +586,7 @@ jTable1.setModel(miTabla);
         clienteTango=(Clientes)listadoClientes.get(this.jTable1.getSelectedRow());
         NuevoCliente clienteNuevo=new NuevoCliente(clienteTango);
         Inicio.jDesktopPane1.add(clienteNuevo);
+        clienteNuevo.setTitle(clienteTango.getRazonSocial());
         try {
             clienteNuevo.setMaximum(true);
         } catch (PropertyVetoException ex) {

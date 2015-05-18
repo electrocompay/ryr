@@ -680,6 +680,11 @@ public class Inicio extends javax.swing.JFrame {
     private void jMenu6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu6MouseClicked
          AbmClientes clie=new AbmClientes();
         jDesktopPane1.add(clie);
+        try {
+            clie.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
         clie.setVisible(true);
         clie.toFront();
     }//GEN-LAST:event_jMenu6MouseClicked

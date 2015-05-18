@@ -4,6 +4,7 @@
  */
 package facturacion.pantallas;
 
+import Conversores.Numeros;
 import Cotizaciones.Cotizable;
 import Cotizaciones.Cotizacion;
 import Cotizaciones.DetalleCotizacion;
@@ -29,6 +30,7 @@ import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
 import javax.swing.table.DefaultTableModel;
 import objetos.CondicionesIva;
+import objetos.Localidades;
 
 /**
  *
@@ -46,6 +48,9 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
     private ArrayList listadoPed=new ArrayList();
     DefaultTableModel modelo=new DefaultTableModel();
     DefaultTableModel modelo1=new DefaultTableModel();
+    private CondicionesIva condicion=new CondicionesIva();
+    private ListasDePrecios listaPrecio=new ListasDePrecios();
+    private Localidades localidad=new Localidades();
     
     /**
      * Creates new form NuevoCliente
@@ -58,26 +63,70 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
         initComponents();
         cliTa=(Clientes)client;
         this.jTextField1.setText(cliTa.getRazonSocial());
+        //this.setTitle("MODIFICACION DATOS DEL CLIENTE - "+cliTa.getRazonSocial());
         this.jTextField2.setText(cliTa.getDireccion());
-        switch (cliTa.getTipoIva()){
-           case 1:
-               this.jComboBox1.setSelectedIndex(0);
-               break;
-           case 2:
-               this.jComboBox1.setSelectedIndex(1);
-               break;
-           case 3:
-               this.jComboBox1.setSelectedIndex(2);
-               break;
-           default:
-               this.jComboBox1.setSelectedIndex(0);
-               break;
-       }
+        Iterator iIva=listadoIva.listIterator();
+        int tipoIvaC=cliTa.getTipoIva();
+        int rengl=0;
+        int posicion=0;
+        while(iIva.hasNext()){
+            condicion=(CondicionesIva)iIva.next();
+            if(tipoIvaC==condicion.getId()){
+                posicion=rengl;
+            }
+            rengl++;
+        }
+        this.jComboBox1.setSelectedIndex(posicion);
+        
         this.jTextField3.setText(cliTa.getNumeroDeCuit());
         this.jTextField4.setText(cliTa.getTelefono());
-        this.jComboBox2.setSelectedIndex(cliTa.getListaDePrecios()-1);
+        tipoIvaC=cliTa.getListaDePrecios();
+        rengl=0;
+        posicion=0;
+        Iterator iLst=listadoL.listIterator();
+        while(iLst.hasNext()){
+            listaPrecio=(ListasDePrecios)iLst.next();
+            if(tipoIvaC==listaPrecio.getNumeroLista()){
+                posicion=rengl;
+            }
+            rengl++;
+        }
+        this.jComboBox2.setSelectedIndex(posicion);
+        String loc=cliTa.getLocalidad();
+        String loc2="";
+        rengl=0;
+        posicion=0;
+        Iterator itLoc=listadoLoc.listIterator();
+        while(itLoc.hasNext()){
+            localidad=(Localidades)itLoc.next();
+            loc2=localidad.getDescripcion();
+            if(loc.equals(loc2)){
+                posicion=rengl;
+            }
+            rengl++;
+        }
+        this.jComboBox3.setSelectedIndex(posicion);
+        this.jTextField5.setText(String.valueOf(cliTa.getCupoDeCredito()));
+        Double coef=0.00;
+        coef=cliTa.getCoeficienteListaDeprecios() - 1;
+        /*
+        if(cliTa.getCoeficienteListaDeprecios() < 1){
+            
+            coef=coef * 100;
+        }else{
+            coef=0.00;
+        }
+        */
+        this.jTextField6.setText(String.valueOf(coef));
+        this.jTextField7.setText(cliTa.getResponsable());
+        this.jTextField8.setText(cliTa.getFantasia());
+        this.jTextField9.setText(cliTa.getCelular());
+        this.jTextField10.setText(cliTa.getDireccionFantasia());
+        this.jTextField11.setText(cliTa.getFax());
+        this.jTextField12.setText(cliTa.getEmail());
+        
         modificacion=1;
-        this.setTitle("MODIFICACION DATOS DEL CLIENTE");
+        //this.setTitle("MODIFICACION DATOS DEL CLIENTE");
         Cotizable cotizable=new Cotizacion();
         Cotizacion cotizacion=new Cotizacion();
         listadoCot=cotizable.listarPorEstado(cliTa.getCodigoId(),0);
@@ -128,6 +177,12 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
         jTextField9 = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jTextField10 = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        jTextField11 = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        jTextField12 = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        jComboBox3 = new javax.swing.JComboBox();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -208,6 +263,25 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
 
         jTextField10.setText("jTextField10");
 
+        jLabel15.setText("Fax :");
+
+        jTextField11.setText("jTextField11");
+
+        jLabel16.setText("email  :");
+
+        jTextField12.setText("jTextField12");
+
+        jLabel17.setText("Localidad :");
+
+        Localidades localidad1=new Localidades();
+        Busquedas busca=new Localidades();
+        listadoLoc=busca.listar("");
+        Iterator iLoc=listadoLoc.listIterator();
+        while(iLoc.hasNext()){
+            localidad1=(Localidades)iLoc.next();
+            jComboBox3.addItem(localidad1.getDescripcion());
+        }
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -218,6 +292,9 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel16, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -243,7 +320,10 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
                             .addComponent(jTextField7)
                             .addComponent(jTextField8)
                             .addComponent(jTextField9)
-                            .addComponent(jTextField10))))
+                            .addComponent(jTextField10)
+                            .addComponent(jTextField11)
+                            .addComponent(jTextField12)
+                            .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(50, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -297,9 +377,21 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
                     .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15)
+                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16)
+                    .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17)
+                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTable1.setModel(modelo);
@@ -438,26 +530,11 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
        }
        cli.setRazonSocial(this.jTextField1.getText());
        cli.setDireccion(this.jTextField2.getText());
-       String condicion=null;
+       String condicion1=null;
        Integer tipo=0;
-       switch (this.jComboBox1.getSelectedIndex()){
-           case 0:
-               condicion="CF ";
-               tipo=1;
-               break;
-           case 1:
-               condicion="RI ";
-               tipo=2;
-               break;
-           case 2:
-               condicion="EX ";
-               tipo=3;
-               break;
-           default:
-               condicion="CF ";
-               tipo=1;
-               break;
-       }
+       condicion=(CondicionesIva)listadoIva.get(this.jComboBox1.getSelectedIndex());
+       tipo=condicion.getId();
+       
        if(this.jComboBox1.getSelectedIndex() < 4){
            cli.setEmpresa("sd");
        }else{
@@ -467,9 +544,22 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
        lista=(ListasDePrecios)listadoL.get(this.jComboBox2.getSelectedIndex());
        cli.setListaDePrecios(lista.getNumeroLista());
        cli.setTipoIva(tipo);
-       cli.setCondicionIva(condicion);
+       cli.setCondicionIva(condicion1);
        cli.setNumeroDeCuit(this.jTextField3.getText());
        cli.setTelefono(this.jTextField4.getText());
+       cli.setCupoDeCredito(Numeros.ConvertirStringADouble(this.jTextField5.getText()));
+       Double coef=Numeros.ConvertirStringADouble(this.jTextField6.getText()) / 100;
+       coef=coef + 1;
+       cli.setCoeficienteListaDeprecios(coef);
+       cli.setResponsable(this.jTextField7.getText());
+       cli.setFantasia(this.jTextField8.getText());
+       cli.setCelular(this.jTextField9.getText());
+       cli.setFax(this.jTextField11.getText());
+       cli.setDireccionFantasia(this.jTextField10.getText());
+       cli.setEmail(this.jTextField12.getText());
+       localidad=(Localidades)listadoLoc.get(this.jComboBox3.getSelectedIndex());
+       cli.setLocalidad(localidad.getDescripcion());
+       
        Facturar fact=new Clientes();
        if(modificacion==1){
           
@@ -579,12 +669,16 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
+    private javax.swing.JComboBox jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -601,6 +695,8 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
+    private javax.swing.JTextField jTextField11;
+    private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
