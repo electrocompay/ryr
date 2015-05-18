@@ -290,7 +290,7 @@ public class Cajas extends Sucursales implements Cajeables{
     }
     private Integer NumeroDeComprobanteActivoMovCaja(){
         Integer numeroAct=0;
-        String sql="select tipocomprobantes.numeroActivo from tipocomprobantes where numero=12";
+        String sql="select tipocomprobantes.numeroActivo from tipocomprobantes where id=6";
         Transaccionable tra;
         /*
         if(Inicio.coneccionRemota){
@@ -311,7 +311,7 @@ public class Cajas extends Sucursales implements Cajeables{
         } catch (SQLException ex) {
             Logger.getLogger(Cajas.class.getName()).log(Level.SEVERE, null, ex);
         }
-        sql="update tipocomprobantes set numeroActivo="+numeroAct+" where numero=12";
+        sql="update tipocomprobantes set numeroActivo=numeroActivo + 1 where id=6";
         if(tra.guardarRegistro(sql));//System.err.println(sql);
         return numeroAct;
     }
@@ -470,16 +470,17 @@ public class Cajas extends Sucursales implements Cajeables{
        try {
             Transaccionable tra=new Conecciones();
             int cajaNumeroAct=0;
-            ResultSet rs=tra.leerConjuntoDeRegistros("select numero from caja");
-            while(rs.next()){
-                    cajaNumeroAct=rs.getInt("numero");
-            }
-            rs.close();
-            cajaNumeroAct++;
-            cajaNumeroAct=Inicio.usuario.getEquipo() + cajaNumeroAct;
+            ResultSet rs;
+            
+            
             Double saldoI=cajaNueva.getSaldoInicial();
-            String sql="insert into caja (numero,numeroSucursal,numeroUsuario,tipoMovimiento,saldoInicial,tipo,estado) values ("+cajaNumeroAct+","+Inicio.sucursal.getNumero()+","+Inicio.usuario.getNumero()+",9,"+cajaNueva.saldoInicial+","+tipo+",0)";
+            String sql="insert into caja (numeroSucursal,numeroUsuario,tipoMovimiento,saldoInicial,tipo,estado) values ("+Inicio.sucursal.getNumero()+","+Inicio.usuario.getNumero()+",1,"+cajaNueva.saldoInicial+","+tipo+",0)";
             tra.guardarRegistro(sql);
+            sql="select LAST_INSERT_ID()";
+            rs=tra.leerConjuntoDeRegistros(sql);
+            while(rs.next()){
+                cajaNumeroAct=rs.getInt(1);
+            }
             //cajaNueva=new Cajas(cajaNumeroAct);
             /*
             sql="select LAST_INSERT_ID()";
@@ -492,7 +493,7 @@ public class Cajas extends Sucursales implements Cajeables{
             */
                 
                 int nume=NumeroDeComprobanteActivoMovCaja();
-                sql="insert into movimientoscaja (numeroUsuario,numeroSucursal,monto,tipoMovimiento,idCaja,numerocomprobante,tipocomprobante,pagado) values ("+Inicio.usuario.getNumeroId()+","+Inicio.sucursal.getNumero()+","+cajaNueva.getSaldoInicial()+",9,"+cajaNumeroAct+","+nume+",0,0)";
+                sql="insert into movimientoscaja (numeroUsuario,numeroSucursal,monto,tipoMovimiento,idCaja,numerocomprobante,tipocomprobante,pagado) values ("+Inicio.usuario.getNumeroId()+","+Inicio.sucursal.getNumero()+","+cajaNueva.getSaldoInicial()+",1,"+cajaNumeroAct+","+nume+",0,0)";
                 tra.guardarRegistro(sql);
                 cajaNueva.setNumero(cajaNumeroAct);
                 int pos=cajaNueva.getTipoMovimiento();
@@ -502,14 +503,15 @@ public class Cajas extends Sucursales implements Cajeables{
                             listOperaciones=Operaciones.getListOp();
                             }
                  */ 
+                
                 Operaciones operacion=(Operaciones)listOperaciones.get(pos);
                 String desc=operacion.getDescripcion();
                 cajaNueva.setDescripcionMovimiento(desc);
             
             listadoCajas.add(cajaNueva);
             
-            sql="insert into caja (numero,numeroSucursal,numeroUsuario,tipoMovimiento,saldoInicial,tipo,estado) values ("+cajaNumeroAct+","+Inicio.sucursal.getNumero()+","+Inicio.usuario.getNumero()+",9,"+saldoI+","+tipo+",0)";
-            BkDeConeccion.guardarSentencias(sql);
+            //sql="insert into caja (numero,numeroSucursal,numeroUsuario,tipoMovimiento,saldoInicial,tipo,estado) values ("+cajaNumeroAct+","+Inicio.sucursal.getNumero()+","+Inicio.usuario.getNumero()+",9,"+saldoI+","+tipo+",0)";
+            //BkDeConeccion.guardarSentencias(sql);
             /*
             sql="select LAST_INSERT_ID()";
             rs=tra.leerConjuntoDeRegistros(sql);

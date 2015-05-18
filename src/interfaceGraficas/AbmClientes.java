@@ -627,7 +627,34 @@ private void cargarTabla(){
         MiModeloTablaBuscarCliente busC=new MiModeloTablaBuscarCliente();
         this.jTable1.removeAll();
         //ArrayList listadoPedidos=new ArrayList();
-        this.jTable1.setModel(busC);
+        
+        Clientes pedidos=new Clientes();
+        busC.addColumn("COD CLIENTE");
+busC.addColumn("RAZON SOCIAL");
+busC.addColumn("DIRECCION");
+busC.addColumn("TELEFONO");
+busC.addColumn("LOCALIDAD");
+busC.addColumn("CONTACTO");
+busC.addColumn("NOM. FANTASIA");
+busC.addColumn("CELULAR");
+busC.addColumn("COND IVA");
+Object[] fila=new Object[9];
+Iterator irP=listadoClientes.listIterator();
+while(irP.hasNext()){
+    pedidos=(Clientes) irP.next();
+    fila[0]=pedidos.getCodigoId();
+fila[1]=pedidos.getRazonSocial();
+fila[2]=pedidos.getDireccion();
+fila[3]=pedidos.getTelefono();
+fila[4]=pedidos.getLocalidad();
+fila[5]=pedidos.getResponsable();
+fila[6]=pedidos.getFantasia();
+fila[7]=pedidos.getCelular();
+fila[8]=pedidos.getCondicionIva();
+busC.addRow(fila);
+}
+this.jTable1.setModel(busC);
+      /*  
         Clientes pedidos=new Clientes();
         busC.addColumn("CODIGO CLIENTE");
         busC.addColumn("RAZON SOCIAL");
@@ -651,7 +678,7 @@ private void cargarTabla(){
             fila[7]=pedidos.getCondicionDeVenta();
             busC.addRow(fila);
         }
-        
+        */
 
 }
 

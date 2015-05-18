@@ -20,7 +20,7 @@ public class MiModeloTablaBuscarCliente extends DefaultTableModel {
           if(colum==4) {
             return int.class;
         }
-          if(colum==8) {
+          if(colum==9) {
             return Boolean.class;
         }
         return String.class;

@@ -109,6 +109,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
         this.jTextField5.setText(String.valueOf(cliTa.getCupoDeCredito()));
         Double coef=0.00;
         coef=cliTa.getCoeficienteListaDeprecios() - 1;
+        if(coef==0.00)coef=1.00;
         /*
         if(cliTa.getCoeficienteListaDeprecios() < 1){
             
@@ -558,7 +559,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
        cli.setDireccionFantasia(this.jTextField10.getText());
        cli.setEmail(this.jTextField12.getText());
        localidad=(Localidades)listadoLoc.get(this.jComboBox3.getSelectedIndex());
-       cli.setLocalidad(localidad.getDescripcion());
+       cli.setLocalidad(String.valueOf(localidad.getId()));
        
        Facturar fact=new Clientes();
        if(modificacion==1){
