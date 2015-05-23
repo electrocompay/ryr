@@ -285,7 +285,7 @@ public class BkDeConeccion implements Backpeable{
 
            //Inicio.coneccionRemota=ProbarConeccion();
        Transaccionable tras=new Conecciones();
-                       String sql="select * from usuarios where nombreUsuario like '"+nombre+"' and clave like '"+clave+"'";
+                       String sql="select * from usuarios where nombreUsuario like '"+nombre+"' and clave ='"+clave+"'";
                        //System.out.println(sql);
                        ResultSet rs=tras.leerConjuntoDeRegistros(sql);
                    

@@ -11,7 +11,6 @@ import Excel.LeerExcelClientes;
 import facturacion.clientes.Clientes;
 import facturacion.pantallas.IngresoDeFacturas;
 import Pedidos.IngresoDePedidos;
-import facturacion.pantallas.NuevoCliente;
 import interfacesPrograma.Busquedas;
 import interfacesPrograma.Facturar;
 import java.beans.PropertyVetoException;
