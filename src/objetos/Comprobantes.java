@@ -6,6 +6,8 @@ package objetos;
 
 import Articulos.Articulos;
 import facturacion.clientes.Clientes;
+import facturacion.clientes.Facturable;
+import facturacion.clientes.Facturas;
 import interfaceGraficas.Inicio;
 import interfaces.Transaccionable;
 import interfacesPrograma.Facturar;
@@ -240,12 +242,12 @@ public class Comprobantes implements Facturar{
         }else{
             tx=fc;
         }
-        String sql="select * from tipocomprobantes where descripcion like '"+tx+"%' and numeroSucursal ="+Inicio.sucursal.getNumero();
+        String sql="select * from tipocomprobantes where id="+tipoComprobante+" and numeroSucursal =1";
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {
             while(rs.next()){
             numeroComprobante=rs.getInt("numeroActivo");
-            idComp=rs.getInt("numero");   
+            idComp=rs.getInt("id");   
             }
             rs.close();
         } catch (SQLException ex) {
@@ -274,6 +276,18 @@ public class Comprobantes implements Facturar{
         Transaccionable tra=new Conecciones();
         Articulos articulo=new Articulos();
         Articulos art;
+        Facturas factura=new Facturas();
+        factura.setEstado(comp.getPagado());
+        factura.setIdCliente(comp.getCliente().getCodigoId());
+        factura.setIdPedido(0);
+        factura.setIdRemito(0);
+        factura.setIdUsuario(Inicio.usuario.getNumeroId());
+        factura.setNumeroFactura(numeroComprobante);
+        factura.setTipo(comp.getTipoComprobante());
+        factura.setTotal(comp.getMontoTotal());
+        Facturable ff=new Facturas();
+        factura.setId(ff.nuevaFactura(factura));
+        
         Boolean verif=false;
         String sql="";
         while(iComp.hasNext()){
@@ -289,6 +303,7 @@ public class Comprobantes implements Facturar{
                     cantidad=cantidad * art.getCantidad();
                     sql="insert into movimientosarticulos (tipoMovimiento,idArticulo,cantidad,numeroDeposito,tipoComprobante,numeroComprobante,numeroCliente,fechaComprobante,numeroUsuario,precioDeVenta,precioServicio,preciodecosto,idcaja) values ("+comp.getTipoMovimiento()+","+art.getNumeroId()+","+cantidad+","+Inicio.deposito.getNumero()+","+comp.getTipoComprobante()+","+comp.getNumero()+","+comp.getCliente().getCodigoId()+",'"+comp.getFechaEmision()+"',"+comp.getUsuarioGenerador()+","+articulo.getPrecioUnitario()+","+articulo.getPrecioServicio()+","+articulo.getPrecioDeCosto()+","+Inicio.caja.getNumero()+")";
                     verif=tra.guardarRegistro(sql);
+                    // aca debe grabar en detalle de facturas
                 }
             }else{
             
@@ -297,13 +312,13 @@ public class Comprobantes implements Facturar{
             }
         }
         
-            sql="insert into movimientoscaja (numeroUsuario,numeroSucursal,numeroComprobante,tipoComprobante,monto,tipoMovimiento,idCaja,idCliente,tipoCliente,pagado) values ("+comp.getUsuarioGenerador()+","+comp.getIdSucursal()+","+comp.getNumero()+","+comp.getTipoComprobante()+","+comp.getMontoTotal()+","+comp.getTipoMovimiento()+","+Inicio.caja.getNumero()+","+comp.getCliente().getCodigoId()+",1,"+comp.getPagado()+")";
+            sql="insert into movimientoscaja (numeroUsuario,numeroSucursal,numeroComprobante,tipoComprobante,monto,tipoMovimiento,idCaja,idCliente,tipoCliente,pagado) values ("+comp.getUsuarioGenerador()+","+comp.getIdSucursal()+","+comp.getNumero()+","+comp.getTipoComprobante()+",round("+comp.getMontoTotal()+",4),"+comp.getTipoMovimiento()+","+Inicio.caja.getNumero()+","+comp.getCliente().getCodigoId()+",1,"+comp.getPagado()+")";
             tra.guardarRegistro(sql);
-            sql="insert into movimientosclientes (numeroProveedor,monto,pagado,numeroComprobante,idUsuario,idCaja,idSucursal,tipoComprobante) values ("+comp.getCliente().getCodigoId()+","+comp.getMontoTotal()+","+comp.getPagado()+","+numeroComprobante+","+Inicio.usuario.getNumeroId()+","+Inicio.caja.getNumero()+","+Inicio.sucursal.getNumero()+","+comp.getTipoComprobante()+")";
+            sql="insert into movimientosclientes (numeroProveedor,monto,pagado,numeroComprobante,idUsuario,idCaja,idSucursal,tipoComprobante) values ("+comp.getCliente().getCodigoId()+",round("+comp.getMontoTotal()+",4),"+comp.getPagado()+","+numeroComprobante+","+Inicio.usuario.getNumeroId()+","+Inicio.caja.getNumero()+","+Inicio.sucursal.getNumero()+","+comp.getTipoComprobante()+")";
             tra.guardarRegistro(sql);
         
         System.out.println("SE RECEPCIONO BARBARO");
-        sql="update tipocomprobantes set numeroActivo="+numeroComprobante+" where numero="+idComp;
+        sql="update tipocomprobantes set numeroActivo="+numeroComprobante+" where id="+idComp;
         /*
         if(Inicio.coneccionRemota){
             

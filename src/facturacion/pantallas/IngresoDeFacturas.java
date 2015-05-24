@@ -774,8 +774,9 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
              * 
              */
             Double limite=cliT.getCupoDeCredito();
-            Double saldo=cliT.getSaldo();
-            Double totalGral=montoTotal + saldo;
+            //Double saldo=cliT.getSaldo();
+            //Double totalGral=montoTotal + saldo;
+            Double totalGral=montoTotal;
             if(limite < totalGral)noFacturar=1;
             
         }
