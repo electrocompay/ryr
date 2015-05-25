@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
 public interface Facturable {
     public Integer nuevaFactura(Object ped);
     public ArrayList cargarDetallefactura(Integer idPed);
-    public Object cargarEncabezadoFactura(Integer idPed);
+    public Object cargarEncabezadoFactura(Integer idPed,Integer tipo);
     public ArrayList listar();
     public ArrayList listarPorCliente(Integer idClient);
     public ArrayList listarPorEstado(Integer idClient,int estado);

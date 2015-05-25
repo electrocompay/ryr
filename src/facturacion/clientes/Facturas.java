@@ -147,8 +147,30 @@ public class Facturas implements Facturable{
     }
 
     @Override
-    public Object cargarEncabezadoFactura(Integer idPed) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Object cargarEncabezadoFactura(Integer idPed,Integer tipo) {
+        Facturas factura=new Facturas();
+        String sql="select * from facturas where numerofactura="+idPed+" and tipo="+tipo;
+        Transaccionable tra=new Conecciones();
+        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        try {
+            while(rs.next()){
+                factura.setEstado(rs.getInt("estado"));
+                factura.setFecha(rs.getDate("fecha"));
+                factura.setId(rs.getInt("id"));
+                factura.setIdCliente(rs.getInt("idcliente"));
+                factura.setIdPedido(rs.getInt("idpedido"));
+                factura.setIdRemito(rs.getInt("idremito"));
+                factura.setIdUsuario(rs.getInt("idusuario"));
+                factura.setNumeroFactura(rs.getInt("numerofactura"));
+                factura.setTipo(rs.getInt("tipo"));
+                factura.setTotal(rs.getDouble("total"));
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Facturas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return factura;
     }
 
     @Override

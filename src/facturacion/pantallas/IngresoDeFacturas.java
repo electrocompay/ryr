@@ -27,6 +27,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import Articulos.Articulos;
+import facturacion.clientes.ImprimirFactura;
 import objetos.Comprobantes;
 import objetos.Conecciones;
 import tablas.MiModeloTablaBuscarCliente;
@@ -783,7 +784,13 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
         }
         if(noFacturar==0){
         Facturar fat=new Comprobantes();
-        fat.guardar(comprobante);
+        comprobante=(Comprobantes)fat.guardar(comprobante);
+        ImprimirFactura imprimir=new ImprimirFactura();
+            try {
+                imprimir.ImprimirFactura(comprobante.getNumero(),comprobante.getTipoComprobante());
+            } catch (IOException ex) {
+                Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
+            }
         /*
          * ACA DEBO LIMPIAR TODOS LOS CAMPOS Y VARIABLES DE LA PANTALLA
          * 

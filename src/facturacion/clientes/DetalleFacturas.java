@@ -6,7 +6,11 @@
 package facturacion.clientes;
 
 import interfaces.Transaccionable;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import objetos.Conecciones;
 
@@ -92,11 +96,29 @@ public class DetalleFacturas implements Facturable{
 
     @Override
     public ArrayList cargarDetallefactura(Integer idPed) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        DetalleFacturas detalle;
+        ArrayList listadoDetalle=new ArrayList();
+        String sql="select * from detallefacturas where idfactura="+idPed;
+        Transaccionable tra=new Conecciones();
+        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        try {
+            while(rs.next()){
+                detalle=new DetalleFacturas();
+                detalle.setIdArticulo(rs.getInt("idArticulo"));
+                detalle.setCantidad(rs.getDouble("cantidad"));
+                detalle.setPrecioUnitario(rs.getDouble("preciounitario"));
+                detalle.setId(rs.getInt("id"));
+                listadoDetalle.add(detalle);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DetalleFacturas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return listadoDetalle;
     }
 
     @Override
-    public Object cargarEncabezadoFactura(Integer idPed) {
+    public Object cargarEncabezadoFactura(Integer idPed,Integer tipo) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

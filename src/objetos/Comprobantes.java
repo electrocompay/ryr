@@ -259,7 +259,7 @@ public class Comprobantes implements Facturar{
         }
     }
     @Override
-    public Boolean guardar(Object oob) {
+    public Object guardar(Object oob) {
         // GUARDA EL OBJETO COMPROBANTE COMO EL O LOS MOVIMIENTOS CORRESPONDIENTES
         // EJ: EN UNA FACTURA DE VENTA VOY A TENER MOVIMIENTO DE STOCK DESCONTANDO
         // EN EL DEPOSITO Y DE CAJA SUMANDO EN CAJA DE LA SUCURSAL
@@ -335,7 +335,7 @@ public class Comprobantes implements Facturar{
             tra=new Conecciones();
         //}
         tra.guardarRegistro(sql);
-        return true;
+        return comp;
     }
 
     @Override

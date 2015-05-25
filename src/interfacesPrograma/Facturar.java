@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * @author hernan
  */
 public interface Facturar {
-    public Boolean guardar(Object oob);
+    public Object guardar(Object oob);
     public Boolean modificar(Object oob);
     public Boolean nuevo(Object oob);
     public ArrayList listar();
