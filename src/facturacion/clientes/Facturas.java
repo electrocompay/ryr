@@ -31,7 +31,17 @@ public class Facturas implements Facturable{
     private String archivo;
     private Integer numeroFactura;
     private Integer estado;
+    private String descripcionTipo;
 
+    public String getDescripcionTipo() {
+        return descripcionTipo;
+    }
+
+    public void setDescripcionTipo(String descripcionTipo) {
+        this.descripcionTipo = descripcionTipo;
+    }
+
+    
     public Integer getEstado() {
         return estado;
     }
@@ -149,7 +159,7 @@ public class Facturas implements Facturable{
     @Override
     public Object cargarEncabezadoFactura(Integer idPed,Integer tipo) {
         Facturas factura=new Facturas();
-        String sql="select * from facturas where numerofactura="+idPed+" and tipo="+tipo;
+        String sql="select *,(select tipocomprobantes.descripcion from tipocomprobantes where tipocomprobantes.id=facturas.tipo)as descripcionTipo from facturas where numerofactura="+idPed+" and tipo="+tipo;
         Transaccionable tra=new Conecciones();
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {
@@ -164,7 +174,7 @@ public class Facturas implements Facturable{
                 factura.setNumeroFactura(rs.getInt("numerofactura"));
                 factura.setTipo(rs.getInt("tipo"));
                 factura.setTotal(rs.getDouble("total"));
-                
+                factura.setDescripcionTipo(rs.getString("descripcionTipo"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(Facturas.class.getName()).log(Level.SEVERE, null, ex);

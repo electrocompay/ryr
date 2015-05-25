@@ -101,31 +101,60 @@ public class ImprimirFactura {
         //pagina.drawImage(imagen,63,20,174,93,null);
         pagina.setFont(fuente6);
         pagina.setColor(Color.black);
-        pagina.drawString("PEDIDO N° 00"+Inicio.sucursal.getNumero()+"-000"+cotizacion.getId(),20,20);
-        pagina.setFont(fuente);
-        pagina.drawString("FECHA IMPRESION:"+fec, 420,70);
-        //pagina.drawString(" :"+Inicio.sucursal.getDescripcion(),20,150);
-        pagina.drawString("USUARIO :"+Inicio.usuario.getNombre(),320,20);
-        pagina.setFont(fuente6);
         Double monto=0.00; //caja.getMontoMovimiento()* -1;
-        pagina.drawString("CLIENTE: "+cliente.getRazonSocial(),320,30);
-        pagina.setFont(fuente);
-        pagina.drawString("CODIGO",20,50);
-        pagina.drawString("DESCRIPCION",100,50);
-        pagina.drawString("CANTIDAD", 420,80);
-        int renglon=60;
+        
+        pagina.setFont(fuente6);
+        pagina.drawString("N° "+cotizacion.getDescripcionTipo()+"-0000000"+cotizacion.getNumeroFactura(), 420,80);
+        pagina.drawString("FECHA: "+fec, 420,95);
+        pagina.drawString("ORIGINAL", 420,110);
+        pagina.drawString("RAZON SOCIAL: "+cliente.getRazonSocial(),30,185);
+        pagina.drawString("C.U.I.T.: "+cliente.getNumeroDeCuit(), 350,185);
+        pagina.drawString("DIRECCION: "+cliente.getDireccion(),30,200);
+        pagina.drawString("LOCALIDAD: "+cliente.getLocalidad(),350,200);
+        pagina.drawString("COND IVA: "+cliente.getCondicionIva(),30,215);
+        String pago="";
+        if(cotizacion.getEstado()==0){
+            pago="CTA. CTE";
+        }else{
+            pago="CONTADO";
+        }
+        pagina.drawString("FORMA DE PAGO: "+pago,350,215);
+        
+        pagina.drawString("CODIGO",20,250);
+        pagina.drawString("DESCRIPCION",160,250);
+        pagina.drawString("CANTIDAD", 350,250);
+        pagina.drawString("P. UNITARIO",450,250);
+        int renglon=260;
         Iterator it=listadoDetalle.listIterator();
+        String unitario="";
         while(it.hasNext()){
             detalleDeCotizacion=(DetalleFacturas)it.next();
             pagina.drawString(String.valueOf(detalleDeCotizacion.getIdArticulo()),40,renglon);
             pagina.drawString(detalleDeCotizacion.getDescripcionArticulo(),80,renglon);
             pagina.drawString(String.valueOf(detalleDeCotizacion.getCantidad()),370,renglon);
+            if(cotizacion.getTipo()==2){
+                unitario=Numeros.ConvertirNumero(detalleDeCotizacion.getPrecioUnitario() * detalleDeCotizacion.getCantidad());
+            }else{
+                unitario=Numeros.ConvertirNumero((detalleDeCotizacion.getPrecioUnitario() * detalleDeCotizacion.getCantidad()) * 1.21);
+            }
+            pagina.drawString(unitario,470,renglon);
             renglon=renglon + 10;
         }
         //formulario derecho
         
         //pagina.drawImage(imagen,363,20,174,93,null);
-        
+        if(cotizacion.getTipo()==2){
+            Double sub=cotizacion.getTotal() / 1.21;
+            Double iva=cotizacion.getTotal() - sub;
+        pagina.drawString("SUBTOTAL", 30,750);
+        pagina.drawString(Numeros.ConvertirNumero(sub),40,760);
+        pagina.drawString("IVA 21%", 280, 750);
+        pagina.drawString(Numeros.ConvertirNumero(iva),280,760);            
+        }else{
+
+        }
+        pagina.drawString("TOTAL", 450, 750);
+        pagina.drawString(String.valueOf(cotizacion.getTotal()),440,760);
         
         pagina.dispose();
         pj.end();

@@ -98,7 +98,7 @@ public class DetalleFacturas implements Facturable{
     public ArrayList cargarDetallefactura(Integer idPed) {
         DetalleFacturas detalle;
         ArrayList listadoDetalle=new ArrayList();
-        String sql="select * from detallefacturas where idfactura="+idPed;
+        String sql="select *,(select articulos.nombre from articulos where articulos.id=detallefacturas.idarticulo)as descripcion from detallefacturas where idfactura="+idPed;
         Transaccionable tra=new Conecciones();
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {
@@ -108,6 +108,7 @@ public class DetalleFacturas implements Facturable{
                 detalle.setCantidad(rs.getDouble("cantidad"));
                 detalle.setPrecioUnitario(rs.getDouble("preciounitario"));
                 detalle.setId(rs.getInt("id"));
+                detalle.setDescripcionArticulo(rs.getString("descripcion"));
                 listadoDetalle.add(detalle);
             }
         } catch (SQLException ex) {

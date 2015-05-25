@@ -986,11 +986,12 @@ private void agregarRenglonTabla(){
             pedidos.setPrecioUnitario(valor);
             String val=String.valueOf(valor);
             montoTotal=montoTotal + valor;
-            montoTotal=montoTotal * 1.21;
+            
             fila[3]=val;
             busC.addRow(fila);
         }
-        String total=String.valueOf(montoTotal);
+        montoTotal=montoTotal * 1.21;
+        String total=Numeros.ConvertirNumero(montoTotal);
         this.jLabel2.setText(total);
         listadoDeBusqueda.clear();
         cargarLista(listadoDeBusqueda);
