@@ -80,7 +80,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
         this.jLabel7.setVisible(false);
         this.jTextField4.setVisible(false);
         this.jCheckBox1.setVisible(false);
-        this.jCheckBox2.setEnabled(false);
+        //this.jCheckBox2.setEnabled(false);
         this.jTextField1.requestFocus();
         //this.jPanel2.requestFocus();
     }
@@ -612,7 +612,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
         detalleDelPedido.clear();
         agregarRenglonTabla();
         this.jCheckBox2.setSelected(true);
-        this.jCheckBox2.setEnabled(false);
+        //this.jCheckBox2.setEnabled(false);
         this.jList1.removeAll();
         listadoDeBusqueda.clear();
         cargarLista(listadoDeBusqueda);
@@ -727,8 +727,9 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
         String fecha2=ano+"-"+mes+"-"+dia;
         //comp.setFechaComprobante(fecha2);
         //comp.setFechaComprobante(fecha);
-        int comprobanteTipo=(int) Inicio.sucursal.getTipoComprobantes().get(0);
-        if(cliT.getTipoIva()==2)comprobanteTipo=(int)Inicio.sucursal.getTipoComprobantes().get(1);
+        int comprobanteTipo=cliT.getTipoComprobante();
+        
+        
         Comprobantes comprobante=new Comprobantes();
         comprobante.setCliente(cliT);
         comprobante.setTipoMovimiento(1);
@@ -765,14 +766,14 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
         }
         comprobante.setMontoTotal(montoTotal);
         int noFacturar=0;
-        if(this.jCheckBox2.isSelected()){
+        if(IngresoDeFacturas.jCheckBox2.isSelected()){
             comprobante.setPagado(1);
         }else{
             comprobante.setPagado(0);
             /*
-             * ACA DEBO COMPROBAR EL LIMITE DEL CLIENTE Y SI LO SUPERA LA COMPRA RECHAZAR LA VENTA
-             * 
-             */
+            * ACA DEBO COMPROBAR EL LIMITE DEL CLIENTE Y SI LO SUPERA LA COMPRA RECHAZAR LA VENTA
+            *
+            */
             Double limite=cliT.getCupoDeCredito();
             //Double saldo=cliT.getSaldo();
             //Double totalGral=montoTotal + saldo;
@@ -784,7 +785,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
         Facturar fat=new Comprobantes();
         fat.guardar(comprobante);
         /*
-         * ACA DEVO LIMPIAR TODOS LOS CAMPOS Y VARIABLES DE LA PANTALLA
+         * ACA DEBO LIMPIAR TODOS LOS CAMPOS Y VARIABLES DE LA PANTALLA
          * 
          */
         //comp.setTipoComprobante(comprobanteTipo);
@@ -792,11 +793,11 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
         detalleDelPedido.clear();
         agregarRenglonTabla();
         this.jCheckBox2.setSelected(true);
-        this.jCheckBox2.setEnabled(false);
+        //this.jCheckBox2.setEnabled(false);
         this.jList1.removeAll();
         listadoDeBusqueda.clear();
         cargarLista(listadoDeBusqueda);
-        cliT=new Clientes("999999");
+        //cliT=new Clientes("99");
         this.jLabel6.setText(cliT.getRazonSocial());
         this.jTextField2.setText("");
         jTextField1.setText("");

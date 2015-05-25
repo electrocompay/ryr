@@ -6,6 +6,7 @@ package objetos;
 
 import Articulos.Articulos;
 import facturacion.clientes.Clientes;
+import facturacion.clientes.DetalleFacturas;
 import facturacion.clientes.Facturable;
 import facturacion.clientes.Facturas;
 import interfaceGraficas.Inicio;
@@ -287,6 +288,8 @@ public class Comprobantes implements Facturar{
         factura.setTotal(comp.getMontoTotal());
         Facturable ff=new Facturas();
         factura.setId(ff.nuevaFactura(factura));
+        DetalleFacturas detalle=new DetalleFacturas();
+        Facturable ffD=new DetalleFacturas();
         
         Boolean verif=false;
         String sql="";
@@ -306,7 +309,12 @@ public class Comprobantes implements Facturar{
                     // aca debe grabar en detalle de facturas
                 }
             }else{
-            
+            detalle.setIdArticulo(articulo.getNumeroId());
+            detalle.setCantidad(articulo.getCantidad());
+            detalle.setIdFactura(factura.getId());
+            detalle.setPrecioUnitario(articulo.getPrecioUnitarioNeto());
+            detalle.setDescuento(articulo.getDescuento());
+            ffD.nuevaFactura(detalle);
             sql="insert into movimientosarticulos (tipoMovimiento,idArticulo,cantidad,numeroDeposito,tipoComprobante,numeroComprobante,numeroCliente,fechaComprobante,numeroUsuario,precioDeVenta,precioServicio,preciodecosto,idcaja) values ("+comp.getTipoMovimiento()+","+articulo.getNumeroId()+","+cantidad+","+Inicio.deposito.getNumero()+","+comp.getTipoComprobante()+","+comp.getNumero()+","+comp.getCliente().getCodigoId()+",'"+comp.getFechaEmision()+"',"+comp.getUsuarioGenerador()+","+articulo.getPrecioUnitario()+","+articulo.getPrecioServicio()+","+articulo.getPrecioDeCosto()+","+Inicio.caja.getNumero()+")";
             verif=tra.guardarRegistro(sql);
             }
