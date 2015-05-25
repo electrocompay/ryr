@@ -15,7 +15,10 @@ import Pedidos.ModificacionDePedidos;
 import Pedidos.Pedable;
 import Pedidos.Pedidos;
 import facturacion.clientes.Clientes;
+import facturacion.clientes.Facturable;
+import facturacion.clientes.Facturas;
 import facturacion.clientes.ListasDePrecios;
+import facturacion.pantallas.ModificacionDeFacturas;
 import interfaceGraficas.AbmClientes;
 import interfaceGraficas.Inicio;
 import interfaces.Personalizable;
@@ -48,9 +51,11 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
     private ArrayList listadoPed=new ArrayList();
     DefaultTableModel modelo=new DefaultTableModel();
     DefaultTableModel modelo1=new DefaultTableModel();
+    DefaultTableModel modelo2=new DefaultTableModel();        
     private CondicionesIva condicion=new CondicionesIva();
     private ListasDePrecios listaPrecio=new ListasDePrecios();
     private Localidades localidad=new Localidades();
+    private ArrayList listadoFac=new ArrayList();
     
     /**
      * Creates new form NuevoCliente
@@ -142,6 +147,11 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
         listadoPed=pedable.listarPorEstado(cliTa.getCodigoId(),0);
         modelo1=pedable.mostrarListado(listadoPed);
         this.jTable2.setModel(modelo1);
+        Facturable ff=new Facturas();
+        Facturas factura=new Facturas();
+        listadoFac=ff.listarPorClienteNoRemitidas(cliTa.getCodigoId());
+        modelo2=ff.mostrarListado(listadoFac);
+        this.jTable3.setModel(modelo2);
         
     }
     
@@ -187,6 +197,9 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
         jTextField12 = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         jComboBox3 = new javax.swing.JComboBox();
+        jButton11 = new javax.swing.JButton();
+        jButton12 = new javax.swing.JButton();
+        jButton13 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -203,6 +216,9 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
         jButton8 = new javax.swing.JButton();
         jLabel18 = new javax.swing.JLabel();
         jButton9 = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
+        jButton10 = new javax.swing.JButton();
 
         setClosable(true);
         setMaximizable(true);
@@ -289,6 +305,12 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
             jComboBox3.addItem(localidad1.getDescripcion());
         }
 
+        jButton11.setText("ADM. PRECIOS");
+
+        jButton12.setText("VER REMITOS");
+
+        jButton13.setText("DETALLE DE SALDO");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -296,7 +318,6 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -330,7 +351,15 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
                             .addComponent(jTextField10)
                             .addComponent(jTextField11)
                             .addComponent(jTextField12)
-                            .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jButton12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton11, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
+                            .addComponent(jButton13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(50, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -397,8 +426,14 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
                     .addComponent(jLabel17)
                     .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addContainerGap(172, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton11))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton12)
+                    .addComponent(jButton13))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
 
         jTable1.setModel(modelo);
@@ -445,6 +480,11 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/List.png"))); // NOI18N
         jButton6.setText("Factura");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/comment_edit.png"))); // NOI18N
         jButton7.setText("Modificar");
@@ -459,7 +499,14 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
 
         jLabel18.setText("Facturas ");
 
-        jButton9.setText("jButton9");
+        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/tractorunitblack.png"))); // NOI18N
+        jButton9.setText("Remitir");
+
+        jTable3.setModel(modelo2);
+        jScrollPane3.setViewportView(jTable3);
+
+        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Currency- Dollar.png"))); // NOI18N
+        jButton10.setText("Emitir Recibo");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -469,15 +516,24 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane3)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton3))
+                                .addContainerGap()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jButton3))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jButton9)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jButton10))))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -490,14 +546,8 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
                                 .addComponent(jButton7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButton8)))
-                        .addGap(0, 46, Short.MAX_VALUE)))
+                        .addGap(0, 21, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton9)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -508,7 +558,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
                     .addComponent(jButton2)
                     .addComponent(jButton3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
@@ -518,12 +568,15 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
                     .addComponent(jButton7)
                     .addComponent(jButton8))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel18)
-                    .addComponent(jButton9))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton9)
+                    .addComponent(jButton10))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -533,17 +586,19 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(53, 53, 53)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(40, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -607,6 +662,59 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        Pedidos pedido=new Pedidos();
+        pedido=(Pedidos)listadoPed.get(this.jTable2.getSelectedRow());
+        ModificacionDePedidos modificar=new ModificacionDePedidos(pedido);
+        Inicio.jDesktopPane1.add(modificar);
+        try {
+            modificar.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(NuevoCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        modificar.setVisible(true);
+        modificar.toFront();
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        Pedidos pedido=new Pedidos();
+        pedido=(Pedidos)listadoPed.get(this.jTable2.getSelectedRow());
+        ImprimirPedido imprimir=new ImprimirPedido();
+        try {
+            imprimir.ImprimirOrdenDetallada(pedido);
+        } catch (IOException ex) {
+            Logger.getLogger(NuevoCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        Pedidos pedido=new Pedidos();
+        pedido=(Pedidos)listadoPed.get(this.jTable2.getSelectedRow());
+        ImprimirPedido imprimir=new ImprimirPedido();
+        try {
+            imprimir.ImprimirOrdenDeTrabajo(pedido.getId());
+        } catch (IOException ex) {
+            Logger.getLogger(NuevoCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        Cotizacion cotizacion=new Cotizacion();
+        cotizacion=(Cotizacion)listadoCot.get(this.jTable1.getSelectedRow());
+        Cotizable coti=new Cotizacion();
+        ArrayList detalleC=new ArrayList();
+        Cotizable detC=new DetalleCotizacion();
+        detalleC=detC.cargarDetalle(cotizacion.getId());
+        coti.transformarEnPedido(cotizacion, detalleC);
+        this.jTable2.removeAll();
+        Pedable pedable=new Pedidos();
+        listadoPed.clear();
+        listadoPed=pedable.listarPorEstado(cliTa.getCodigoId(),0);
+        modelo1=pedable.mostrarListado(listadoPed);
+        this.jTable2.setModel(modelo1);
+
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         Cotizable cotizable=new Cotizacion();
         Cotizacion cotizacion=new Cotizacion();
@@ -622,58 +730,19 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
         modificar.toFront();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         Pedidos pedido=new Pedidos();
         pedido=(Pedidos)listadoPed.get(this.jTable2.getSelectedRow());
-       ImprimirPedido imprimir=new ImprimirPedido();
+        ModificacionDeFacturas factu=new ModificacionDeFacturas(pedido);
+        Inicio.jDesktopPane1.add(factu);
         try {
-            imprimir.ImprimirOrdenDetallada(pedido);
-        } catch (IOException ex) {
-            Logger.getLogger(NuevoCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        Pedidos pedido=new Pedidos();
-        pedido=(Pedidos)listadoPed.get(this.jTable2.getSelectedRow());
-       ImprimirPedido imprimir=new ImprimirPedido();
-        try {
-            imprimir.ImprimirOrdenDeTrabajo(pedido.getId());
-        } catch (IOException ex) {
-            Logger.getLogger(NuevoCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        Pedidos pedido=new Pedidos();
-        pedido=(Pedidos)listadoPed.get(this.jTable2.getSelectedRow());
-        ModificacionDePedidos modificar=new ModificacionDePedidos(pedido);
-        Inicio.jDesktopPane1.add(modificar);
-        try {
-            modificar.setMaximum(true);
+            factu.setMaximum(true);
         } catch (PropertyVetoException ex) {
             Logger.getLogger(NuevoCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
-        modificar.setVisible(true);
-        modificar.toFront();
-    }//GEN-LAST:event_jButton7ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Cotizacion cotizacion=new Cotizacion();
-        cotizacion=(Cotizacion)listadoCot.get(this.jTable1.getSelectedRow());
-        Cotizable coti=new Cotizacion();
-        ArrayList detalleC=new ArrayList();
-        Cotizable detC=new DetalleCotizacion();
-        detalleC=detC.cargarDetalle(cotizacion.getId());
-        coti.transformarEnPedido(cotizacion, detalleC);
-        this.jTable2.removeAll();
-        Pedable pedable=new Pedidos();
-        listadoPed.clear();
-         listadoPed=pedable.listarPorEstado(cliTa.getCodigoId(),0);
-        modelo1=pedable.mostrarListado(listadoPed);
-        this.jTable2.setModel(modelo1);
-        
-    }//GEN-LAST:event_jButton3ActionPerformed
+        factu.setVisible(true);
+        factu.toFront();
+    }//GEN-LAST:event_jButton6ActionPerformed
     private void ControlaInstancia(JInternalFrame inter){
         /*
         boolean mostrar=true;
@@ -688,6 +757,10 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -721,8 +794,10 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTable3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;

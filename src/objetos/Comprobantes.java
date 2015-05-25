@@ -46,6 +46,16 @@ public class Comprobantes implements Facturar{
     private static Integer numeroComprobante;
     private static Integer idComp;
     private Date vencimiento;
+    private Integer idFactura;
+
+    public Integer getIdFactura() {
+        return idFactura;
+    }
+
+    public void setIdFactura(Integer idFactura) {
+        this.idFactura = idFactura;
+    }
+    
 
     public Date getVencimiento() {
         return vencimiento;
@@ -288,6 +298,7 @@ public class Comprobantes implements Facturar{
         factura.setTotal(comp.getMontoTotal());
         Facturable ff=new Facturas();
         factura.setId(ff.nuevaFactura(factura));
+        comp.setIdFactura(factura.getId());
         DetalleFacturas detalle=new DetalleFacturas();
         Facturable ffD=new DetalleFacturas();
         

@@ -26,4 +26,7 @@ public interface Facturable {
     public void transformarEnrecibo(Object ped,ArrayList detalle);
     public void transformarEndetalle(Object ped,ArrayList detalle);
     public ArrayList convertirAArticulos(ArrayList detalle);
+    public ArrayList listarPorClienteNoRemitidas(Integer idClient);
+    public ArrayList listarAdeudadaas(Integer idClient);
+    public Boolean identificarPedidoAFactura(Integer idPedido,Integer idFactura);
 }

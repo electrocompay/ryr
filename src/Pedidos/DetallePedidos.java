@@ -237,6 +237,8 @@ public class DetallePedidos implements Pedable{
             if(detalle.getIdArticulo()==0){
              articulo.setNumeroId(detalle.getIdArticulo());
              articulo.setDescripcionArticulo(detalle.getDescripcionArticulo());
+             articulo.setIdCombo(0);
+             articulo.setPrecioDeCosto(0.00);
             }else{
             articulo=(Articulos) fact.cargarPorCodigoAsignado(detalle.getIdArticulo());
             }

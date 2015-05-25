@@ -181,7 +181,7 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
             
             if(signal==1){
                 tra=new Conecciones();
-                sql="select *,(select coeficienteslistas.coeficiente from coeficienteslistas where coeficienteslistas.id=clientes.NRO_LISTA)as coeficiente,(select sum(movimientosclientes.monto) from movimientosclientes where pagado=0 and movimientosclientes.numeroProveedor=clientes.id)as saldo from clientes";    
+                sql="select *,(select coeficienteslistas.coeficiente from coeficienteslistas where coeficienteslistas.id=clientes.LISTADEPRECIO)as coeficiente,(select sum(movimientosclientes.monto) from movimientosclientes where pagado=0 and movimientosclientes.numeroProveedor=clientes.id)as saldo from clientes";    
                 //System.err.println("LEER CLIENTES - "+sql);
                 //signal=0;
                 Inicio.coneccionRemota=true;

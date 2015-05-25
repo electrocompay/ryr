@@ -212,7 +212,7 @@ public class Usuarios extends TipoAcceso implements Personalizable{
                 us.direccion=rr.getString("direccion");
                 us.localidad=rr.getString("localidad");
                 us.mail=rr.getString("mail");
-                us.numeroId=rr.getInt("numero");
+                us.numeroId=rr.getInt("id");
                 us.telefono=rr.getString("telefono");
                 us.nombreDeUsuario=rr.getString("nombreUsuario");
                 us.clave=rr.getString("clave");

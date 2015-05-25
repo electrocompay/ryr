@@ -172,6 +172,21 @@ public class DetalleFacturas implements Facturable{
     public ArrayList convertirAArticulos(ArrayList detalle) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public ArrayList listarPorClienteNoRemitidas(Integer idClient) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList listarAdeudadaas(Integer idClient) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Boolean identificarPedidoAFactura(Integer idPedido, Integer idFactura) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
     

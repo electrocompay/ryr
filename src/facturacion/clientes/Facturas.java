@@ -10,10 +10,12 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import objetos.Conecciones;
+import tablas.MiModeloTablaContacto;
 
 /**
  *
@@ -210,7 +212,31 @@ public class Facturas implements Facturable{
 
     @Override
     public DefaultTableModel mostrarListado(ArrayList lista) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        MiModeloTablaContacto listado1=new MiModeloTablaContacto();
+        Facturas cotizacion;
+        Iterator iL=lista.listIterator();
+        listado1.addColumn("Recibo");
+        listado1.addColumn("Fecha");
+        listado1.addColumn("Numero");
+        listado1.addColumn("Tipo");
+        listado1.addColumn("Monto");
+        listado1.addColumn("Estado");
+        Object[] fila=new Object[6];
+        while(iL.hasNext()){
+            cotizacion=(Facturas)iL.next();
+            fila[0]=false;
+            fila[1]=String.valueOf(cotizacion.getFecha());
+            fila[2]=String.valueOf(cotizacion.getNumeroFactura());
+            fila[3]=String.valueOf(cotizacion.getDescripcionTipo());
+            fila[4]=String.valueOf(cotizacion.getTotal());
+            if(cotizacion.getEstado()==0){
+                fila[5]="Pendiente";
+            }else{
+                fila[5]="Cobrada";
+            }
+            listado1.addRow(fila);
+        }
+        return listado1;
     }
 
     @Override
@@ -231,6 +257,50 @@ public class Facturas implements Facturable{
     @Override
     public ArrayList convertirAArticulos(ArrayList detalle) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList listarPorClienteNoRemitidas(Integer idClient) {
+       ArrayList listado=new ArrayList();
+       String sql="select *,(select tipocomprobantes.descripcion from tipocomprobantes where tipocomprobantes.id=facturas.tipo)as descripcionTipo from facturas where idremito=0 and idcliente="+idClient;
+       Transaccionable tra=new Conecciones();
+       ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+       Facturas factura;
+        try {
+            while(rs.next()){
+                factura=new Facturas();
+                factura.setId(rs.getInt("id"));
+                factura.setEstado(rs.getInt("estado"));
+                factura.setFecha(rs.getDate("fecha"));
+                factura.setIdCliente(rs.getInt("idcliente"));
+                factura.setIdPedido(rs.getInt("idpedido"));
+                factura.setIdUsuario(rs.getInt("idusuario"));
+                factura.setNumeroFactura(rs.getInt("numerofactura"));
+                factura.setTipo(rs.getInt("tipo"));
+                factura.setTotal(rs.getDouble("total"));
+                factura.setDescripcionTipo(rs.getString("descripciontipo"));
+                listado.add(factura);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Facturas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       return listado;
+    }
+
+    @Override
+    public ArrayList listarAdeudadaas(Integer idClient) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Boolean identificarPedidoAFactura(Integer idPedido, Integer idFactura) {
+        String sql="update pedidos set idfactura="+idFactura+" where id="+idPedido;
+        Transaccionable tra=new Conecciones();
+        tra.guardarRegistro(sql);
+        sql="update facturas set idpedido="+idPedido+" where id="+idFactura;
+        tra.guardarRegistro(sql);
+        
+        return true;
     }
     
     

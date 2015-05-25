@@ -69,7 +69,7 @@ public class Localidades implements Busquedas{
     public ArrayList listar(String cliente) {
         ArrayList listado=new ArrayList();
         Transaccionable tra=new Conecciones();
-        String sql="select * from localidades";
+        String sql="select * from localidades order by localidad";
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {
             while(rs.next()){
