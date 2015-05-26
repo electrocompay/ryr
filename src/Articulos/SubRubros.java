@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 import objetos.Conecciones;
 
 /**
@@ -126,6 +127,11 @@ public class SubRubros implements Rubrable{
         String sql="update articulos set costo=round((costo * "+coe+"),4) where idsubrubro="+idRubro;
         Transaccionable tra=new Conecciones();
         tra.guardarRegistro(sql);
+    }
+
+    @Override
+    public DefaultTableModel mostrarListado(ArrayList listado) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

@@ -367,8 +367,11 @@
         </Component>
         <Component class="javax.swing.JButton" name="jButton11">
           <Properties>
-            <Property name="text" type="java.lang.String" value="ADM. PRECIOS"/>
+            <Property name="text" type="java.lang.String" value="LISTAS DE PRECIOS"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton11ActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButton12">
           <Properties>

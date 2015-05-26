@@ -6,13 +6,15 @@
 package ListasDePrecios;
 
 import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author mauro di
  */
 public interface Articulable {
-    public ArrayList filtrador(Integer rubro,Integer subRubro);
+    public ArrayList filtrador(ArrayList rubro,ArrayList subRubro,Object cli);
     public void guardar(ArrayList listado);
-    
+    public DefaultTableModel mostrarListado(ArrayList lista);
+    public ArrayList listarTodos(Object idCliente);
 }

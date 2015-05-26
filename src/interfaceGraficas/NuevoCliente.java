@@ -10,6 +10,7 @@ import Cotizaciones.Cotizacion;
 import Cotizaciones.DetalleCotizacion;
 import Cotizaciones.IngresoDeCotizacion;
 import Cotizaciones.ModificacionDeCotizacion;
+import ListasDePrecios.ListasPorCliente;
 import Pedidos.ImprimirPedido;
 import Pedidos.ModificacionDePedidos;
 import Pedidos.Pedable;
@@ -305,7 +306,12 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
             jComboBox3.addItem(localidad1.getDescripcion());
         }
 
-        jButton11.setText("ADM. PRECIOS");
+        jButton11.setText("LISTAS DE PRECIOS");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
 
         jButton12.setText("VER REMITOS");
 
@@ -743,6 +749,18 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
         factu.setVisible(true);
         factu.toFront();
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        ListasPorCliente listas=new ListasPorCliente(cliTa);
+        Inicio.jDesktopPane1.add(listas);
+        try {
+            listas.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(NuevoCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        listas.setVisible(true);
+        listas.toFront();
+    }//GEN-LAST:event_jButton11ActionPerformed
     private void ControlaInstancia(JInternalFrame inter){
         /*
         boolean mostrar=true;

@@ -6,6 +6,7 @@
 package Articulos;
 
 import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -19,4 +20,5 @@ public interface Rubrable {
     public ArrayList listarPorSubRubro(Integer idSubRubro);
     public void eliminar(Integer idRubro);
     public void modificarCostoPorRubro(Integer idRubro,Double precio);
+    public DefaultTableModel mostrarListado(ArrayList listado);
 }

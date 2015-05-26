@@ -10,9 +10,12 @@ import interfaces.Transaccionable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 import objetos.Conecciones;
+import tablas.MiModeloTablaContacto;
 
 /**
  *
@@ -156,6 +159,23 @@ public class Rubros implements Personalizable,Rubrable{
         String sql="update articulos set costo=round((costo * "+coe+"),4) where idrubro="+idRubro;
         Transaccionable tra=new Conecciones();
         tra.guardarRegistro(sql);
+    }
+
+    @Override
+    public DefaultTableModel mostrarListado(ArrayList listado) {
+        MiModeloTablaContacto mod=new MiModeloTablaContacto();
+        Iterator it=listado.listIterator();
+        Rubros rubro;
+        mod.addColumn("Seleccion");
+        mod.addColumn("Descripcion");
+        Object[] fila=new Object[2];
+        while(it.hasNext()){
+            rubro=(Rubros)it.next();
+            fila[0]=true;
+            fila[1]=rubro.getDescripcion();
+            mod.addRow(fila);
+        }
+        return mod;
     }
     
     
