@@ -124,7 +124,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
             coef=0.00;
         }
         */
-        this.jTextField6.setText(String.valueOf(coef));
+        this.jTextField6.setText(String.valueOf(1.00));
         this.jTextField7.setText(cliTa.getResponsable());
         this.jTextField8.setText(cliTa.getFantasia());
         this.jTextField9.setText(cliTa.getCelular());
