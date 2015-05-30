@@ -8,9 +8,12 @@ package ListasDePrecios;
 import Articulos.Rubrable;
 import Articulos.Rubros;
 import Articulos.SubRubros;
+import Conversores.Numeros;
+import Sucursales.ListasDePrecios;
 import facturacion.clientes.Clientes;
 import interfaces.Personalizable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -27,6 +30,9 @@ public class ListasPorCliente extends javax.swing.JInternalFrame {
     private ArrayList listadoGral=new ArrayList();
     private Clientes cliT=new Clientes();
     private ArticulosAsignados articulos;
+    private ListasDePrecios listaDePrecios;
+    private ArrayList listadoDePrecios=new ArrayList();
+    
     
     /**
      * Creates new form ListasPorCliente
@@ -121,14 +127,22 @@ public class ListasPorCliente extends javax.swing.JInternalFrame {
         });
 
         jButton2.setText("Guardar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Asignar lista de precio");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        listadoDePrecios=ListasDePrecios.Listado();
+        Iterator iLp=listadoDePrecios.listIterator();
+        while(iLp.hasNext()){
+            listaDePrecios=(ListasDePrecios)iLp.next();
+            jComboBox3.addItem(listaDePrecios.getDesccripcion());
+        }
 
         jLabel5.setText("Porcentaje a modificar");
-
-        jTextField2.setText("jTextField2");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -206,14 +220,14 @@ public class ListasPorCliente extends javax.swing.JInternalFrame {
     private void jTable2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable2KeyPressed
         ArrayList lls=new ArrayList();
         int ctt=this.jTable2.getRowCount();
-        Rubros rubro;
+        SubRubros rubro;
         Boolean ss;
         for (int aa=0;aa < ctt;aa++){
             
             ss=(Boolean)this.jTable2.getValueAt(aa,0);
             if(ss){
-                rubro=new Rubros();
-                rubro=(Rubros)listadoRubros.get(aa);
+                rubro=new SubRubros();
+                rubro=(SubRubros)listadoSubRubros.get(aa);
                 lls.add(rubro);
             }
         }
@@ -222,6 +236,24 @@ public class ListasPorCliente extends javax.swing.JInternalFrame {
         modelo1=att.mostrarListado(listadoGral);
         this.jTable1.setModel(modelo1);
     }//GEN-LAST:event_jTable2KeyPressed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        listaDePrecios=(ListasDePrecios)listadoDePrecios.get(this.jComboBox3.getSelectedIndex());
+        Double coeficiente=0.00;
+        if(this.jComboBox3.getSelectedIndex()==0){
+            coeficiente=Numeros.ConvertirStringADouble(this.jTextField2.getText());
+        }else{
+            coeficiente=listaDePrecios.getCoeficiente();
+        }
+        Articulable att=new ArticulosAsignados();
+        ArticulosAsignados articulo=new ArticulosAsignados();
+        Iterator itG=listadoGral.listIterator();
+        while(itG.hasNext()){
+            articulo=(ArticulosAsignados)itG.next();
+            articulo.setCoeficiente(coeficiente);
+        }
+        att.guardar(listadoGral);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
