@@ -49,17 +49,17 @@ public class Actualiza extends Thread{
             //Proveedores.cargarListadoProv1();
         Inicio.actualizable=1;
         if(Inicio.actualizable==1){
-        Usuarios.BackapearUsuarios();
-        Sucursales.BackapearSucursales();
+        //Usuarios.BackapearUsuarios();
+        //Sucursales.BackapearSucursales();
             //Articulos.RecargarMap();
         
-        Proveedores.BackapearProveedores();
-        Clientes.BackapearClientes();
-        ListasDePrecios.BackapearListasDePrecios();
+        //Proveedores.BackapearProveedores();
+        //Clientes.BackapearClientes();
+        //ListasDePrecios.BackapearListasDePrecios();
         //Cajas.BackapearCajas();
         //Cajas.LeerCajaAdministradora();
         //Articulos.BackapearMap();
-        Depositos.BackapearDepositos();
+        //Depositos.BackapearDepositos();
         
         
         
@@ -68,8 +68,8 @@ public class Actualiza extends Thread{
         ListasDePrecios.cargarMap();
         Inicio.actualizable=0;
         }
-        BkDeConeccion bk=new BkDeConeccion();
-        bk.procesosDeCierre();
+        //BkDeConeccion bk=new BkDeConeccion();
+        //bk.procesosDeCierre();
         
         /*
          * Usuarios

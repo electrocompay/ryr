@@ -9,10 +9,12 @@ import interfaces.Transaccionable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import objetos.Conecciones;
+import tablas.MiModeloTablaContacto;
 
 /**
  *
@@ -22,6 +24,16 @@ public class SubRubros implements Rubrable{
     private Integer id;
     private Integer idRubro;
     private String descripcion;
+    private String descripcionRubro;
+
+    public String getDescripcionRubro() {
+        return descripcionRubro;
+    }
+
+    public void setDescripcionRubro(String descripcionRubro) {
+        this.descripcionRubro = descripcionRubro;
+    }
+    
 
     public Integer getId() {
         return id;
@@ -92,14 +104,16 @@ public class SubRubros implements Rubrable{
     public ArrayList listarPorRubro(Integer idRubro) {
         ArrayList listado=new ArrayList();
         SubRubros subRubro;
-        String sql="select * from subrubros order by descripcion";
+        String sql="select *,(select rubros.descripcion from rubros where rubros.id=tipos.id_clasificacion)as descr from tipos order by id_clasificacion";
         Transaccionable tra=new Conecciones();
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {
             while(rs.next()){
                 subRubro=new SubRubros();
-                subRubro.setDescripcion(rs.getString("descripcion"));
+                subRubro.setDescripcion(rs.getString("tipo"));
                 subRubro.setId(rs.getInt("id"));
+                subRubro.setIdRubro(rs.getInt("id_clasificacion"));
+                subRubro.setDescripcionRubro(rs.getString("descr"));
                 listado.add(subRubro);
             }
             rs.close();
@@ -131,7 +145,21 @@ public class SubRubros implements Rubrable{
 
     @Override
     public DefaultTableModel mostrarListado(ArrayList listado) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        MiModeloTablaContacto mod=new MiModeloTablaContacto();
+        Iterator it=listado.listIterator();
+        SubRubros rubro;
+        mod.addColumn("Seleccion");
+        mod.addColumn("Descripcion");
+        mod.addColumn("Rubro");
+        Object[] fila=new Object[3];
+        while(it.hasNext()){
+            rubro=(SubRubros)it.next();
+            fila[0]=false;
+            fila[1]=rubro.getDescripcion();
+            fila[2]=rubro.getDescripcionRubro();
+            mod.addRow(fila);
+        }
+        return mod;
     }
     
     

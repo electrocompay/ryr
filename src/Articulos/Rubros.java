@@ -171,7 +171,7 @@ public class Rubros implements Personalizable,Rubrable{
         Object[] fila=new Object[2];
         while(it.hasNext()){
             rubro=(Rubros)it.next();
-            fila[0]=true;
+            fila[0]=false;
             fila[1]=rubro.getDescripcion();
             mod.addRow(fila);
         }

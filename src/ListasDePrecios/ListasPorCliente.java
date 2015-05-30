@@ -7,6 +7,7 @@ package ListasDePrecios;
 
 import Articulos.Rubrable;
 import Articulos.Rubros;
+import Articulos.SubRubros;
 import facturacion.clientes.Clientes;
 import interfaces.Personalizable;
 import java.util.ArrayList;
@@ -33,11 +34,11 @@ public class ListasPorCliente extends javax.swing.JInternalFrame {
     public ListasPorCliente(Object cliente) {
         cliT=(Clientes)cliente;
         initComponents();
-        Rubros rubro=new Rubros();
-        Personalizable per=new Rubros();
-        listadoRubros=per.listar();
-        Rubrable rble=new Rubros();
-        modelo2=rble.mostrarListado(listadoRubros);
+        SubRubros rubro=new SubRubros();
+        Rubrable rble=new SubRubros();
+        listadoSubRubros=rble.listarPorRubro(0);
+        
+        modelo2=rble.mostrarListado(listadoSubRubros);
         Articulable artis=new ArticulosAsignados();
         listadoGral=artis.listarTodos(cliT);
         System.out.println("CANTIDAD: "+listadoGral.size());
