@@ -342,7 +342,7 @@ private void agregarRenglonTabla(){
             busC.addRow(fila);
         }
         String total=String.valueOf(montoTotal);
-        this.jLabel2.setText(total);
+        
         listadoDeBusqueda.clear();
         cargarLista(listadoDeBusqueda);
         
@@ -357,7 +357,7 @@ private void montrarMonto(){
     Double total=montoTotal;
     //Double total=montoTotal * cliT.getDescuento();
     //comp.setMontoTotal(total);
-    this.jLabel2.setText(String.valueOf(total));
+    
 }
 private void verificar(){
     int cantidad=this.jTable1.getRowCount();

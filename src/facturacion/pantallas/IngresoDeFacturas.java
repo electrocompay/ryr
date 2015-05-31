@@ -996,7 +996,7 @@ private void agregarRenglonTabla(){
         }
         montoTotal=montoTotal * 1.21;
         String total=Numeros.ConvertirNumero(montoTotal);
-        this.jLabel2.setText(total);
+        
         listadoDeBusqueda.clear();
         cargarLista(listadoDeBusqueda);
         this.jCheckBox1.setSelected(true);
