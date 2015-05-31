@@ -11,5 +11,5 @@ package interfaces;
  */
 public interface Comparables {
     public Double comparaConCotizaciones(Integer idCliente,Integer idArticulo);
-    public Double comparaConPedidos(Integer idCliente,Integer idArticulo);
+    public String comparaConPedidos(Integer idCliente,Integer idArticulo);
 }

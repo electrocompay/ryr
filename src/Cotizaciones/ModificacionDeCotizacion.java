@@ -674,19 +674,16 @@ public class ModificacionDeCotizacion extends javax.swing.JInternalFrame {
                     articul.setDescripcionArticulo(arti.getDescripcionArticulo());
                     articul.setNumeroId(arti.getNumeroId());
                     Double precio=comparar.comparaConCotizaciones(cliT.getCodigoId(),arti.getNumeroId());
-                    Double precio2=comparar.comparaConPedidos(cliT.getCodigoId(),arti.getNumeroId());
+                    String precio2=comparar.comparaConPedidos(cliT.getCodigoId(),arti.getNumeroId());
+                    // aca tengo que modificar el precio unitario segun el coeficiente del cliente y la lista
                     Double precioU=arti.getPrecioUnitarioNeto() * lista.getCoeficiente();
                     precioU= precioU * cliT.getCoeficienteListaDeprecios();
                     articul.setPrecioUnitarioNeto(precioU);
                     
                     if(precio > 0){
-                        String cartel="confirma el precio unitario ultimo cotizado ???? :"+precio;
+                        precio=articul.getPrecioUnitarioNeto()* precio;
+                        String cartel="precio asignado: "+precio+" "+precio2;
                         if(JOptionPane.showConfirmDialog(this, cartel)==0)articul.setPrecioUnitarioNeto(precio);
-                    }
-                    
-                    if(precio2 > 0){
-                            String cartel="confirma el precio unitario ultimo en pedido ???? :"+precio2;
-                        if(JOptionPane.showConfirmDialog(this, cartel)==0)articul.setPrecioUnitarioNeto(precio2);
                     }
                     articul.setPrecioDeCosto(arti.getPrecioDeCosto());
                     articul.setPrecioUnitario(arti.getPrecioUnitarioNeto());

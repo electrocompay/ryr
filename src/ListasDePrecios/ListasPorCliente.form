@@ -74,7 +74,7 @@
                   <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jScrollPane2" min="-2" pref="147" max="-2" attributes="0"/>
-                  <EmptySpace min="0" pref="248" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="252" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -133,8 +133,6 @@
                       <Component id="jButton2" max="32767" attributes="0"/>
                       <Component id="jLabel4" min="-2" pref="139" max="-2" attributes="0"/>
                       <Component id="jComboBox3" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jLabel5" max="32767" attributes="0"/>
-                      <Component id="jTextField2" max="32767" attributes="0"/>
                       <Component id="jButton1" alignment="0" pref="148" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace pref="31" max="32767" attributes="0"/>
@@ -150,11 +148,7 @@
                   <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jComboBox3" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jTextField2" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                   <Component id="jButton2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -193,13 +187,6 @@
             <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Iterator iLp=listadoDePrecios.listIterator();&#xa;while(iLp.hasNext()){&#xa;    listaDePrecios=(ListasDePrecios)iLp.next();&#xa;jComboBox3.addItem(listaDePrecios.getDesccripcion());&#xa;}"/>
             <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="listadoDePrecios=ListasDePrecios.Listado();"/>
           </AuxValues>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel5">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Porcentaje a modificar"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="jTextField2">
         </Component>
       </SubComponents>
     </Container>

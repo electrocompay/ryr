@@ -15,6 +15,7 @@ import Pedidos.ImprimirPedido;
 import Pedidos.ModificacionDePedidos;
 import Pedidos.Pedable;
 import Pedidos.Pedidos;
+import Remitos.IngresoDeRemitos;
 import facturacion.clientes.Clientes;
 import facturacion.clientes.Facturable;
 import facturacion.clientes.Facturas;
@@ -507,6 +508,11 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
 
         jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/tractorunitblack.png"))); // NOI18N
         jButton9.setText("Remitir");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
 
         jTable3.setModel(modelo2);
         jScrollPane3.setViewportView(jTable3);
@@ -761,6 +767,21 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
         listas.setVisible(true);
         listas.toFront();
     }//GEN-LAST:event_jButton11ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        Integer numeroF=0;
+        Facturas factura=new Facturas();
+        factura=(Facturas)listadoFac.get(this.jTable3.getSelectedRow());
+        IngresoDeRemitos remi=new IngresoDeRemitos(cliTa,factura.getId());
+        Inicio.jDesktopPane1.add(remi);
+        try {
+            remi.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(NuevoCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        remi.setVisible(true);
+        remi.toFront();
+    }//GEN-LAST:event_jButton9ActionPerformed
     private void ControlaInstancia(JInternalFrame inter){
         /*
         boolean mostrar=true;

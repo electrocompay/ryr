@@ -1084,12 +1084,12 @@ public class Articulos implements Facturar,Editables,Comparables{
     @Override
     public Double comparaConCotizaciones(Integer idCliente, Integer idArticulo) {
         Double precio=0.00;
-        String sql="select detallecotizaciones.preciounitario from detallecotizaciones where idcliente="+idCliente+" and idarticulo="+idArticulo+" and descuento=1 order by id desc limit 0,1";
+        String sql="select aplicacion.coeficiente from aplicacion where idcliente="+idCliente+" and idarticulo="+idArticulo+" limit 0,1";
         Transaccionable tra=new Conecciones();
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {
             while(rs.next()){
-                precio=rs.getDouble("preciounitario");
+                precio=rs.getDouble("coeficiente");
             }
         } catch (SQLException ex) {
             Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
@@ -1098,14 +1098,14 @@ public class Articulos implements Facturar,Editables,Comparables{
     }
 
     @Override
-    public Double comparaConPedidos(Integer idCliente, Integer idArticulo) {
-        Double precio=0.00;
-        String sql="select detallepedidos.preciounitario from detallepedidos where idcliente="+idCliente+" and idarticulo="+idArticulo+" and descuento=1 order by id desc limit 0,1";
+    public String comparaConPedidos(Integer idCliente, Integer idArticulo) {
+        String precio="";
+        String sql="select aplicacion.observaciones,aplicacion.idlista,(select coeficienteslistas.descripcion from coeficienteslistas where coeficienteslistas.id=aplicacion.idlista)as descLista from aplicacion where idcliente="+idCliente+" and idarticulo="+idArticulo+" limit 0,1";
         Transaccionable tra=new Conecciones();
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {
             while(rs.next()){
-                precio=rs.getDouble("preciounitario");
+                precio=" lista asignada: "+rs.getString("descLista")+" Motivo: "+rs.getString("observaciones");
             }
         } catch (SQLException ex) {
             Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);

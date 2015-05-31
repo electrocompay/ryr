@@ -27,7 +27,9 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import Articulos.Articulos;
+import Sucursales.ListasDePrecios;
 import facturacion.clientes.ImprimirFactura;
+import interfaces.Comparables;
 import objetos.Comprobantes;
 import objetos.Conecciones;
 import tablas.MiModeloTablaBuscarCliente;
@@ -49,6 +51,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
     private static ArrayList listadoDeBusqueda=new ArrayList();
     private static Double montoTotal=0.00;
     private static Comprobantes comp=new Comprobantes();
+    private ListasDePrecios lista;
     
     public IngresoDeFacturas() {
         //Articulos.CargarMap();
@@ -70,7 +73,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
     public IngresoDeFacturas(Object clienteTango){
         cliT=new Clientes();
         cliT=(Clientes)clienteTango;
-        
+        lista=new ListasDePrecios(cliT.getListaDePrecios());
 //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
         initComponents();
@@ -99,7 +102,6 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
         MiModeloTablaFacturacion facturas=new MiModeloTablaFacturacion();
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jTextField3 = new javax.swing.JTextField();
@@ -160,9 +162,6 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
 
         jLabel1.setText("TOTAL FACTURA :");
 
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 153));
-
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/printer32.png"))); // NOI18N
         jButton1.setText("IMPRIMIR");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -200,27 +199,22 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(131, 131, 131)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(23, 23, 23)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 773, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(23, 23, 23)
+                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
-                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 773, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
+                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -240,9 +234,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
                     .addComponent(jCheckBox2)
                     .addComponent(jLabel1)
                     .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(56, 56, 56))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         jPanel2.setMaximumSize(new java.awt.Dimension(507, 207));
@@ -453,7 +445,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(65, Short.MAX_VALUE))
         );
 
@@ -647,7 +639,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
             Double cantt=Double.parseDouble(this.jTextField2.getText());
             Double precioUni=0.00;
-            if(cantt < 1000){
+            
             if(arti.getModificaPrecio()){
                 this.jTextField4.requestFocus();
             }else{
@@ -666,6 +658,20 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
                     articul.setPrecioUnitarioNeto(arti.getPrecioUnitarioNeto());
                     articul.setIdCombo(arti.getIdCombo());
                     articul.setCombo(arti.getCombo());
+                    
+                    Comparables comparar=new Articulos();
+                    Double precio=comparar.comparaConCotizaciones(cliT.getCodigoId(),arti.getNumeroId());
+                    String precio2=comparar.comparaConPedidos(cliT.getCodigoId(),arti.getNumeroId());
+                    // aca tengo que modificar el precio unitario segun el coeficiente del cliente y la lista
+                    Double precioU=arti.getPrecioUnitarioNeto() * lista.getCoeficiente();
+                    precioU= precioU * cliT.getCoeficienteListaDeprecios();
+                    articul.setPrecioUnitarioNeto(precioU);
+                    
+                    if(precio > 0){
+                        precio=articul.getPrecioUnitarioNeto()* precio;
+                        String cartel="precio asignado: "+precio+" "+precio2;
+                        if(JOptionPane.showConfirmDialog(this, cartel)==0)articul.setPrecioUnitarioNeto(precio);
+                    }
             detalleDelPedido.add(articul);
             agregarRenglonTabla();
 //                Double montoTotalX=(arti.getPrecioUnitario() * arti.getCantidad());
@@ -680,9 +686,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
             this.jTextField1.requestFocus();
                 }
                 }
-            }else{
-                JOptionPane.showMessageDialog(this,"LA CANTIDAD INGRESADA ES EXCESIVA, POR FAVOR VERIFÍQUELA");
-            }
+            
         }
     }//GEN-LAST:event_jTextField2KeyPressed
 
@@ -1040,7 +1044,6 @@ private void verificar(){
     private javax.swing.JCheckBox jCheckBox1;
     public static javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
