@@ -14,6 +14,7 @@ import facturacion.clientes.Clientes;
 import interfaces.Personalizable;
 import java.util.ArrayList;
 import java.util.Iterator;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -240,19 +241,25 @@ public class ListasPorCliente extends javax.swing.JInternalFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         listaDePrecios=(ListasDePrecios)listadoDePrecios.get(this.jComboBox3.getSelectedIndex());
         Double coeficiente=0.00;
-        if(this.jComboBox3.getSelectedIndex()==0){
-            coeficiente=Numeros.ConvertirStringADouble(this.jTextField2.getText());
-        }else{
+        String observaciones=JOptionPane.showInputDialog(this,"Ingrese comentario");
+        
             coeficiente=listaDePrecios.getCoeficiente();
-        }
+        
         Articulable att=new ArticulosAsignados();
         ArticulosAsignados articulo=new ArticulosAsignados();
-        Iterator itG=listadoGral.listIterator();
-        while(itG.hasNext()){
-            articulo=(ArticulosAsignados)itG.next();
+        
+        ArrayList resultado=new ArrayList();
+        int renglones=this.jTable1.getRowCount();
+        for(int a = 0;a < renglones;a++){
+            if((Boolean) this.jTable1.getValueAt(a, 0)){
+                articulo=(ArticulosAsignados)listadoGral.get(a);
             articulo.setCoeficiente(coeficiente);
+            articulo.setIdLista(listaDePrecios.getId());
+            articulo.setObservaciones(observaciones);
+            resultado.add(articulo);
+            }
         }
-        att.guardar(listadoGral);
+        att.guardar(resultado);
     }//GEN-LAST:event_jButton2ActionPerformed
 
 

@@ -34,6 +34,16 @@ public class ArticulosAsignados implements Articulable{
     private Integer idLista;
     private Double coeficiente;
     private String observaciones;
+    private Integer origen;
+
+    public Integer getOrigen() {
+        return origen;
+    }
+
+    public void setOrigen(Integer origen) {
+        this.origen = origen;
+    }
+    
 
     public Integer getId() {
         return id;
@@ -130,8 +140,9 @@ public class ArticulosAsignados implements Articulable{
         Iterator it=rubro1.listIterator();
         while(it.hasNext()){
             rubro=(SubRubros)it.next();
-            sql="select articulos.id,articulos.nombre,articulos.costo,articulos.precio,articulos.idrubro,articulos.idsubrubro,(select aplicacion.coeficiente from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+")as coeficienteA,(select aplicacion.observaciones from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+")as observaciones,(select aplicacion.idlista from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+")as idlista from articulos where idrubro="+rubro.getId()+" order by nombre";
+            sql="select articulos.id,articulos.nombre,articulos.costo,articulos.precio,articulos.idrubro,articulos.idsubrubro,(select aplicacion.coeficiente from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+")as coeficienteA,(select aplicacion.observaciones from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+")as observaciones,(select aplicacion.idlista from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+")as idlista from articulos where idsubrubro="+rubro.getId()+" order by nombre";
             rs=tra.leerConjuntoDeRegistros(sql);
+            //System.out.println(sql);
         Double precio=0.00;
         Double coeficiente=1.00;
         try {
@@ -145,10 +156,12 @@ public class ArticulosAsignados implements Articulable{
                     articulo.setIdLista(cliente.getListaDePrecios());
                     coeficiente=cliente.getCoeficienteListaDeprecios();
                     articulo.setCoeficiente(cliente.getCoeficienteListaDeprecios());
+                    articulo.setOrigen(0);
                 }else{
                     articulo.setIdLista(rs.getInt("idlista"));
                     articulo.setCoeficiente(rs.getDouble("coeficienteA"));
                     coeficiente=rs.getDouble("coeficienteA");
+                    articulo.setOrigen(1);
                 }
                 articulo.setIdRubro(rs.getInt("idrubro"));
                 articulo.setIdSubRubro(rs.getInt("idsubrubro"));
@@ -169,7 +182,22 @@ public class ArticulosAsignados implements Articulable{
 
     @Override
     public void guardar(ArrayList listado) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArticulosAsignados arti;
+        Iterator itA=listado.listIterator();
+        String sql="";
+        Transaccionable tra=new Conecciones();
+        while(itA.hasNext()){
+            arti=(ArticulosAsignados)itA.next();
+            if(arti.getOrigen()==0){
+                //nuevo
+                sql="insert into aplicacion (idcliente,idarticulo,idlista,coeficiente,observaciones) values ("+arti.getIdCliente()+","+arti.getId()+","+arti.getIdLista()+","+arti.getCoeficiente()+",'"+arti.getObservaciones()+"')";
+                tra.guardarRegistro(sql);
+            }else{
+                //modificar
+                sql="update aplicacion set idlista="+arti.getIdLista()+",coeficiente="+arti.getCoeficiente()+",observaciones='"+arti.getObservaciones()+"' where idcliente="+arti.getIdCliente()+" and idarticulo="+arti.getId();
+                tra.guardarRegistro(sql);
+            }
+        }
     }
 
     @Override
