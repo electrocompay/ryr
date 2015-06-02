@@ -28,6 +28,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import Articulos.Articulos;
+import facturacion.clientes.Facturas;
 import objetos.Comprobantes;
 import objetos.Conecciones;
 import tablas.MiModeloTablaBuscarCliente;
@@ -49,6 +50,8 @@ public class IngresoDeRemitos extends javax.swing.JInternalFrame {
     private static ArrayList listadoDeBusqueda=new ArrayList();
     private static Double montoTotal=0.00;
     private static Comprobantes comp=new Comprobantes();
+    private Integer fc;
+    private Facturas factura=new Facturas();
     
     public IngresoDeRemitos() {
         //Articulos.CargarMap();
@@ -61,8 +64,10 @@ public class IngresoDeRemitos extends javax.swing.JInternalFrame {
         
     }
 
-    public IngresoDeRemitos(Clientes ccl,Integer idFact) {
+    public IngresoDeRemitos(Clientes ccl,Object fc) {
         cliT=(Clientes)ccl;
+        factura=(Facturas)fc;
+        fc=factura.getId();
         //detalleDelPedido=listado;
         initComponents();
         agregarRenglonTabla();
@@ -194,7 +199,10 @@ public class IngresoDeRemitos extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //verificar();
-        //Impresora imp=new Impresora();        
+        //Impresora imp=new Impresora();  
+        Remitos remito=new Remitos();
+        Remitable remm=new Remitos();
+        
         String cadena=cliT.getCodigoCliente()+" - "+cliT.getRazonSocial()+"\n"+cliT.getDireccion();
         //comp.setCliente(cliT);
         //VisorDeHojaDeRuta
@@ -219,11 +227,11 @@ public class IngresoDeRemitos extends javax.swing.JInternalFrame {
         String fecha2=ano+"-"+mes+"-"+dia;
         //comp.setFechaComprobante(fecha2);
         //comp.setFechaComprobante(fecha);
-        int comprobanteTipo=(int) Inicio.sucursal.getTipoComprobantes().get(0);
-        if(cliT.getCondicionIva().equals("RI "))comprobanteTipo=(int)Inicio.sucursal.getTipoComprobantes().get(1);
+        int comprobanteTipo=7;
+        
         Comprobantes comprobante=new Comprobantes();
         comprobante.setCliente(cliT);
-        comprobante.setTipoMovimiento(1);
+        comprobante.setTipoMovimiento(5);
         comprobante.setTipoComprobante(comprobanteTipo);
         comprobante.setFechaEmision((Date.valueOf(fecha2)));
         comprobante.setListadoDeArticulos(detalleDelPedido);
@@ -233,35 +241,18 @@ public class IngresoDeRemitos extends javax.swing.JInternalFrame {
         Integer numeroCaja=Inicio.caja.getNumero();
         //System.out.println("EL NUMERO DE CAJA ESSSSSSSS "+numeroCaja);
         comprobante.setIdCaja(numeroCaja);
-        if(montoTotal == 0.00){
-            String sqM="usuario :"+Inicio.usuario.getNombre()+" sucursal "+Inicio.sucursal.getNumero()+" idcaja "+Inicio.caja.getNumero();
-            JOptionPane.showMessageDialog(this,"OJO EL MONTO DE ESTE COMPROBANTE ES $ 0, AVISE PARA DETECTAR EL ERROR");
-            FileWriter fichero=null;
-            PrintWriter pw=null;
-            try {
-                fichero = new FileWriter("C:\\Gestion\\"+Inicio.fechaDia+" - errores en comprobantes.txt",true);
-                pw=new PrintWriter(fichero);
-                pw.println(sqM);
-            } catch (IOException ex1) {
-                Logger.getLogger(IngresoDePedidos.class.getName()).log(Level.SEVERE, null, ex1);
-            }finally{
-                         try {
-           // Nuevamente aprovechamos el finally para 
-           // asegurarnos que se cierra el fichero.
-           if (null != fichero)
-              fichero.close();
-           } catch (Exception e2) {
-              e2.printStackTrace();
-           }
-            }
-        }
-        comprobante.setMontoTotal(montoTotal);
-        int noFacturar=0;
-            
         
-        if(noFacturar==0){
-        Facturar fat=new Comprobantes();
-        fat.guardar(comprobante);
+        comprobante.setMontoTotal(0.00);
+        int noFacturar=0;
+        remito.setIdCliente(cliT.getCodigoId());
+        remito.setNumeroDeRemito(numeroCaja);
+        remito.setTipoComprobantte(comprobanteTipo);
+        remito.setObservaciones(JOptionPane.showInputDialog(this,"Ingrese aclaración en el remito"));
+        remito.setIdComprobante(factura.getId());
+        remito.setId(remm.nuevo(remito));
+        
+        //Facturar fat=new Comprobantes();
+        //fat.guardar(comprobante);
         /*
          * ACA DEVO LIMPIAR TODOS LOS CAMPOS Y VARIABLES DE LA PANTALLA
          * 
@@ -273,12 +264,9 @@ public class IngresoDeRemitos extends javax.swing.JInternalFrame {
         
         listadoDeBusqueda.clear();
         cargarLista(listadoDeBusqueda);
-        cliT=new Clientes("999999");
+        //cliT=new Clientes("999999");
+        this.dispose();
         
-        }else{
-            JOptionPane.showMessageDialog(this,"El cliente supera el límite de crédito, debe abonar la venta");
-            noFacturar=0;
-        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -346,11 +334,7 @@ private void agregarRenglonTabla(){
         listadoDeBusqueda.clear();
         cargarLista(listadoDeBusqueda);
         
-        if(detalleDelPedido.size()==0){
-            this.jButton1.setEnabled(false);
-        }else{
-            this.jButton1.setEnabled(true);
-        }
+        
 }
 private void montrarMonto(){
     //System.err.println("DESCUENTO :"+cliT.getDescuento());

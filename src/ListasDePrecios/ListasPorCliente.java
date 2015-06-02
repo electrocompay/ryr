@@ -78,6 +78,7 @@ public class ListasPorCliente extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setMaximizable(true);
+        setTitle("Editor de Listas de Precios");
 
         jTable1.setModel(modelo1);
         jScrollPane1.setViewportView(jTable1);

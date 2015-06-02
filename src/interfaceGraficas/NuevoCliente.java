@@ -772,7 +772,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
         Integer numeroF=0;
         Facturas factura=new Facturas();
         factura=(Facturas)listadoFac.get(this.jTable3.getSelectedRow());
-        IngresoDeRemitos remi=new IngresoDeRemitos(cliTa,factura.getId());
+        IngresoDeRemitos remi=new IngresoDeRemitos(cliTa,factura);
         Inicio.jDesktopPane1.add(remi);
         try {
             remi.setMaximum(true);
