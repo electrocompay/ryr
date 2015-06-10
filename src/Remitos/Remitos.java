@@ -143,7 +143,25 @@ public class Remitos implements Remitable{
     public ArrayList cargarDetalle(Integer remi) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 }
+
+    @Override
+    public Object carga(Integer id) {
+        Remitos remito=new Remitos();
+        sql="select * from remitos where id="+id;
+        rs=tra.leerConjuntoDeRegistros(sql);
+        try {
+            while(rs.next()){
+                remito.setId(rs.getInt("id"));
+                remito.setIdCliente(rs.getInt("idcliente"));
+                remito.setNumeroDeRemito(rs.getInt("numeroremito"));
+                remito.setObservaciones(rs.getString("observaciones"));
+                remito.setIdComprobante(rs.getInt("idcomprobante"));
+            
+            }   
+        } catch (SQLException ex) {
+            Logger.getLogger(Remitos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    return remito;
     
-    
-    
+    }
 }

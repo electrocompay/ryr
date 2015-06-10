@@ -5,6 +5,7 @@
  */
 package Remitos;
 
+import Articulos.Articulos;
 import interfaces.Transaccionable;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -109,7 +110,12 @@ public class DetalleRemitos implements Remitable{
 
     @Override
     public Integer nuevo(Object remi) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        DetalleRemitos detalle=new DetalleRemitos();
+        detalle=(DetalleRemitos)remi;
+        int id=0;
+        sql="insert into detalleremitos (idremito,idarticulo,cantidadremitida,descrpcionarticulo,idfactura) values ("+detalle.getIdRemito()+","+detalle.getIdArticulo()+","+detalle.getCantidadRemitida()+",'"+detalle.descripcionArticulo+"',"+detalle.getIdFactura()+")";
+        tra.guardarRegistro(sql);
+        return id;
     }
 
     @Override
@@ -154,6 +160,11 @@ public class DetalleRemitos implements Remitable{
         }
         return detalle;
  
+    }
+
+    @Override
+    public Object carga(Integer id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

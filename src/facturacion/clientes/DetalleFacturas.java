@@ -5,10 +5,13 @@
  */
 package facturacion.clientes;
 
+import Articulos.Articulos;
 import interfaces.Transaccionable;
+import interfacesPrograma.Facturar;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -169,8 +172,30 @@ public class DetalleFacturas implements Facturable{
     }
 
     @Override
-    public ArrayList convertirAArticulos(ArrayList detalle) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ArrayList convertirAArticulos(ArrayList listado) {
+        Articulos articulo;
+        Facturar fact=new Articulos(); 
+        DetalleFacturas detalle=new DetalleFacturas();
+        ArrayList listadoA=new ArrayList();
+        Iterator it=listado.listIterator();
+        while(it.hasNext()){
+            detalle=(DetalleFacturas)it.next();
+            articulo=new Articulos();
+            if(detalle.getIdArticulo()==0){
+             articulo.setNumeroId(detalle.getIdArticulo());
+             articulo.setDescripcionArticulo(detalle.getDescripcionArticulo());
+             articulo.setIdCombo(0);
+             articulo.setPrecioDeCosto(0.00);
+            }else{
+            articulo=(Articulos) fact.cargarPorCodigoAsignado(detalle.getIdArticulo());
+            }
+            articulo.setPrecioUnitarioNeto(detalle.getPrecioUnitario());
+            articulo.setCantidad(detalle.getCantidad());
+            articulo.setIdRenglon(detalle.getId());
+            listadoA.add(articulo);
+        }
+        
+        return listadoA;
     }
 
     @Override
@@ -185,6 +210,11 @@ public class DetalleFacturas implements Facturable{
 
     @Override
     public Boolean identificarPedidoAFactura(Integer idPedido, Integer idFactura) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void actualizadorDeEstado(Object factu) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

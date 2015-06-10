@@ -220,7 +220,7 @@ public class Facturas implements Facturable{
         listado1.addColumn("Numero");
         listado1.addColumn("Tipo");
         listado1.addColumn("Monto");
-        listado1.addColumn("Estado");
+        listado1.addColumn("Remito");
         Object[] fila=new Object[6];
         while(iL.hasNext()){
             cotizacion=(Facturas)iL.next();
@@ -229,11 +229,7 @@ public class Facturas implements Facturable{
             fila[2]=String.valueOf(cotizacion.getNumeroFactura());
             fila[3]=String.valueOf(cotizacion.getDescripcionTipo());
             fila[4]=String.valueOf(cotizacion.getTotal());
-            if(cotizacion.getEstado()==0){
-                fila[5]="Pendiente";
-            }else{
-                fila[5]="Cobrada";
-            }
+            fila[5]=String.valueOf(cotizacion.getIdRemito());
             listado1.addRow(fila);
         }
         return listado1;
@@ -262,7 +258,7 @@ public class Facturas implements Facturable{
     @Override
     public ArrayList listarPorClienteNoRemitidas(Integer idClient) {
        ArrayList listado=new ArrayList();
-       String sql="select *,(select tipocomprobantes.descripcion from tipocomprobantes where tipocomprobantes.id=facturas.tipo)as descripcionTipo from facturas where idremito=0 and idcliente="+idClient;
+       String sql="select *,(select tipocomprobantes.descripcion from tipocomprobantes where tipocomprobantes.id=facturas.tipo)as descripcionTipo,(select remitos.numeroremito from remitos where remitos.id=idremito)as remito from facturas where estado < 3 and idcliente="+idClient;
        Transaccionable tra=new Conecciones();
        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
        Facturas factura;
@@ -276,6 +272,7 @@ public class Facturas implements Facturable{
                 factura.setIdPedido(rs.getInt("idpedido"));
                 factura.setIdUsuario(rs.getInt("idusuario"));
                 factura.setNumeroFactura(rs.getInt("numerofactura"));
+                factura.setIdRemito(rs.getInt("remito"));
                 factura.setTipo(rs.getInt("tipo"));
                 factura.setTotal(rs.getDouble("total"));
                 factura.setDescripcionTipo(rs.getString("descripciontipo"));
@@ -301,6 +298,11 @@ public class Facturas implements Facturable{
         tra.guardarRegistro(sql);
         
         return true;
+    }
+
+    @Override
+    public void actualizadorDeEstado(Object factu) {
+        //ACA DEBO PONER EL NUMERO DE ESTADO SI SE HACE RECIBO Y REMITO Y CARGAR EL SALDO
     }
     
     

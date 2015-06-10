@@ -29,4 +29,5 @@ public interface Facturable {
     public ArrayList listarPorClienteNoRemitidas(Integer idClient);
     public ArrayList listarAdeudadaas(Integer idClient);
     public Boolean identificarPedidoAFactura(Integer idPedido,Integer idFactura);
+    public void actualizadorDeEstado(Object factu);
 }

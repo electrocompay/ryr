@@ -28,6 +28,8 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import Articulos.Articulos;
+import facturacion.clientes.DetalleFacturas;
+import facturacion.clientes.Facturable;
 import facturacion.clientes.Facturas;
 import objetos.Comprobantes;
 import objetos.Conecciones;
@@ -68,6 +70,9 @@ public class IngresoDeRemitos extends javax.swing.JInternalFrame {
         cliT=(Clientes)ccl;
         factura=(Facturas)fc;
         fc=factura.getId();
+        Facturable fac=new DetalleFacturas();
+        listadoDeBusqueda=fac.cargarDetallefactura((Integer) fc);
+        detalleDelPedido=fac.convertirAArticulos(listadoDeBusqueda);
         //detalleDelPedido=listado;
         initComponents();
         agregarRenglonTabla();
@@ -202,6 +207,8 @@ public class IngresoDeRemitos extends javax.swing.JInternalFrame {
         //Impresora imp=new Impresora();  
         Remitos remito=new Remitos();
         Remitable remm=new Remitos();
+        DetalleRemitos detalleR=new DetalleRemitos();
+        Remitable remD=new DetalleRemitos();
         
         String cadena=cliT.getCodigoCliente()+" - "+cliT.getRazonSocial()+"\n"+cliT.getDireccion();
         //comp.setCliente(cliT);
@@ -250,7 +257,25 @@ public class IngresoDeRemitos extends javax.swing.JInternalFrame {
         remito.setObservaciones(JOptionPane.showInputDialog(this,"Ingrese aclaración en el remito"));
         remito.setIdComprobante(factura.getId());
         remito.setId(remm.nuevo(remito));
-        
+        Iterator itD=detalleDelPedido.listIterator();
+        Articulos arr=new Articulos();
+        while(itD.hasNext()){
+            arr=(Articulos)itD.next();
+            detalleR=new DetalleRemitos();
+            detalleR.setIdRemito(remito.getId());
+            detalleR.setIdFactura(factura.getId());
+            detalleR.setIdArticulo(arr.getNumeroId());
+            detalleR.setDescripcionArticulo(arr.getDescripcionArticulo());
+            detalleR.setCantidadRemitida(arr.getCantidad());
+            remD.nuevo(detalleR);
+            
+        }
+        ImprimirRemitos imprimir=new ImprimirRemitos();
+        try {
+            imprimir.ImprimirRemito(remito.getId());
+        } catch (IOException ex) {
+            Logger.getLogger(IngresoDeRemitos.class.getName()).log(Level.SEVERE, null, ex);
+        }
         //Facturar fat=new Comprobantes();
         //fat.guardar(comprobante);
         /*

@@ -20,4 +20,5 @@ public interface Remitable {
     public Boolean actualizarRegistros(Object remi);
     public ArrayList listarPendientesPorCliente(Integer idCliente);
     public ArrayList cargarDetalle(Integer remi);
+    public Object carga(Integer id);
 }
