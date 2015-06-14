@@ -131,7 +131,7 @@ public class ArticulosAsignados implements Articulable{
     public ArrayList filtrador(ArrayList rubro1, ArrayList subRubro,Object cli) {
         ArrayList listado=new ArrayList();
         String sql="";
-        SubRubros rubro=new SubRubros();
+        Rubros rubro=new Rubros();
         Clientes cliente=new Clientes();
         cliente=(Clientes)cli;
         ArticulosAsignados articulo;
@@ -139,8 +139,8 @@ public class ArticulosAsignados implements Articulable{
         ResultSet rs;
         Iterator it=rubro1.listIterator();
         while(it.hasNext()){
-            rubro=(SubRubros)it.next();
-            sql="select articulos.id,articulos.nombre,articulos.costo,articulos.precio,articulos.idrubro,articulos.idsubrubro,(select aplicacion.coeficiente from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+")as coeficienteA,(select aplicacion.observaciones from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+")as observaciones,(select aplicacion.idlista from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+")as idlista from articulos where idsubrubro="+rubro.getId()+" order by nombre";
+            rubro=(Rubros)it.next();
+            sql="select articulos.id,articulos.nombre,articulos.costo,articulos.precio,articulos.idrubro,articulos.idsubrubro,(select aplicacion.coeficiente from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+")as coeficienteA,(select aplicacion.observaciones from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+")as observaciones,(select aplicacion.idlista from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+")as idlista from articulos where idrubro="+rubro.getId()+" order by nombre";
             rs=tra.leerConjuntoDeRegistros(sql);
             //System.out.println(sql);
         Double precio=0.00;

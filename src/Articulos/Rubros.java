@@ -138,11 +138,27 @@ public class Rubros implements Personalizable,Rubrable{
 
     @Override
     public ArrayList listarPorRubro(Integer idRubro) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+ArrayList listado=new ArrayList();
+        Rubros subRubro;
+        String sql="select * from rubros order by descripcion";
+        Transaccionable tra=new Conecciones();
+        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        try {
+            while(rs.next()){
+                subRubro=new Rubros();
+                subRubro.setDescripcion(rs.getString("descripcion"));
+                subRubro.setId(rs.getInt("id"));
+                listado.add(subRubro);
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(SubRubros.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listado;
     }
 
     @Override
-    public ArrayList listarPorSubRubro(Integer idSubRubro) {
+    public ArrayList listarPorSubRubro(ArrayList idSubRubro) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -167,7 +183,7 @@ public class Rubros implements Personalizable,Rubrable{
         Iterator it=listado.listIterator();
         Rubros rubro;
         mod.addColumn("Seleccion");
-        mod.addColumn("Descripcion");
+        mod.addColumn("Rubros");
         Object[] fila=new Object[2];
         while(it.hasNext()){
             rubro=(Rubros)it.next();

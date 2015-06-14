@@ -138,7 +138,7 @@ public class Facturas implements Facturable{
         Facturas factura=new Facturas();
         factura=(Facturas)ped;
         Transaccionable tra=new Conecciones();
-        String sql="insert into facturas (idcliente,total,tipo,idusuario,idpedido,idremito,numerofactura,estado) values ("+factura.getIdCliente()+",round("+factura.getTotal()+",4),"+factura.getTipo()+","+factura.getIdUsuario()+","+factura.getIdPedido()+","+factura.getIdRemito()+","+factura.getNumeroFactura()+","+factura.getEstado()+")";
+        String sql="insert into facturas (idcliente,total,tipo,idusuario,idpedido,idremito,numerofactura,estado,saldo) values ("+factura.getIdCliente()+",round("+factura.getTotal()+",4),"+factura.getTipo()+","+factura.getIdUsuario()+","+factura.getIdPedido()+","+factura.getIdRemito()+","+factura.getNumeroFactura()+","+factura.getEstado()+",round("+factura.getTotal()+",4))";
         tra.guardarRegistro(sql);
         int idNuevo=0;
         sql="select LAST_INSERT_ID()";

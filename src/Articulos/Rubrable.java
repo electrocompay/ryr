@@ -17,7 +17,7 @@ public interface Rubrable {
     public Boolean modificar(Object rubro);
     public void modificarPrecioRubro(Integer idRubro,Double precio);
     public ArrayList listarPorRubro(Integer idRubro);
-    public ArrayList listarPorSubRubro(Integer idSubRubro);
+    public ArrayList listarPorSubRubro(ArrayList idSubRubro);
     public void eliminar(Integer idRubro);
     public void modificarCostoPorRubro(Integer idRubro,Double precio);
     public DefaultTableModel mostrarListado(ArrayList listado);

@@ -125,7 +125,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
             coef=0.00;
         }
         */
-        this.jTextField6.setText(String.valueOf(1.00));
+        this.jTextField6.setText(cliTa.getDireccionDeEntrega());
         this.jTextField7.setText(cliTa.getResponsable());
         this.jTextField8.setText(cliTa.getFantasia());
         this.jTextField9.setText(cliTa.getCelular());
@@ -226,6 +226,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setResizable(true);
         setTitle("FACTURACION - CARGA DE NUEVO CLIENTE");
+        setAutoscrolls(true);
 
         jLabel1.setText("Razon Social");
 
@@ -268,7 +269,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
 
         jTextField5.setText("jTextField5");
 
-        jLabel10.setText("Coeficiente :");
+        jLabel10.setText("Dirección de Entrega:");
 
         jTextField6.setText("jTextField6");
 
@@ -440,7 +441,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton12)
                     .addComponent(jButton13))
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTable1.setModel(modelo);
@@ -588,7 +589,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
                     .addComponent(jButton10))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -607,7 +608,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(105, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -642,9 +643,10 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
        cli.setNumeroDeCuit(this.jTextField3.getText());
        cli.setTelefono(this.jTextField4.getText());
        cli.setCupoDeCredito(Numeros.ConvertirStringADouble(this.jTextField5.getText()));
-       Double coef=Numeros.ConvertirStringADouble(this.jTextField6.getText()) / 100;
-       coef=coef + 1;
-       cli.setCoeficienteListaDeprecios(coef);
+       cli.setDireccionDeEntrega(this.jTextField6.getText());
+       //Double coef=Numeros.ConvertirStringADouble(this.jTextField6.getText()) / 100;
+       //coef=coef + 1;
+       //cli.setCoeficienteListaDeprecios(coef);
        cli.setResponsable(this.jTextField7.getText());
        cli.setFantasia(this.jTextField8.getText());
        cli.setCelular(this.jTextField9.getText());
