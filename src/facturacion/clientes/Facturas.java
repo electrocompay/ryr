@@ -219,7 +219,7 @@ public class Facturas implements Facturable{
         listado1.addColumn("Fecha");
         listado1.addColumn("Numero");
         listado1.addColumn("Tipo");
-        listado1.addColumn("Monto");
+        listado1.addColumn("Saldo");
         listado1.addColumn("Remito");
         Object[] fila=new Object[6];
         while(iL.hasNext()){
@@ -274,7 +274,7 @@ public class Facturas implements Facturable{
                 factura.setNumeroFactura(rs.getInt("numerofactura"));
                 factura.setIdRemito(rs.getInt("remito"));
                 factura.setTipo(rs.getInt("tipo"));
-                factura.setTotal(rs.getDouble("total"));
+                factura.setTotal(rs.getDouble("total") - rs.getDouble("saldo"));
                 factura.setDescripcionTipo(rs.getString("descripciontipo"));
                 listado.add(factura);
             }

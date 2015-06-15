@@ -15,6 +15,9 @@ import Pedidos.ImprimirPedido;
 import Pedidos.ModificacionDePedidos;
 import Pedidos.Pedable;
 import Pedidos.Pedidos;
+import Recibos.AbmRecibos;
+import Recibos.DetalleRecibo;
+import Recibos.Recidable;
 import Remitos.IngresoDeRemitos;
 import facturacion.clientes.Clientes;
 import facturacion.clientes.Facturable;
@@ -520,6 +523,11 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
 
         jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Currency- Dollar.png"))); // NOI18N
         jButton10.setText("Emitir Recibo");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -784,6 +792,35 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
         remi.setVisible(true);
         remi.toFront();
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        ArrayList listadoParaRecibo=new ArrayList();
+        int cantidad=this.jTable3.getRowCount();
+        Double montt=0.00;
+        Facturas factura;
+        for(int a=0;a < cantidad;a++){
+            if((Boolean)this.jTable3.getValueAt(a, 0)){
+                factura=new Facturas();
+                factura=(Facturas)listadoFac.get(a);
+                listadoParaRecibo.add(factura);
+                montt=montt + factura.getTotal();
+            }
+        }
+        System.out.println("cantidad a recibir "+listadoParaRecibo.size()+" monto total: "+montt);
+        Recidable reci=new DetalleRecibo();
+        AbmRecibos abm=new AbmRecibos(listadoParaRecibo,montt);
+        //abm.jTable1.setModel(reci.mostrarARecibir(listadoParaRecibo));
+        //AbmRecibos.listadoFc=listadoParaRecibo;
+        //AbmRecibos.montoTotal=montt;
+//        abm.setListadoFc(listadoParaRecibo);
+  //      abm.setMontoTotal(montt);
+    //    abm.setSaldo(montt);
+        
+        //AbmRecibos.jLabel2.setText(" $"+montt);
+        abm.setVisible(true);
+        abm.toFront();
+        
+    }//GEN-LAST:event_jButton10ActionPerformed
     private void ControlaInstancia(JInternalFrame inter){
         /*
         boolean mostrar=true;
