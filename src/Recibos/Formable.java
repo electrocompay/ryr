@@ -12,5 +12,6 @@ import java.util.ArrayList;
  * @author mauro di
  */
 public interface Formable {
-    public Boolean guardarCheques(ArrayList listado);
+    public Boolean guardarCheques(Object listado);
+    public Boolean guardarEfectivo(Object listado);
 }

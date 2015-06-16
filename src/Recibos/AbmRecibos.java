@@ -396,19 +396,21 @@ public class AbmRecibos extends javax.swing.JDialog {
         }
         //ACA CARGO LAS FORMAS DE PAGO SI ES EFECTIVO MOV DE CAJA, SINO CHEQUES
         Iterator itP=detallePagos.listIterator();
+        Formable ff=new FormasDePago(); 
         while(itP.hasNext()){
             pago=(FormasDePago)itP.next();
             pago.setIdCliente(cli.getCodigoId());
             pago.setIdRecibo(recibo.getId());
             if(pago.getDescripcion().equals("Cheque")){
                // mando a formable
-                
+                ff.guardarCheques(pago);
             }else{
                 // mando a movimientos caja
-                
+                ff.guardarEfectivo(pago);
             }
         }
         
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

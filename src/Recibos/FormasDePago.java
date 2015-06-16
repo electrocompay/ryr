@@ -5,11 +5,16 @@
  */
 package Recibos;
 
+import interfaceGraficas.Inicio;
+import interfaces.Transaccionable;
+import java.sql.ResultSet;
+import objetos.Conecciones;
+
 /**
  *
  * @author mauro di
  */
-public class FormasDePago {
+public class FormasDePago implements Formable{
     private Integer id;
     private String descripcion;
     private Double monto;
@@ -18,6 +23,9 @@ public class FormasDePago {
     private String vencimiento;
     private Integer idRecibo;
     private Integer idCliente;
+    private static Transaccionable tra=new Conecciones();
+    private static ResultSet rs;
+    private String sql;
 
     public Integer getIdRecibo() {
         return idRecibo;
@@ -84,6 +92,24 @@ public class FormasDePago {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    @Override
+    public Boolean guardarCheques(Object listado) {
+        FormasDePago forma=new FormasDePago();
+        forma=(FormasDePago)listado;
+        sql="insert into cheques (banco,idcliente,monto,vencimiento,numero,idrecibo) values ('"+forma.getBanco()+"',"+forma.getIdCliente()+","+forma.getMonto()+",'"+forma.getVencimiento()+"',"+forma.getNumero()+","+forma.getIdRecibo()+")";
+        tra.guardarRegistro(sql);
+        return true;
+    }
+
+    @Override
+    public Boolean guardarEfectivo(Object listado) {
+        FormasDePago forma=new FormasDePago();
+        forma=(FormasDePago)listado;
+        sql="insert into movimientoscaja (numeroUsuario,numeroSucursal,numerocomprobante,tipocomprobante,monto,tipomovimiento,idcaja,cantidad,idcliente,tipocliente,pagado) values ("+Inicio.usuario.getNumeroId()+",1,"+forma.getId()+",8,"+forma.getMonto()+",1,"+Inicio.caja.getNumero()+",0,"+forma.getIdCliente()+",1,1)";
+        tra.guardarRegistro(sql);
+        return true;
     }
     
     
