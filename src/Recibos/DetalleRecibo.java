@@ -31,10 +31,20 @@ public class DetalleRecibo implements Recidable{
     private Date fecha;
     private Integer idFactura;
     private Integer idPedido;
+    private Integer numeroFc;
     private static Transaccionable tra=new Conecciones();
     private static ResultSet rs;
     private String sql;
 
+    public Integer getNumeroFc() {
+        return numeroFc;
+    }
+
+    public void setNumeroFc(Integer numeroFc) {
+        this.numeroFc = numeroFc;
+    }
+
+    
     public Integer getId() {
         return id;
     }
@@ -117,7 +127,7 @@ public class DetalleRecibo implements Recidable{
     public Double imputarAFactura(Object rec) {
         Facturas factura=new Facturas();
         factura=(Facturas)rec;
-        sql="update facturas set saldo=total - "+factura.getTotal()+" where id="+factura.getId();
+        sql="update facturas set saldo="+factura.getTotal()+" where id="+factura.getId();
         tra.guardarRegistro(sql);
         return 0.00;
     }

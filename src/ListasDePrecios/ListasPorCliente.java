@@ -33,6 +33,7 @@ public class ListasPorCliente extends javax.swing.JInternalFrame {
     private ArticulosAsignados articulos;
     private ListasDePrecios listaDePrecios;
     private ArrayList listadoDePrecios=new ArrayList();
+    private static Rubrable sRble=new SubRubros();
     
     
     /**
@@ -98,6 +99,11 @@ public class ListasPorCliente extends javax.swing.JInternalFrame {
         jLabel6.setText("Filtrar por Rubros - Seleccione o des seleccione los rubros a incluir ");
 
         jTable3.setModel(modelo3);
+        jTable3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTable3KeyPressed(evt);
+            }
+        });
         jScrollPane3.setViewportView(jTable3);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -115,20 +121,20 @@ public class ListasPorCliente extends javax.swing.JInternalFrame {
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 34, Short.MAX_VALUE)))
+                        .addGap(0, 115, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE))
-                .addGap(0, 285, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         jButton1.setText("Emitir Lista de Precio");
@@ -187,18 +193,15 @@ public class ListasPorCliente extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -226,7 +229,7 @@ public class ListasPorCliente extends javax.swing.JInternalFrame {
         int ctt=this.jTable2.getRowCount();
         
         SubRubros subRubro=new SubRubros();
-        Rubrable sRble=new SubRubros();
+        //Rubrable sRble=new SubRubros();
         Rubros rubro;
         Boolean ss;
         for (int aa=0;aa < ctt;aa++){
@@ -239,12 +242,13 @@ public class ListasPorCliente extends javax.swing.JInternalFrame {
             }
         }
         Articulable att=new ArticulosAsignados();
-        listadoGral=att.filtrador(lls, listadoRubros, cliT);
-        modelo1=att.mostrarListado(listadoGral);
+        
         listadoSubRubros.clear();
         listadoSubRubros=sRble.listarPorSubRubro(lls);
         
         modelo3=sRble.mostrarListado(listadoSubRubros);
+        listadoGral=att.filtrador(listadoSubRubros, lls, cliT);
+        modelo1=att.mostrarListado(listadoGral);
         this.jTable3.setVisible(true);
         this.jTable3.setModel(modelo3);
         this.jTable1.setModel(modelo1);
@@ -273,6 +277,24 @@ public class ListasPorCliente extends javax.swing.JInternalFrame {
         }
         att.guardar(resultado);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTable3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable3KeyPressed
+        int cantidad=this.jTable3.getRowCount();
+        for(int b=0;b < cantidad;b++){
+            if((Boolean)this.jTable3.getValueAt(b, 0)){
+            
+        }else{
+                listadoSubRubros.remove(b);
+            }
+        }
+        Articulable att=new ArticulosAsignados();
+        listadoGral=att.filtrador(listadoSubRubros, listadoSubRubros, cliT);
+        modelo1=att.mostrarListado(listadoGral);
+         modelo3=sRble.mostrarListado(listadoSubRubros);
+         this.jTable3.setModel(modelo3);
+         this.jTable1.setModel(modelo1);
+        
+    }//GEN-LAST:event_jTable3KeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

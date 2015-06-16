@@ -21,7 +21,23 @@ public class ListasDePrecios implements Personalizable{
     private int numeroLista;
     private String descripcionLista;
     private Double porcentaje;
+    private String sql;
+    private static Transaccionable tra=new Conecciones();
+    private static ResultSet rs;
 
+    public void setNumeroLista(int numeroLista) {
+        this.numeroLista = numeroLista;
+    }
+
+    public void setDescripcionLista(String descripcionLista) {
+        this.descripcionLista = descripcionLista;
+    }
+
+    public void setPorcentaje(Double porcentaje) {
+        this.porcentaje = porcentaje;
+    }
+
+    
     public int getNumeroLista() {
         return numeroLista;
     }
@@ -57,7 +73,21 @@ public class ListasDePrecios implements Personalizable{
 
     @Override
     public Object buscarPorNumero(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet.");
+       ListasDePrecios lista = null;
+       sql="select * from coeficienteslistas where id="+id;
+       rs=tra.leerConjuntoDeRegistros(sql);
+        try {
+            while(rs.next()){
+                lista=new ListasDePrecios();
+                lista.setDescripcionLista(rs.getString("descripcion"));
+                lista.setNumeroLista(rs.getInt("id"));
+                lista.setPorcentaje(rs.getDouble("coeficiente"));
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ListasDePrecios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lista;
     }
 
     @Override
@@ -74,9 +104,9 @@ public class ListasDePrecios implements Personalizable{
     public ArrayList listar() {
        ArrayList listadoList=new ArrayList();
        ListasDePrecios lista=null;
-       Transaccionable tra=new Conecciones();
-       String sql="select * from coeficienteslistas";
-       ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+       
+       sql="select * from coeficienteslistas";
+       rs=tra.leerConjuntoDeRegistros(sql);
         try {
             while(rs.next()){
                 lista=new ListasDePrecios();

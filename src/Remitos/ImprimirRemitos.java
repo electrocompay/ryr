@@ -105,8 +105,8 @@ public class ImprimirRemitos {
         
         pagina.setFont(fuente6);
         pagina.drawString("REMITO N° 001-0000000"+cotizacion.getNumeroDeRemito(), 420,80);
-        pagina.drawString("FECHA: "+fec, 420,95);
-        pagina.drawString("ORIGINAL", 420,110);
+        pagina.drawString("FECHA: "+fec, 420,110);
+        //pagina.drawString("ORIGINAL", 420,110);
         pagina.drawString("RAZON SOCIAL: "+cliente.getRazonSocial(),30,185);
         pagina.drawString("C.U.I.T.: "+cliente.getNumeroDeCuit(), 350,185);
         pagina.drawString("DIRECCION: "+cliente.getDireccion(),30,200);

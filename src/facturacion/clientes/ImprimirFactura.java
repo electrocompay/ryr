@@ -29,6 +29,9 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import javax.imageio.ImageIO;
 import Articulos.Articulos;
+import Conversores.NumberToLetterConverter;
+import interfaces.Personalizable;
+import objetos.Localidades;
 
 
 
@@ -83,6 +86,8 @@ public class ImprimirFactura {
         Clientes cliente=new Clientes();
         Facturar factu=new Clientes();
         cliente=(Clientes)factu.cargarPorCodigoAsignado(cotizacion.getIdCliente());
+        Localidades localidad=new Localidades();
+        Personalizable pp=new Localidades();
         Calendar fecha=new GregorianCalendar();
         int dia=fecha.get(Calendar.DAY_OF_MONTH);
         int mes=fecha.get(Calendar.MONTH);
@@ -104,12 +109,13 @@ public class ImprimirFactura {
         Double monto=0.00; //caja.getMontoMovimiento()* -1;
         
         pagina.setFont(fuente6);
-        pagina.drawString("N° "+cotizacion.getDescripcionTipo()+"-0000000"+cotizacion.getNumeroFactura(), 420,80);
-        pagina.drawString("FECHA: "+fec, 420,95);
-        pagina.drawString("ORIGINAL", 420,110);
+       // pagina.drawString("N° "+cotizacion.getDescripcionTipo()+"-0000000"+cotizacion.getNumeroFactura(), 420,80);
+        pagina.drawString("FECHA: "+fec, 420,110);
+        //pagina.drawString("ORIGINAL", 420,110);
         pagina.drawString("RAZON SOCIAL: "+cliente.getRazonSocial(),30,185);
         pagina.drawString("C.U.I.T.: "+cliente.getNumeroDeCuit(), 350,185);
         pagina.drawString("DIRECCION: "+cliente.getDireccion(),30,200);
+        
         pagina.drawString("LOCALIDAD: "+cliente.getLocalidad(),350,200);
         pagina.drawString("COND IVA: "+cliente.getCondicionIva(),30,215);
         String pago="";
@@ -143,6 +149,7 @@ public class ImprimirFactura {
         //formulario derecho
         
         //pagina.drawImage(imagen,363,20,174,93,null);
+        pagina.drawString("SON PESOS: "+NumberToLetterConverter.convertNumberToLetter(cotizacion.getTotal()), 30,735);
         if(cotizacion.getTipo()==2){
             Double sub=cotizacion.getTotal() / 1.21;
             Double iva=cotizacion.getTotal() - sub;
@@ -159,134 +166,7 @@ public class ImprimirFactura {
         pagina.dispose();
         //duplicado
         
-         pagina = pj.getGraphics();
-        
-        //BufferedImage imagen= ImageIO.read(new File("C://Gestion//imagen//logo.png"));
-        //pagina.drawImage(imagen,63,20,174,93,null);
-        pagina.setFont(fuente6);
-        pagina.setColor(Color.black);
-        monto=0.00; //caja.getMontoMovimiento()* -1;
-        
-        pagina.setFont(fuente6);
-        pagina.drawString("N° "+cotizacion.getDescripcionTipo()+"-0000000"+cotizacion.getNumeroFactura(), 420,80);
-        pagina.drawString("FECHA: "+fec, 420,95);
-        pagina.drawString("DUPLICADO", 420,110);
-        pagina.drawString("RAZON SOCIAL: "+cliente.getRazonSocial(),30,185);
-        pagina.drawString("C.U.I.T.: "+cliente.getNumeroDeCuit(), 350,185);
-        pagina.drawString("DIRECCION: "+cliente.getDireccion(),30,200);
-        pagina.drawString("LOCALIDAD: "+cliente.getLocalidad(),350,200);
-        pagina.drawString("COND IVA: "+cliente.getCondicionIva(),30,215);
-        pago="";
-        if(cotizacion.getEstado()==0){
-            pago="CTA. CTE";
-        }else{
-            pago="CONTADO";
-        }
-        pagina.drawString("FORMA DE PAGO: "+pago,350,215);
-        
-        pagina.drawString("CODIGO",20,250);
-        pagina.drawString("DESCRIPCION",160,250);
-        pagina.drawString("CANTIDAD", 350,250);
-        pagina.drawString("P. UNITARIO",450,250);
-        renglon=260;
-        it=listadoDetalle.listIterator();
-        unitario="";
-        while(it.hasNext()){
-            detalleDeCotizacion=(DetalleFacturas)it.next();
-            pagina.drawString(String.valueOf(detalleDeCotizacion.getIdArticulo()),40,renglon);
-            pagina.drawString(detalleDeCotizacion.getDescripcionArticulo(),80,renglon);
-            pagina.drawString(String.valueOf(detalleDeCotizacion.getCantidad()),370,renglon);
-            if(cotizacion.getTipo()==2){
-                unitario=Numeros.ConvertirNumero(detalleDeCotizacion.getPrecioUnitario() * detalleDeCotizacion.getCantidad());
-            }else{
-                unitario=Numeros.ConvertirNumero((detalleDeCotizacion.getPrecioUnitario() * detalleDeCotizacion.getCantidad()) * 1.21);
-            }
-            pagina.drawString(unitario,470,renglon);
-            renglon=renglon + 10;
-        }
-        //formulario derecho
-        
-        //pagina.drawImage(imagen,363,20,174,93,null);
-        if(cotizacion.getTipo()==2){
-            Double sub=cotizacion.getTotal() / 1.21;
-            Double iva=cotizacion.getTotal() - sub;
-        pagina.drawString("SUBTOTAL", 30,750);
-        pagina.drawString(Numeros.ConvertirNumero(sub),40,760);
-        pagina.drawString("IVA 21%", 280, 750);
-        pagina.drawString(Numeros.ConvertirNumero(iva),280,760);            
-        }else{
-
-        }
-        pagina.drawString("TOTAL", 450, 750);
-        pagina.drawString(String.valueOf(cotizacion.getTotal()),440,760);
-        
-        pagina.dispose();
-        
-        //triplicado
-        
-         pagina = pj.getGraphics();
-        
-        //BufferedImage imagen= ImageIO.read(new File("C://Gestion//imagen//logo.png"));
-        //pagina.drawImage(imagen,63,20,174,93,null);
-        pagina.setFont(fuente6);
-        pagina.setColor(Color.black);
-        monto=0.00; //caja.getMontoMovimiento()* -1;
-        
-        pagina.setFont(fuente6);
-        pagina.drawString("N° "+cotizacion.getDescripcionTipo()+"-0000000"+cotizacion.getNumeroFactura(), 420,80);
-        pagina.drawString("FECHA: "+fec, 420,95);
-        pagina.drawString("TRIPLICADO", 420,110);
-        pagina.drawString("RAZON SOCIAL: "+cliente.getRazonSocial(),30,185);
-        pagina.drawString("C.U.I.T.: "+cliente.getNumeroDeCuit(), 350,185);
-        pagina.drawString("DIRECCION: "+cliente.getDireccion(),30,200);
-        pagina.drawString("LOCALIDAD: "+cliente.getLocalidad(),350,200);
-        pagina.drawString("COND IVA: "+cliente.getCondicionIva(),30,215);
-        pago="";
-        if(cotizacion.getEstado()==0){
-            pago="CTA. CTE";
-        }else{
-            pago="CONTADO";
-        }
-        pagina.drawString("FORMA DE PAGO: "+pago,350,215);
-        
-        pagina.drawString("CODIGO",20,250);
-        pagina.drawString("DESCRIPCION",160,250);
-        pagina.drawString("CANTIDAD", 350,250);
-        pagina.drawString("P. UNITARIO",450,250);
-        renglon=260;
-        it=listadoDetalle.listIterator();
-        unitario="";
-        while(it.hasNext()){
-            detalleDeCotizacion=(DetalleFacturas)it.next();
-            pagina.drawString(String.valueOf(detalleDeCotizacion.getIdArticulo()),40,renglon);
-            pagina.drawString(detalleDeCotizacion.getDescripcionArticulo(),80,renglon);
-            pagina.drawString(String.valueOf(detalleDeCotizacion.getCantidad()),370,renglon);
-            if(cotizacion.getTipo()==2){
-                unitario=Numeros.ConvertirNumero(detalleDeCotizacion.getPrecioUnitario() * detalleDeCotizacion.getCantidad());
-            }else{
-                unitario=Numeros.ConvertirNumero((detalleDeCotizacion.getPrecioUnitario() * detalleDeCotizacion.getCantidad()) * 1.21);
-            }
-            pagina.drawString(unitario,470,renglon);
-            renglon=renglon + 10;
-        }
-        //formulario derecho
-        
-        //pagina.drawImage(imagen,363,20,174,93,null);
-        if(cotizacion.getTipo()==2){
-            Double sub=cotizacion.getTotal() / 1.21;
-            Double iva=cotizacion.getTotal() - sub;
-        pagina.drawString("SUBTOTAL", 30,750);
-        pagina.drawString(Numeros.ConvertirNumero(sub),40,760);
-        pagina.drawString("IVA 21%", 280, 750);
-        pagina.drawString(Numeros.ConvertirNumero(iva),280,760);            
-        }else{
-
-        }
-        pagina.drawString("TOTAL", 450, 750);
-        pagina.drawString(String.valueOf(cotizacion.getTotal()),440,760);
-        
-        pagina.dispose();
-        
+                 
         pj.end();
         }catch(Exception e)
 	{

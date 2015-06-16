@@ -8,6 +8,8 @@ package ListasDePrecios;
 import Articulos.Rubros;
 import Articulos.SubRubros;
 import facturacion.clientes.Clientes;
+import facturacion.clientes.ListasDePrecios;
+import interfaces.Personalizable;
 import interfaces.Transaccionable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -35,7 +37,19 @@ public class ArticulosAsignados implements Articulable{
     private Double coeficiente;
     private String observaciones;
     private Integer origen;
+    private String descLista;
+    private static Transaccionable tra=new Conecciones();
+    private static ResultSet rs;
 
+    public String getDescLista() {
+        return descLista;
+    }
+
+    public void setDescLista(String descLista) {
+        this.descLista = descLista;
+    }
+
+    
     public Integer getOrigen() {
         return origen;
     }
@@ -131,20 +145,21 @@ public class ArticulosAsignados implements Articulable{
     public ArrayList filtrador(ArrayList rubro1, ArrayList subRubro,Object cli) {
         ArrayList listado=new ArrayList();
         String sql="";
-        Rubros rubro=new Rubros();
+        SubRubros rubro=new SubRubros();
         Clientes cliente=new Clientes();
         cliente=(Clientes)cli;
         ArticulosAsignados articulo;
-        Transaccionable tra=new Conecciones();
-        ResultSet rs;
+        
         Iterator it=rubro1.listIterator();
         while(it.hasNext()){
-            rubro=(Rubros)it.next();
-            sql="select articulos.id,articulos.nombre,articulos.costo,articulos.precio,articulos.idrubro,articulos.idsubrubro,(select aplicacion.coeficiente from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+")as coeficienteA,(select aplicacion.observaciones from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+")as observaciones,(select aplicacion.idlista from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+")as idlista from articulos where idrubro="+rubro.getId()+" order by nombre";
+            rubro=(SubRubros)it.next();
+            sql="select articulos.id,articulos.nombre,articulos.costo,articulos.precio,articulos.idrubro,articulos.idsubrubro,(select aplicacion.coeficiente from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+")as coeficienteA,(select aplicacion.observaciones from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+")as observaciones,(select aplicacion.idlista from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+")as idlista from articulos where idsubrubro="+rubro.getId()+" order by nombre";
             rs=tra.leerConjuntoDeRegistros(sql);
             //System.out.println(sql);
         Double precio=0.00;
         Double coeficiente=1.00;
+        Personalizable per=new ListasDePrecios();
+        ListasDePrecios lst=new ListasDePrecios();
         try {
             while(rs.next()){
                 articulo=new ArticulosAsignados();
@@ -163,6 +178,8 @@ public class ArticulosAsignados implements Articulable{
                     coeficiente=rs.getDouble("coeficienteA");
                     articulo.setOrigen(1);
                 }
+                lst=(ListasDePrecios) per.buscarPorNumero(articulo.getIdLista());
+                articulo.setDescLista(lst.getDescripcionLista());
                 articulo.setIdRubro(rs.getInt("idrubro"));
                 articulo.setIdSubRubro(rs.getInt("idsubrubro"));
                 articulo.setObservaciones(rs.getString("observaciones"));
@@ -210,14 +227,16 @@ public class ArticulosAsignados implements Articulable{
         modelo.addColumn("Precio");
         modelo.addColumn("Costo");
         modelo.addColumn("Lista Asig.");
-        Object [] fila=new Object[5];
+        modelo.addColumn("Observaciones");
+        Object [] fila=new Object[6];
         while(it.hasNext()){
             articulos=(ArticulosAsignados)it.next();
             fila[0]=true;
             fila[1]=articulos.getDescripcion();
             fila[2]=articulos.getPrecioUnitario();
             fila[3]=articulos.getPrecioDeCosto();
-            fila[4]=articulos.getIdLista();
+            fila[4]=articulos.getDescLista();
+            fila[5]=articulos.getObservaciones();
             modelo.addRow(fila);
         }
         return modelo;
@@ -235,6 +254,8 @@ public class ArticulosAsignados implements Articulable{
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         Double precio=0.00;
         Double coeficiente=1.00;
+        Personalizable per=new ListasDePrecios();
+        ListasDePrecios lst=new ListasDePrecios();
         try {
             while(rs.next()){
                 articulo=new ArticulosAsignados();
@@ -251,6 +272,8 @@ public class ArticulosAsignados implements Articulable{
                     articulo.setCoeficiente(rs.getDouble("coeficienteA"));
                     coeficiente=rs.getDouble("coeficienteA");
                 }
+                lst=(ListasDePrecios) per.buscarPorNumero(articulo.getIdLista());
+                articulo.setDescLista(lst.getDescripcionLista());
                 articulo.setIdRubro(rs.getInt("idrubro"));
                 articulo.setIdSubRubro(rs.getInt("idsubrubro"));
                 articulo.setObservaciones(rs.getString("observaciones"));

@@ -5,6 +5,7 @@
  */
 package objetos;
 
+import interfaces.Personalizable;
 import interfaces.Transaccionable;
 import interfacesPrograma.Busquedas;
 import java.sql.ResultSet;
@@ -17,11 +18,14 @@ import java.util.logging.Logger;
  *
  * @author mauro di
  */
-public class Localidades implements Busquedas{
+public class Localidades implements Busquedas,Personalizable{
     private Integer id;
     private String descripcion;
     private Integer provincia;
     private String descripcionProvincia;
+    private static Transaccionable tra=new Conecciones();
+    private static String sql;
+    private static ResultSet rs;
 
     public Integer getId() {
         return id;
@@ -68,9 +72,9 @@ public class Localidades implements Busquedas{
     @Override
     public ArrayList listar(String cliente) {
         ArrayList listado=new ArrayList();
-        Transaccionable tra=new Conecciones();
-        String sql="select * from localidades order by localidad";
-        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        
+        sql="select * from localidades order by localidad";
+        rs=tra.leerConjuntoDeRegistros(sql);
         try {
             while(rs.next()){
                 Localidades localidad=new Localidades();
@@ -103,6 +107,63 @@ public class Localidades implements Busquedas{
 
     @Override
     public void modificarDatosCliente(Object cliente) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Boolean agregar(Object objeto) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Boolean modificar(Object objeto) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Boolean eliminar(Object objeto) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Object buscarPorNumero(Integer id) {
+        Localidades localidad=new Localidades();
+        sql="select * from localidades where id="+id;
+        rs=tra.leerConjuntoDeRegistros(sql);
+        try {
+            while(rs.next()){
+                localidad.setDescripcion(rs.getString("localidad"));
+                localidad.setId(rs.getInt("id"));
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Localidades.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return localidad;
+    }
+
+    @Override
+    public Object buscarPorNombre(String nombre) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Object buscarPorCuit(String cuit) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList listar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList listarPorNombre(String nombre) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList listarPorCuit(String cuit) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

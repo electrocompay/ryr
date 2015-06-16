@@ -9,8 +9,11 @@ import Conversores.Numeros;
 import facturacion.clientes.Clientes;
 import facturacion.clientes.Facturas;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
 
@@ -383,6 +386,7 @@ public class AbmRecibos extends javax.swing.JDialog {
         numero=recc.nuevo(recibo);
         recibo.setId(numero);
         Iterator itF=listadoFc.listIterator();
+        ArrayList listadoDet=new ArrayList();
         Facturas factura;
         while(itF.hasNext()){
             factura=(Facturas)itF.next();
@@ -391,8 +395,10 @@ public class AbmRecibos extends javax.swing.JDialog {
             detalle.setIdFactura(factura.getId());
             detalle.setIdRecibo(recibo.getId());
             detalle.setMonto(factura.getTotal());
+            detalle.setNumeroFc(factura.getNumeroFactura());
             det.nuevo(detalle);
             det.imputarAFactura(factura);
+            listadoDet.add(detalle);
         }
         //ACA CARGO LAS FORMAS DE PAGO SI ES EFECTIVO MOV DE CAJA, SINO CHEQUES
         Iterator itP=detallePagos.listIterator();
@@ -409,7 +415,12 @@ public class AbmRecibos extends javax.swing.JDialog {
                 ff.guardarEfectivo(pago);
             }
         }
-        
+        ImprimirRecibo imprimir=new ImprimirRecibo();
+        try {
+            imprimir.ImprimirOrdenDeTrabajo(recibo, listadoDet, detallePagos);
+        } catch (IOException ex) {
+            Logger.getLogger(AbmRecibos.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
