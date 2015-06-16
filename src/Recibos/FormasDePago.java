@@ -16,6 +16,25 @@ public class FormasDePago {
     private String banco;
     private String numero;
     private String vencimiento;
+    private Integer idRecibo;
+    private Integer idCliente;
+
+    public Integer getIdRecibo() {
+        return idRecibo;
+    }
+
+    public void setIdRecibo(Integer idRecibo) {
+        this.idRecibo = idRecibo;
+    }
+
+    public Integer getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(Integer idCliente) {
+        this.idCliente = idCliente;
+    }
+
 
     public String getBanco() {
         return banco;

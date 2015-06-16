@@ -6,8 +6,11 @@
 package Recibos;
 
 import Conversores.Numeros;
+import facturacion.clientes.Clientes;
+import facturacion.clientes.Facturas;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Iterator;
 import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,6 +28,7 @@ public class AbmRecibos extends javax.swing.JDialog {
     private DefaultListModel modeloL=new DefaultListModel();
     private String banco;
     private String vencimiento;
+    private Clientes cli;
 
     
     /**
@@ -41,8 +45,9 @@ public class AbmRecibos extends javax.swing.JDialog {
         this.jLabel9.setText("Saldo: $"+saldo);
     }
 
-    public AbmRecibos(ArrayList listado,Double monto) {
+    public AbmRecibos(ArrayList listado,Double monto,Clientes cliente) {
         initComponents();
+        cli=(Clientes)cliente;
         Recidable reci=new DetalleRecibo();
         listadoFc=listado;
         montoTotal=monto;
@@ -116,11 +121,21 @@ public class AbmRecibos extends javax.swing.JDialog {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Efectivo", "Cheque" }));
 
+        jList1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jList1MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jList1);
 
         jLabel4.setText("Detalle:");
 
         jButton1.setText("Guardar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Monto: ");
 
@@ -264,11 +279,20 @@ public class AbmRecibos extends javax.swing.JDialog {
         int cantidad=this.jTable1.getRowCount();
         Double total=0.00;
         Double parte=0.00;
+        Facturas factu;
+        Recidable reci=new DetalleRecibo();
         for(int a=0;a < cantidad;a++){
             if((Boolean)this.jTable1.getValueAt(a, 0)){
                 parte=Numeros.ConvertirStringADouble((String) this.jTable1.getValueAt(a, 4));
+                factu=(Facturas)listadoFc.get(a);
+                factu.setTotal(parte);
                 total=total + parte;
+            }else{
+                listadoFc.remove(a);
+                modelo4=reci.mostrarARecibir(listadoFc);
+                this.jTable1.setModel(modelo4);
             }
+            
         }
         montoTotal=total;
         saldo=montoTotal;
@@ -332,6 +356,60 @@ public class AbmRecibos extends javax.swing.JDialog {
             this.jFormattedTextField1.requestFocus();
         }
     }//GEN-LAST:event_jTextField3KeyPressed
+
+    private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
+        int seleccion=this.jList1.getSelectedIndex();
+        detallePagos.remove(seleccion);
+        Iterator itD=detallePagos.listIterator();
+        modeloL.clear();
+        while(itD.hasNext()){
+            pago=new FormasDePago();
+            pago=(FormasDePago)itD.next();
+            modeloL.addElement(pago.getBanco()+" $"+pago.getMonto());
+            
+        }
+        this.jList1.setModel(modeloL);
+        this.jComboBox1.requestFocus();
+    }//GEN-LAST:event_jList1MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Recibo recibo=new Recibo();
+        DetalleRecibo detalle;
+        Recidable det=new DetalleRecibo();
+        recibo.setIdCliente(cli.getCodigoId());
+        recibo.setMonto(montoTotal);
+        Recidable recc=new Recibo();
+        int numero=0;
+        numero=recc.nuevo(recibo);
+        recibo.setId(numero);
+        Iterator itF=listadoFc.listIterator();
+        Facturas factura;
+        while(itF.hasNext()){
+            factura=(Facturas)itF.next();
+            detalle=new DetalleRecibo();
+            detalle.setIdCliente(cli.getCodigoId());
+            detalle.setIdFactura(factura.getId());
+            detalle.setIdRecibo(recibo.getId());
+            detalle.setMonto(factura.getTotal());
+            det.nuevo(detalle);
+            det.imputarAFactura(factura);
+        }
+        //ACA CARGO LAS FORMAS DE PAGO SI ES EFECTIVO MOV DE CAJA, SINO CHEQUES
+        Iterator itP=detallePagos.listIterator();
+        while(itP.hasNext()){
+            pago=(FormasDePago)itP.next();
+            pago.setIdCliente(cli.getCodigoId());
+            pago.setIdRecibo(recibo.getId());
+            if(pago.getDescripcion().equals("Cheque")){
+               // mando a formable
+                
+            }else{
+                // mando a movimientos caja
+                
+            }
+        }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

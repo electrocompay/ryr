@@ -808,7 +808,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
         }
         System.out.println("cantidad a recibir "+listadoParaRecibo.size()+" monto total: "+montt);
         Recidable reci=new DetalleRecibo();
-        AbmRecibos abm=new AbmRecibos(listadoParaRecibo,montt);
+        AbmRecibos abm=new AbmRecibos(listadoParaRecibo,montt,cliTa);
         //abm.jTable1.setModel(reci.mostrarARecibir(listadoParaRecibo));
         //AbmRecibos.listadoFc=listadoParaRecibo;
         //AbmRecibos.montoTotal=montt;

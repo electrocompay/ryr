@@ -6,9 +6,15 @@
 package Recibos;
 
 import facturacion.clientes.Facturas;
+import interfaces.Transaccionable;
+
 import java.sql.Date;
+import java.sql.ResultSet;
+
 import java.util.ArrayList;
+import objetos.Conecciones;
 import java.util.Iterator;
+
 import javax.swing.table.DefaultTableModel;
 import tablas.MiModeloTablaContacto;
 
@@ -25,6 +31,9 @@ public class DetalleRecibo implements Recidable{
     private Date fecha;
     private Integer idFactura;
     private Integer idPedido;
+    private static Transaccionable tra=new Conecciones();
+    private static ResultSet rs;
+    private String sql;
 
     public Integer getId() {
         return id;
@@ -92,7 +101,11 @@ public class DetalleRecibo implements Recidable{
 
     @Override
     public Integer nuevo(Object rec) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        DetalleRecibo detalle=new DetalleRecibo();
+        detalle=(DetalleRecibo)rec;
+        sql="insert into detallerecibos (idrecibo,idcliente,monto,idfactura) values ("+detalle.getIdRecibo()+","+detalle.getIdCliente()+","+detalle.getMonto()+","+detalle.getIdFactura()+")";
+        tra.guardarRegistro(sql);
+        return 0;
     }
 
     @Override
@@ -102,7 +115,11 @@ public class DetalleRecibo implements Recidable{
 
     @Override
     public Double imputarAFactura(Object rec) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Facturas factura=new Facturas();
+        factura=(Facturas)rec;
+        sql="update facturas set saldo=total - "+factura.getTotal()+" where id="+factura.getId();
+        tra.guardarRegistro(sql);
+        return 0.00;
     }
 
     @Override
