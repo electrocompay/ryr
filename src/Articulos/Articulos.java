@@ -20,14 +20,17 @@ import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import objetos.Conecciones;
+import tablas.MiModeloTablaContacto;
 
 /**
  *
  * @author mauro
  */
-public class Articulos implements Facturar,Editables,Comparables{
+public class Articulos implements Facturar,Editables,Comparables,Modificable{
     private String codigoDeBarra;
     private String codigoAsignado;
     private Integer rubro;
@@ -64,6 +67,10 @@ public class Articulos implements Facturar,Editables,Comparables{
     private int descuento;
     private int idRenglon;
     private Integer idSubRubro;
+    private static Transaccionable tra=new Conecciones();
+    private String sql;
+    private static ResultSet rs;
+    
 
     public Integer getIdSubRubro() {
         return idSubRubro;
@@ -988,9 +995,9 @@ public class Articulos implements Facturar,Editables,Comparables{
         //String idd=String.valueOf(id);
         //articulo=(Articulos)listadoCodigo.get(idd);
         
-        Transaccionable tra;
+        
         //ArrayList resultado=new ArrayList();
-        String sql="";
+        sql="";
         Articulos articulo=null;
         /*
         if(listadoBarr.size()==0){
@@ -999,7 +1006,7 @@ public class Articulos implements Facturar,Editables,Comparables{
             
         }else{
          */
-            tra=new Conecciones();
+            
             
             sql="select articulos.ID,articulos.idrubro,articulos.idsubrubro,articulos.NOMBRE,articulos.BARRAS,articulos.recargo,articulos.PRECIO,articulos.equivalencia,articulos.COSTO,articulos.MINIMO,(articulos.STOCK) as stock,articulos.SERVICIO, articulos.modificaPrecio,articulos.modificaServicio,articulos.SERVICIO1,articulos.idcombo from articulos where INHABILITADO=0 and id="+id;
             
@@ -1045,8 +1052,8 @@ public class Articulos implements Facturar,Editables,Comparables{
         Articulos articulo=(Articulos)objeto;
         Boolean verif=false;
         
-        String sql="insert into movimientosarticulos (tipoMovimiento,idArticulo,cantidad,numeroDeposito,tipoComprobante,numeroComprobante,numeroCliente,fechaComprobante,numerousuario,precioDeCosto,precioDeVenta,precioServicio,observaciones,idcaja) values (14,"+articulo.getNumeroId()+","+cantidadMovimiento+","+articulo.getIdDeposito()+",18,(select tipocomprobantes.numeroActivo + 1 from tipocomprobantes where tipocomprobantes.numero=18),1,'"+Inicio.fechaDia+"',"+Inicio.usuario.getNumeroId()+","+articulo.getPrecioDeCosto()+","+articulo.getPrecioUnitarioNeto()+","+articulo.getPrecioServicio()+",'"+observaciones+"',"+Inicio.caja.getNumero()+")";
-        Transaccionable tra=new Conecciones();
+        sql="insert into movimientosarticulos (tipoMovimiento,idArticulo,cantidad,numeroDeposito,tipoComprobante,numeroComprobante,numeroCliente,fechaComprobante,numerousuario,precioDeCosto,precioDeVenta,precioServicio,observaciones,idcaja) values (14,"+articulo.getNumeroId()+","+cantidadMovimiento+","+articulo.getIdDeposito()+",18,(select tipocomprobantes.numeroActivo + 1 from tipocomprobantes where tipocomprobantes.numero=18),1,'"+Inicio.fechaDia+"',"+Inicio.usuario.getNumeroId()+","+articulo.getPrecioDeCosto()+","+articulo.getPrecioUnitarioNeto()+","+articulo.getPrecioServicio()+",'"+observaciones+"',"+Inicio.caja.getNumero()+")";
+        
         verif=tra.guardarRegistro(sql);
         sql="update tipocomprobantes set numeroActivo=numeroActivo + 1 where numero=18";
         tra.guardarRegistro(sql);
@@ -1111,6 +1118,172 @@ public class Articulos implements Facturar,Editables,Comparables{
             Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
         }
         return precio;
+    }
+
+    @Override
+    public ArrayList buscar(Integer rubro,Integer subRubro, String criterio) {
+        ArrayList resultado=new ArrayList();
+        Articulos articulo=null;
+        criterio=criterio.toUpperCase();
+        
+        
+        sql="select * from articulos where nombre like '%"+criterio+"%' or idrubro="+rubro+" or idsubrubro="+subRubro+" order by nombre";
+        
+        rs=tra.leerConjuntoDeRegistros(sql);
+        try {
+            while(rs.next()){
+                articulo=new Articulos();
+                articulo.setCodigoAsignado(rs.getString("ID"));
+                articulo.setDescripcionArticulo(rs.getString("NOMBRE"));
+                articulo.setNumeroId(rs.getInt("ID"));
+                articulo.setCodigoDeBarra(rs.getString("BARRAS"));
+                articulo.setRecargo(rs.getDouble("recargo"));
+                articulo.setPrecioUnitarioNeto(rs.getDouble("PRECIO"));
+                articulo.setEquivalencia(rs.getDouble("equivalencia"));
+                articulo.setPrecioDeCosto(rs.getDouble("COSTO"));
+                articulo.setStockMinimo(rs.getDouble("MINIMO"));
+                articulo.setStockActual(rs.getDouble("stock"));
+                articulo.setRubroId(rs.getInt("idrubro"));
+                articulo.setIdSubRubro(rs.getInt("idsubrubro"));
+                
+                articulo.setModificaPrecio(rs.getBoolean("modificaPrecio"));
+                articulo.setModificaServicio(rs.getBoolean("modificaServicio"));
+                String nom=rs.getString("NOMBRE");
+                articulo.setIdCombo(rs.getInt("idcombo"));
+                if(articulo.getIdCombo() > 0)articulo.setCombo(CargarCombo(articulo.getNumeroId()));
+                resultado.add(articulo);
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        /*
+        Transaccionable tra=new Conecciones();
+        ArrayList resultado=new ArrayList();
+        Articulos articulo=null;
+        String sql="select *,(select stockart.stock from stockart where stockart.id=articulos.ID)as stock,(select rubros.recargo from rubros where rubros.id=articulos.idRubro)as recargo from articulos where NOMBRE like '"+criterio+"%' and INHABILITADO=0";
+        ResultSet rr=tra.leerConjuntoDeRegistros(sql);
+        try {
+            while(rr.next()){
+                articulo=new Articulos();
+                articulo.setCodigoAsignado(rr.getString("ID"));
+                articulo.setDescripcionArticulo(rr.getString("NOMBRE"));
+                articulo.setNumeroId(rr.getInt("ID"));
+                articulo.setCodigoDeBarra(rr.getString("BARRAS"));
+                articulo.setRecargo(rr.getDouble("recargo"));
+                articulo.setPrecioUnitarioNeto(rr.getDouble("PRECIO"));
+                articulo.setEquivalencia(rr.getDouble("equivalencia"));
+                articulo.setPrecioDeCosto(rr.getDouble("COSTO"));
+                articulo.setStockMinimo(rr.getDouble("MINIMO"));
+                articulo.setStockActual(rr.getDouble("stock"));
+                articulo.setPrecioServicio(rr.getDouble("SERVICIO"));
+                articulo.setModificaPrecio(rr.getBoolean("modificaPrecio"));
+                resultado.add(articulo);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        */
+        return resultado;
+    }
+
+    @Override
+    public Integer nuevoArticulo(Object objeto) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Boolean modificarArticulo(Object objeto) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList modificarPrecios(ArrayList listado, Double porcPrecio, Double porcCosto) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public DefaultTableModel mostrarListado(ArrayList listado) {
+        MiModeloTablaContacto modelo=new MiModeloTablaContacto();
+        Iterator it=listado.listIterator();
+        Articulos articulos=new Articulos();
+        modelo.addColumn("Listar");
+        modelo.addColumn("Descripcion");
+        modelo.addColumn("Precio");
+        modelo.addColumn("Costo");
+        modelo.addColumn("Rubro");
+        modelo.addColumn("SubRubro");
+        Object [] fila=new Object[6];
+        while(it.hasNext()){
+            articulos=(Articulos)it.next();
+            fila[0]=true;
+            fila[1]=articulos.getDescripcionArticulo();
+            fila[2]=articulos.getPrecioUnitarioNeto();
+            fila[3]=articulos.getPrecioDeCosto();
+            fila[4]=articulos.getNrubro();
+            fila[5]=articulos.getIdSubRubro();
+            modelo.addRow(fila);
+        }
+        return modelo;
+    }
+
+    @Override
+    public DefaultListModel mostrarListadoBusqueda(ArrayList listado) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList buscarParaFacturar(Integer rubro, Integer subRubro, String criterio, Integer idCliente) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList filtrador(ArrayList rubro1, ArrayList subRubro) {
+        ArrayList listado=new ArrayList();
+        String sql="";
+        SubRubros rubro=new SubRubros();
+        
+        Articulos articulo;
+        
+        Iterator it=rubro1.listIterator();
+        while(it.hasNext()){
+            rubro=(SubRubros)it.next();
+            sql="select * from articulos where idsubrubro="+rubro.getId()+" order by nombre";
+            rs=tra.leerConjuntoDeRegistros(sql);
+            //System.out.println(sql);
+        Double precio=0.00;
+        Double coeficiente=1.00;
+        
+        try {
+            while(rs.next()){
+                articulo=new Articulos();
+                articulo.setCodigoAsignado(rs.getString("ID"));
+                articulo.setDescripcionArticulo(rs.getString("NOMBRE"));
+                articulo.setNumeroId(rs.getInt("ID"));
+                articulo.setCodigoDeBarra(rs.getString("BARRAS"));
+                articulo.setRecargo(rs.getDouble("recargo"));
+                articulo.setPrecioUnitarioNeto(rs.getDouble("PRECIO"));
+                articulo.setEquivalencia(rs.getDouble("equivalencia"));
+                articulo.setPrecioDeCosto(rs.getDouble("COSTO"));
+                articulo.setStockMinimo(rs.getDouble("MINIMO"));
+                articulo.setStockActual(rs.getDouble("stock"));
+                articulo.setRubroId(rs.getInt("idrubro"));
+                articulo.setIdSubRubro(rs.getInt("idsubrubro"));
+                
+                articulo.setModificaPrecio(rs.getBoolean("modificaPrecio"));
+                articulo.setModificaServicio(rs.getBoolean("modificaServicio"));
+                String nom=rs.getString("NOMBRE");
+                articulo.setIdCombo(rs.getInt("idcombo"));
+                if(articulo.getIdCombo() > 0)articulo.setCombo(CargarCombo(articulo.getNumeroId()));
+                listado.add(articulo);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        // fin iterator
+        }
+        return listado;
     }
     
     

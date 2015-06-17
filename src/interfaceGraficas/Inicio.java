@@ -8,6 +8,7 @@ import Articulos.RubrosAbm;
 import Actualizaciones.Actualiza;
 import Actualizaciones.Actualiza1;
 import Actualizaciones.BkDeConeccion;
+import Articulos.AbmArticulos;
 import Compras.Proveedores;
 import Depositos.Depositos;
 import Excel.InformeMensual;
@@ -579,7 +580,7 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
-        ArticulosAbm artt=new ArticulosAbm();
+        AbmArticulos artt=new AbmArticulos();
         jDesktopPane1.add(artt);
         try {
             artt.setMaximum(true);

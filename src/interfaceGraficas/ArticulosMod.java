@@ -44,7 +44,15 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
             totalActual=totalActual + arr.getCantidad();
         }
         arti.setStockActual(totalActual);
+        Personalizable rub=new Rubros();
+        lstRubros=rub.listar();
+        Rubrable sR=new SubRubros();
+        lstSubRubros=sR.listarPorRubro(arti.getRubroId());
+        
+        
         initComponents();
+        
+        
         combo=new ArrayList();
         Iterator itR=lstRubros.listIterator();
         Rubros rubro=new Rubros();
@@ -71,12 +79,13 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
         while(itSr.hasNext()){
             sub=(SubRubros)itSr.next();
             rubroI=sub.getId();
+            System.out.println("subrubro: "+rubroI);
             if(rubroI==artI){
                 posicion=rengl;
             }
             rengl++;
         }
-        System.out.println("posicion "+posicion+"cantidad "+lstSubRubros.size());
+        System.out.println("posicion "+posicion+"cantidad "+lstSubRubros.size()+" seleccionado "+artI);
         this.jComboBox3.setSelectedIndex(posicion);
         this.jTextField1.setText(arti.getDescripcionArticulo());
         
@@ -231,13 +240,11 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
 
         jLabel8.setText("Sub Rubro");
 
-        Rubrable perRu=new SubRubros();
-        SubRubros subRubro=new SubRubros();
-        lstSubRubros=perRu.listarPorRubro(0);
-        Iterator iRu=lstSubRubros.listIterator();
-        while(iRu.hasNext()){
-            subRubro=(SubRubros)iRu.next();
-            jComboBox3.addItem(subRubro.getDescripcion());
+        Iterator iRs=lstSubRubros.listIterator();
+        SubRubros sRubro=new SubRubros();
+        while(iRs.hasNext()){
+            sRubro=(SubRubros)iRs.next();
+            jComboBox3.addItem(sRubro.getDescripcion());
         }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

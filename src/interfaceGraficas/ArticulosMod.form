@@ -274,7 +274,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="Rubrable perRu=new SubRubros();&#xa;SubRubros subRubro=new SubRubros();&#xa;lstSubRubros=perRu.listarPorRubro(0);&#xa;Iterator iRu=lstSubRubros.listIterator();&#xa;while(iRu.hasNext()){&#xa;    subRubro=(SubRubros)iRu.next();&#xa;    jComboBox3.addItem(subRubro.getDescripcion());&#xa;}"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="Iterator iRs=lstSubRubros.listIterator();&#xa;SubRubros sRubro=new SubRubros();&#xa;while(iRs.hasNext()){&#xa;    sRubro=(SubRubros)iRs.next();&#xa;    jComboBox3.addItem(sRubro.getDescripcion());&#xa;}"/>
           </AuxValues>
         </Component>
       </SubComponents>
