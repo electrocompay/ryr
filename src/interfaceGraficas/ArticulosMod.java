@@ -228,6 +228,11 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
             rubro=(Rubros)iR.next();
             jComboBox1.addItem(rubro.getDescripcion());
         }
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         Personalizable per=new Proveedores();
         Proveedores proveedor=new Proveedores();
@@ -369,15 +374,21 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
         arti.setPrecioServicio1(cant);
         //arti.setModificaPrecio(this.jCheckBox1.isSelected());
         //arti.setModificaServicio(this.jCheckBox2.isSelected());
-        Proveedores proveedor=new Proveedores();
-        proveedor=(Proveedores)lstProveedores.get(this.jComboBox2.getSelectedIndex());
-        arti.setProveedorId(proveedor.getNumero());
+        
+        //Proveedores proveedor=new Proveedores();
+        //proveedor=(Proveedores)lstProveedores.get(this.jComboBox2.getSelectedIndex());
+        //
+        arti.setProveedorId(1);
         Rubros rubro=new Rubros();
         rubro=(Rubros)lstRubros.get(this.jComboBox1.getSelectedIndex());
         arti.setRubroId(rubro.getId());
+        if(lstSubRubros.size() > 0){
         SubRubros sub=new SubRubros();
         sub=(SubRubros)lstSubRubros.get(this.jComboBox3.getSelectedIndex());
         arti.setIdSubRubro(sub.getId());
+        }else{
+            arti.setIdSubRubro(0);
+        }
         if(this.jCheckBox3.isSelected()){
             arti.setIdCombo(1);
         }else{
@@ -418,6 +429,23 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
     private void jTextField7KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField7KeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField7KeyPressed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        int seleccion=this.jComboBox1.getSelectedIndex();
+        Rubros rub=new Rubros();
+        rub=(Rubros)lstRubros.get(seleccion);
+        Rubrable rubra=new SubRubros();
+        lstSubRubros.clear();
+        lstSubRubros=rubra.listarPorRubro(rub.getId());
+        this.jComboBox3.removeAllItems();
+        Iterator iSb=lstSubRubros.listIterator();
+        SubRubros subR=new SubRubros();
+        while(iSb.hasNext()){
+            subR=(SubRubros)iSb.next();
+            this.jComboBox3.addItem(subR.getDescripcion());
+        }
+        
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

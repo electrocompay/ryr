@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
 import objetos.Conecciones;
 import tablas.MiModeloTablaContacto;
@@ -135,6 +137,7 @@ public class SubRubros implements Rubrable{
             sentencia+=" id_clasificacion="+rubro.getId()+" or";
         }
         int cant=sentencia.length();
+        System.out.println(sentencia+" cantidad "+cant);
         cant=cant - 2;
         sentencia=sentencia.substring(0, cant);
         String sql="select *,(select rubros.descripcion from rubros where rubros.id=tipos.id_clasificacion)as descr from tipos where "+sentencia+" order by id_clasificacion";
@@ -190,6 +193,19 @@ public class SubRubros implements Rubrable{
             mod.addRow(fila);
         }
         return mod;
+    }
+
+    @Override
+    public DefaultListModel mostrarEnCombo(ArrayList listado) {
+        SubRubros sub=new SubRubros();
+        DefaultListModel modelo=new DefaultListModel();
+        Iterator il=listado.listIterator();
+        while(il.hasNext()){
+            sub=(SubRubros)il.next();
+            modelo.addElement(sub.getDescripcion());
+        }
+        
+        return modelo;
     }
     
     

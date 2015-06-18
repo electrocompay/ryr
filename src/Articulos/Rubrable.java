@@ -6,6 +6,8 @@
 package Articulos;
 
 import java.util.ArrayList;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -21,4 +23,5 @@ public interface Rubrable {
     public void eliminar(Integer idRubro);
     public void modificarCostoPorRubro(Integer idRubro,Double precio);
     public DefaultTableModel mostrarListado(ArrayList listado);
+    public DefaultListModel mostrarEnCombo(ArrayList listado);
 }

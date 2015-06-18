@@ -954,8 +954,9 @@ public class Articulos implements Facturar,Editables,Comparables,Modificable{
     public Boolean ModificaionObjeto(Object objeto) {
         Articulos articulo=(Articulos)objeto;
         Boolean ch=false;
-        String sql="update articulos set NOMBRE='"+articulo.getDescripcionArticulo()+"',COSTO="+articulo.getPrecioDeCosto()+",PRECIO="+articulo.getPrecioUnitarioNeto()+",MINIMO="+articulo.getStockMinimo()+",BARRAS ='"+articulo.getCodigoDeBarra()+"',modificaPrecio="+articulo.getModificaPrecio()+",modificaServicio="+articulo.getModificaServicio()+",actualizacion=2,idcombo="+articulo.getIdCombo()+",idrubro="+articulo.getRubroId()+",idsubrubro="+articulo.getIdSubRubro()+" where ID="+articulo.getNumeroId();
-        Transaccionable tra=new Conecciones();
+        sql="update articulos set NOMBRE='"+articulo.getDescripcionArticulo()+"',COSTO="+articulo.getPrecioDeCosto()+",PRECIO="+articulo.getPrecioUnitarioNeto()+",MINIMO="+articulo.getStockMinimo()+",BARRAS ='"+articulo.getCodigoDeBarra()+"',modificaPrecio="+articulo.getModificaPrecio()+",modificaServicio="+articulo.getModificaServicio()+",actualizacion=2,idcombo="+articulo.getIdCombo()+",idrubro="+articulo.getRubroId()+",idsubrubro="+articulo.getIdSubRubro()+" where ID="+articulo.getNumeroId();
+        System.out.println(sql);
+        tra=new Conecciones();
         ch=tra.guardarRegistro(sql);
         //sql="insert into actualizaciones (iddeposito,idobjeto,estado) values (1,1,2),(2,1,2),(3,1,2),(4,1,2),(5,1,2),(6,1,2),(7,1,2)";
         //tra.guardarRegistro(sql);
