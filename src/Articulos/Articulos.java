@@ -1200,7 +1200,21 @@ public class Articulos implements Facturar,Editables,Comparables,Modificable{
 
     @Override
     public ArrayList modificarPrecios(ArrayList listado, Double porcPrecio, Double porcCosto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Double porc1=porcPrecio / 100;
+        porc1=porc1 + 1;
+        Double porc2=porcCosto / 100;
+        porc2=porc2 + 1;
+        Iterator itL=listado.listIterator();
+        Articulos articulo=new Articulos();
+        while(itL.hasNext()){
+            articulo=(Articulos)itL.next();
+            articulo.setPrecioUnitarioNeto(articulo.getPrecioUnitarioNeto() * porc1);
+            articulo.setPrecioDeCosto(articulo.getPrecioDeCosto() * porc2);
+            sql="update articulos set precio=round(precio * "+porc1+",4),costo=round(costo * "+porc2+",4) where id="+articulo.getNumeroId();
+            tra.guardarRegistro(sql);
+        }
+        return listado;
+        
     }
 
     @Override
