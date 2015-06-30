@@ -24,4 +24,5 @@ public interface Rubrable {
     public void modificarCostoPorRubro(Integer idRubro,Double precio);
     public DefaultTableModel mostrarListado(ArrayList listado);
     public DefaultListModel mostrarEnCombo(ArrayList listado);
+    public ArrayList buscar(String texto);
 }

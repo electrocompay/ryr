@@ -26,6 +26,10 @@ import tablas.MiModeloTablaContacto;
 public class Rubros implements Personalizable,Rubrable{
     private Integer id;
     private String descripcion;
+    private static String sql;
+    private static Transaccionable tra=new Conecciones();
+    private static ResultSet rs;
+    
 
     public Integer getId() {
         return id;
@@ -132,8 +136,8 @@ public class Rubros implements Personalizable,Rubrable{
         Double coe=precio / 100;
         coe=coe + 1;
         System.out.println("resultado :"+coe);
-        String sql="update articulos set precio=round((precio * "+coe+"),4) where idrubro="+idRubro;
-        Transaccionable tra=new Conecciones();
+        sql="update articulos set precio=round((precio * "+coe+"),4) where idrubro="+idRubro;
+        
         tra.guardarRegistro(sql);
         
     }
@@ -143,8 +147,8 @@ public class Rubros implements Personalizable,Rubrable{
 ArrayList listado=new ArrayList();
         Rubros subRubro;
         String sql="select * from rubros order by descripcion";
-        Transaccionable tra=new Conecciones();
-        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        
+        rs=tra.leerConjuntoDeRegistros(sql);
         try {
             while(rs.next()){
                 subRubro=new Rubros();
@@ -175,7 +179,7 @@ ArrayList listado=new ArrayList();
         coe=coe + 1;
         System.out.println("resultado :"+coe);
         String sql="update articulos set costo=round((costo * "+coe+"),4) where idrubro="+idRubro;
-        Transaccionable tra=new Conecciones();
+        
         tra.guardarRegistro(sql);
     }
 
@@ -199,6 +203,25 @@ ArrayList listado=new ArrayList();
     @Override
     public DefaultListModel mostrarEnCombo(ArrayList listado) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList buscar(String texto) {
+        ArrayList resultado=new ArrayList();
+        Rubros rubro=null;
+        sql="select * from rubros where descripcion like '%"+texto+"%'";
+        rs=tra.leerConjuntoDeRegistros(sql);
+        try {
+            while(rs.next()){
+               rubro=new Rubros();
+               rubro.setId(rs.getInt("id"));
+               rubro.setDescripcion(rs.getString("descripcion"));
+               resultado.add(rubro);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return resultado;
     }
     
     

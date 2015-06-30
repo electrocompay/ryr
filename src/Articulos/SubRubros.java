@@ -207,6 +207,11 @@ public class SubRubros implements Rubrable{
         
         return modelo;
     }
+
+    @Override
+    public ArrayList buscar(String texto) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
 }
