@@ -7,6 +7,7 @@ package Articulos;
 
 import java.util.ArrayList;
 import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,4 +26,5 @@ public interface Rubrable {
     public DefaultTableModel mostrarListado(ArrayList listado);
     public DefaultListModel mostrarEnCombo(ArrayList listado);
     public ArrayList buscar(String texto);
+    public DefaultComboBoxModel mostrarEnBox(ArrayList listado);
 }

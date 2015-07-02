@@ -14,6 +14,7 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
 import objetos.Conecciones;
@@ -202,7 +203,14 @@ ArrayList listado=new ArrayList();
 
     @Override
     public DefaultListModel mostrarEnCombo(ArrayList listado) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        DefaultListModel modelo=new DefaultListModel();
+        Rubros rubro=new Rubros();
+        Iterator it=listado.listIterator();
+        while(it.hasNext()){
+            rubro=(Rubros)it.next();
+            modelo.addElement(rubro.getId()+" "+rubro.getDescripcion());
+        }
+        return modelo;
     }
 
     @Override
@@ -222,6 +230,11 @@ ArrayList listado=new ArrayList();
             Logger.getLogger(Rubros.class.getName()).log(Level.SEVERE, null, ex);
         }
         return resultado;
+    }
+
+    @Override
+    public DefaultComboBoxModel mostrarEnBox(ArrayList listado) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

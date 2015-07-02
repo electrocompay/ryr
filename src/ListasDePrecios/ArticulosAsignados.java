@@ -1,16 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package ListasDePrecios;
 
+import Articulos.Articulos;
 import Articulos.Rubros;
 import Articulos.SubRubros;
+import Conversores.Numeros;
 import facturacion.clientes.Clientes;
+import facturacion.clientes.Facturable;
 import facturacion.clientes.ListasDePrecios;
+import interfaces.Comparables;
+import interfaces.Editables;
 import interfaces.Personalizable;
 import interfaces.Transaccionable;
+import interfacesPrograma.Facturar;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -288,6 +290,83 @@ public class ArticulosAsignados implements Articulable{
         
         return listado;
         
+    }
+
+    @Override
+    public ArrayList convertirListadoEnArticulos(ArrayList listado) {
+        ArrayList listadoArticulos=new ArrayList();
+        Iterator it=listado.listIterator();
+        Articulos articulo;
+        Facturar comp=new Articulos();
+        ArticulosAsignados art=new ArticulosAsignados();
+        while(it.hasNext()){
+            art=(ArticulosAsignados)it.next();
+            articulo=new Articulos();
+            articulo=(Articulos) comp.cargarPorCodigoAsignado(art.getId());
+            articulo.setPrecioDeCosto(Numeros.ConvertirStringADouble(String.valueOf(art.getPrecioDeCosto())));
+            articulo.setPrecioUnitario(Numeros.ConvertirStringADouble(String.valueOf(art.getPrecioUnitario())));
+            articulo.setPrecioUnitarioNeto(Numeros.ConvertirStringADouble(String.valueOf(art.getPrecioUnitario())));
+            listadoArticulos.add(articulo);
+            
+        }
+        
+        return listadoArticulos;
+    }
+
+    @Override
+    public ArrayList filtradorDeFormularios(ArrayList rubro1, ArrayList subRubro, Object cli, String ttx) {
+        ArrayList listado=new ArrayList();
+        String sql="";
+        SubRubros rubro=new SubRubros();
+        Clientes cliente=new Clientes();
+        cliente=(Clientes)cli;
+        ArticulosAsignados articulo;
+        
+        Iterator it=rubro1.listIterator();
+        while(it.hasNext()){
+            rubro=(SubRubros)it.next();
+            sql="select articulos.id,articulos.nombre,articulos.costo,articulos.precio,articulos.idrubro,articulos.idsubrubro,(select aplicacion.coeficiente from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+")as coeficienteA,(select aplicacion.observaciones from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+")as observaciones,(select aplicacion.idlista from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+")as idlista from articulos where idsubrubro="+rubro.getId()+" and nombre like '%"+ttx+"%' order by nombre";
+            rs=tra.leerConjuntoDeRegistros(sql);
+            //System.out.println(sql);
+        Double precio=0.00;
+        Double coeficiente=1.00;
+        Personalizable per=new ListasDePrecios();
+        ListasDePrecios lst=new ListasDePrecios();
+        try {
+            while(rs.next()){
+                articulo=new ArticulosAsignados();
+                articulo.setId(rs.getInt("id"));
+                
+                articulo.setDescripcion(rs.getString("nombre"));
+                articulo.setIdCliente(cliente.getCodigoId());
+                if(rs.getInt("idlista")==0){
+                    articulo.setIdLista(cliente.getListaDePrecios());
+                    coeficiente=cliente.getCoeficienteListaDeprecios();
+                    articulo.setCoeficiente(cliente.getCoeficienteListaDeprecios());
+                    articulo.setOrigen(0);
+                }else{
+                    articulo.setIdLista(rs.getInt("idlista"));
+                    articulo.setCoeficiente(rs.getDouble("coeficienteA"));
+                    coeficiente=rs.getDouble("coeficienteA");
+                    articulo.setOrigen(1);
+                }
+                lst=(ListasDePrecios) per.buscarPorNumero(articulo.getIdLista());
+                articulo.setDescLista(lst.getDescripcionLista());
+                articulo.setIdRubro(rs.getInt("idrubro"));
+                articulo.setIdSubRubro(rs.getInt("idsubrubro"));
+                articulo.setObservaciones(rs.getString("observaciones"));
+                articulo.setPrecioDeCosto(rs.getDouble("costo"));
+                precio=rs.getDouble("precio") * coeficiente;
+                articulo.setPrecioUnitario(precio);
+                listado.add(articulo);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ArticulosAsignados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        // fin iterator
+        }
+        return listado;
     }
     
 }

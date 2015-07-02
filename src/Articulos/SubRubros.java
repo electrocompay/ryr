@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
 import objetos.Conecciones;
@@ -211,6 +212,19 @@ public class SubRubros implements Rubrable{
     @Override
     public ArrayList buscar(String texto) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public DefaultComboBoxModel mostrarEnBox(ArrayList listado) {
+        DefaultComboBoxModel modeloB=new DefaultComboBoxModel();
+        SubRubros sub=new SubRubros();
+        Iterator it=listado.listIterator();
+        while(it.hasNext()){
+            sub=(SubRubros)it.next();
+            modeloB.addElement(sub.getDescripcion());
+            
+        }
+        return modeloB;
     }
     
     

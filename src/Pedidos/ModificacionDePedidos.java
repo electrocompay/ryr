@@ -29,7 +29,14 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import Articulos.Articulos;
+import Articulos.Modificable;
+import Articulos.Rubrable;
+import Articulos.Rubros;
+import Articulos.SubRubros;
+import ListasDePrecios.Articulable;
+import ListasDePrecios.ArticulosAsignados;
 import Sucursales.ListasDePrecios;
+import javax.swing.DefaultComboBoxModel;
 import objetos.Comprobantes;
 import objetos.Conecciones;
 import tablas.MiModeloTablaBuscarCliente;
@@ -54,6 +61,12 @@ public class ModificacionDePedidos extends javax.swing.JInternalFrame {
     private Pedidos pedido=new Pedidos();
     private ArrayList listadoPed=new ArrayList();
     private ListasDePrecios lista;
+    private Rubros rubro=new Rubros();
+    private SubRubros subRubro;
+    private ArrayList listadoSubRubros;
+    private Rubrable ruble=new Rubros();
+    private ArrayList listadoR=new ArrayList();
+    private DefaultComboBoxModel combox=new DefaultComboBoxModel();
     
     public ModificacionDePedidos() {
         //Articulos.CargarMap();
@@ -136,6 +149,10 @@ public class ModificacionDePedidos extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         jCheckBox1 = new javax.swing.JCheckBox();
         jLabel9 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jTextField5 = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
@@ -334,6 +351,23 @@ public class ModificacionDePedidos extends javax.swing.JInternalFrame {
 
         jLabel9.setText("PRESIONE F4 PARA IMPRIMIR");
 
+        jLabel2.setText("Rubro");
+
+        jTextField5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField5KeyPressed(evt);
+            }
+        });
+
+        jLabel10.setText("SubRubro");
+
+        jComboBox2.setModel(combox);
+        jComboBox2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jComboBox2KeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -359,19 +393,25 @@ public class ModificacionDePedidos extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton4)))
-                        .addGap(0, 19, Short.MAX_VALUE)))
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton4))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -380,9 +420,14 @@ public class ModificacionDePedidos extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
-                    .addComponent(jButton5))
+                    .addComponent(jButton5)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel10)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -694,7 +739,7 @@ public class ModificacionDePedidos extends javax.swing.JInternalFrame {
                 this.jButton1.setVisible(true);
             this.jTextField1.setText("");
             this.jTextField2.setText("");
-            this.jTextField1.requestFocus();
+            this.jTextField5.requestFocus();
                 }
                 }
             
@@ -873,7 +918,7 @@ public class ModificacionDePedidos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-        jTextField1.requestFocus();
+        jTextField5.requestFocus();
     }//GEN-LAST:event_formComponentShown
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -980,6 +1025,49 @@ public class ModificacionDePedidos extends javax.swing.JInternalFrame {
         jTextField1.setText("");
         jTextField1.requestFocus();
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jTextField5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField5KeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            rubro=new Rubros();
+            Rubrable subRuble=new SubRubros();
+            Iterator iR=listadoR.listIterator();
+            while(iR.hasNext()){
+                rubro=(Rubros)iR.next();
+                listadoSubRubros=subRuble.listarPorRubro(rubro.getId());
+            }
+            Modificable modiA=new Articulos();
+            Articulable modi=new ArticulosAsignados();
+            listadoDeBusqueda=modi.convertirListadoEnArticulos(modi.filtrador(listadoSubRubros, listadoR, cliT));
+            //listadoDeBusqueda=modi.filtrador(listadoSubRubros,listadoR);
+            this.jList1.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
+            this.jLabel10.setVisible(true);
+            this.jComboBox2.setVisible(true);
+            this.jComboBox2.setModel(subRuble.mostrarEnBox(listadoSubRubros));
+            this.jComboBox2.requestFocus();
+        }else{
+            String rub=this.jTextField5.getText();
+
+            listadoR=ruble.buscar(rub);
+
+            //this.jList1.setModel(ruble.mostrarEnCombo(listadoR));
+        }
+    }//GEN-LAST:event_jTextField5KeyPressed
+
+    private void jComboBox2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox2KeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            subRubro=(SubRubros)listadoSubRubros.get(this.jComboBox2.getSelectedIndex());
+            listadoSubRubros.clear();
+            listadoSubRubros.add(subRubro);
+            this.jList1.removeAll();
+            Modificable modiA=new Articulos();
+            Articulable modi=new ArticulosAsignados();
+            listadoDeBusqueda=modi.convertirListadoEnArticulos(modi.filtradorDeFormularios(listadoSubRubros, listadoR, cliT,""));
+            //listadoDeBusqueda=modi.filtrador(listadoSubRubros,listadoR);
+            this.jList1.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
+            this.jTextField1.requestFocus();
+        }
+
+    }//GEN-LAST:event_jComboBox2KeyPressed
 private void cargarLista(ArrayList lista){
     DefaultListModel modelo=new DefaultListModel();
     Iterator il=lista.listIterator();
@@ -1024,11 +1112,11 @@ private void agregarRenglonTabla(){
             //Double valor=(pedidos.getCantidad() * precioUnitario);
             valor=valor * cliT.getCoeficienteListaDeprecios();
             pedidos.setPrecioUnitario(valor);
-            String val=String.valueOf(valor);
+            String val=Numeros.ConvertirNumero(valor);
             montoTotal=montoTotal + valor;
             fila[3]=val;
-            fila[4]=String.valueOf(precioUnitario);
-            fila[5]=String.valueOf(pedidos.getPrecioDeCosto());
+            fila[4]=Numeros.ConvertirNumero(precioUnitario);
+            fila[5]=Numeros.ConvertirNumero(pedidos.getPrecioDeCosto());
             busC.addRow(fila);
         }
         montoTotal=montoTotal * 1.21;
@@ -1081,7 +1169,10 @@ private void verificar(){
     private javax.swing.JButton jButton7;
     private javax.swing.JCheckBox jCheckBox1;
     public static javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1100,5 +1191,6 @@ private void verificar(){
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
     // End of variables declaration//GEN-END:variables
 }

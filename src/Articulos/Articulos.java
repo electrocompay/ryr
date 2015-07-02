@@ -4,6 +4,7 @@
  */
 package Articulos;
 
+import Conversores.Numeros;
 import com.mysql.jdbc.CommunicationsException;
 import interfaceGraficas.Inicio;
 import interfaces.Comparables;
@@ -1244,7 +1245,14 @@ public class Articulos implements Facturar,Editables,Comparables,Modificable{
 
     @Override
     public DefaultListModel mostrarListadoBusqueda(ArrayList listado) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        DefaultListModel modelo=new DefaultListModel();
+        Iterator it=listado.listIterator();
+        Articulos articulo=new Articulos();
+        while(it.hasNext()){
+            articulo=(Articulos)it.next();
+            modelo.addElement(articulo.getDescripcionArticulo()+" $"+Numeros.ConvertirNumero(articulo.getPrecioUnitarioNeto()));
+        }
+        return modelo;
     }
 
     @Override

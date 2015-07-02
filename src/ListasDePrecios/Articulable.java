@@ -17,4 +17,6 @@ public interface Articulable {
     public void guardar(ArrayList listado);
     public DefaultTableModel mostrarListado(ArrayList lista);
     public ArrayList listarTodos(Object idCliente);
+    public ArrayList convertirListadoEnArticulos(ArrayList listado);
+    public ArrayList filtradorDeFormularios(ArrayList rubro,ArrayList subRubro,Object cli,String ttx);
 }
