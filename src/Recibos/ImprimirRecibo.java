@@ -78,6 +78,7 @@ public class ImprimirRecibo {
         Pedable cotiz=new DetallePedidos();
         listadoDetalle=cotiz.cargarDetallePedido(cotizacion.getId());
         */
+        rec=(Recibo)recibo;
         Clientes cliente=new Clientes();
         Facturar factu=new Clientes();
         cliente=(Clientes)factu.cargarPorCodigoAsignado(rec.getIdCliente());
@@ -99,7 +100,7 @@ public class ImprimirRecibo {
         //pagina.drawImage(imagen,63,20,174,93,null);
         pagina.setFont(fuente6);
         pagina.setColor(Color.black);
-        pagina.drawString("PEDIDO N° 0000"+Inicio.sucursal.getNumero()+"-000"+rec.getId(),20,20);
+        pagina.drawString("RECIBO N° 0000"+Inicio.sucursal.getNumero()+"-000"+rec.getId(),20,20);
         pagina.setFont(fuente);
         pagina.drawString("FECHA IMPRESION:"+fec, 20,30);
         //pagina.drawString(" :"+Inicio.sucursal.getDescripcion(),20,150);
@@ -116,7 +117,7 @@ public class ImprimirRecibo {
         while(it.hasNext()){
             det=(DetalleRecibo)it.next();
             //pagina.drawString(String.valueOf(det.get),40,renglon);
-            pagina.drawString(String.valueOf(det.getNumeroFc()),80,renglon);
+            pagina.drawString("Factura N° "+String.valueOf(det.getNumeroFc())+" fecha "+det.getFecha(),80,renglon);
             pagina.drawString(String.valueOf(det.getMonto()),370,renglon);
             renglon=renglon + 10;
         }
@@ -129,13 +130,18 @@ public class ImprimirRecibo {
         while(it.hasNext()){
             formas=(FormasDePago)it.next();
             //pagina.drawString(String.valueOf(det.get),40,renglon);
+            if(formas.getDescripcion().equals("Cheque")){
             pagina.drawString(String.valueOf(formas.getDescripcion()+" "+formas.getBanco()+" "+formas.getNumero()+" "+formas.getVencimiento()),40,renglon);
+            }else{
+                pagina.drawString(formas.getDescripcion()+" ",40,renglon);
+            }
             pagina.drawString(String.valueOf(formas.getMonto()),370,renglon);
             renglon=renglon + 10;
         }
         //pagina.drawImage(imagen,363,20,174,93,null);
         renglon=renglon + 20;
-        pagina.drawString("SON PESOS: "+NumberToLetterConverter.convertNumberToLetter(rec.getMonto()),40,renglon);        
+        String letras=NumberToLetterConverter.convertNumberToLetter(rec.getMonto());
+        pagina.drawString("SON PESOS: "+letras,40,renglon);        
         
         pagina.dispose();
         pj.end();

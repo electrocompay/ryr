@@ -32,6 +32,9 @@ public class Pedidos implements Pedable{
     private Integer idRemito;
     private String archivo;
     private int estado;
+    private static Transaccionable tra=new Conecciones();
+    private static ResultSet rs;
+    private static String sql;
 
     public Integer getId() {
         return id;
@@ -118,12 +121,12 @@ public class Pedidos implements Pedable{
         Pedidos pedido=new Pedidos();
         pedido=(Pedidos)ped;
         Integer verif=0;
-        String sql="insert into pedidos (idcliente,fecha,total,idusuario,idcotizacion,estado) values ("+pedido.getIdCliente()+",'"+pedido.getFecha()+"',"+pedido.getTotal()+","+pedido.getIdUsuario()+","+pedido.getIdCotizacion()+",0)";
-        Transaccionable tra=new Conecciones();
+        sql="insert into pedidos (idcliente,fecha,total,idusuario,idcotizacion,estado) values ("+pedido.getIdCliente()+",'"+pedido.getFecha()+"',"+pedido.getTotal()+","+pedido.getIdUsuario()+","+pedido.getIdCotizacion()+",0)";
+        //Transaccionable tra=new Conecciones();
         tra.guardarRegistro(sql);
         sql="select LAST_INSERT_ID()";
         
-        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        rs=tra.leerConjuntoDeRegistros(sql);
         try {
             while(rs.next()){
                 verif=rs.getInt(1);
@@ -143,9 +146,9 @@ public class Pedidos implements Pedable{
     public Object cargarEncabezadoPedido(Integer idPed) {
         Pedidos pedido=new Pedidos();
         //ArrayList listado=new ArrayList();
-        String sql="select * from pedidos where id="+idPed;
-        Transaccionable tra=new Conecciones();
-        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        sql="select * from pedidos where id="+idPed;
+        
+        rs=tra.leerConjuntoDeRegistros(sql);
         try {
             while(rs.next()){
                 
@@ -171,9 +174,9 @@ public class Pedidos implements Pedable{
     public ArrayList listar() {
         Pedidos pedido;
         ArrayList listado=new ArrayList();
-        String sql="select * from pedidos order by id desc";
-        Transaccionable tra=new Conecciones();
-        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        sql="select * from pedidos order by id desc";
+        
+        rs=tra.leerConjuntoDeRegistros(sql);
         try {
             while(rs.next()){
                 pedido=new Pedidos();
@@ -200,7 +203,7 @@ public class Pedidos implements Pedable{
         Pedidos pedido;
         ArrayList listado=new ArrayList();
         String sql="select * from pedidos where idcliente="+idClient+" order by id desc";
-        Transaccionable tra=new Conecciones();
+        
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {
             while(rs.next()){
@@ -228,7 +231,7 @@ public class Pedidos implements Pedable{
         Pedidos pedido;
         ArrayList listado=new ArrayList();
         String sql="select *,(select facturas.numerofactura from facturas where facturas.id=pedidos.idfactura)as factura from pedidos where idcliente="+idClient+" and estado="+estado+" order by id desc";
-        Transaccionable tra=new Conecciones();
+        
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {
             while(rs.next()){
@@ -300,7 +303,10 @@ public class Pedidos implements Pedable{
 
     @Override
     public void transformarEnFactura(Object ped, ArrayList detalle) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Pedidos pedido=new Pedidos();
+        pedido=(Pedidos)ped;
+        sql="update pedidos set estado=1 where id="+pedido.getId();
+        tra.guardarRegistro(sql);
     }
 
     @Override

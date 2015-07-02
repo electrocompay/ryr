@@ -27,10 +27,48 @@ public class Remitos implements Remitable{
     private String observaciones;
     private Integer numeroDeRemito;
     private Integer id;
+    private String domicilioDeEntrega;
+    private String localidad;
+    private Integer cantidadBultos;
+    private Integer tipoBulto;
+    
     private String sql;
     private static Transaccionable tra=new Conecciones();
     private static ResultSet rs;
 
+    public String getDomicilioDeEntrega() {
+        return domicilioDeEntrega;
+    }
+
+    public void setDomicilioDeEntrega(String domicilioDeEntrega) {
+        this.domicilioDeEntrega = domicilioDeEntrega;
+    }
+
+    public String getLocalidad() {
+        return localidad;
+    }
+
+    public void setLocalidad(String localidad) {
+        this.localidad = localidad;
+    }
+
+    public Integer getCantidadBultos() {
+        return cantidadBultos;
+    }
+
+    public void setCantidadBultos(Integer cantidadBultos) {
+        this.cantidadBultos = cantidadBultos;
+    }
+
+    public Integer getTipoBulto() {
+        return tipoBulto;
+    }
+
+    public void setTipoBulto(Integer tipoBulto) {
+        this.tipoBulto = tipoBulto;
+    }
+
+    
     public Integer getId() {
         return id;
     }
@@ -95,7 +133,7 @@ public class Remitos implements Remitable{
         remito=(Remitos)remi;
         //System.out.println("es una prueba de carga :"+this.getIdCliente()+" observaciones: "+this.getObservaciones());
         
-        sql="insert into remitos (idcliente,tipocomprobante,observaciones,numeroremito,idcomprobante) values ("+remito.getIdCliente()+","+remito.getTipoComprobantte()+",'"+remito.getObservaciones()+"',(select tipocomprobantes.numeroActivo + 1 from tipocomprobantes where id=7),"+remito.getIdComprobante()+")";
+        sql="insert into remitos (idcliente,tipocomprobante,observaciones,numeroremito,idcomprobante,domicilio,localidad,cantidad,tipoBulto) values ("+remito.getIdCliente()+","+remito.getTipoComprobantte()+",'"+remito.getObservaciones()+"',(select tipocomprobantes.numeroActivo + 1 from tipocomprobantes where id=7),"+remito.getIdComprobante()+",'"+remito.getDomicilioDeEntrega()+"','"+remito.getLocalidad()+"',"+remito.getCantidadBultos()+","+remito.getTipoBulto()+")";
         tra.guardarRegistro(sql);
         sql="select LAST_INSERT_ID()";
         rs=tra.leerConjuntoDeRegistros(sql);
@@ -156,6 +194,10 @@ public class Remitos implements Remitable{
                 remito.setNumeroDeRemito(rs.getInt("numeroremito"));
                 remito.setObservaciones(rs.getString("observaciones"));
                 remito.setIdComprobante(rs.getInt("idcomprobante"));
+                remito.setDomicilioDeEntrega(rs.getString("domicilio"));
+                remito.setLocalidad(rs.getString("localidad"));
+                remito.setCantidadBultos(rs.getInt("cantidad"));
+                remito.setTipoBulto(rs.getInt("tipoBulto"));
             
             }   
         } catch (SQLException ex) {

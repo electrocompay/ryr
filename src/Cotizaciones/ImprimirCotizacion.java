@@ -24,6 +24,7 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import javax.imageio.ImageIO;
 import Articulos.Articulos;
+import javax.print.attribute.standard.Copies;
 
 
 
@@ -55,7 +56,11 @@ public class ImprimirCotizacion {
 	********************************************************************/
 	public ImprimirCotizacion()
 	{
-		pj = Toolkit.getDefaultToolkit().getPrintJob(new Frame(), "SCAT", null);
+	
+            pj = Toolkit.getDefaultToolkit().getPrintJob(new Frame(), "SCAT",null);
+            new Copies(2);
+            
+                
                
 	}
 			

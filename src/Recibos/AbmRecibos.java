@@ -403,6 +403,7 @@ public class AbmRecibos extends javax.swing.JDialog {
         //ACA CARGO LAS FORMAS DE PAGO SI ES EFECTIVO MOV DE CAJA, SINO CHEQUES
         Iterator itP=detallePagos.listIterator();
         Formable ff=new FormasDePago(); 
+        Double montt=0.00;
         while(itP.hasNext()){
             pago=(FormasDePago)itP.next();
             pago.setIdCliente(cli.getCodigoId());
@@ -414,6 +415,10 @@ public class AbmRecibos extends javax.swing.JDialog {
                 // mando a movimientos caja
                 ff.guardarEfectivo(pago);
             }
+            montt=montt + pago.getMonto();
+        }
+        if(montt >= recibo.getMonto()){
+            recibo.setMonto(montt);
         }
         ImprimirRecibo imprimir=new ImprimirRecibo();
         try {

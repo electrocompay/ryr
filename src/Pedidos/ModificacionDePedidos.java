@@ -564,10 +564,24 @@ public class ModificacionDePedidos extends javax.swing.JInternalFrame {
             }
         }
         if(evt.getKeyCode()==KeyEvent.VK_F1){
-            //System.out.println("ENTRO CON F1¡¡¡¡¡");
         Facturar fart=new Articulos();
-        listadoDeBusqueda=fart.listadoBusqueda(this.jTextField1.getText());
-        cargarLista(listadoDeBusqueda);    
+        this.jList1.removeAll();
+            Modificable modiA=new Articulos();
+            Articulable modi=new ArticulosAsignados();
+            listadoDeBusqueda.clear();
+            listadoDeBusqueda=modi.convertirListadoEnArticulos(modi.filtradorDeFormularios(listadoSubRubros, listadoR, cliT,this.jTextField1.getText()));
+            //listadoDeBusqueda=modi.filtrador(listadoSubRubros,listadoR);
+            this.jList1.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
+            this.jList1.requestFocus();
+        }else{
+            Facturar fart=new Articulos();
+            this.jList1.removeAll();
+            Modificable modiA=new Articulos();
+            Articulable modi=new ArticulosAsignados();
+            listadoDeBusqueda.clear();
+            listadoDeBusqueda=modi.convertirListadoEnArticulos(modi.filtradorDeFormularios(listadoSubRubros, listadoR, cliT,this.jTextField1.getText()));
+            //listadoDeBusqueda=modi.filtrador(listadoSubRubros,listadoR);
+            this.jList1.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
         }
         if(evt.getKeyCode()==KeyEvent.VK_F4){
                     //verificar();

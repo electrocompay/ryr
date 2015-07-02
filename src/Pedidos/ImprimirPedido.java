@@ -28,6 +28,7 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import javax.imageio.ImageIO;
 import Articulos.Articulos;
+import javax.print.attribute.standard.Copies;
 
 
 
@@ -59,7 +60,7 @@ public class ImprimirPedido {
 	********************************************************************/
 	public ImprimirPedido()
 	{
-		pj = Toolkit.getDefaultToolkit().getPrintJob(new Frame(), "SCAT", null);
+		pj = Toolkit.getDefaultToolkit().getPrintJob(new Frame(), "SCAT",null);
                
 	}
 			
@@ -93,8 +94,9 @@ public class ImprimirPedido {
         String fec=dia+"/"+mes+"/"+ano;
         String hrs=hora+","+minuto+":"+segundo;
         // formulario izquierdo
-        
+        //new Copies(2);
         pagina = pj.getGraphics();
+        
         try{
         //BufferedImage imagen= ImageIO.read(new File("C://Gestion//imagen//logo.png"));
         //pagina.drawImage(imagen,63,20,174,93,null);

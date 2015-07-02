@@ -153,6 +153,10 @@ public class DetalleRemitos implements Remitable{
         while(rs.next()){
             detRem=new DetalleRemitos();
             detRem.setCantidadFacturada(rs.getDouble("cantidadfacturada"));
+            detRem.setIdArticulo(rs.getInt("idarticulo"));
+            detRem.setDescripcionArticulo(rs.getString("descrpcionarticulo"));
+            detRem.setCantidadRemitida(rs.getDouble("cantidadremitida"));
+            detalle.add(detRem);
             
         }
         } catch (SQLException ex) {

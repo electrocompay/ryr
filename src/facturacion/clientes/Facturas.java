@@ -274,7 +274,7 @@ public class Facturas implements Facturable{
                 factura.setNumeroFactura(rs.getInt("numerofactura"));
                 factura.setIdRemito(rs.getInt("remito"));
                 factura.setTipo(rs.getInt("tipo"));
-                factura.setTotal(rs.getDouble("total") - rs.getDouble("saldo"));
+                factura.setTotal(rs.getDouble("saldo"));
                 factura.setDescripcionTipo(rs.getString("descripciontipo"));
                 listado.add(factura);
             }

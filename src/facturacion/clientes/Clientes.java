@@ -828,7 +828,7 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
 
     @Override
     public Object cargarPorCodigoAsignado(Integer id) {
-        String sql="select *,(select condicionesiva.tipocomprobante from condicionesiva where condicionesiva.id=clientes.tipo_iva)as tipocomprobante,(select localidades.localidad from localidades where localidades.id=localidad)as localidadD,(select condicionesiva.descripcion from condicionesiva where condicionesiva.id=clientes.tipo_iva)as tipocondicion from clientes where id="+id;
+        String sql="select *,(select condicionesiva.tipocomprobante from condicionesiva where condicionesiva.id=clientes.tipo_iva)as tipocomprobante,(select localidades.localidad from localidades where localidades.id=clientes.localidad)as localidadD,(select condicionesiva.descripcion from condicionesiva where condicionesiva.id=clientes.tipo_iva)as tipocondicion from clientes where id="+id;
         String sql1="";
         Clientes cli=new Clientes();
         

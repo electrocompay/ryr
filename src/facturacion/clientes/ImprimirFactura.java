@@ -149,7 +149,8 @@ public class ImprimirFactura {
         //formulario derecho
         
         //pagina.drawImage(imagen,363,20,174,93,null);
-        pagina.drawString("SON PESOS: "+NumberToLetterConverter.convertNumberToLetter(cotizacion.getTotal()), 30,735);
+        String letras=NumberToLetterConverter.convertNumberToLetter(cotizacion.getTotal());
+        pagina.drawString("SON PESOS: "+letras, 30,735);
         if(cotizacion.getTipo()==2){
             Double sub=cotizacion.getTotal() / 1.21;
             Double iva=cotizacion.getTotal() - sub;

@@ -57,15 +57,15 @@ public abstract class NumberToLetterConverter {
 
         StringBuilder converted = new StringBuilder();
 
-        String patternThreeDecimalPoints = "#.###";
+        String patternThreeDecimalPoints = "#.####";
 
         DecimalFormat format = new DecimalFormat(patternThreeDecimalPoints);
         format.setRoundingMode(RoundingMode.DOWN);
 
         // formateamos el numero, para ajustarlo a el formato de tres puntos
         // decimales
-        String formatedDouble = format.format(doubleNumber);
-        doubleNumber = Double.parseDouble(formatedDouble);
+        //String formatedDouble = format.format(doubleNumber);
+        //doubleNumber = Double.parseDouble(formatedDouble);
 
         // Validamos que sea un numero legal
         if (doubleNumber > 999999999)
@@ -113,7 +113,7 @@ public abstract class NumberToLetterConverter {
         if (cientos > 1)
             converted.append(convertNumber(String.valueOf(cientos)));
 
-        converted.append("PESOS");
+        converted.append(" ");
 
         // Descompone los centavos
         int centavos = Integer.parseInt(String.valueOf(getDigitAt(
