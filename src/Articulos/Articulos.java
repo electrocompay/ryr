@@ -71,6 +71,16 @@ public class Articulos implements Facturar,Editables,Comparables,Modificable{
     private static Transaccionable tra=new Conecciones();
     private String sql;
     private static ResultSet rs;
+    private static Double totalVenta;
+    private static Double totalCosto;
+
+    public static Double getTotalVenta() {
+        return totalVenta;
+    }
+
+    public static Double getTotalCosto() {
+        return totalCosto;
+    }
     
 
     public Integer getIdSubRubro() {
@@ -1265,13 +1275,14 @@ public class Articulos implements Facturar,Editables,Comparables,Modificable{
         ArrayList listado=new ArrayList();
         String sql="";
         SubRubros rubro=new SubRubros();
-        
+        totalVenta=0.00;
+        totalCosto=0.00;
         Articulos articulo;
         
         Iterator it=rubro1.listIterator();
         while(it.hasNext()){
             rubro=(SubRubros)it.next();
-            sql="select * from articulos where idsubrubro="+rubro.getId()+" order by nombre";
+            sql="select *,sum(precio)as totalVenta,sum(costo)as totalCosto from articulos where idsubrubro="+rubro.getId()+" order by nombre";
             rs=tra.leerConjuntoDeRegistros(sql);
             //System.out.println(sql);
         Double precio=0.00;
@@ -1292,7 +1303,8 @@ public class Articulos implements Facturar,Editables,Comparables,Modificable{
                 articulo.setStockActual(rs.getDouble("stock"));
                 articulo.setRubroId(rs.getInt("idrubro"));
                 articulo.setIdSubRubro(rs.getInt("idsubrubro"));
-                
+                totalVenta=totalVenta + rs.getDouble("PRECIO");
+                totalCosto=totalCosto + rs.getDouble("COSTO");
                 articulo.setModificaPrecio(rs.getBoolean("modificaPrecio"));
                 articulo.setModificaServicio(rs.getBoolean("modificaServicio"));
                 String nom=rs.getString("NOMBRE");
@@ -1305,6 +1317,21 @@ public class Articulos implements Facturar,Editables,Comparables,Modificable{
         }
         
         // fin iterator
+        }
+        return listado;
+    }
+
+    @Override
+    public ArrayList aplicarGanancia(ArrayList listado, Double ganancia) {
+        Double porc1=ganancia / 100;
+        
+        Iterator itL=listado.listIterator();
+        Articulos articulo=new Articulos();
+        while(itL.hasNext()){
+            articulo=(Articulos)itL.next();
+            articulo.setPrecioUnitarioNeto(articulo.getPrecioDeCosto() * porc1);
+            sql="update articulos set precio=round("+articulo.getPrecioUnitarioNeto()+",4) where id="+articulo.getNumeroId();
+            tra.guardarRegistro(sql);
         }
         return listado;
     }

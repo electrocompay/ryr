@@ -22,4 +22,5 @@ public interface Modificable {
     public DefaultListModel mostrarListadoBusqueda(ArrayList listado);
     public ArrayList buscarParaFacturar(Integer rubro,Integer subRubro,String criterio,Integer idCliente);
     public ArrayList filtrador(ArrayList rubro1, ArrayList subRubro);
+    public ArrayList aplicarGanancia(ArrayList listado,Double ganancia);
 }

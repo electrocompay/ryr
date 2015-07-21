@@ -15,6 +15,7 @@ import interfaces.Personalizable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.YES_NO_CANCEL_OPTION;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -83,6 +84,8 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jTextField3 = new javax.swing.JTextField();
 
         setClosable(true);
         setMaximizable(true);
@@ -141,6 +144,10 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel3.setText("Porcentaje de Ganancia:");
+
+        jTextField3.setText("0.00");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -149,26 +156,31 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTextField1)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE))))
+                            .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                            .addComponent(jTextField3))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(22, 22, 22)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -179,10 +191,12 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(7, 7, 7)
-                .addComponent(jButton2)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -198,7 +212,7 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE))
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE))
                             .addComponent(jLabel6))
                         .addGap(18, 18, 18)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -284,6 +298,12 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
         modelo3=sRble.mostrarListado(listadoSubRubros);
         listadoGral=att.filtrador(listadoSubRubros, lls);
         modelo1=att.mostrarListado(listadoGral);
+        Double porcentajeGanancia=0.00;
+        porcentajeGanancia=Articulos.getTotalVenta() / Articulos.getTotalCosto();
+        System.err.println("vta "+Articulos.getTotalVenta()+" costo "+Articulos.getTotalCosto()+" total "+porcentajeGanancia);
+        porcentajeGanancia=porcentajeGanancia * 100;
+         
+        this.jTextField3.setText(String.valueOf(Math.round(porcentajeGanancia)));
         this.jTable3.setVisible(true);
         this.jTable3.setModel(modelo3);
         this.jTable1.setModel(modelo1);
@@ -293,6 +313,7 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
         //listaDePrecios=(ListasDePrecios)listadoDePrecios.get(this.jComboBox3.getSelectedIndex());
         Double coeficiente=Numeros.ConvertirStringADouble(this.jTextField1.getText());
         Double coeficiente1=Numeros.ConvertirStringADouble(this.jTextField2.getText());
+        Double ganancia=Numeros.ConvertirStringADouble(this.jTextField3.getText());
         //String observaciones=JOptionPane.showInputDialog(this,"Ingrese comentario");
         
             //coeficiente=listaDePrecios.getCoeficiente();
@@ -312,8 +333,29 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
             resultado.add(articulo);
             }
         }
-        att.modificarPrecios(resultado, coeficiente, coeficiente1);
-        //att.guardar(resultado);
+        if(coeficiente==0.00 && coeficiente1==0.00){
+            att.aplicarGanancia(resultado, ganancia);
+        }else{
+            resultado=att.modificarPrecios(resultado, coeficiente, coeficiente1);
+            if(coeficiente1 > 0){
+                int seleccion=JOptionPane.showOptionDialog(this,"¿desea aplicar el porcentje de ganancia al costo ingresado?", "Seleccione una opcion", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,new Object[]{"Si","No"}, "Si");
+                if (seleccion != -1)
+{
+   if((seleccion + 1)==1)
+   {
+      att.aplicarGanancia(resultado, ganancia);
+   }
+
+}
+            }
+        }
+        listadoGral=resultado;
+        modelo1=att.mostrarListado(listadoGral);
+        this.jTable1.setModel(modelo1);
+        this.jTextField1.setText("0.00");
+        this.jTextField2.setText("0.00");
+        
+//att.guardar(resultado);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTable3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable3KeyPressed
@@ -329,6 +371,10 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
         listadoGral=att.filtrador(listadoSubRubros, listadoSubRubros);
         modelo1=att.mostrarListado(listadoGral);
          modelo3=sRble.mostrarListado(listadoSubRubros);
+         Double porcentajeGanancia=0.00;
+         porcentajeGanancia=Articulos.getTotalVenta() / Articulos.getTotalCosto();
+         porcentajeGanancia=porcentajeGanancia * 100;
+        this.jTextField3.setText(String.valueOf(Math.round(porcentajeGanancia)));
          this.jTable3.setModel(modelo3);
          this.jTable1.setModel(modelo1);
         
@@ -348,6 +394,7 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
@@ -360,5 +407,6 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTable3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
 }
