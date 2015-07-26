@@ -1282,9 +1282,9 @@ public class Articulos implements Facturar,Editables,Comparables,Modificable{
         Iterator it=rubro1.listIterator();
         while(it.hasNext()){
             rubro=(SubRubros)it.next();
-            sql="select *,sum(precio)as totalVenta,sum(costo)as totalCosto from articulos where idsubrubro="+rubro.getId()+" order by nombre";
-            rs=tra.leerConjuntoDeRegistros(sql);
-            //System.out.println(sql);
+            sql="select * from articulos where idsubrubro="+rubro.getId()+" order by nombre";
+            ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+            System.out.println(sql);
         Double precio=0.00;
         Double coeficiente=1.00;
         
@@ -1311,7 +1311,9 @@ public class Articulos implements Facturar,Editables,Comparables,Modificable{
                 articulo.setIdCombo(rs.getInt("idcombo"));
                 if(articulo.getIdCombo() > 0)articulo.setCombo(CargarCombo(articulo.getNumeroId()));
                 listado.add(articulo);
+                System.out.println("cantiadad cargada "+listado.size());
             }
+            rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
         }
