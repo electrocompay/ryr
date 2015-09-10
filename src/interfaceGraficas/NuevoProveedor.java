@@ -4,6 +4,7 @@
  */
 package interfaceGraficas;
 
+import Compras.Proveedores;
 import Conversores.Numeros;
 import Cotizaciones.Cotizable;
 import Cotizaciones.Cotizacion;
@@ -47,10 +48,10 @@ import objetos.Localidades;
  *
  * @author hernan
  */
-public class NuevoCliente extends javax.swing.JInternalFrame implements InternalFrameListener {
+public class NuevoProveedor extends javax.swing.JInternalFrame implements InternalFrameListener {
     private JInternalFrame clientes;
     private int modificacion;
-    private Clientes cliTa=new Clientes();
+    private Proveedores cliTa=new Proveedores();
     private ArrayList listadoL=new ArrayList();
     private ArrayList listadoIva=new ArrayList();
     private ArrayList listadoLoc=new ArrayList();
@@ -68,18 +69,18 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
     /**
      * Creates new form NuevoCliente
      */
-    public NuevoCliente() {
+    public NuevoProveedor() {
         initComponents();
         this.jPanel2.setVisible(false);
     }
-    public NuevoCliente(Object client) {
+    public NuevoProveedor(Object client) {
         initComponents();
-        cliTa=(Clientes)client;
-        this.jTextField1.setText(cliTa.getRazonSocial());
+        cliTa=(Proveedores)client;
+        this.jTextField1.setText(cliTa.getNombre());
         //this.setTitle("MODIFICACION DATOS DEL CLIENTE - "+cliTa.getRazonSocial());
         this.jTextField2.setText(cliTa.getDireccion());
         Iterator iIva=listadoIva.listIterator();
-        int tipoIvaC=cliTa.getTipoIva();
+        int tipoIvaC=cliTa.getCondicionDeIva();
         int rengl=0;
         int posicion=0;
         while(iIva.hasNext()){
@@ -93,7 +94,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
         
         this.jTextField3.setText(cliTa.getNumeroDeCuit());
         this.jTextField4.setText(cliTa.getTelefono());
-        tipoIvaC=cliTa.getListaDePrecios();
+        //tipoIvaC=cliTa.getListaDePrecios();
         rengl=0;
         posicion=0;
         Iterator iLst=listadoL.listIterator();
@@ -119,10 +120,10 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
             rengl++;
         }
         this.jComboBox3.setSelectedIndex(posicion);
-        this.jTextField5.setText(String.valueOf(cliTa.getCupoDeCredito()));
-        Double coef=0.00;
-        coef=cliTa.getCoeficienteListaDeprecios() - 1;
-        if(coef==0.00)coef=1.00;
+        //this.jTextField5.setText(String.valueOf(cliTa.getCupoDeCredito()));
+        Double coef=1.00;
+        //coef=cliTa.getCoeficienteListaDeprecios() - 1;
+        //if(coef==0.00)coef=1.00;
         /*
         if(cliTa.getCoeficienteListaDeprecios() < 1){
             
@@ -131,6 +132,8 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
             coef=0.00;
         }
         */
+        
+        /*
         this.jTextField6.setText(cliTa.getDireccionDeEntrega());
         this.jTextField7.setText(cliTa.getResponsable());
         this.jTextField8.setText(cliTa.getFantasia());
@@ -160,7 +163,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
         listadoFac=ff.listarPorClienteNoRemitidas(cliTa.getCodigoId());
         modelo2=ff.mostrarListado(listadoFac);
         this.jTable3.setModel(modelo2);
-        
+        */
     }
     
 
@@ -209,18 +212,8 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
         jButton12 = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jLabel7 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
-        jLabel8 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jLabel18 = new javax.swing.JLabel();
         jButton9 = new javax.swing.JButton();
@@ -233,7 +226,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
         setClosable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("FACTURACION - CARGA DE NUEVO CLIENTE");
+        setTitle("FACTURACION - CARGA DE NUEVO PROVEEDOR");
         setAutoscrolls(true);
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
@@ -467,63 +460,8 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(modelo);
-        jScrollPane1.setViewportView(jTable1);
-
-        jLabel7.setText("Cotizaciones pendientes");
-
         jTable2.setModel(modelo1);
         jScrollPane2.setViewportView(jTable2);
-
-        jLabel8.setText("Pedidos Pendientes");
-
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/pdf.png"))); // NOI18N
-        jButton2.setText("Modificar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Cart.png"))); // NOI18N
-        jButton3.setText("Pedido");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Print.png"))); // NOI18N
-        jButton4.setText("OTrabajo");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Print.png"))); // NOI18N
-        jButton5.setText("Detallado");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/List.png"))); // NOI18N
-        jButton6.setText("Factura");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
-            }
-        });
-
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/comment_edit.png"))); // NOI18N
-        jButton7.setText("Modificar");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
 
         jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/tractorunitblack.png"))); // NOI18N
         jButton8.setText("Remitir");
@@ -571,78 +509,47 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addComponent(jScrollPane2)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jButton3))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jButton9)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jButton10)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jButton14)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jButton15))))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton4)
+                                .addComponent(jButton9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton8)))
-                        .addGap(0, 21, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane3)))
+                                .addComponent(jButton10)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton14)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton15)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton8)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(4, 4, 4)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel8)
-                        .addComponent(jButton4)
-                        .addComponent(jButton5)
-                        .addComponent(jButton7)
-                        .addComponent(jButton8)))
-                .addGap(18, 18, 18)
+                .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel18)
-                    .addComponent(jButton9)
-                    .addComponent(jButton10)
-                    .addComponent(jButton14)
-                    .addComponent(jButton15))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(51, 51, 51)
+                        .addComponent(jButton8))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel18)
+                            .addComponent(jButton9)
+                            .addComponent(jButton10)
+                            .addComponent(jButton14)
+                            .addComponent(jButton15))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(153, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -671,18 +578,19 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       Clientes cli=new Clientes();
+       Proveedores cli=new Proveedores();
        //cli.setCodigoCliente(title);
        if(modificacion==1){
            cli=cliTa;
        }
-       cli.setRazonSocial(this.jTextField1.getText());
+       cli.setNombre(this.jTextField1.getText());
        cli.setDireccion(this.jTextField2.getText());
        String condicion1=null;
        Integer tipo=0;
        condicion=(CondicionesIva)listadoIva.get(this.jComboBox1.getSelectedIndex());
        tipo=condicion.getId();
        
+       /*
        if(this.jComboBox1.getSelectedIndex() < 4){
            cli.setEmpresa("sd");
        }else{
@@ -726,92 +634,10 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
            //JInternalFrame AbmClientes = null;
           //ControlaInstancia(AbmClientes);
       }
+       */
+       
        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        Pedidos pedido=new Pedidos();
-        pedido=(Pedidos)listadoPed.get(this.jTable2.getSelectedRow());
-        ModificacionDePedidos modificar=new ModificacionDePedidos(pedido);
-        Inicio.jDesktopPane1.add(modificar);
-        try {
-            modificar.setMaximum(true);
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(NuevoCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        modificar.setVisible(true);
-        modificar.toFront();
-    }//GEN-LAST:event_jButton7ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        Pedidos pedido=new Pedidos();
-        pedido=(Pedidos)listadoPed.get(this.jTable2.getSelectedRow());
-        ImprimirPedido imprimir=new ImprimirPedido();
-        try {
-            imprimir.ImprimirOrdenDetallada(pedido);
-        } catch (IOException ex) {
-            Logger.getLogger(NuevoCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        Pedidos pedido=new Pedidos();
-        pedido=(Pedidos)listadoPed.get(this.jTable2.getSelectedRow());
-        ImprimirPedido imprimir=new ImprimirPedido();
-        try {
-            imprimir.ImprimirOrdenDeTrabajo(pedido.getId());
-        } catch (IOException ex) {
-            Logger.getLogger(NuevoCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Cotizacion cotizacion=new Cotizacion();
-        cotizacion=(Cotizacion)listadoCot.get(this.jTable1.getSelectedRow());
-        Cotizable coti=new Cotizacion();
-        ArrayList detalleC=new ArrayList();
-        Cotizable detC=new DetalleCotizacion();
-        detalleC=detC.cargarDetalle(cotizacion.getId());
-        coti.transformarEnPedido(cotizacion, detalleC);
-        this.jTable2.removeAll();
-        Pedable pedable=new Pedidos();
-        listadoPed.clear();
-        listadoPed=pedable.listarPorEstado(cliTa.getCodigoId(),0);
-        modelo1=pedable.mostrarListado(listadoPed);
-        this.jTable2.setModel(modelo1);
-
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Cotizable cotizable=new Cotizacion();
-        Cotizacion cotizacion=new Cotizacion();
-        cotizacion=(Cotizacion)listadoCot.get(this.jTable1.getSelectedRow());
-        ModificacionDeCotizacion modificar=new ModificacionDeCotizacion(cliTa,cotizacion);
-        Inicio.jDesktopPane1.add(modificar);
-        try {
-            modificar.setMaximum(true);
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(NuevoCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        modificar.setVisible(true);
-        modificar.toFront();
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        Pedidos pedido=new Pedidos();
-        pedido=(Pedidos)listadoPed.get(this.jTable2.getSelectedRow());
-        Pedable peda=new Pedidos();
-        peda.transformarEnFactura(pedido, listadoL);
-        ModificacionDeFacturas factu=new ModificacionDeFacturas(pedido);
-        Inicio.jDesktopPane1.add(factu);
-        try {
-            factu.setMaximum(true);
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(NuevoCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        factu.setVisible(true);
-        factu.toFront();
-    }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         ListasPorCliente listas=new ListasPorCliente(cliTa);
@@ -826,6 +652,8 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        
+        /*
         Integer numeroF=0;
         Facturas factura=new Facturas();
         factura=(Facturas)listadoFac.get(this.jTable3.getSelectedRow());
@@ -838,9 +666,13 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
         }
         remi.setVisible(true);
         remi.toFront();
+        */
+        
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        
+        /*
         ArrayList listadoParaRecibo=new ArrayList();
         int cantidad=this.jTable3.getRowCount();
         Double montt=0.00;
@@ -866,6 +698,9 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
         //AbmRecibos.jLabel2.setText(" $"+montt);
         abm.setVisible(true);
         abm.toFront();
+        */
+        
+        
         
     }//GEN-LAST:event_jButton10ActionPerformed
 
@@ -929,12 +764,6 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JComboBox jComboBox1;
@@ -955,15 +784,11 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTextField jTextField1;

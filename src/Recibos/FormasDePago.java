@@ -5,10 +5,22 @@
  */
 package Recibos;
 
+import facturacion.clientes.Clientes;
+import facturacion.clientes.Facturable;
 import interfaceGraficas.Inicio;
 import interfaces.Transaccionable;
+import interfacesPrograma.Busquedas;
+import interfacesPrograma.Facturar;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
 import objetos.Conecciones;
+import tablas.MiModeloTablaArticulos;
 
 /**
  *
@@ -110,6 +122,85 @@ public class FormasDePago implements Formable{
         sql="insert into movimientoscaja (numeroUsuario,numeroSucursal,numerocomprobante,tipocomprobante,monto,tipomovimiento,idcaja,cantidad,idcliente,tipocliente,pagado) values ("+Inicio.usuario.getNumeroId()+",1,"+forma.getIdRecibo()+",8,"+forma.getMonto()+",6,"+Inicio.caja.getNumero()+",0,"+forma.getIdCliente()+",1,1)";
         tra.guardarRegistro(sql);
         return true;
+    }
+
+    @Override
+    public ArrayList listarCheques() {
+        sql="select * from cheques where estado=0 order by vencimiento";
+        rs=tra.leerConjuntoDeRegistros(sql);
+        FormasDePago pago=null;
+        ArrayList lista=new ArrayList();
+        try {
+            while(rs.next()){
+                pago=new FormasDePago();
+                pago.setId(rs.getInt("id"));
+                pago.setIdCliente(rs.getInt("idCliente"));
+                pago.setBanco(rs.getString("banco"));
+                pago.setIdRecibo(rs.getInt("idRecibo"));
+                pago.setMonto(rs.getDouble("monto"));
+                pago.setNumero(rs.getString("numero"));
+                pago.setVencimiento(rs.getString("vencimiento"));
+                lista.add(pago);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FormasDePago.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lista;
+    }
+
+    @Override
+    public ArrayList listarChequesPorCliente(Integer idCliente) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList listarChequesPorEstado(Integer idEstado) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList listarChequesPorRecibo(Integer idRecibo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList listarChequesPorProveedor(Integer idProveedor) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList listarChequesPorReciboDeProveedor(Integer idRecibo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public DefaultTableModel mostrarChequesEnTabla(ArrayList listado) {
+        MiModeloTablaArticulos mod=new MiModeloTablaArticulos();
+        FormasDePago pago=new FormasDePago();
+        mod.addColumn("Cliente");
+        mod.addColumn("Banco");
+        mod.addColumn("Monto");
+        mod.addColumn("Vencimiento");
+        Object[] fila=new Object[4];
+        Iterator it=listado.listIterator();
+        Clientes cliente=new Clientes();
+        Facturar bus=new Clientes();
+        
+        while(it.hasNext()){
+            pago=(FormasDePago)it.next();
+            cliente=(Clientes) bus.cargarPorCodigoAsignado(pago.getIdCliente());
+            fila[0]=cliente.getRazonSocial();
+            fila[1]=pago.getBanco();
+            fila[2]=String.valueOf(pago.getMonto());
+            fila[3]=pago.getVencimiento();
+            mod.addRow(fila);
+        }
+        return mod;
+    }
+
+    @Override
+    public DefaultListModel mostrarChequesEnListado(ArrayList listado) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

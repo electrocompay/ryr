@@ -4,12 +4,14 @@
  */
 package interfaceGraficas;
 
+import Compras.Proveedores;
 import Conversores.Numeros;
 import Excel.InformesClientes;
 import Excel.LeerExcelProveedores;
 import facturacion.clientes.Clientes;
 import interfacesPrograma.Busquedas;
 import interfacesPrograma.Facturar;
+import java.beans.PropertyVetoException;
 import java.io.File;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -64,7 +66,6 @@ public class AbmProveedores extends javax.swing.JInternalFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
-        jMenu4 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
 
         setClosable(true);
@@ -72,7 +73,7 @@ public class AbmProveedores extends javax.swing.JInternalFrame {
         setTitle("Proveedores");
 
         MiModeloTablaArticulos miTabla=new MiModeloTablaArticulos();
-        Busquedas bus=new Clientes();
+        Busquedas bus=new facturacion.clientes.Clientes();
         listadoClientes=bus.listar("");
         Iterator listC=listadoClientes.listIterator();
         miTabla.addColumn("COD PROVEEDOR");
@@ -83,9 +84,9 @@ public class AbmProveedores extends javax.swing.JInternalFrame {
         miTabla.addColumn("CONTACTO");
         miTabla.addColumn("CUIT");
         Object[] fila=new Object[7];
-        Clientes cliente=new Clientes();
+        facturacion.clientes.Clientes cliente=new facturacion.clientes.Clientes();
         while(listC.hasNext()){
-            cliente=(Clientes)listC.next();
+            cliente=(facturacion.clientes.Clientes)listC.next();
             fila[0]=cliente.getCodigoId();
             fila[1]=cliente.getRazonSocial();
             fila[2]=cliente.getDireccion();
@@ -247,15 +248,16 @@ public class AbmProveedores extends javax.swing.JInternalFrame {
         jMenuBar1.add(jMenu2);
 
         jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/documents_black.png"))); // NOI18N
-        jMenu3.setText("Cotizaciones");
+        jMenu3.setText("Facturacion");
         jMenuBar1.add(jMenu3);
-
-        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/library_black.png"))); // NOI18N
-        jMenu4.setText("Pedidos");
-        jMenuBar1.add(jMenu4);
 
         jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/metacontact_offline.png"))); // NOI18N
         jMenu5.setText("Perfil");
+        jMenu5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu5MouseClicked(evt);
+            }
+        });
         jMenuBar1.add(jMenu5);
 
         setJMenuBar(jMenuBar1);
@@ -360,6 +362,21 @@ public class AbmProveedores extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
+         Proveedores clienteTango=new Proveedores();
+        clienteTango=(Proveedores)listadoClientes.get(this.jTable1.getSelectedRow());
+        NuevoProveedor clienteNuevo=new NuevoProveedor(clienteTango);
+        Inicio.jDesktopPane1.add(clienteNuevo);
+        clienteNuevo.setTitle(clienteTango.getNombre());
+        try {
+            clienteNuevo.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(AbmClientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        clienteNuevo.setVisible(true);
+        clienteNuevo.toFront();
+    }//GEN-LAST:event_jMenu5MouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private datechooser.beans.DateChooserCombo dateChooserCombo3;
     private datechooser.beans.DateChooserCombo dateChooserCombo4;
@@ -375,7 +392,6 @@ public class AbmProveedores extends javax.swing.JInternalFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;

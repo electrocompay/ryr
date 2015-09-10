@@ -45,6 +45,7 @@ import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import Articulos.Articulos;
 import Articulos.SubRubrosAbm;
+import Recibos.ChequesAbm;
 import objetos.GastosF;
 
 /**
@@ -164,6 +165,7 @@ public class Inicio extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem16 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
         jMenuItem21 = new javax.swing.JMenuItem();
@@ -207,6 +209,11 @@ public class Inicio extends javax.swing.JFrame {
 
         jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/developer_black.png"))); // NOI18N
         jMenu1.setText("Administracion");
+        jMenu1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu1ActionPerformed(evt);
+            }
+        });
 
         jMenuItem9.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem9.setText("Listas de Precios");
@@ -216,6 +223,14 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem9);
+
+        jMenuItem16.setText("Listado de Cheques");
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem16ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem16);
 
         jMenuItem10.setText("Sucursales");
         jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
@@ -697,6 +712,17 @@ public class Inicio extends javax.swing.JFrame {
        sub.toFront();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
+        
+    }//GEN-LAST:event_jMenu1ActionPerformed
+
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+        ChequesAbm chequ=new ChequesAbm();
+        Inicio.jDesktopPane1.add(chequ);
+        chequ.setVisible(true);
+        chequ.toFront();
+    }//GEN-LAST:event_jMenuItem16ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -769,6 +795,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem21;
