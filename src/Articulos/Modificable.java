@@ -23,4 +23,5 @@ public interface Modificable {
     public ArrayList buscarParaFacturar(Integer rubro,Integer subRubro,String criterio,Integer idCliente);
     public ArrayList filtrador(ArrayList rubro1, ArrayList subRubro);
     public ArrayList aplicarGanancia(ArrayList listado,Double ganancia);
+    public void depurarFiltrador(ArrayList rubro1);
 }

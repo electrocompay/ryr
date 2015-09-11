@@ -1326,7 +1326,7 @@ public class Articulos implements Facturar,Editables,Comparables,Modificable{
     @Override
     public ArrayList aplicarGanancia(ArrayList listado, Double ganancia) {
         Double porc1=ganancia / 100;
-        
+        porc1=porc1 +1;
         Iterator itL=listado.listIterator();
         Articulos articulo=new Articulos();
         while(itL.hasNext()){
@@ -1336,6 +1336,26 @@ public class Articulos implements Facturar,Editables,Comparables,Modificable{
             tra.guardarRegistro(sql);
         }
         return listado;
+    }
+
+    @Override
+    public void depurarFiltrador(ArrayList rubro1) {
+       ArrayList listado=new ArrayList();
+        String sql="";
+        Articulos rubro=new Articulos();
+        totalVenta=0.00;
+        totalCosto=0.00;
+        Articulos articulo;
+        
+        Iterator it=rubro1.listIterator();
+        while(it.hasNext()){
+            articulo=(Articulos)it.next();
+                //articulo=new Articulos();
+                
+                totalVenta=totalVenta + articulo.getPrecioUnitarioNeto();
+                totalCosto=totalCosto + articulo.getPrecioDeCosto();
+            }
+        //return listado;
     }
     
     

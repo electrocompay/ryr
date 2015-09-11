@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Articulos;
 
 
@@ -92,6 +87,11 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
         setTitle("Modificacion de Artículos");
 
         jTable1.setModel(modelo1);
+        jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTable1KeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jTable2.setModel(modelo2);
@@ -301,7 +301,7 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
         Double porcentajeGanancia=0.00;
         porcentajeGanancia=Articulos.getTotalVenta() / Articulos.getTotalCosto();
         System.err.println("vta "+Articulos.getTotalVenta()+" costo "+Articulos.getTotalCosto()+" total "+porcentajeGanancia);
-        porcentajeGanancia=porcentajeGanancia * 100;
+        porcentajeGanancia=(porcentajeGanancia -1) * 100;
          
         this.jTextField3.setText(String.valueOf(Math.round(porcentajeGanancia)));
         this.jTable3.setVisible(true);
@@ -373,7 +373,7 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
          modelo3=sRble.mostrarListado(listadoSubRubros);
          Double porcentajeGanancia=0.00;
          porcentajeGanancia=Articulos.getTotalVenta() / Articulos.getTotalCosto();
-         porcentajeGanancia=porcentajeGanancia * 100;
+         porcentajeGanancia=(porcentajeGanancia -1) * 100;
         this.jTextField3.setText(String.valueOf(Math.round(porcentajeGanancia)));
          this.jTable3.setModel(modelo3);
          this.jTable1.setModel(modelo1);
@@ -386,6 +386,29 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
         articMo.setVisible(true);
         articMo.toFront();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
+        int cantidad=this.jTable1.getRowCount();
+        for(int b=0;b < cantidad;b++){
+            if((Boolean)this.jTable1.getValueAt(b, 0)){
+            
+        }else{
+                listadoGral.remove(b);
+            }
+        }
+        Modificable att=new Articulos();
+        att.depurarFiltrador(listadoGral);
+        //listadoGral=att.filtrador(listadoSubRubros, listadoSubRubros);
+        modelo1=att.mostrarListado(listadoGral);
+         //modelo3=sRble.mostrarListado(listadoSubRubros);
+         Double porcentajeGanancia=0.00;
+         Double totalV=Articulos.getTotalVenta();
+         Double totalC=Articulos.getTotalCosto();
+         porcentajeGanancia=totalV / totalC;
+         porcentajeGanancia=(porcentajeGanancia -1) * 100;
+        this.jTextField3.setText(String.valueOf(Math.round(porcentajeGanancia)));
+        this.jTable1.setModel(modelo1);
+    }//GEN-LAST:event_jTable1KeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
