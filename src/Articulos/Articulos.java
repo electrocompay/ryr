@@ -1357,6 +1357,25 @@ public class Articulos implements Facturar,Editables,Comparables,Modificable{
             }
         //return listado;
     }
+
+    @Override
+    public ArrayList modificarPreciosValor(ArrayList listado, Double porcPrecio, Double porcCosto) {
+        Double porc1=porcPrecio;
+        //porc1=porc1 + 1;
+        Double porc2=porcCosto;
+        //porc2=porc2 + 1;
+        Iterator itL=listado.listIterator();
+        Articulos articulo=new Articulos();
+        while(itL.hasNext()){
+            articulo=(Articulos)itL.next();
+            articulo.setPrecioUnitarioNeto(porc1);
+            articulo.setPrecioDeCosto(porc2);
+            sql="update articulos set precio=round("+porc1+",4),costo=round("+porc2+",4) where id="+articulo.getNumeroId();
+            tra.guardarRegistro(sql);
+        }
+        return listado;
+        
+    }
     
     
 }
