@@ -148,9 +148,19 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
         jTextField3.setText("0.00");
 
         jCheckBox1.setText("Valor");
+        jCheckBox1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jCheckBox1MouseClicked(evt);
+            }
+        });
 
         jCheckBox2.setSelected(true);
         jCheckBox2.setText("Porcentaje");
+        jCheckBox2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jCheckBox2MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -422,6 +432,18 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
         this.jTextField3.setText(String.valueOf(Math.round(porcentajeGanancia)));
         this.jTable1.setModel(modelo1);
     }//GEN-LAST:event_jTable1KeyPressed
+
+    private void jCheckBox1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCheckBox1MouseClicked
+        if(this.jCheckBox1.isSelected()){
+            this.jCheckBox2.setSelected(false);
+        }
+    }//GEN-LAST:event_jCheckBox1MouseClicked
+
+    private void jCheckBox2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCheckBox2MouseClicked
+        if(this.jCheckBox2.isSelected()){
+            this.jCheckBox1.setSelected(false);
+        }
+    }//GEN-LAST:event_jCheckBox2MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
