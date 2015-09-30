@@ -4,6 +4,7 @@
  */
 package interfaceGraficas;
 
+import Articulos.ArticulosMod;
 import Excel.InformeArticulos;
 import Excel.LeerExcel;
 import interfacesPrograma.Facturar;

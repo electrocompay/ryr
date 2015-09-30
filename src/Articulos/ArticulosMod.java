@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package interfaceGraficas;
+package Articulos;
 
 import Proveedores.Proveedores;
 import Conversores.Numeros;
@@ -16,6 +16,7 @@ import Articulos.Articulos;
 import Articulos.Rubrable;
 import Articulos.Rubros;
 import Articulos.SubRubros;
+import interfaceGraficas.Combos;
 import tablas.MiModeloTablaArticulos;
 
 /**
@@ -417,9 +418,11 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
         
         if(this.jCheckBox3.isSelected()){
             System.out.println("entrooooooo");
+            /*
             Combos combo=new Combos();
             combo.setVisible(true);
             arti.setIdCombo(1);
+                    */
             
             
         }

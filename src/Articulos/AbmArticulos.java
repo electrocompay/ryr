@@ -4,14 +4,18 @@ package Articulos;
 
 import Conversores.Numeros;
 import Sucursales.ListasDePrecios;
-import interfaceGraficas.ArticulosMod;
 import interfaceGraficas.Inicio;
 import interfaces.Personalizable;
+import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.YES_NO_CANCEL_OPTION;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -29,6 +33,8 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
     private ListasDePrecios listaDePrecios;
     private ArrayList listadoDePrecios=new ArrayList();
     private static Rubrable sRble=new SubRubros();
+    private TableColumn columna;
+    
     
     
     /**
@@ -49,6 +55,8 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
         modelo1=artis.mostrarListado(listadoGral);
         this.jTable1.setModel(modelo1);
         this.jTable2.setModel(modelo2);
+        columna=this.jTable1.getColumn("Descripcion");
+        columna.setPreferredWidth(400);
         this.jTable3.setVisible(false);
         
     }
@@ -277,6 +285,11 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
         articulos=(Articulos)listadoGral.get(cantidad);
         ArticulosMod mod=new ArticulosMod(articulos);
         Inicio.jDesktopPane1.add(mod);
+        try {
+            mod.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(AbmArticulos.class.getName()).log(Level.SEVERE, null, ex);
+        }
         mod.setVisible(true);
         mod.toFront();
         /*
@@ -325,6 +338,8 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
         this.jTable3.setVisible(true);
         this.jTable3.setModel(modelo3);
         this.jTable1.setModel(modelo1);
+        columna=this.jTable1.getColumn("Descripcion");
+        columna.setPreferredWidth(400);
     }//GEN-LAST:event_jTable2KeyPressed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -373,9 +388,11 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
 }
             }
         }
-        listadoGral=resultado;
+        //listadoGral=resultado;
         modelo1=att.mostrarListado(listadoGral);
         this.jTable1.setModel(modelo1);
+        columna=this.jTable1.getColumn("Descripcion");
+        columna.setPreferredWidth(400);
         this.jTextField1.setText("0.00");
         this.jTextField2.setText("0.00");
         
@@ -401,6 +418,8 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
         this.jTextField3.setText(String.valueOf(Math.round(porcentajeGanancia)));
          this.jTable3.setModel(modelo3);
          this.jTable1.setModel(modelo1);
+         columna=this.jTable1.getColumn("Descripcion");
+        columna.setPreferredWidth(400);
         
     }//GEN-LAST:event_jTable3KeyPressed
 
@@ -413,25 +432,32 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
 
     private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
         int cantidad=this.jTable1.getRowCount();
+        ArrayList resTado=new ArrayList();
+        Articulos articu;
         for(int b=0;b < cantidad;b++){
             if((Boolean)this.jTable1.getValueAt(b, 0)){
-            
+            articu=new Articulos();
+            articu=(Articulos)listadoGral.get(b);
+            resTado.add(articu);
         }else{
-                listadoGral.remove(b);
+                //listadoGral.remove(b);
             }
         }
         Modificable att=new Articulos();
-        att.depurarFiltrador(listadoGral);
+        att.depurarFiltrador(resTado);
         //listadoGral=att.filtrador(listadoSubRubros, listadoSubRubros);
-        modelo1=att.mostrarListado(listadoGral);
+        
+        //modelo1=att.mostrarListado(listadoGral);
+        
          //modelo3=sRble.mostrarListado(listadoSubRubros);
+        
          Double porcentajeGanancia=0.00;
          Double totalV=Articulos.getTotalVenta();
          Double totalC=Articulos.getTotalCosto();
          porcentajeGanancia=totalV / totalC;
          porcentajeGanancia=(porcentajeGanancia -1) * 100;
         this.jTextField3.setText(String.valueOf(Math.round(porcentajeGanancia)));
-        this.jTable1.setModel(modelo1);
+        //this.jTable1.setModel(modelo1);
     }//GEN-LAST:event_jTable1KeyPressed
 
     private void jCheckBox1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCheckBox1MouseClicked
