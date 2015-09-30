@@ -356,9 +356,10 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
             att.aplicarGanancia(resultado, ganancia);
         }else{
             if(this.jCheckBox1.isSelected()){
-                resultado=att.modificarPrecios(resultado, coeficiente, coeficiente1);
+                
+                 resultado=att.modificarPreciosValor(resultado, coeficiente, coeficiente1);
             }else{
-                resultado=att.modificarPreciosValor(resultado, coeficiente, coeficiente1);
+               resultado=att.modificarPrecios(resultado, coeficiente, coeficiente1);
             }
             if(coeficiente1 > 0){
                 int seleccion=JOptionPane.showOptionDialog(this,"¿desea aplicar el porcentaje de ganancia al costo ingresado?", "Seleccione una opcion", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,new Object[]{"Si","No"}, "Si");
