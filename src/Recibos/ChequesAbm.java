@@ -5,7 +5,7 @@
  */
 package Recibos;
 
-import Compras.Proveedores;
+import Proveedores.Proveedores;
 import facturacion.clientes.Clientes;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;

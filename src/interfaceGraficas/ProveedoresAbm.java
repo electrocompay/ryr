@@ -4,7 +4,7 @@
  */
 package interfaceGraficas;
 
-import Compras.Proveedores;
+import Proveedores.Proveedores;
 import interfaces.Personalizable;
 
 /**

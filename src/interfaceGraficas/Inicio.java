@@ -4,12 +4,13 @@
  */
 package interfaceGraficas;
 
+import Proveedores.AbmProveedores;
 import Articulos.RubrosAbm;
 import Actualizaciones.Actualiza;
 import Actualizaciones.Actualiza1;
 import Actualizaciones.BkDeConeccion;
 import Articulos.AbmArticulos;
-import Compras.Proveedores;
+import Proveedores.Proveedores;
 import Depositos.Depositos;
 import Excel.InformeMensual;
 import Sucursales.Cajas;

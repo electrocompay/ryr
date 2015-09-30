@@ -5,7 +5,7 @@
 package interfaceGraficas;
 
 import Compras.FacturaProveedor;
-import Compras.Proveedores;
+import Proveedores.Proveedores;
 import Conversores.Numeros;
 import Impresiones.Impresora;
 import Sucursales.Cajas;

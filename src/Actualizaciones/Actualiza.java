@@ -4,7 +4,7 @@
  */
 package Actualizaciones;
 
-import Compras.Proveedores;
+import Proveedores.Proveedores;
 import Depositos.Depositos;
 import Sucursales.Cajas;
 import Sucursales.ListasDePrecios;

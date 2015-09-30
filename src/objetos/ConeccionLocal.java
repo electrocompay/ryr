@@ -5,7 +5,7 @@
 package objetos;
 
 import Articulos.Articulos;
-import Compras.Proveedores;
+import Proveedores.Proveedores;
 import Depositos.Depositos;
 import Sucursales.Cajas;
 import Sucursales.ListasDePrecios;

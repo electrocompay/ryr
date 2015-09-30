@@ -4,7 +4,7 @@
  */
 package objetos;
 
-import Compras.Proveedores;
+import Proveedores.Proveedores;
 import Conversores.Numeros;
 import interfaceGraficas.Inicio;
 import interfaces.Editables;

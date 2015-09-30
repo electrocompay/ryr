@@ -4,6 +4,7 @@
  */
 package Compras;
 
+import Proveedores.Proveedores;
 import Administracion.TipoComprobante;
 import Conversores.Numeros;
 import interfaceGraficas.Inicio;

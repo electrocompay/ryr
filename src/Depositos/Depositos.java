@@ -4,7 +4,7 @@
  */
 package Depositos;
 
-import Compras.Proveedores;
+import Proveedores.Proveedores;
 import interfaceGraficas.Inicio;
 import interfaces.Personalizable;
 import interfaces.Transaccionable;

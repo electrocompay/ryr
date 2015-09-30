@@ -2,13 +2,15 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package interfaceGraficas;
+package Proveedores;
 
-import Compras.Proveedores;
 import Conversores.Numeros;
 import Excel.InformesClientes;
 import Excel.LeerExcelProveedores;
 import facturacion.clientes.Clientes;
+import interfaceGraficas.AbmClientes;
+import interfaceGraficas.Inicio;
+import interfaceGraficas.NuevoProveedor;
 import interfacesPrograma.Busquedas;
 import interfacesPrograma.Facturar;
 import java.beans.PropertyVetoException;
