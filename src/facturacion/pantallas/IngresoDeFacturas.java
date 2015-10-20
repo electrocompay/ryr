@@ -36,9 +36,12 @@ import ListasDePrecios.ArticulosAsignados;
 import Sucursales.ListasDePrecios;
 import facturacion.clientes.ImprimirFactura;
 import interfaces.Comparables;
+import java.net.MalformedURLException;
 import javax.swing.DefaultComboBoxModel;
+import javax.xml.parsers.ParserConfigurationException;
 import objetos.Comprobantes;
 import objetos.Conecciones;
+import org.xml.sax.SAXException;
 import tablas.MiModeloTablaBuscarCliente;
 import tablas.MiModeloTablaFacturacion;
 
@@ -880,10 +883,15 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
         }
         FacturaElectronica fe=new FacturaElectronica();
         try {
-            fe.leer("");
+           fe=(FacturaElectronica) fe.leer("");
+           if(fe.getRespuesta().equals("OK"))JOptionPane.showConfirmDialog(this,"aprobada");
         } catch (IOException ex) {
             Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
             System.err.println(ex);
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
+            Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
         } 
         
         
