@@ -8,7 +8,7 @@ import interfaceGraficas.NuevoCliente;
 import Pedidos.IngresoDePedidos;
 import Conversores.Numeros;
 import facturacion.clientes.Clientes;
-
+import FacturaE.FacturaElectronica;
 import interfaceGraficas.Inicio;
 import interfacesPrograma.Facturar;
 import java.awt.event.KeyEvent;
@@ -878,6 +878,15 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this,"El cliente supera el límite de crédito, debe abonar la venta");
             noFacturar=0;
         }
+        FacturaElectronica fe=new FacturaElectronica();
+        try {
+            fe.leer("");
+        } catch (IOException ex) {
+            Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println(ex);
+        } 
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
