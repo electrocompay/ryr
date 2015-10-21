@@ -853,12 +853,33 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
         if(noFacturar==0){
         Facturar fat=new Comprobantes();
         comprobante=(Comprobantes)fat.guardar(comprobante);
+        // aqui hago el envio a factura  electronica, si aprueba no imprime
+        
+        FacturaElectronica fe=new FacturaElectronica();
+        try {
+           fe=(FacturaElectronica) fe.leer("");
+           if(fe.getRespuesta().equals("OK")){
+               JOptionPane.showMessageDialog(this,"aprobada");
+              /*         
         ImprimirFactura imprimir=new ImprimirFactura();
             try {
                 imprimir.ImprimirFactura(comprobante.getNumero(),comprobante.getTipoComprobante());
             } catch (IOException ex) {
                 Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
             }
+            */
+            
+           }else{
+                              JOptionPane.showMessageDialog(this,"error en la coneccion");
+           }
+        } catch (IOException ex) {
+            Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println(ex);
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
+            Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
+        }
         /*
          * ACA DEBO LIMPIAR TODOS LOS CAMPOS Y VARIABLES DE LA PANTALLA
          * 
@@ -881,18 +902,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this,"El cliente supera el límite de crédito, debe abonar la venta");
             noFacturar=0;
         }
-        FacturaElectronica fe=new FacturaElectronica();
-        try {
-           fe=(FacturaElectronica) fe.leer("");
-           if(fe.getRespuesta().equals("OK"))JOptionPane.showConfirmDialog(this,"aprobada");
-        } catch (IOException ex) {
-            Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
-            System.err.println(ex);
-        } catch (ParserConfigurationException ex) {
-            Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SAXException ex) {
-            Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+         
         
         
     }//GEN-LAST:event_jButton1ActionPerformed
