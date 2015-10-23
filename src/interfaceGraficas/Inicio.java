@@ -46,6 +46,7 @@ import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import Articulos.Articulos;
 import Articulos.SubRubrosAbm;
+import FacturaE.AbmFacturaElectronica;
 import Recibos.ChequesAbm;
 import objetos.GastosF;
 
@@ -192,6 +193,8 @@ public class Inicio extends javax.swing.JFrame {
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenu8 = new javax.swing.JMenu();
         jMenuItem23 = new javax.swing.JMenuItem();
+        jMenu9 = new javax.swing.JMenu();
+        jMenuItem25 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SISITEMA DE GESTION BAMBU SOFTWARE");
@@ -453,6 +456,19 @@ public class Inicio extends javax.swing.JFrame {
         jMenu8.add(jMenuItem23);
 
         jMenuBar1.add(jMenu8);
+
+        jMenu9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/torrents_black.png"))); // NOI18N
+        jMenu9.setText("C.A.E. Pendientes");
+
+        jMenuItem25.setText("Listar");
+        jMenuItem25.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem25ActionPerformed(evt);
+            }
+        });
+        jMenu9.add(jMenuItem25);
+
+        jMenuBar1.add(jMenu9);
 
         setJMenuBar(jMenuBar1);
 
@@ -724,6 +740,13 @@ public class Inicio extends javax.swing.JFrame {
         chequ.toFront();
     }//GEN-LAST:event_jMenuItem16ActionPerformed
 
+    private void jMenuItem25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem25ActionPerformed
+        AbmFacturaElectronica fe=new AbmFacturaElectronica();
+        Inicio.jDesktopPane1.add(fe);
+        fe.setVisible(true);
+        fe.toFront();
+    }//GEN-LAST:event_jMenuItem25ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -788,6 +811,7 @@ public class Inicio extends javax.swing.JFrame {
     public static javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu8;
+    private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
@@ -803,6 +827,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem22;
     private javax.swing.JMenuItem jMenuItem23;
     private javax.swing.JMenuItem jMenuItem24;
+    private javax.swing.JMenuItem jMenuItem25;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;

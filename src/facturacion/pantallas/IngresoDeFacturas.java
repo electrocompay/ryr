@@ -31,11 +31,13 @@ import Articulos.Modificable;
 import Articulos.Rubrable;
 import Articulos.Rubros;
 import Articulos.SubRubros;
+import FacturaE.pdfsJavaGenerador;
 import ListasDePrecios.Articulable;
 import ListasDePrecios.ArticulosAsignados;
 import Sucursales.ListasDePrecios;
 import facturacion.clientes.ImprimirFactura;
 import interfaces.Comparables;
+import java.awt.event.KeyListener;
 import java.net.MalformedURLException;
 import javax.swing.DefaultComboBoxModel;
 import javax.xml.parsers.ParserConfigurationException;
@@ -50,7 +52,7 @@ import tablas.MiModeloTablaFacturacion;
  *
  * @author hernan
  */
-public class IngresoDeFacturas extends javax.swing.JInternalFrame {
+public class IngresoDeFacturas extends javax.swing.JInternalFrame implements KeyListener{
 
     /**
      * Creates new form IngresoDePedidos
@@ -176,6 +178,11 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
                 formComponentShown(evt);
             }
         });
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         jTable1.setModel(facturas);
         jScrollPane1.setViewportView(jTable1);
@@ -183,7 +190,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
         jLabel1.setText("TOTAL FACTURA :");
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/printer32.png"))); // NOI18N
-        jButton1.setText("IMPRIMIR");
+        jButton1.setText("FACT ELECT");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -495,7 +502,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
 
         pack();
@@ -579,6 +586,8 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
         if(evt.getKeyCode()==KeyEvent.VK_F4){
                     //verificar();
         //Impresora imp=new Impresora();        
+        //verificar();
+        //Impresora imp=new Impresora();        
         String cadena=cliT.getCodigoCliente()+" - "+cliT.getRazonSocial()+"\n"+cliT.getDireccion();
         //comp.setCliente(cliT);
         //VisorDeHojaDeRuta
@@ -606,10 +615,11 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
         String fecha2=ano+"-"+mes+"-"+dia;
         //comp.setFechaComprobante(fecha2);
         //comp.setFechaComprobante(fecha);
-        int comprobanteTipo=(int) Inicio.sucursal.getTipoComprobantes().get(0);
-        //System.out.println("COMPROBANTEEEEEEE "+comprobanteTipo);
-        if(cliT.getCondicionIva().equals("RI "))comprobanteTipo=(int)Inicio.sucursal.getTipoComprobantes().get(1);
+        int comprobanteTipo=cliT.getTipoComprobante();
+        
+        
         Comprobantes comprobante=new Comprobantes();
+        comprobante.setFe(false);
         comprobante.setCliente(cliT);
         comprobante.setTipoMovimiento(1);
         comprobante.setTipoComprobante(comprobanteTipo);
@@ -618,7 +628,9 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
         comprobante.setUsuarioGenerador(Inicio.usuario.getNumero());
         comprobante.setIdSucursal(Inicio.sucursal.getNumero());
         comprobante.setIdDeposito(Inicio.deposito.getNumero());
-        comprobante.setIdCaja(Inicio.caja.getNumero());
+        Integer numeroCaja=Inicio.caja.getNumero();
+        //System.out.println("EL NUMERO DE CAJA ESSSSSSSS "+numeroCaja);
+        comprobante.setIdCaja(numeroCaja);
         if(montoTotal == 0.00){
             String sqM="usuario :"+Inicio.usuario.getNombre()+" sucursal "+Inicio.sucursal.getNumero()+" idcaja "+Inicio.caja.getNumero();
             JOptionPane.showMessageDialog(this,"OJO EL MONTO DE ESTE COMPROBANTE ES $ 0, AVISE PARA DETECTAR EL ERROR");
@@ -643,25 +655,38 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
         }
         comprobante.setMontoTotal(montoTotal);
         int noFacturar=0;
-        if(this.jCheckBox2.isSelected()){
+        if(IngresoDeFacturas.jCheckBox2.isSelected()){
             comprobante.setPagado(1);
         }else{
             comprobante.setPagado(0);
             /*
-             * ACA DEBO COMPROBAR EL LIMITE DEL CLIENTE Y SI LO SUPERA LA COMPRA RECHAZAR LA VENTA
-             * 
-             */
+            * ACA DEBO COMPROBAR EL LIMITE DEL CLIENTE Y SI LO SUPERA LA COMPRA RECHAZAR LA VENTA
+            *
+            */
             Double limite=cliT.getCupoDeCredito();
-            Double saldo=cliT.getSaldo();
-            Double totalGral=montoTotal + saldo;
+            //Double saldo=cliT.getSaldo();
+            //Double totalGral=montoTotal + saldo;
+            Double totalGral=montoTotal;
             if(limite < totalGral)noFacturar=1;
             
         }
         if(noFacturar==0){
         Facturar fat=new Comprobantes();
-        fat.guardar(comprobante);
+        comprobante=(Comprobantes)fat.guardar(comprobante);
+        // aqui hago el envio a factura  electronica, si aprueba no imprime
+       
+                      
+        ImprimirFactura imprimir=new ImprimirFactura();
+            try {
+                imprimir.ImprimirFactura(comprobante.getNumero(),comprobante.getTipoComprobante());
+            } catch (IOException ex) {
+                Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            
+       
         /*
-         * ACA DEVO LIMPIAR TODOS LOS CAMPOS Y VARIABLES DE LA PANTALLA
+         * ACA DEBO LIMPIAR TODOS LOS CAMPOS Y VARIABLES DE LA PANTALLA
          * 
          */
         //comp.setTipoComprobante(comprobanteTipo);
@@ -673,16 +698,18 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
         this.jList1.removeAll();
         listadoDeBusqueda.clear();
         cargarLista(listadoDeBusqueda);
-        cliT=new Clientes("999999");
+        //cliT=new Clientes("99");
         this.jLabel6.setText(cliT.getRazonSocial());
         this.jTextField2.setText("");
         jTextField1.setText("");
         jTextField1.requestFocus();
-        
         }else{
             JOptionPane.showMessageDialog(this,"El cliente supera el límite de crédito, debe abonar la venta");
             noFacturar=0;
         }
+         
+        
+       
         }
     }//GEN-LAST:event_jTextField1KeyPressed
 
@@ -800,6 +827,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
         
         
         Comprobantes comprobante=new Comprobantes();
+        comprobante.setFe(true);
         comprobante.setCliente(cliT);
         comprobante.setTipoMovimiento(1);
         comprobante.setTipoComprobante(comprobanteTipo);
@@ -857,9 +885,14 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
         
         FacturaElectronica fe=new FacturaElectronica();
         try {
-           fe=(FacturaElectronica) fe.leer("");
+            
+           fe=(FacturaElectronica) fe.leer(comprobante);
            if(fe.getRespuesta().equals("OK")){
-               JOptionPane.showMessageDialog(this,"aprobada");
+               //JOptionPane.showMessageDialog(this,"aprobada id: "+fe.getId());
+               pdfsJavaGenerador pdf=new pdfsJavaGenerador();
+               pdf.setDoc(fe);
+               pdf.setCliente(cliT);
+               pdf.run();
               /*         
         ImprimirFactura imprimir=new ImprimirFactura();
             try {
@@ -870,7 +903,8 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
             */
             
            }else{
-                              JOptionPane.showMessageDialog(this,"error en la coneccion");
+               if(fe.getRespuesta().equals("PARAMETROS"))JOptionPane.showMessageDialog(this,"Error en los parametros del cliente, modifiquelos en cae pendientes");
+                              JOptionPane.showMessageDialog(this,"error en la coneccion, intentelo mas tarde");
            }
         } catch (IOException ex) {
             Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
@@ -1077,6 +1111,11 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
         }
 
     }//GEN-LAST:event_jComboBox2KeyPressed
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        
+        
+    }//GEN-LAST:event_formKeyPressed
 private void cargarLista(ArrayList lista){
     DefaultListModel modelo=new DefaultListModel();
     Iterator il=lista.listIterator();
@@ -1198,4 +1237,19 @@ private void verificar(){
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void keyTyped(KeyEvent ke) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void keyPressed(KeyEvent ke) {
+        System.out.println("entro con F4    ¡¡¡¡¡¡");
+    }
+
+    @Override
+    public void keyReleased(KeyEvent ke) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

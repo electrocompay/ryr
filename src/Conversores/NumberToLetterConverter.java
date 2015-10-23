@@ -123,7 +123,7 @@ public abstract class NumberToLetterConverter {
         if (centavos == 1)
             converted.append(" CON UN CENTAVO");
         else if (centavos > 1)
-            converted.append(" CON " + convertNumber(String.valueOf(centavos))
+            converted.append(" CON " + splitNumber[1]
                     + "CENTAVOS");
 
         return converted.toString();
@@ -139,9 +139,9 @@ public abstract class NumberToLetterConverter {
      */
     private static String convertNumber(String number) {
 
-        if (number.length() > 3)
+        if (number.length() > 4)
             throw new NumberFormatException(
-                    "La longitud maxima debe ser 3 digitos");
+                    "La longitud maxima debe ser 4 digitos");
 
         // Caso especial con el 100
         if (number.equals("100")) {

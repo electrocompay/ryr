@@ -304,6 +304,33 @@ public class Facturas implements Facturable{
     public void actualizadorDeEstado(Object factu) {
         //ACA DEBO PONER EL NUMERO DE ESTADO SI SE HACE RECIBO Y REMITO Y CARGAR EL SALDO
     }
+
+    @Override
+    public Object cargarIdFactura(Integer id) {
+        Facturas factura=new Facturas();
+        String sql="select *,(select tipocomprobantes.descripcion from tipocomprobantes where tipocomprobantes.id=facturas.tipo)as descripcionTipo from facturas where id="+id;
+        Transaccionable tra=new Conecciones();
+        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        try {
+            while(rs.next()){
+                factura.setEstado(rs.getInt("estado"));
+                factura.setFecha(rs.getDate("fecha"));
+                factura.setId(rs.getInt("id"));
+                factura.setIdCliente(rs.getInt("idcliente"));
+                factura.setIdPedido(rs.getInt("idpedido"));
+                factura.setIdRemito(rs.getInt("idremito"));
+                factura.setIdUsuario(rs.getInt("idusuario"));
+                factura.setNumeroFactura(rs.getInt("numerofactura"));
+                factura.setTipo(rs.getInt("tipo"));
+                factura.setTotal(rs.getDouble("total"));
+                factura.setDescripcionTipo(rs.getString("descripcionTipo"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Facturas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return factura;
+    }
     
     
 }

@@ -47,6 +47,16 @@ public class Comprobantes implements Facturar{
     private static Integer idComp;
     private Date vencimiento;
     private Integer idFactura;
+    private Boolean fe;
+
+    public Boolean getFe() {
+        return fe;
+    }
+
+    public void setFe(Boolean fe) {
+        this.fe = fe;
+    }
+    
 
     public Integer getIdFactura() {
         return idFactura;
@@ -282,7 +292,11 @@ public class Comprobantes implements Facturar{
         Comprobantes comp=(Comprobantes)oob;
         Iterator iComp=comp.listadoDeArticulos.listIterator();
         numeroActual(comp.getTipoComprobante());
+        if(comp.getFe()){
+            numeroComprobante=0;
+        }else{
         numeroComprobante++;
+        }
         comp.setNumero(numeroComprobante);
         Transaccionable tra=new Conecciones();
         Articulos articulo=new Articulos();
