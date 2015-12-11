@@ -780,7 +780,14 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
         String fecha=dia+"/"+mes+"/"+ano;
         String fecha2=ano+"-"+mes+"-"+dia;
         me++;
+        if(me > 12){
+            me=1;
+            Integer anio=Integer.parseInt(ano);
+            anio++;
+            ano=String.valueOf(anio);
+        }    
         mes=fr.format(me);
+        
         String vencimiento=ano+"-"+mes+"-"+dia;
         //comp.setFechaComprobante(fecha2);
         //comp.setFechaComprobante(fecha);
@@ -958,6 +965,10 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
         pedidos=(Articulos)detalleDelPedido.get(posicion);
         Double precioU=pedidos.getPrecioUnitarioNeto();
         Double precio=Double.parseDouble(JOptionPane.showInputDialog("Ingrese el nuevo valor unitario s/iva",precioU));
+        Double cantidad=Double.parseDouble(JOptionPane.showInputDialog("Ingrese la cantidad",pedidos.getCantidad()));
+        pedidos.setCantidad(cantidad);
+
+        
         pedidos.setPrecioUnitarioNeto(precio);
         pedidos.setDescuento(1);
         //detalleDelPedido.clear();

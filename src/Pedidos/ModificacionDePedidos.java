@@ -1012,6 +1012,9 @@ public class ModificacionDePedidos extends javax.swing.JInternalFrame {
         Articulos pedidos;
         pedidos=(Articulos)detalleDelPedido.get(posicion);
         Double precio=Double.parseDouble(JOptionPane.showInputDialog("Ingrese el nuevo valor unitario s/iva",pedidos.getPrecioUnitarioNeto()));
+        Double cantidad=Double.parseDouble(JOptionPane.showInputDialog("Ingrese la cantidad",pedidos.getCantidad()));
+        pedidos.setCantidad(cantidad);
+
         pedidos.setPrecioUnitarioNeto(precio);
         pedidos.setDescuento(1);
         //detalleDelPedido.clear();
@@ -1148,10 +1151,18 @@ private void agregarRenglonTabla(){
 }
 private void montrarMonto(){
     //System.err.println("DESCUENTO :"+cliT.getDescuento());
-    Double total=montoTotal;
+    String total1=Numeros.ConvertirNumero(montoTotal);
+    String total="";
+    if(cliT.getTipoIva()==1){
+        String bruto=Numeros.ConvertirNumero( montoTotal /1.21);
+        String iva=Numeros.ConvertirNumero(montoTotal * 0.21);
+        total="Bruto :"+bruto+" IVA 21% "+iva+" Neto "+total1;
+    }else{
+        total="Neto "+total1;
+    }
     //Double total=montoTotal * cliT.getDescuento();
     //comp.setMontoTotal(total);
-    this.jLabel1.setText("TOTAL PEDIDO  "+String.valueOf(total));
+    this.jLabel1.setText(total);
 }
 private void verificar(){
     int cantidad=this.jTable1.getRowCount();

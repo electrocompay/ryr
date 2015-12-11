@@ -255,13 +255,18 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                         .addGap(3, 3, 3)
                         .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5)
-                    .addComponent(jCheckBox2)
-                    .addComponent(jLabel1)
-                    .addComponent(jButton1))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5)
+                            .addComponent(jCheckBox2)
+                            .addComponent(jButton1))
+                        .addGap(0, 11, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         jPanel2.setMaximumSize(new java.awt.Dimension(507, 207));
@@ -502,7 +507,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
 
         pack();
@@ -1179,10 +1184,18 @@ private void agregarRenglonTabla(){
 }
 private void montrarMonto(){
     //System.err.println("DESCUENTO :"+cliT.getDescuento());
-    Double total=montoTotal;
+    String total1=Numeros.ConvertirNumero(montoTotal);
+    String total="";
+    if(cliT.getTipoIva()==1){
+        String bruto=Numeros.ConvertirNumero( montoTotal /1.21);
+        String iva=Numeros.ConvertirNumero(montoTotal * 0.21);
+        total="Bruto :"+bruto+" IVA 21% "+iva+" Neto "+total1;
+    }else{
+        total="Neto "+total1;
+    }
     //Double total=montoTotal * cliT.getDescuento();
     //comp.setMontoTotal(total);
-    this.jLabel1.setText("TOTAL FACTURA :"+String.valueOf(total));
+    this.jLabel1.setText(total);
 }
 private void verificar(){
     int cantidad=this.jTable1.getRowCount();

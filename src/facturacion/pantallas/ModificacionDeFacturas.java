@@ -1157,10 +1157,18 @@ private void agregarRenglonTabla(){
 }
 private void montrarMonto(){
     //System.err.println("DESCUENTO :"+cliT.getDescuento());
-    Double total=montoTotal;
+    String total1=Numeros.ConvertirNumero(montoTotal);
+    String total="";
+    if(cliT.getTipoIva()==1){
+        String bruto=Numeros.ConvertirNumero( montoTotal /1.21);
+        String iva=Numeros.ConvertirNumero(montoTotal * 0.21);
+        total="Bruto :"+bruto+" IVA 21% "+iva+" Neto "+total1;
+    }else{
+        total="Neto "+total1;
+    }
     //Double total=montoTotal * cliT.getDescuento();
     //comp.setMontoTotal(total);
-    this.jLabel1.setText("TOTAL FACTURA :"+String.valueOf(total));
+    this.jLabel1.setText(total);
 }
 private void verificar(){
     int cantidad=this.jTable1.getRowCount();

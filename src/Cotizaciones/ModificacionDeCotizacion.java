@@ -1007,6 +1007,9 @@ public class ModificacionDeCotizacion extends javax.swing.JInternalFrame {
         Articulos pedidos;
         pedidos=(Articulos)detalleDelPedido.get(posicion);
         Double precio=Double.parseDouble(JOptionPane.showInputDialog("Ingrese el nuevo valor unitario s/iva",pedidos.getPrecioUnitarioNeto()));
+        Double cantidad=Double.parseDouble(JOptionPane.showInputDialog("Ingrese la cantidad",pedidos.getCantidad()));
+        pedidos.setCantidad(cantidad);
+
         pedidos.setPrecioUnitarioNeto(precio);
         pedidos.setDescuento(1);
         //detalleDelPedido.clear();
