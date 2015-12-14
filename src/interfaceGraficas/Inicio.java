@@ -205,6 +205,7 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
 
+        jDesktopPane1.setAutoscrolls(true);
         jDesktopPane1.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
                 jDesktopPane1ComponentShown(evt);

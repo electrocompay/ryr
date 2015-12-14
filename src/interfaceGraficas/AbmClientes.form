@@ -24,28 +24,6 @@
             <Property name="text" type="java.lang.String" value="Saldo"/>
           </Properties>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu3">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagen/documents_black.png"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Cotizaciones"/>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jMenu3MouseClicked"/>
-          </Events>
-        </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu4">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagen/library_black.png"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Pedidos"/>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jMenu4MouseClicked"/>
-          </Events>
-        </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu5">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -55,17 +33,6 @@
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jMenu5MouseClicked"/>
-          </Events>
-        </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu6">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagen/delete_ticket.png"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Facturar"/>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jMenu6MouseClicked"/>
           </Events>
         </Menu>
       </SubComponents>
@@ -191,6 +158,7 @@
                 </Property>
               </Properties>
               <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="columnaCodigo=this.jTable1.getColumn(&quot;COD CLIENTE&quot;);&#xa;        columnaCodigo.setPreferredWidth(30);"/>
                 <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="MiModeloTablaArticulos miTabla=new MiModeloTablaArticulos();&#xa;Busquedas bus=new facturacion.clientes.Clientes();&#xa;listadoClientes=bus.listar(&quot;&quot;);&#xa;Iterator listC=listadoClientes.listIterator();&#xa;miTabla.addColumn(&quot;COD CLIENTE&quot;);&#xa;miTabla.addColumn(&quot;RAZON SOCIAL&quot;);&#xa;miTabla.addColumn(&quot;DIRECCION&quot;);&#xa;miTabla.addColumn(&quot;TELEFONO&quot;);&#xa;miTabla.addColumn(&quot;LOCALIDAD&quot;);&#xa;miTabla.addColumn(&quot;CONTACTO&quot;);&#xa;miTabla.addColumn(&quot;CUIT&quot;);&#xa;miTabla.addColumn(&quot;ID IVA&quot;);&#xa;miTabla.addColumn(&quot;COND IVA&quot;);&#xa;Object[] fila=new Object[9];&#xa;facturacion.clientes.Clientes cliente=new facturacion.clientes.Clientes();&#xa;while(listC.hasNext()){&#xa;    cliente=(facturacion.clientes.Clientes)listC.next();&#xa;    fila[0]=cliente.getCodigoId();&#xa;fila[1]=cliente.getRazonSocial();&#xa;fila[2]=cliente.getDireccion();&#xa;fila[3]=cliente.getTelefono();&#xa;fila[4]=cliente.getLocalidad();&#xa;fila[5]=cliente.getResponsable();&#xa;fila[6]=cliente.getNumeroDeCuit();&#xa;fila[7]=cliente.getTipoIva();&#xa;fila[8]=cliente.getCondicionIva();&#xa;miTabla.addRow(fila);&#xa;}"/>
               </AuxValues>
             </Component>

@@ -37,6 +37,7 @@ import ListasDePrecios.ArticulosAsignados;
 import Sucursales.ListasDePrecios;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.TableColumn;
 import objetos.Comprobantes;
 import objetos.Conecciones;
 import tablas.MiModeloTablaBuscarCliente;
@@ -65,6 +66,7 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
     private Rubrable ruble=new Rubros();
     private ArrayList listadoR=new ArrayList();
     private DefaultComboBoxModel combox=new DefaultComboBoxModel();
+    private TableColumn columnaCodigo;
     
     
     public IngresoDeCotizacion() {
@@ -274,7 +276,9 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
-        jLabel3.setText("Codigo de Barra");
+        jPanel2.setMaximumSize(new java.awt.Dimension(521, 202));
+
+        jLabel3.setText("Descripcion");
 
         jLabel4.setText("CANTIDAD :");
 
@@ -733,7 +737,7 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
                  this.jLabel8.setText("");
                  this.jList1.removeAll();
                 this.jButton1.setVisible(true);
-            this.jTextField1.setText("");
+            
             this.jTextField2.setText("");
             this.jTextField5.requestFocus();
                 }
@@ -1014,7 +1018,8 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
             this.jLabel10.setVisible(true);
             this.jComboBox2.setVisible(true);
             this.jComboBox2.setModel(subRuble.mostrarEnBox(listadoSubRubros));
-            this.jComboBox2.requestFocus();
+            this.jTextField1.selectAll();
+            this.jTextField1.requestFocus();
         }else{
             String rub=this.jTextField5.getText();
             
@@ -1095,6 +1100,16 @@ private void agregarRenglonTabla(){
             fila[5]=Numeros.ConvertirNumero(pedidos.getPrecioDeCosto());
             busC.addRow(fila);
         }
+        columnaCodigo=this.jTable1.getColumn("CODIGO");
+        columnaCodigo.setPreferredWidth(40);
+        columnaCodigo.setMaxWidth(40);
+        columnaCodigo=this.jTable1.getColumn("DESCRIPCION");
+        columnaCodigo.setPreferredWidth(400);
+        //columnaCodigo.setMaxWidth(400);
+        columnaCodigo.setMinWidth(300);
+        columnaCodigo=this.jTable1.getColumn("CANTIDAD");
+        columnaCodigo.setPreferredWidth(80);
+        columnaCodigo.setMaxWidth(80);
         montoTotal=montoTotal * 1.21;
         String total=String.valueOf(montoTotal);
         this.jLabel1.setText("TOTAL COTIZACION:  "+total);
