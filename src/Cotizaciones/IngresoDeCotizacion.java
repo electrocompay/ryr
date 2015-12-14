@@ -504,7 +504,7 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
              jTextField1.setText("");   
             }else{
             listadoDeBusqueda.add(arti);
-            jTextField1.setText(arti.getCodigoAsignado());
+            //jTextField1.setText(arti.getCodigoAsignado());
             jTextField2.setText("1");
             this.jLabel8.setText(arti.getDescripcionArticulo());
             if(arti.getModificaPrecio()){
