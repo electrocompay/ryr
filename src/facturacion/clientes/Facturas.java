@@ -5,6 +5,7 @@
  */
 package facturacion.clientes;
 
+import Conversores.Numeros;
 import interfaces.Transaccionable;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -228,7 +229,7 @@ public class Facturas implements Facturable{
             fila[1]=String.valueOf(cotizacion.getFecha());
             fila[2]=String.valueOf(cotizacion.getNumeroFactura());
             fila[3]=String.valueOf(cotizacion.getDescripcionTipo());
-            fila[4]=String.valueOf(cotizacion.getTotal());
+            fila[4]=Numeros.ConvertirNumero(cotizacion.getTotal());
             fila[5]=String.valueOf(cotizacion.getIdRemito());
             listado1.addRow(fila);
         }

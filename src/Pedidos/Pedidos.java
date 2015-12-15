@@ -5,6 +5,7 @@
  */
 package Pedidos;
 
+import Conversores.Numeros;
 import interfaces.Transaccionable;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -289,7 +290,7 @@ public class Pedidos implements Pedable{
             fila[1]=String.valueOf(cotizacion.getFecha());
             fila[2]=String.valueOf(cotizacion.getIdFactura());
             fila[3]=String.valueOf(cotizacion.getIdRemito());
-            fila[4]=String.valueOf(cotizacion.getTotal());
+            fila[4]=Numeros.ConvertirNumero(cotizacion.getTotal());
             if(cotizacion.getEstado()==0){
                 fila[5]="Pendiente";
             }else{
