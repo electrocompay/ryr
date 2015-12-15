@@ -19,7 +19,7 @@ public interface Modificable {
     public Boolean modificarArticulo(Object objeto);
     public ArrayList modificarPrecios(ArrayList listado,Double porcPrecio,Double porcCosto);
     public DefaultTableModel mostrarListado(ArrayList listado);
-    public DefaultListModel mostrarListadoBusqueda(ArrayList listado);
+    public DefaultTableModel mostrarListadoBusqueda(ArrayList listado);
     public ArrayList buscarParaFacturar(Integer rubro,Integer subRubro,String criterio,Integer idCliente);
     public ArrayList filtrador(ArrayList rubro1, ArrayList subRubro);
     public ArrayList aplicarGanancia(ArrayList listado,Double ganancia);

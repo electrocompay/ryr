@@ -1256,13 +1256,21 @@ public class Articulos implements Facturar,Editables,Comparables,Modificable{
     }
 
     @Override
-    public DefaultListModel mostrarListadoBusqueda(ArrayList listado) {
-        DefaultListModel modelo=new DefaultListModel();
+    public DefaultTableModel mostrarListadoBusqueda(ArrayList listado) {
+        DefaultTableModel modelo=new DefaultTableModel();
         Iterator it=listado.listIterator();
         Articulos articulo=new Articulos();
+        modelo.addColumn("Descripcion");
+        modelo.addColumn("Precio");
+        modelo.addColumn("Stock");
+        Object [] fila=new Object[3];
         while(it.hasNext()){
             articulo=(Articulos)it.next();
-            modelo.addElement(articulo.getDescripcionArticulo()+" $"+Numeros.ConvertirNumero(articulo.getPrecioUnitarioNeto()));
+            fila[0]=articulo.getDescripcionArticulo();
+            fila[1]=" $"+Numeros.ConvertirNumero(articulo.getPrecioUnitarioNeto());
+            fila[2]=String.valueOf(articulo.getStockActual());
+            //modelo.addElement(articulo.getDescripcionArticulo()+" $"+Numeros.ConvertirNumero(articulo.getPrecioUnitarioNeto()));
+            modelo.addRow(fila);
         }
         return modelo;
     }

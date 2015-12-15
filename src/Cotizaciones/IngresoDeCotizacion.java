@@ -37,6 +37,7 @@ import ListasDePrecios.ArticulosAsignados;
 import Sucursales.ListasDePrecios;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import objetos.Comprobantes;
 import objetos.Conecciones;
@@ -122,7 +123,6 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         MiModeloTablaFacturacion facturas=new MiModeloTablaFacturacion();
         jTable1 = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jTextField3 = new javax.swing.JTextField();
@@ -130,6 +130,7 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
         jCheckBox2 = new javax.swing.JCheckBox();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -140,7 +141,6 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
         jButton5 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
         jCheckBox1 = new javax.swing.JCheckBox();
         jLabel9 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -148,8 +148,9 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
         jComboBox2 = new javax.swing.JComboBox();
         jTextField5 = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jLabel8 = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -184,8 +185,6 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
 
         jTable1.setModel(facturas);
         jScrollPane1.setViewportView(jTable1);
-
-        jLabel1.setText("TOTAL FACTURA :");
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/pdf.png"))); // NOI18N
         jButton1.setText("IMPRIMIR");
@@ -227,6 +226,8 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel1.setText("TOTAL FACTURA :");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -235,8 +236,7 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(200, 200, 200)
                         .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -244,36 +244,38 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
                         .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 28, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton7, javax.swing.GroupLayout.Alignment.TRAILING))
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton7)))
+                        .addComponent(jButton7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
                     .addComponent(jCheckBox2)
-                    .addComponent(jLabel1)
                     .addComponent(jButton1))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         jPanel2.setMaximumSize(new java.awt.Dimension(521, 202));
@@ -283,7 +285,6 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
         jLabel4.setText("CANTIDAD :");
 
         jTextField1.requestFocus();
-        jTextField1.setNextFocusableComponent(jList1);
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -336,7 +337,7 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel9.setText("PRESIONE F4 PARA IMPRIMIR");
+        jLabel9.setText("<html>PRESIONE F1 PARA CONSULTAR POR DESCRIPCION<br>\nPRESIONE F3 PARA FILTRAR POR SUBRUBRO<br>\n</html>");
 
         jLabel2.setText("Rubro");
 
@@ -363,23 +364,6 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -397,7 +381,20 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -420,46 +417,51 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel4)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jCheckBox1))))
-                .addGap(33, 33, 33))
+                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jCheckBox1))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(12, 12, 12))
         );
 
-        jList1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jList1MouseClicked(evt);
-            }
-        });
-        jList1.addKeyListener(new java.awt.event.KeyAdapter() {
+        DefaultTableModel modelo=new DefaultTableModel();
+        jTable2.setModel(modelo);
+        jTable2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jList1KeyPressed(evt);
+                jTable2KeyPressed(evt);
             }
         });
-        jScrollPane2.setViewportView(jList1);
+        jScrollPane3.setViewportView(jTable2);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -467,14 +469,14 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 521, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -486,7 +488,7 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(76, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -549,23 +551,35 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
         if(evt.getKeyCode()==KeyEvent.VK_F1){
             //System.out.println("ENTRO CON F1¡¡¡¡¡");
         Facturar fart=new Articulos();
-        this.jList1.removeAll();
+        this.jTable2.removeAll();
             Modificable modiA=new Articulos();
             Articulable modi=new ArticulosAsignados();
             listadoDeBusqueda.clear();
             listadoDeBusqueda=modi.convertirListadoEnArticulos(modi.filtradorDeFormularios(listadoSubRubros, listadoR, cliT,this.jTextField1.getText()));
             //listadoDeBusqueda=modi.filtrador(listadoSubRubros,listadoR);
-            this.jList1.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
-            this.jList1.requestFocus();
+            this.jTable2.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
+                columnaCodigo=this.jTable2.getColumn("Precio");
+        columnaCodigo.setPreferredWidth(60);
+        columnaCodigo.setMaxWidth(60);
+                columnaCodigo=this.jTable2.getColumn("Stock");
+        columnaCodigo.setPreferredWidth(60);
+        columnaCodigo.setMaxWidth(60);
+            this.jTable2.requestFocus();
         }else{
             Facturar fart=new Articulos();
-            this.jList1.removeAll();
+            this.jTable2.removeAll();
             Modificable modiA=new Articulos();
             Articulable modi=new ArticulosAsignados();
             listadoDeBusqueda.clear();
             listadoDeBusqueda=modi.convertirListadoEnArticulos(modi.filtradorDeFormularios(listadoSubRubros, listadoR, cliT,this.jTextField1.getText()));
             //listadoDeBusqueda=modi.filtrador(listadoSubRubros,listadoR);
-            this.jList1.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
+            this.jTable2.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
+                columnaCodigo=this.jTable2.getColumn("Precio");
+        columnaCodigo.setPreferredWidth(60);
+        columnaCodigo.setMaxWidth(60);
+                columnaCodigo=this.jTable2.getColumn("Stock");
+        columnaCodigo.setPreferredWidth(60);
+        columnaCodigo.setMaxWidth(60);
         }
         if(evt.getKeyCode()==KeyEvent.VK_F4){
                     //verificar();
@@ -661,7 +675,7 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
         agregarRenglonTabla();
         this.jCheckBox2.setSelected(true);
         this.jCheckBox2.setEnabled(false);
-        this.jList1.removeAll();
+        this.jTable2.removeAll();
         listadoDeBusqueda.clear();
         cargarLista(listadoDeBusqueda);
         cliT=new Clientes("999999");
@@ -675,20 +689,10 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
             noFacturar=0;
         }
         }
+        if(evt.getKeyCode()==KeyEvent.VK_F3){
+            this.jComboBox2.requestFocus();
+        }
     }//GEN-LAST:event_jTextField1KeyPressed
-
-    private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
-        int posicion=this.jList1.getSelectedIndex();
-        arti=(Articulos)listadoDeBusqueda.get(posicion);
-        //System.err.println("ARTICULO SELECCIONADO :"+arti.getDescripcionArticulo()+" "+arti.getCodigoDeBarra());
-        String codBar=arti.getCodigoDeBarra();
-        jTextField1.setText(codBar.trim());
-      
-        this.jLabel8.setText(arti.getDescripcionArticulo());
-        
-        this.jTextField1.requestFocus();
-        
-    }//GEN-LAST:event_jList1MouseClicked
 
     private void jTextField2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyPressed
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
@@ -735,7 +739,7 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
                  montrarMonto();
                  //System.err.println("MONTO TOTAL "+montoTotal);
                  this.jLabel8.setText("");
-                 this.jList1.removeAll();
+                 this.jTable2.removeAll();
                 this.jButton1.setVisible(true);
             
             this.jTextField2.setText("");
@@ -932,7 +936,7 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
                  montrarMonto();
                  //System.err.println("MONTO TOTAL "+montoTotal);
                  this.jLabel8.setText("");
-                 this.jList1.removeAll();
+                 this.jTable2.removeAll();
                 this.jButton1.setVisible(true);
             this.jTextField1.setText("");
             this.jTextField2.setText("");
@@ -945,22 +949,6 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
     private void jCheckBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox1ItemStateChanged
        this.jTextField4.requestFocus();
     }//GEN-LAST:event_jCheckBox1ItemStateChanged
-
-    private void jList1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jList1KeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-                    int posicion=this.jList1.getSelectedIndex();
-        arti=(Articulos)listadoDeBusqueda.get(posicion);
-        //System.err.println("ARTICULO SELECCIONADO :"+arti.getDescripcionArticulo()+" "+arti.getCodigoDeBarra());
-        String codBar=arti.getCodigoDeBarra();
-        jTextField1.setText(codBar.trim());
-      
-        this.jLabel8.setText(arti.getDescripcionArticulo());
-        
-        this.jTextField1.requestFocus();
-        
-
-        }
-    }//GEN-LAST:event_jList1KeyPressed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         //MODIFICAR PRECIO
@@ -1014,7 +1002,13 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
             Articulable modi=new ArticulosAsignados();
             listadoDeBusqueda=modi.convertirListadoEnArticulos(modi.filtrador(listadoSubRubros, listadoR, cliT));
             //listadoDeBusqueda=modi.filtrador(listadoSubRubros,listadoR);
-            this.jList1.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
+            this.jTable2.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
+                columnaCodigo=this.jTable2.getColumn("Precio");
+        columnaCodigo.setPreferredWidth(60);
+        columnaCodigo.setMaxWidth(60);
+                columnaCodigo=this.jTable2.getColumn("Stock");
+        columnaCodigo.setPreferredWidth(60);
+        columnaCodigo.setMaxWidth(60);
             this.jLabel10.setVisible(true);
             this.jComboBox2.setVisible(true);
             this.jComboBox2.setModel(subRuble.mostrarEnBox(listadoSubRubros));
@@ -1025,8 +1019,9 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
             
             listadoR=ruble.buscar(rub);
             
-            //this.jList1.setModel(ruble.mostrarEnCombo(listadoR));
+            //this.jTable2.setModel(ruble.mostrarEnCombo(listadoR));
         }
+        
     }//GEN-LAST:event_jTextField5KeyPressed
 
     private void jComboBox2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox2KeyPressed
@@ -1034,28 +1029,65 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
             subRubro=(SubRubros)listadoSubRubros.get(this.jComboBox2.getSelectedIndex());
             listadoSubRubros.clear();
             listadoSubRubros.add(subRubro);
-            this.jList1.removeAll();
+            this.jTable2.removeAll();
             Modificable modiA=new Articulos();
             Articulable modi=new ArticulosAsignados();
-            listadoDeBusqueda=modi.convertirListadoEnArticulos(modi.filtradorDeFormularios(listadoSubRubros, listadoR, cliT,""));
+            listadoDeBusqueda=modi.convertirListadoEnArticulos(modi.filtradorDeFormularios(listadoSubRubros, listadoR, cliT,this.jTextField1.getText()));
             //listadoDeBusqueda=modi.filtrador(listadoSubRubros,listadoR);
-            this.jList1.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
+            this.jTable2.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
+                columnaCodigo=this.jTable2.getColumn("Precio");
+        columnaCodigo.setPreferredWidth(60);
+        columnaCodigo.setMaxWidth(60);
+                columnaCodigo=this.jTable2.getColumn("Stock");
+        columnaCodigo.setPreferredWidth(60);
+        columnaCodigo.setMaxWidth(60);
             this.jTextField1.requestFocus();
         }
                 
         
     }//GEN-LAST:event_jComboBox2KeyPressed
+
+    private void jTable2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable2KeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+                    int posicion=this.jTable2.getSelectedRow();
+        arti=(Articulos)listadoDeBusqueda.get(posicion);
+        //System.err.println("ARTICULO SELECCIONADO :"+arti.getDescripcionArticulo()+" "+arti.getCodigoDeBarra());
+        String codBar=arti.getCodigoDeBarra();
+        jTextField1.setText(codBar.trim());
+      
+        this.jLabel8.setText(arti.getDescripcionArticulo());
+        
+        this.jTextField1.requestFocus();
+        
+
+        }
+
+    }//GEN-LAST:event_jTable2KeyPressed
 private void cargarLista(ArrayList lista){
-    DefaultListModel modelo=new DefaultListModel();
+    DefaultTableModel modelo=new DefaultTableModel();
     Iterator il=lista.listIterator();
     Articulos art=new Articulos();
-    while(il.hasNext()){
-        art=(Articulos)il.next();
-        //System.out.println("DESCRIPCION "+art.getDescripcionArticulo());
-        modelo.addElement(art.getCodigoAsignado()+" "+art.getDescripcionArticulo());
-    }
-    this.jList1.setModel(modelo);
+    modelo.addColumn("Descripcion");
+        modelo.addColumn("Precio");
+        modelo.addColumn("Stock");
+        Object [] fila=new Object[3];
+        while(il.hasNext()){
+            art=(Articulos)il.next();
+            fila[0]=art.getDescripcionArticulo();
+            fila[1]=" $"+Numeros.ConvertirNumero(art.getPrecioUnitarioNeto());
+            fila[2]=String.valueOf(art.getStockActual());
+            //modelo.addElement(articulo.getDescripcionArticulo()+" $"+Numeros.ConvertirNumero(articulo.getPrecioUnitarioNeto()));
+            modelo.addRow(fila);
+        }
     
+    
+    this.jTable2.setModel(modelo);
+            columnaCodigo=this.jTable2.getColumn("Precio");
+        columnaCodigo.setPreferredWidth(60);
+        columnaCodigo.setMaxWidth(60);
+                columnaCodigo=this.jTable2.getColumn("Stock");
+        columnaCodigo.setPreferredWidth(60);
+        columnaCodigo.setMaxWidth(60);
 }
 private void agregarRenglonTabla(){
         MiModeloTablaFacturacion busC=new MiModeloTablaFacturacion();
@@ -1070,7 +1102,9 @@ private void agregarRenglonTabla(){
         busC.addColumn("PRECIO TOTAL");
         busC.addColumn("PRECIO UNITARIO S/IVA");
         busC.addColumn("COSTO");
-        Object[] fila=new Object[6];
+        busC.addColumn("IVA");
+        busC.addColumn("PRECIO FINAL");
+        Object[] fila=new Object[8];
         Iterator irP=detalleDelPedido.listIterator();
         while(irP.hasNext()){
             pedidos=new Articulos();
@@ -1098,6 +1132,10 @@ private void agregarRenglonTabla(){
             fila[3]=val;
             fila[4]=Numeros.ConvertirNumero(precioUnitario);
             fila[5]=Numeros.ConvertirNumero(pedidos.getPrecioDeCosto());
+            Double iva=valor * 0.21;
+            fila[6]=Numeros.ConvertirNumero(iva);
+            Double pFinal=valor + iva;
+            fila[7]=Numeros.ConvertirNumero(pFinal);
             busC.addRow(fila);
         }
         columnaCodigo=this.jTable1.getColumn("CODIGO");
@@ -1128,7 +1166,7 @@ private void montrarMonto(){
     Double total=montoTotal;
     //Double total=montoTotal * cliT.getDescuento();
     //comp.setMontoTotal(total);
-    this.jLabel1.setText("TOTAL COTIZACION:  "+String.valueOf(total));
+    this.jLabel1.setText("<html>TOTAL COTIZACION:  "+Numeros.ConvertirNumero(total)+"</html>");
 }
 private void verificar(){
     int cantidad=this.jTable1.getRowCount();
@@ -1170,13 +1208,13 @@ private void verificar(){
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JList jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     public static javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
