@@ -35,7 +35,7 @@ public class Actualiza1 extends Thread{
     public void actionPerformed(ActionEvent e) 
     { 
         Inicio.actualizable=0;
-        System.err.println("COMIENZO DEL CICLO DE RELOJ *******************************");
+        //System.err.println("COMIENZO DEL CICLO DE RELOJ *******************************");
         //ActOt at=new ActOt();
         //at.start();
         

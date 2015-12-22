@@ -73,6 +73,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
     private ArrayList listadoR=new ArrayList();
     private DefaultComboBoxModel combox=new DefaultComboBoxModel();
     private TableColumn columnaCodigo;
+    private String valorCargado;
     
     public IngresoDeFacturas() {
         //Articulos.CargarMap();
@@ -546,6 +547,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
         }
         if(evt.getKeyCode()==KeyEvent.VK_F1){
             //System.out.println("ENTRO CON F1¡¡¡¡¡");
+            valorCargado=jTextField1.getText();
         Facturar fart=new Articulos();
         this.jTable2.removeAll();
             Modificable modiA=new Articulos();
@@ -755,7 +757,9 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                  this.jLabel8.setText("");
                  this.jTable2.removeAll();
                 this.jButton1.setVisible(true);
-            
+                    //String valorCargado;
+            jTextField1.setText(valorCargado);
+            this.jTextField5.selectAll();
             this.jTextField2.setText("");
             this.jTextField5.requestFocus();
                 }

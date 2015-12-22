@@ -6,6 +6,7 @@ import Conversores.Numeros;
 import Sucursales.ListasDePrecios;
 import interfaceGraficas.Inicio;
 import interfaces.Personalizable;
+import java.awt.event.KeyEvent;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -111,7 +112,7 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
         });
         jScrollPane2.setViewportView(jTable2);
 
-        jLabel6.setText("Filtrar por Rubros - Seleccione o des seleccione los rubros a incluir ");
+        jLabel6.setText("Filtrar por Rubros - Seleccione o des seleccione los rubros a incluir // Para subRubros - seleccione y luego presione F1");
 
         jTable3.setModel(modelo3);
         jTable3.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -222,7 +223,7 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
                     .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -239,7 +240,7 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE))
-                            .addComponent(jLabel6))
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -359,7 +360,7 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
         for(int a = 0;a < renglones;a++){
             if((Boolean) this.jTable1.getValueAt(a, 0)){
                 articulo=(Articulos)listadoGral.get(a);
-                
+                articulo.setConfirmado(true);
             //articulo.setCoeficiente(coeficiente);
             //articulo.setIdLista(listaDePrecios.getId());
             //articulo.setObservaciones(observaciones);
@@ -371,8 +372,8 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
             att.aplicarGanancia(resultado, ganancia);
         }else{
             if(this.jCheckBox1.isSelected()){
-                
-                 resultado=att.modificarPreciosValor(resultado, coeficiente, coeficiente1);
+                int seleccion1=JOptionPane.showOptionDialog(this,"¿desea modificar el precio por valor?", "Seleccione una opcion", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,new Object[]{"Si","No"}, "Si");
+                 if (seleccion1 != -1)resultado=att.modificarPreciosValor(resultado, coeficiente, coeficiente1);
             }else{
                resultado=att.modificarPrecios(resultado, coeficiente, coeficiente1);
             }
@@ -389,7 +390,8 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
             }
         }
         //listadoGral=resultado;
-        modelo1=att.mostrarListado(listadoGral);
+        
+        modelo1=att.actualizarListado(listadoGral);
         this.jTable1.setModel(modelo1);
         columna=this.jTable1.getColumn("Descripcion");
         columna.setPreferredWidth(400);
@@ -400,16 +402,19 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTable3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable3KeyPressed
+        
+        if(evt.getKeyCode()==KeyEvent.VK_F1){
+            ArrayList provisorio=new ArrayList();
         int cantidad=this.jTable3.getRowCount();
         for(int b=0;b < cantidad;b++){
             if((Boolean)this.jTable3.getValueAt(b, 0)){
+            provisorio.add(listadoSubRubros.get(b));
+        }
             
-        }else{
-                listadoSubRubros.remove(b);
-            }
         }
         Modificable att=new Articulos();
-        listadoGral=att.filtrador(listadoSubRubros, listadoSubRubros);
+        listadoGral=att.filtrador(provisorio,provisorio);
+        //listadoGral=att.filtrador(listadoSubRubros, listadoSubRubros);
         modelo1=att.mostrarListado(listadoGral);
          modelo3=sRble.mostrarListado(listadoSubRubros);
          Double porcentajeGanancia=0.00;
@@ -420,7 +425,7 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
          this.jTable1.setModel(modelo1);
          columna=this.jTable1.getColumn("Descripcion");
         columna.setPreferredWidth(400);
-        
+    }
     }//GEN-LAST:event_jTable3KeyPressed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

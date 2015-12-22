@@ -188,7 +188,7 @@ public class SubRubros implements Rubrable{
         Object[] fila=new Object[3];
         while(it.hasNext()){
             rubro=(SubRubros)it.next();
-            fila[0]=true;
+            fila[0]=false;
             fila[1]=rubro.getDescripcionRubro();
             fila[2]=rubro.getDescripcion();
             mod.addRow(fila);

@@ -68,6 +68,7 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
     private ArrayList listadoR=new ArrayList();
     private DefaultComboBoxModel combox=new DefaultComboBoxModel();
     private TableColumn columnaCodigo;
+    private String valorCargado;
     
     
     public IngresoDeCotizacion() {
@@ -550,6 +551,7 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
         }
         if(evt.getKeyCode()==KeyEvent.VK_F1){
             //System.out.println("ENTRO CON F1¡¡¡¡¡");
+            valorCargado=jTextField1.getText();
         Facturar fart=new Articulos();
         this.jTable2.removeAll();
             Modificable modiA=new Articulos();
@@ -743,6 +745,8 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
                 this.jButton1.setVisible(true);
             
             this.jTextField2.setText("");
+            jTextField1.setText(valorCargado);
+            this.jTextField5.selectAll();
             this.jTextField5.requestFocus();
                 }
                 }

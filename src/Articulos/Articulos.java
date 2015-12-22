@@ -987,7 +987,8 @@ public class Articulos implements Facturar,Editables,Comparables,Modificable{
     public Boolean EliminacionDeObjeto(Object objeto) {
         Articulos articulo=(Articulos)objeto;
         Boolean verif=false;
-        String sql="update articulos set INHABILITADO=1, actualizacion=4 where ID="+articulo.getNumeroId();
+        //String sql="update articulos set INHABILITADO=1, actualizacion=4 where ID="+articulo.getNumeroId();
+        String sql="delete from articulos where ID="+articulo.getNumeroId();
         Transaccionable tra=new Conecciones();
         verif=tra.guardarRegistro(sql);
         sql="insert into actualizaciones (iddeposito,idobjeto,estado) values (1,1,4),(2,1,4),(3,1,4),(4,1,4),(5,1,4),(6,1,4),(7,1,4)";
@@ -1244,6 +1245,7 @@ public class Articulos implements Facturar,Editables,Comparables,Modificable{
         Object [] fila=new Object[6];
         while(it.hasNext()){
             articulos=(Articulos)it.next();
+            articulos.setConfirmado(false);
             fila[0]=true;
             fila[1]=articulos.getDescripcionArticulo();
             fila[2]=articulos.getPrecioUnitarioNeto();
@@ -1390,6 +1392,31 @@ public class Articulos implements Facturar,Editables,Comparables,Modificable{
         }
         return listado;
         
+    }
+
+    @Override
+    public DefaultTableModel actualizarListado(ArrayList listado) {
+        MiModeloTablaContacto modelo=new MiModeloTablaContacto();
+        Iterator it=listado.listIterator();
+        Articulos articulos=new Articulos();
+        modelo.addColumn("Listar");
+        modelo.addColumn("Descripcion");
+        modelo.addColumn("Precio");
+        modelo.addColumn("Costo");
+        modelo.addColumn("Rubro");
+        modelo.addColumn("SubRubro");
+        Object [] fila=new Object[6];
+        while(it.hasNext()){
+            articulos=(Articulos)it.next();
+            fila[0]=articulos.getConfirmado();
+            fila[1]=articulos.getDescripcionArticulo();
+            fila[2]=articulos.getPrecioUnitarioNeto();
+            fila[3]=articulos.getPrecioDeCosto();
+            fila[4]=articulos.getNrubro();
+            fila[5]=articulos.getIdSubRubro();
+            modelo.addRow(fila);
+        }
+        return modelo;
     }
     
     

@@ -101,6 +101,11 @@ public class AbmRecibos extends javax.swing.JDialog {
                 jTable1FocusLost(evt);
             }
         });
+        jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTable1KeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -279,28 +284,7 @@ public class AbmRecibos extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTable1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTable1FocusLost
-        int cantidad=this.jTable1.getRowCount();
-        Double total=0.00;
-        Double parte=0.00;
-        Facturas factu;
-        Recidable reci=new DetalleRecibo();
-        for(int a=0;a < cantidad;a++){
-            if((Boolean)this.jTable1.getValueAt(a, 0)){
-                parte=Numeros.ConvertirStringADouble((String) this.jTable1.getValueAt(a, 4));
-                factu=(Facturas)listadoFc.get(a);
-                factu.setTotal(parte);
-                total=total + parte;
-            }else{
-                listadoFc.remove(a);
-                modelo4=reci.mostrarARecibir(listadoFc);
-                this.jTable1.setModel(modelo4);
-            }
-            
-        }
-        montoTotal=total;
-        saldo=montoTotal;
-        jLabel2.setText(" $"+total);
-        this.jComboBox1.requestFocus();
+        
     }//GEN-LAST:event_jTable1FocusLost
 
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
@@ -428,6 +412,42 @@ public class AbmRecibos extends javax.swing.JDialog {
         }
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_F1){
+            int cantidad=this.jTable1.getRowCount();
+        Double total=0.00;
+        Double parte=0.00;
+        Facturas factu;
+        Recidable reci=new DetalleRecibo();
+        ArrayList aEliminar=new ArrayList();
+        for(int a=0;a < cantidad;a++){
+            if((Boolean)this.jTable1.getValueAt(a, 0)){
+                parte=Numeros.ConvertirStringADouble((String) this.jTable1.getValueAt(a, 4));
+                factu=(Facturas)listadoFc.get(a);
+                factu.setTotal(parte);
+                total=total + parte;
+            }else{
+                //listadoFc.remove(a);
+                aEliminar.add(a);
+            }
+            
+        }
+        Iterator iEl=aEliminar.listIterator();
+        int orden=0;
+        while(iEl.hasNext()){
+            orden=(int)iEl.next();
+            listadoFc.remove(orden);
+        }
+        modelo4=reci.mostrarARecibir(listadoFc);
+                this.jTable1.setModel(modelo4);
+        montoTotal=total;
+        saldo=montoTotal;
+        jLabel2.setText(" $"+total);
+        jLabel9.setText("Saldo: "+saldo);
+        this.jComboBox1.requestFocus();
+        }
+    }//GEN-LAST:event_jTable1KeyPressed
 
     /**
      * @param args the command line arguments
