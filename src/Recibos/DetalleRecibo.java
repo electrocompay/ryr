@@ -127,7 +127,8 @@ public class DetalleRecibo implements Recidable{
     public Double imputarAFactura(Object rec) {
         Facturas factura=new Facturas();
         factura=(Facturas)rec;
-        sql="update facturas set saldo="+factura.getTotal()+" where id="+factura.getId();
+        sql="update facturas set saldo=(total - "+factura.getTotal()+") where id="+factura.getId();
+        System.out.println(sql);
         tra.guardarRegistro(sql);
         return 0.00;
     }

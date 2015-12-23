@@ -379,6 +379,7 @@ public class AbmRecibos extends javax.swing.JDialog {
             detalle.setIdFactura(factura.getId());
             detalle.setIdRecibo(recibo.getId());
             detalle.setMonto(factura.getTotal());
+            detalle.setFecha(factura.getFecha());
             detalle.setNumeroFc(factura.getNumeroFactura());
             det.nuevo(detalle);
             det.imputarAFactura(factura);
