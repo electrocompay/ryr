@@ -100,19 +100,25 @@ public class ImprimirRecibo {
         //pagina.drawImage(imagen,63,20,174,93,null);
         pagina.setFont(fuente6);
         pagina.setColor(Color.black);
-        pagina.drawString("RECIBO N° 0000"+Inicio.sucursal.getNumero()+"-000"+rec.getId(),20,20);
+        pagina.drawString("RECIBO N° 0000"+Inicio.sucursal.getNumero()+"-000"+rec.getId(),20,110);
         pagina.setFont(fuente);
-        pagina.drawString("FECHA IMPRESION:"+fec, 20,30);
+        pagina.drawString("FECHA IMPRESION:"+fec, 20,120);
         //pagina.drawString(" :"+Inicio.sucursal.getDescripcion(),20,150);
-        pagina.drawString("USUARIO :"+Inicio.usuario.getNombre(),320,20);
+        pagina.drawString("USUARIO :"+Inicio.usuario.getNombre(),320,110);
         pagina.setFont(fuente6);
         Double monto=0.00; //caja.getMontoMovimiento()* -1;
-        pagina.drawString("CLIENTE: "+cliente.getRazonSocial(),320,30);
+        
+        pagina.drawString("RAZON SOCIAL: "+cliente.getRazonSocial(),30,185);
+        pagina.drawString("C.U.I.T.: "+cliente.getNumeroDeCuit(), 350,185);
+        pagina.drawString("DIRECCION: "+cliente.getDireccion(),30,200);
+        
+        pagina.drawString("LOCALIDAD: "+cliente.getLocalidad(),350,200);
+        pagina.drawString("COND IVA: "+cliente.getCondicionIva(),30,215);
         pagina.setFont(fuente);
-        pagina.drawString("",20,50);
-        pagina.drawString("DETALLE",100,50);
-        pagina.drawString("MONTO", 350,50);
-        int renglon=60;
+        pagina.drawString("",20,250);
+        pagina.drawString("DETALLE",100,250);
+        pagina.drawString("MONTO", 350,250);
+        int renglon=260;
         Iterator it=detalle.listIterator();
         while(it.hasNext()){
             det=(DetalleRecibo)it.next();
