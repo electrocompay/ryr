@@ -1236,13 +1236,14 @@ public class Articulos implements Facturar,Editables,Comparables,Modificable{
         MiModeloTablaContacto modelo=new MiModeloTablaContacto();
         Iterator it=listado.listIterator();
         Articulos articulos=new Articulos();
+        Double porcentajeGanancia=0.00;
         modelo.addColumn("Listar");
         modelo.addColumn("Descripcion");
         modelo.addColumn("Precio");
         modelo.addColumn("Costo");
-        modelo.addColumn("Rubro");
-        modelo.addColumn("SubRubro");
-        Object [] fila=new Object[6];
+        modelo.addColumn("% de Ganancia");
+        
+        Object [] fila=new Object[5];
         while(it.hasNext()){
             articulos=(Articulos)it.next();
             articulos.setConfirmado(false);
@@ -1250,8 +1251,12 @@ public class Articulos implements Facturar,Editables,Comparables,Modificable{
             fila[1]=articulos.getDescripcionArticulo();
             fila[2]=articulos.getPrecioUnitarioNeto();
             fila[3]=articulos.getPrecioDeCosto();
-            fila[4]=articulos.getNrubro();
-            fila[5]=articulos.getIdSubRubro();
+            
+        porcentajeGanancia=articulos.getPrecioUnitarioNeto() / articulos.getPrecioDeCosto();
+        //System.err.println("vta "+Articulos.getTotalVenta()+" costo "+Articulos.getTotalCosto()+" total "+porcentajeGanancia);
+        porcentajeGanancia=(porcentajeGanancia -1) * 100;
+            fila[4]=String.valueOf(Math.round(porcentajeGanancia));
+            
             modelo.addRow(fila);
         }
         return modelo;
