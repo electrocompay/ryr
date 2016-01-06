@@ -91,6 +91,11 @@ public class Recibo implements Recidable{
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
+
+    @Override
+    public DefaultTableModel mostrarARecibirSuma(ArrayList listado) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
     

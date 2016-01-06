@@ -74,6 +74,7 @@ public class AbmRecibos extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jLabel10 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -92,6 +93,7 @@ public class AbmRecibos extends javax.swing.JDialog {
         jLabel8 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -108,17 +110,27 @@ public class AbmRecibos extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(jTable1);
 
+        jLabel10.setText("<html>F1 para eliminar de la lista la factura<br>F2 para que calcule el valor total</html>");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel10)
+                .addContainerGap())
         );
 
         jLabel1.setText("Se va a generar un Recibo por un total de :");
@@ -127,7 +139,7 @@ public class AbmRecibos extends javax.swing.JDialog {
 
         jLabel3.setText("Medio de Pago:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Efectivo", "Cheque" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Efectivo", "Cheque", "Transferencia Bancaria" }));
 
         jList1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -164,6 +176,7 @@ public class AbmRecibos extends javax.swing.JDialog {
         });
 
         jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-mm-dd"))));
+        jFormattedTextField1.setToolTipText("aaaa-mm-dd");
         jFormattedTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jFormattedTextField1KeyPressed(evt);
@@ -180,12 +193,23 @@ public class AbmRecibos extends javax.swing.JDialog {
 
         jLabel9.setText("Saldo :");
 
+        jLabel11.setText("Formato de Vencimiento: aaaa-mm-dd (año-mes-dia)");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(79, 79, 79)
+                                .addComponent(jButton1))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 49, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,16 +232,8 @@ public class AbmRecibos extends javax.swing.JDialog {
                                     .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jTextField1)
                                     .addComponent(jTextField2)
-                                    .addComponent(jTextField3)))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(79, 79, 79)
-                                .addComponent(jButton1))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 15, Short.MAX_VALUE)))
+                                    .addComponent(jTextField3)))
+                            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -248,9 +264,11 @@ public class AbmRecibos extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel11)
+                .addGap(10, 10, 10)
                 .addComponent(jLabel4)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel9)
@@ -268,7 +286,7 @@ public class AbmRecibos extends javax.swing.JDialog {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(2, 2, 2))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -370,20 +388,35 @@ public class AbmRecibos extends javax.swing.JDialog {
         numero=recc.nuevo(recibo);
         recibo.setId(numero);
         Iterator itF=listadoFc.listIterator();
+        //int cantRecibos=listadoFc.size();
         ArrayList listadoDet=new ArrayList();
         Facturas factura;
+        int contador=0;
+        Double saldoAImputar=montoTotal - saldo;
         while(itF.hasNext()){
+            
             factura=(Facturas)itF.next();
+            if((Boolean)this.jTable1.getValueAt(contador,0)){
             detalle=new DetalleRecibo();
             detalle.setIdCliente(cli.getCodigoId());
             detalle.setIdFactura(factura.getId());
             detalle.setIdRecibo(recibo.getId());
+            
+            if(factura.getTotal() < saldoAImputar){
             detalle.setMonto(factura.getTotal());
+            }else{
+                factura.setTotal(saldoAImputar);
+                detalle.setMonto(saldoAImputar);
+            }
+            saldoAImputar=saldoAImputar - factura.getTotal();
             detalle.setFecha(factura.getFecha());
             detalle.setNumeroFc(factura.getNumeroFactura());
+            
             det.nuevo(detalle);
             det.imputarAFactura(factura);
             listadoDet.add(detalle);
+            }
+            contador++;
         }
         //ACA CARGO LAS FORMAS DE PAGO SI ES EFECTIVO MOV DE CAJA, SINO CHEQUES
         Iterator itP=detallePagos.listIterator();
@@ -426,6 +459,7 @@ public class AbmRecibos extends javax.swing.JDialog {
             if((Boolean)this.jTable1.getValueAt(a, 0)){
                 parte=Numeros.ConvertirStringADouble((String) this.jTable1.getValueAt(a, 4));
                 factu=(Facturas)listadoFc.get(a);
+                //factu.setEstado(1);
                 factu.setTotal(parte);
                 total=total + parte;
             }else{
@@ -440,8 +474,28 @@ public class AbmRecibos extends javax.swing.JDialog {
             orden=(int)iEl.next();
             listadoFc.remove(orden);
         }
+        
         modelo4=reci.mostrarARecibir(listadoFc);
                 this.jTable1.setModel(modelo4);
+        
+        }
+        if(evt.getKeyCode()==KeyEvent.VK_F2){
+            int cantidad=this.jTable1.getRowCount();
+        Double total=0.00;
+        Double parte=0.00;
+        Facturas factu;
+        Recidable reci=new DetalleRecibo();
+        ArrayList aEliminar=new ArrayList();
+        for(int a=0;a < cantidad;a++){
+            if((Boolean)this.jTable1.getValueAt(a, 0)){
+                parte=Numeros.ConvertirStringADouble((String) this.jTable1.getValueAt(a, 4));
+                factu=(Facturas)listadoFc.get(a);
+                //factu.setEstado(1);
+                factu.setTotal(parte);
+                total=total + parte;
+            }
+            
+        }
         montoTotal=total;
         saldo=montoTotal;
         jLabel2.setText(" $"+total);
@@ -452,7 +506,7 @@ public class AbmRecibos extends javax.swing.JDialog {
 
     /**
      * @param args the command line arguments
-     */
+         */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -497,6 +551,8 @@ public class AbmRecibos extends javax.swing.JDialog {
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

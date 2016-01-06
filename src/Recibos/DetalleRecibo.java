@@ -141,20 +141,26 @@ public class DetalleRecibo implements Recidable{
         listado1.addColumn("Recibo");
         listado1.addColumn("Fecha");
         listado1.addColumn("Numero");
-        listado1.addColumn("Tipo");
+        listado1.addColumn("Monto");
         listado1.addColumn("Saldo");
         
         Object[] fila=new Object[5];
         while(iL.hasNext()){
             cotizacion=(Facturas)iL.next();
-            fila[0]=true;
+            fila[0]=false;
+            
             fila[1]=String.valueOf(cotizacion.getFecha());
             fila[2]=String.valueOf(cotizacion.getNumeroFactura());
-            fila[3]=String.valueOf(cotizacion.getDescripcionTipo());
+            fila[3]=String.valueOf(cotizacion.getMontoOriginal());
             fila[4]=String.valueOf(cotizacion.getTotal());
             listado1.addRow(fila);
         }
         return listado1;
+    }
+
+    @Override
+    public DefaultTableModel mostrarARecibirSuma(ArrayList listado) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

@@ -35,6 +35,17 @@ public class Facturas implements Facturable{
     private Integer numeroFactura;
     private Integer estado;
     private String descripcionTipo;
+    private Double montoOriginal;
+
+    public Double getMontoOriginal() {
+        return montoOriginal;
+    }
+
+    public void setMontoOriginal(Double montoOriginal) {
+        this.montoOriginal = montoOriginal;
+    }
+    
+    
 
     public String getDescripcionTipo() {
         return descripcionTipo;
@@ -259,7 +270,7 @@ public class Facturas implements Facturable{
     @Override
     public ArrayList listarPorClienteNoRemitidas(Integer idClient) {
        ArrayList listado=new ArrayList();
-       String sql="select *,(select tipocomprobantes.descripcion from tipocomprobantes where tipocomprobantes.id=facturas.tipo)as descripcionTipo,(select remitos.numeroremito from remitos where remitos.id=idremito)as remito from facturas where estado < 3 and idcliente="+idClient;
+       String sql="select *,(select tipocomprobantes.descripcion from tipocomprobantes where tipocomprobantes.id=facturas.tipo)as descripcionTipo,(select remitos.numeroremito from remitos where remitos.id=idremito)as remito from facturas where idremito = 0 or saldo > 0 and idcliente="+idClient;
        Transaccionable tra=new Conecciones();
        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
        Facturas factura;
@@ -276,6 +287,7 @@ public class Facturas implements Facturable{
                 factura.setIdRemito(rs.getInt("remito"));
                 factura.setTipo(rs.getInt("tipo"));
                 factura.setTotal(rs.getDouble("saldo"));
+                factura.setMontoOriginal(rs.getDouble("total"));
                 factura.setDescripcionTipo(rs.getString("descripciontipo"));
                 listado.add(factura);
             }
