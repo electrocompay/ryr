@@ -399,8 +399,8 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
         if(arti.getIdCombo() > 0)arti.setCombo(combo);
         Editables edit=new Articulos();
         if(accion==2){
-            //edit.ModificaionObjeto(arti);
-            edit.EliminacionDeObjeto(arti);
+            edit.ModificaionObjeto(arti);
+            //edit.EliminacionDeObjeto(arti);
         }else{
             edit.AltaObjeto(arti);
         }
