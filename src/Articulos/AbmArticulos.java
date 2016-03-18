@@ -282,7 +282,7 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
         int cantidad=this.jTable1.getSelectedRow();
-        Articulos articulos;
+        Articulos articulos=new Articulos();
         articulos=(Articulos)listadoGral.get(cantidad);
         ArticulosMod mod=new ArticulosMod(articulos);
         Inicio.jDesktopPane1.add(mod);
