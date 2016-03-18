@@ -170,6 +170,9 @@
                   <Connection code="facturas" type="code"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTable1KeyPressed"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="MiModeloTablaFacturacion facturas=new MiModeloTablaFacturacion();"/>
               </AuxValues>

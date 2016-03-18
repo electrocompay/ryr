@@ -140,6 +140,11 @@ public class IngresoDeRemitos extends javax.swing.JInternalFrame {
         });
 
         jTable1.setModel(facturas);
+        jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTable1KeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/printer32.png"))); // NOI18N
@@ -342,7 +347,7 @@ public class IngresoDeRemitos extends javax.swing.JInternalFrame {
         remito.setNumeroDeRemito(numeroCaja);
         remito.setTipoComprobantte(comprobanteTipo);
         remito.setObservaciones(this.jTextField4.getText());
-        remito.setIdComprobante(factura.getId());
+        remito.setIdComprobante(factura.getNumeroFactura());
         remito.setDomicilioDeEntrega(this.jTextField1.getText());
         remito.setLocalidad(this.jTextField2.getText());
         remito.setCantidadBultos(Integer.parseInt(this.jTextField3.getText()));
@@ -359,6 +364,7 @@ public class IngresoDeRemitos extends javax.swing.JInternalFrame {
         remito.setId(remm.nuevo(remito));
         Iterator itD=detalleDelPedido.listIterator();
         Articulos arr=new Articulos();
+        
         while(itD.hasNext()){
             arr=(Articulos)itD.next();
             detalleR=new DetalleRemitos();
@@ -408,6 +414,16 @@ public class IngresoDeRemitos extends javax.swing.JInternalFrame {
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         
     }//GEN-LAST:event_formComponentShown
+
+    private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_F1){
+            int posicion=this.jTable1.getSelectedRow();
+            arti=(Articulos)detalleDelPedido.get(posicion);
+            Double cantidad=Numeros.ConvertirStringADouble((String) this.jTable1.getValueAt(posicion,2));
+            arti.setCantidad(cantidad);
+            detalleDelPedido.set(posicion,arti);
+        }
+    }//GEN-LAST:event_jTable1KeyPressed
 private void cargarLista(ArrayList lista){
     DefaultListModel modelo=new DefaultListModel();
     Iterator il=lista.listIterator();
@@ -431,11 +447,13 @@ private void agregarRenglonTabla(){
         busC.addColumn("CANTIDAD");
         busC.addColumn("PRECIO UNITARIO");
         Object[] fila=new Object[4];
+        //Double cantidadR=0.00;
         Iterator irP=detalleDelPedido.listIterator();
         while(irP.hasNext()){
             pedidos=new Articulos();
             pedidos=(Articulos) irP.next();
             //fila[0]=pedidos.getCodigo();
+            
             String codig=pedidos.getCodigoAsignado();
             String desc=pedidos.getDescripcionArticulo();
             String cant=String.valueOf(pedidos.getCantidad());

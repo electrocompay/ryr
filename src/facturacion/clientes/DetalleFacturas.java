@@ -29,6 +29,16 @@ public class DetalleFacturas implements Facturable{
     private String descripcionArticulo;
     private Double precioUnitario;
     private Integer descuento;
+    private Double cantidadRemitida;
+
+    public Double getCantidadRemitida() {
+        return cantidadRemitida;
+    }
+
+    public void setCantidadRemitida(Double cantidadRemitida) {
+        this.cantidadRemitida = cantidadRemitida;
+    }
+    
 
     public Integer getId() {
         return id;
@@ -112,6 +122,7 @@ public class DetalleFacturas implements Facturable{
                 detalle.setPrecioUnitario(rs.getDouble("preciounitario"));
                 detalle.setId(rs.getInt("id"));
                 detalle.setDescripcionArticulo(rs.getString("descripcion"));
+                detalle.setCantidadRemitida(rs.getDouble("cantidadremitida"));
                 listadoDetalle.add(detalle);
             }
         } catch (SQLException ex) {
@@ -190,7 +201,7 @@ public class DetalleFacturas implements Facturable{
             articulo=(Articulos) fact.cargarPorCodigoAsignado(detalle.getIdArticulo());
             }
             articulo.setPrecioUnitarioNeto(detalle.getPrecioUnitario());
-            articulo.setCantidad(detalle.getCantidad());
+            articulo.setCantidad(detalle.getCantidad() - detalle.getCantidadRemitida());
             articulo.setIdRenglon(detalle.getId());
             listadoA.add(articulo);
         }

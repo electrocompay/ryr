@@ -115,6 +115,8 @@ public class DetalleRemitos implements Remitable{
         int id=0;
         sql="insert into detalleremitos (idremito,idarticulo,cantidadremitida,descrpcionarticulo,idfactura) values ("+detalle.getIdRemito()+","+detalle.getIdArticulo()+","+detalle.getCantidadRemitida()+",'"+detalle.descripcionArticulo+"',"+detalle.getIdFactura()+")";
         tra.guardarRegistro(sql);
+        sql="update detallefacturas set cantidadremitida="+detalle.getCantidadRemitida()+" where idfactura="+detalle.getIdFactura()+" and idarticulo="+detalle.getIdArticulo();
+        tra.guardarRegistro(sql);
         return id;
     }
 
