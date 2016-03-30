@@ -339,6 +339,16 @@ public class Comprobantes implements Facturar{
             detalle.setIdFactura(factura.getId());
             detalle.setPrecioUnitario(articulo.getPrecioUnitarioNeto());
             detalle.setDescuento(articulo.getDescuento());
+            if(detalle.getDescuento()!=null){
+                
+            }else{
+                detalle.setDescuento(0);
+            }
+            if(detalle.getCantidadRemitida()!=null){
+                
+            }else{
+                detalle.setCantidadRemitida(0.00);
+            }
             ffD.nuevaFactura(detalle);
             sql="insert into movimientosarticulos (tipoMovimiento,idArticulo,cantidad,numeroDeposito,tipoComprobante,numeroComprobante,numeroCliente,fechaComprobante,numeroUsuario,precioDeVenta,precioServicio,preciodecosto,idcaja) values ("+comp.getTipoMovimiento()+","+articulo.getNumeroId()+","+cantidad+","+Inicio.deposito.getNumero()+","+comp.getTipoComprobante()+","+comp.getNumero()+","+comp.getCliente().getCodigoId()+",'"+comp.getFechaEmision()+"',"+comp.getUsuarioGenerador()+","+articulo.getPrecioUnitario()+","+articulo.getPrecioServicio()+","+articulo.getPrecioDeCosto()+","+Inicio.caja.getNumero()+")";
             verif=tra.guardarRegistro(sql);

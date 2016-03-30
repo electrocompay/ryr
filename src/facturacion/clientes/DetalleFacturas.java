@@ -101,7 +101,7 @@ public class DetalleFacturas implements Facturable{
         DetalleFacturas detalle=new DetalleFacturas();
         int id=0;
         detalle=(DetalleFacturas)ped;
-        String sql="insert into detallefacturas (idfactura,idarticulo,cantidad,preciounitario,descuento) values ("+detalle.getIdFactura()+","+detalle.getIdArticulo()+","+detalle.getCantidad()+",round("+detalle.getPrecioUnitario()+",4),"+detalle.getDescuento()+")";
+        String sql="insert into detallefacturas (idfactura,idarticulo,cantidad,preciounitario,descuento,cantidadremitida) values ("+detalle.getIdFactura()+","+detalle.getIdArticulo()+","+detalle.getCantidad()+",round("+detalle.getPrecioUnitario()+",4),"+detalle.getDescuento()+","+detalle.getCantidadRemitida()+")";
         Transaccionable tra=new Conecciones();
         tra.guardarRegistro(sql);
         return id;

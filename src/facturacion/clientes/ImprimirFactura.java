@@ -63,7 +63,8 @@ public class ImprimirFactura {
 	********************************************************************/
 	public ImprimirFactura()
 	{
-		pj = Toolkit.getDefaultToolkit().getPrintJob(new Frame(), "SCAT", null);
+            //PrintJob print=new PrintJob();
+            pj = Toolkit.getDefaultToolkit().getPrintJob(new Frame(), "SCAT", null);
                
 	}
 			
@@ -101,16 +102,39 @@ public class ImprimirFactura {
         // formulario izquierdo
         
         pagina = pj.getGraphics();
+        
         try{
-        //BufferedImage imagen= ImageIO.read(new File("C://Gestion//imagen//logo.png"));
+        BufferedImage imagen= ImageIO.read(new File("logo.png"));
         //pagina.drawImage(imagen,63,20,174,93,null);
+        pagina.drawImage(imagen,30,20,232,144,null);
         pagina.setFont(fuente6);
         pagina.setColor(Color.black);
         Double monto=0.00; //caja.getMontoMovimiento()* -1;
         
         pagina.setFont(fuente6);
        // pagina.drawString("N° "+cotizacion.getDescripcionTipo()+"-0000000"+cotizacion.getNumeroFactura(), 420,80);
-        pagina.drawString("FECHA: "+fec, 420,110);
+        pagina.drawString("FECHA: "+fec, 420,80);
+        String len=String.valueOf(cotizacion.getNumeroFactura());
+        int cantiL=len.length();
+        String cero="0";
+        int reemplazo= 8 - cantiL;
+        int finall=reemplazo + 1;
+        reemplazo=reemplazo -1;
+        String numero = "0";
+        for(int a=1;a < finall;a++){
+            numero+=cero;
+            if(a == reemplazo){
+                a=finall;
+                numero+=len;
+            }
+            
+        }
+        /*
+        StringBuffer numero=new StringBuffer();
+        numero.ensureCapacity(reemplazo);
+        numero=numero.append(len);
+        */
+        pagina.drawString("N° 0001-"+numero, 420,100);
         //pagina.drawString("ORIGINAL", 420,110);
         pagina.drawString("RAZON SOCIAL: "+cliente.getRazonSocial(),30,185);
         pagina.drawString("C.U.I.T.: "+cliente.getNumeroDeCuit(), 350,185);
@@ -128,22 +152,35 @@ public class ImprimirFactura {
         
         pagina.drawString("CODIGO",20,250);
         pagina.drawString("DESCRIPCION",160,250);
-        pagina.drawString("CANTIDAD", 350,250);
-        pagina.drawString("P. UNITARIO",450,250);
+        pagina.drawString("DESCUENTO", 330,250);
+        pagina.drawString("CANTIDAD", 400,250);
+        pagina.drawString("P. UNITARIO",500,250);
         int renglon=260;
         Iterator it=listadoDetalle.listIterator();
         String unitario="";
+        Double descuentoTotal=0.00;
+        String descuento;
         while(it.hasNext()){
             detalleDeCotizacion=(DetalleFacturas)it.next();
             pagina.drawString(String.valueOf(detalleDeCotizacion.getIdArticulo()),40,renglon);
             pagina.drawString(detalleDeCotizacion.getDescripcionArticulo(),80,renglon);
-            pagina.drawString(String.valueOf(detalleDeCotizacion.getCantidad()),370,renglon);
+            if(detalleDeCotizacion.getDescuento()!=null){
+                descuentoTotal=descuentoTotal + detalleDeCotizacion.getDescuento();
+                descuento=String.valueOf(detalleDeCotizacion.getDescuento());
+            }else{
+                descuento="0.00";
+                descuentoTotal=descuentoTotal + 0;
+            }
+            pagina.drawString(descuento,350,renglon);
+            
+            
+            pagina.drawString(String.valueOf(detalleDeCotizacion.getCantidad()),420,renglon);
             if(cotizacion.getTipo()==2){
                 unitario=Numeros.ConvertirNumero(detalleDeCotizacion.getPrecioUnitario() * detalleDeCotizacion.getCantidad());
             }else{
                 unitario=Numeros.ConvertirNumero((detalleDeCotizacion.getPrecioUnitario() * detalleDeCotizacion.getCantidad()) * 1.21);
             }
-            pagina.drawString(unitario,470,renglon);
+            pagina.drawString(unitario,520,renglon);
             renglon=renglon + 10;
         }
         //formulario derecho
@@ -154,21 +191,27 @@ public class ImprimirFactura {
         if(cotizacion.getTipo()==2){
             Double sub=cotizacion.getTotal() / 1.21;
             Double iva=cotizacion.getTotal() - sub;
-        pagina.drawString("SUBTOTAL", 30,750);
+        pagina.drawString("MONTO BRUTO", 30,750);
         pagina.drawString(Numeros.ConvertirNumero(sub),40,760);
-        pagina.drawString("IVA 21%", 280, 750);
-        pagina.drawString(Numeros.ConvertirNumero(iva),280,760);            
+        pagina.drawString("DESCUENTO GRAL", 150,750);
+        pagina.drawString(Numeros.ConvertirNumero(descuentoTotal),150,760);
+        
+        pagina.drawString("MTO GRAV.", 250,750);
+        pagina.drawString(Numeros.ConvertirNumero(sub),250,760);
+        pagina.drawString("IVA 21%", 350, 750);
+        pagina.drawString(Numeros.ConvertirNumero(iva),350,760);            
         }else{
 
         }
         pagina.drawString("TOTAL", 450, 750);
-        pagina.drawString(String.valueOf(cotizacion.getTotal()),440,760);
+        pagina.drawString(String.valueOf(cotizacion.getTotal()),450,760);
         
         pagina.dispose();
         //duplicado
         
                  
         pj.end();
+        
         }catch(Exception e)
 	{
 		System.out.println("LA IMPRESION HA SIDO CANCELADA..."+e);

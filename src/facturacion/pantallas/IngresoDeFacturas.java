@@ -1035,6 +1035,135 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jTextField5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField5KeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_F4){
+                    //verificar();
+        //Impresora imp=new Impresora();        
+        //verificar();
+        //Impresora imp=new Impresora();        
+        String cadena=cliT.getCodigoCliente()+" - "+cliT.getRazonSocial()+"\n"+cliT.getDireccion();
+        //comp.setCliente(cliT);
+        //VisorDeHojaDeRuta
+        
+        //comp.setVendedor(VisorDeHojaDeRuta.tG.getOperador());
+        if(this.jCheckBox1.isSelected()){
+        //    comp.setReparto(1);
+        //    comp.setEntrega(String.valueOf(this.jTextField3.getText()));
+        }
+        
+        //comp.setArticulos(detalleDelPedido);
+        DecimalFormat fr=new DecimalFormat("00");
+        Calendar c1=Calendar.getInstance();
+	Calendar c2=new GregorianCalendar();
+	String dia=Integer.toString(c2.get(Calendar.DAY_OF_MONTH));
+	String mes=Integer.toString(c2.get(Calendar.MONTH));
+	String ano=Integer.toString(c2.get(Calendar.YEAR));
+	
+        int da=Integer.parseInt(dia);
+        int me=Integer.parseInt(mes);
+        me++;
+        
+        dia=fr.format(da);
+        mes=fr.format(me);
+        String fecha=dia+"/"+mes+"/"+ano;
+        String fecha2=ano+"-"+mes+"-"+dia;
+        //comp.setFechaComprobante(fecha2);
+        //comp.setFechaComprobante(fecha);
+        int comprobanteTipo=cliT.getTipoComprobante();
+        
+        
+        Comprobantes comprobante=new Comprobantes();
+        comprobante.setFe(false);
+        comprobante.setCliente(cliT);
+        comprobante.setTipoMovimiento(1);
+        comprobante.setTipoComprobante(comprobanteTipo);
+        comprobante.setFechaEmision((Date.valueOf(fecha2)));
+        comprobante.setListadoDeArticulos(detalleDelPedido);
+        comprobante.setUsuarioGenerador(Inicio.usuario.getNumero());
+        comprobante.setIdSucursal(Inicio.sucursal.getNumero());
+        comprobante.setIdDeposito(Inicio.deposito.getNumero());
+        Integer numeroCaja=Inicio.caja.getNumero();
+        //System.out.println("EL NUMERO DE CAJA ESSSSSSSS "+numeroCaja);
+        comprobante.setIdCaja(numeroCaja);
+        if(montoTotal == 0.00){
+            String sqM="usuario :"+Inicio.usuario.getNombre()+" sucursal "+Inicio.sucursal.getNumero()+" idcaja "+Inicio.caja.getNumero();
+            JOptionPane.showMessageDialog(this,"OJO EL MONTO DE ESTE COMPROBANTE ES $ 0, AVISE PARA DETECTAR EL ERROR");
+            FileWriter fichero=null;
+            PrintWriter pw=null;
+            try {
+                fichero = new FileWriter("C:\\Gestion\\"+Inicio.fechaDia+" - errores en comprobantes.txt",true);
+                pw=new PrintWriter(fichero);
+                pw.println(sqM);
+            } catch (IOException ex1) {
+                Logger.getLogger(IngresoDePedidos.class.getName()).log(Level.SEVERE, null, ex1);
+            }finally{
+                         try {
+           // Nuevamente aprovechamos el finally para 
+           // asegurarnos que se cierra el fichero.
+           if (null != fichero)
+              fichero.close();
+           } catch (Exception e2) {
+              e2.printStackTrace();
+           }
+            }
+        }
+        comprobante.setMontoTotal(montoTotal);
+        int noFacturar=0;
+        if(IngresoDeFacturas.jCheckBox2.isSelected()){
+            comprobante.setPagado(1);
+        }else{
+            comprobante.setPagado(0);
+            /*
+            * ACA DEBO COMPROBAR EL LIMITE DEL CLIENTE Y SI LO SUPERA LA COMPRA RECHAZAR LA VENTA
+            *
+            */
+            Double limite=cliT.getCupoDeCredito();
+            //Double saldo=cliT.getSaldo();
+            //Double totalGral=montoTotal + saldo;
+            Double totalGral=montoTotal;
+            if(limite < totalGral)noFacturar=1;
+            
+        }
+        if(noFacturar==0){
+        Facturar fat=new Comprobantes();
+        comprobante=(Comprobantes)fat.guardar(comprobante);
+        // aqui hago el envio a factura  electronica, si aprueba no imprime
+       
+                      
+        ImprimirFactura imprimir=new ImprimirFactura();
+            try {
+                imprimir.ImprimirFactura(comprobante.getNumero(),comprobante.getTipoComprobante());
+            } catch (IOException ex) {
+                Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            
+       
+        /*
+         * ACA DEBO LIMPIAR TODOS LOS CAMPOS Y VARIABLES DE LA PANTALLA
+         * 
+         */
+        //comp.setTipoComprobante(comprobanteTipo);
+        //comp.setMontoTotal(montoTotal);
+        detalleDelPedido.clear();
+        agregarRenglonTabla();
+        this.jCheckBox2.setSelected(true);
+        //this.jCheckBox2.setEnabled(false);
+        this.jTable2.removeAll();
+        listadoDeBusqueda.clear();
+        cargarLista(listadoDeBusqueda);
+        //cliT=new Clientes("99");
+        this.jLabel6.setText(cliT.getRazonSocial());
+        this.jTextField2.setText("");
+        //jTextField1.setText("");
+        jTextField1.requestFocus();
+        }else{
+            JOptionPane.showMessageDialog(this,"El cliente supera el límite de crédito, debe abonar la venta");
+            noFacturar=0;
+        }
+         
+        
+       
+        }
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
             rubro=new Rubros();
             Rubrable subRuble=new SubRubros();

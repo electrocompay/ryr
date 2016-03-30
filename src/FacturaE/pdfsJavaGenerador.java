@@ -10,6 +10,7 @@ import Conversores.Numeros;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -18,6 +19,7 @@ import facturacion.clientes.DetalleFacturas;
 import facturacion.clientes.Facturable;
 import facturacion.clientes.Facturas;
 import interfaceGraficas.Inicio;
+import java.awt.image.BufferedImage;
 import java.io.File;
 
 import java.io.FileNotFoundException;
@@ -28,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
 /**
@@ -74,26 +77,29 @@ public class pdfsJavaGenerador {
             PdfWriter writer=PdfWriter.getInstance(documento, fichero);
             documento.open();
             PdfContentByte cb=writer.getDirectContent();
+            Image imagen= Image.getInstance("logo.png");
+            imagen.scaleAbsolute(30, 30);
+            documento.add(imagen);
             BaseFont bf = BaseFont.createFont(BaseFont.COURIER_BOLD,BaseFont.CP1252,BaseFont.NOT_EMBEDDED);
             cb.setFontAndSize(bf,16);
             cb.beginText();
             cb.setTextMatrix(100,750);
-            cb.showText("eR&Re");
-            
+            //cb.showText("eR&Re");
+            //cb.add(imagen);
             cb.setFontAndSize(bf,10);
             cb.setTextMatrix(100, 740);
-            cb.showText("PAPELES");
+            //cb.showText("PAPELES");
             bf = BaseFont.createFont(BaseFont.COURIER,BaseFont.CP1252,BaseFont.NOT_EMBEDDED);
             cb.setFontAndSize(bf,8);
             cb.setTextMatrix(40,720);
-            cb.showText("de Rivadeneira Enrique y Rivadeneira Jorge S.H.");
+            //cb.showText("de Rivadeneira Enrique y Rivadeneira Jorge S.H.");
             bf = BaseFont.createFont(BaseFont.COURIER_BOLD,BaseFont.CP1252,BaseFont.NOT_EMBEDDED);
             cb.setFontAndSize(bf,14);
             cb.setTextMatrix(300,750);
             Integer comF=Integer.parseInt(doc.getTipoComprobante());
             switch (comF){
                 case 1:
-                    cb.showText("FACTURA A N°: "+doc.getAfipPlastCbte());
+                    cb.showText("FACTURA N°: "+doc.getAfipPlastCbte());
                     break;
                 case 2:
                     cb.showText("NTA DE DEBITO A N°: "+doc.getAfipPlastCbte());
