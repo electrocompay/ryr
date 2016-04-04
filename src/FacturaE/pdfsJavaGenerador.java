@@ -240,6 +240,8 @@ public class pdfsJavaGenerador {
             cb.setTextMatrix(40,renglon);
             cb.showText("SON PESOS: "+letras);
             renglon=renglon -20;
+            bf = BaseFont.createFont(BaseFont.COURIER_BOLD,BaseFont.CP1252,BaseFont.NOT_EMBEDDED);
+            cb.setFontAndSize(bf,10);
             cb.setTextMatrix(40,renglon);
             cb.showText("TOTAL BRUTO");
             cb.setTextMatrix(180,renglon);
@@ -251,6 +253,8 @@ public class pdfsJavaGenerador {
             cb.setTextMatrix(480,renglon);
             cb.showText("TOTAL");
             renglon=renglon - 10;
+            bf = BaseFont.createFont(BaseFont.COURIER,BaseFont.CP1252,BaseFont.NOT_EMBEDDED);
+            cb.setFontAndSize(bf,10);
             if(comF==1 || comF==2 || comF==3){
                 cb.setTextMatrix(40,renglon);
             Double sub=factura.getTotal() / 1.21;
