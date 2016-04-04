@@ -78,7 +78,7 @@ public class pdfsJavaGenerador {
             documento.open();
             PdfContentByte cb=writer.getDirectContent();
             Image imagen= Image.getInstance("logo.png");
-            imagen.scaleAbsolute(30, 30);
+            imagen.scaleAbsolute(170, 100);
             documento.add(imagen);
             BaseFont bf = BaseFont.createFont(BaseFont.COURIER_BOLD,BaseFont.CP1252,BaseFont.NOT_EMBEDDED);
             cb.setFontAndSize(bf,16);
@@ -95,34 +95,52 @@ public class pdfsJavaGenerador {
             //cb.showText("de Rivadeneira Enrique y Rivadeneira Jorge S.H.");
             bf = BaseFont.createFont(BaseFont.COURIER_BOLD,BaseFont.CP1252,BaseFont.NOT_EMBEDDED);
             cb.setFontAndSize(bf,14);
-            cb.setTextMatrix(300,750);
+            cb.setTextMatrix(380,750);
             Integer comF=Integer.parseInt(doc.getTipoComprobante());
-            switch (comF){
-                case 1:
-                    cb.showText("FACTURA N°: "+doc.getAfipPlastCbte());
-                    break;
-                case 2:
-                    cb.showText("NTA DE DEBITO A N°: "+doc.getAfipPlastCbte());
-                    break;
-                case 3:
-                    cb.showText("NTA DE CREDITO A N°: "+doc.getAfipPlastCbte());
-                    break;
-                case 6:
-                    cb.showText("FACTURA B N°: "+doc.getAfipPlastCbte());
-                    break;
-                case 7:
-                    cb.showText("NTA DE DEBITO B N°: "+doc.getAfipPlastCbte());
-                    break;
-                case 8:
-                    cb.showText("NTA DE CREDITO B N°: "+doc.getAfipPlastCbte());
-                    break;
+            
+            String len=doc.getAfipPlastCbte();
+        int cantiL=len.length();
+        String cero="0";
+        int reemplazo= 8 - cantiL;
+        int finall=reemplazo + 1;
+        reemplazo=reemplazo -1;
+        String numero = "0";
+        for(int a=1;a < finall;a++){
+            numero+=cero;
+            if(a == reemplazo){
+                a=finall;
+                numero+=len;
             }
             
+        }
+            
+            switch (comF){
+                case 1:
+                    cb.showText("FACTURA A");
+                    break;
+                case 2:
+                    cb.showText("NTA DE DEBITO A");
+                    break;
+                case 3:
+                    cb.showText("NTA DE CREDITO A");
+                    break;
+                case 6:
+                    cb.showText("FACTURA B");
+                    break;
+                case 7:
+                    cb.showText("NTA DE DEBITO B");
+                    break;
+                case 8:
+                    cb.showText("NTA DE CREDITO B");
+                    break;
+            }
+            cb.setTextMatrix(380,730);
+            cb.showText("N°: 0003-"+numero);
             bf = BaseFont.createFont(BaseFont.COURIER,BaseFont.CP1252,BaseFont.NOT_EMBEDDED);
             cb.setFontAndSize(bf,10);
             cb.setTextMatrix(40,690);
             cb.showText("Razon Social :"+cliente.getRazonSocial());
-            cb.setTextMatrix(410,690);
+            cb.setTextMatrix(380,690);
             cb.showText("Fecha "+doc.getFechaCae());
             cb.setTextMatrix(40,670);
             cb.showText("Direccion: "+cliente.getDireccion());
@@ -153,6 +171,7 @@ public class pdfsJavaGenerador {
             String total;
             String totalFinal;
             Double tot=0.00;
+            Double totalD=0.00;
             //aca empieza la iteracion
             
             //encabezados
@@ -162,10 +181,14 @@ public class pdfsJavaGenerador {
                 cb.showText("COD");
                 cb.setTextMatrix(70,renglon);
                 cb.showText("DESCRIPCION");
-                cb.setTextMatrix(350,renglon);
+                cb.setTextMatrix(330,renglon);
                 cb.showText("CANT.");
-                cb.setTextMatrix(420,renglon);
+                cb.setTextMatrix(370,renglon);
                 cb.showText("P. UNIT.");
+                cb.setTextMatrix(450,renglon);
+                cb.showText("DESC.");
+                cb.setTextMatrix(500,renglon);
+                cb.showText("P. TOTAL.");
                 renglon=renglon - 20;
             
             //fin encabezados
@@ -188,42 +211,69 @@ public class pdfsJavaGenerador {
                 cb.showText(String.valueOf(saldo.getIdArticulo()));
                 cb.setTextMatrix(70,renglon);
                 cb.showText(saldo.getDescripcionArticulo());
-                cb.setTextMatrix(350,renglon);
+                cb.setTextMatrix(330,renglon);
                 cb.showText(String.valueOf(saldo.getCantidad()));
                 tot=saldo.getCantidad() * saldo.getPrecioUnitario();
                 tot=tot * 1.21;
-                cb.setTextMatrix(420,renglon);
-                cb.showText(String.valueOf(tot));
+                cb.setTextMatrix(370,renglon);
+                cb.showText(Numeros.ConvertirNumero(saldo.getPrecioUnitario()));
+                cb.setTextMatrix(450,renglon);
+                if(saldo.getDescuento()!=null){
+                    cb.showText(String.valueOf(saldo.getDescuento()));
+                    totalD=totalD + saldo.getDescuento();
+                }else{
+                    cb.showText("0.00");    
+                }
+                cb.setTextMatrix(500,renglon);
+                cb.showText(Numeros.ConvertirNumero(tot));
                 //cb.setTextMatrix(440,renglon);
                 
                 //cb.showText(Numeros.ConvertirNumero(tot));
                 renglon=renglon - 20;
+                System.out.println("renglon "+renglon);
                 
             }
             
-            renglon=renglon - 40;
+            renglon=60;
             String totalF=Numeros.ConvertirNumero(factura.getTotal());
             String letras=NumberToLetterConverter.convertNumberToLetter(factura.getTotal());
             cb.setTextMatrix(40,renglon);
             cb.showText("SON PESOS: "+letras);
             renglon=renglon -20;
-            
-            
+            cb.setTextMatrix(40,renglon);
+            cb.showText("TOTAL BRUTO");
+            cb.setTextMatrix(180,renglon);
+            cb.showText("T. DESC");
+            cb.setTextMatrix(250,renglon);
+            cb.showText("MONTO GRAVADO");
+            cb.setTextMatrix(380,renglon);
+            cb.showText("IVA 21 %");
+            cb.setTextMatrix(480,renglon);
+            cb.showText("TOTAL");
+            renglon=renglon - 10;
             if(comF==1 || comF==2 || comF==3){
                 cb.setTextMatrix(40,renglon);
             Double sub=factura.getTotal() / 1.21;
             Double iva=factura.getTotal() - sub;
-            cb.showText("SUBTOTAL: "+Numeros.ConvertirNumero(sub));
-            cb.setTextMatrix(200,renglon);
-            cb.showText("IVA 21 %: "+Numeros.ConvertirNumero(iva));
+            cb.showText(Numeros.ConvertirNumero(sub));
+            cb.setTextMatrix(180,renglon);
+            cb.showText(Numeros.ConvertirNumero(totalD));
+            cb.setTextMatrix(250,renglon);
+            cb.showText(Numeros.ConvertirNumero(sub));
+            cb.setTextMatrix(380,renglon);
+            cb.showText(Numeros.ConvertirNumero(iva));
             }else{
                 cb.setTextMatrix(40,renglon);
             Double sub=factura.getTotal() / 1.21;
             Double iva=factura.getTotal() - sub;
-            cb.showText("SUBTOTAL: "+totalF);
+            cb.showText(totalF);
+            cb.setTextMatrix(180,renglon);
+            cb.showText(Numeros.ConvertirNumero(totalD));
+            cb.setTextMatrix(250,renglon);
+            cb.showText(totalF);
             }
-            cb.setTextMatrix(340,renglon);
-            cb.showText("TOTAL: "+totalF);
+            cb.setTextMatrix(480,renglon);
+            cb.showText(totalF);
             
             /*
             totalFinal=doc.getImporteTotal();
