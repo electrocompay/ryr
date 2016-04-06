@@ -12,6 +12,7 @@ import Conversores.Numeros;
 import Sucursales.ListasDePrecios;
 import facturacion.clientes.Clientes;
 import interfaces.Personalizable;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JOptionPane;
@@ -279,20 +280,49 @@ public class ListasPorCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTable3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable3KeyPressed
+        if(KeyEvent.VK_F1 == evt.getKeyCode()){
+        
+            /*
+            ArrayList provisorio=new ArrayList();
         int cantidad=this.jTable3.getRowCount();
         for(int b=0;b < cantidad;b++){
             if((Boolean)this.jTable3.getValueAt(b, 0)){
+            provisorio.add(listadoSubRubros.get(b));
+        }
             
+        }
+        
+        Modificable att=new ArticulosAsignados();
+        listadoGral=att.filtrador(provisorio,provisorio);
+        //listadoGral=att.filtrador(listadoSubRubros, listadoSubRubros);
+        modelo1=att.mostrarListado(listadoGral);
+         modelo3=sRble.mostrarListado(listadoSubRubros);
+         Double porcentajeGanancia=0.00;
+         porcentajeGanancia=Articulos.getTotalVenta() / Articulos.getTotalCosto();
+         porcentajeGanancia=(porcentajeGanancia -1) * 100;
+        this.jTextField3.setText(String.valueOf(Math.round(porcentajeGanancia)));
+         this.jTable3.setModel(modelo3);
+         this.jTable1.setModel(modelo1);
+         columna=this.jTable1.getColumn("Descripcion");
+        columna.setPreferredWidth(400);
+        this.jTable1.requestFocus();
+        */    
+            ArrayList provisorio=new ArrayList();
+            int cantidad=this.jTable3.getRowCount();
+        for(int b=0;b < cantidad;b++){
+            if((Boolean)this.jTable3.getValueAt(b, 0)){
+               provisorio.add(listadoSubRubros.get(b));
         }else{
-                listadoSubRubros.remove(b);
+                //listadoSubRubros.remove(b);
             }
         }
         Articulable att=new ArticulosAsignados();
-        listadoGral=att.filtrador(listadoSubRubros, listadoSubRubros, cliT);
+        listadoGral=att.filtrador(provisorio, listadoSubRubros,cliT);
         modelo1=att.mostrarListado(listadoGral);
          modelo3=sRble.mostrarListado(listadoSubRubros);
          this.jTable3.setModel(modelo3);
          this.jTable1.setModel(modelo1);
+        }
         
     }//GEN-LAST:event_jTable3KeyPressed
 

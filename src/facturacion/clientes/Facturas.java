@@ -36,6 +36,17 @@ public class Facturas implements Facturable{
     private Integer estado;
     private String descripcionTipo;
     private Double montoOriginal;
+    private String numeroFiscal;
+
+    public String getNumeroFiscal() {
+        return numeroFiscal;
+    }
+
+    public void setNumeroFiscal(String numeroFiscal) {
+        this.numeroFiscal = numeroFiscal;
+    }
+    
+    
 
     public Double getMontoOriginal() {
         return montoOriginal;
@@ -238,7 +249,11 @@ public class Facturas implements Facturable{
             cotizacion=(Facturas)iL.next();
             fila[0]=false;
             fila[1]=String.valueOf(cotizacion.getFecha());
+            if(cotizacion.getNumeroFiscal()!=null){
             fila[2]=String.valueOf(cotizacion.getNumeroFactura());
+            }else{
+                fila[2]=String.valueOf(cotizacion.getNumeroFiscal());
+            }
             fila[3]=String.valueOf(cotizacion.getDescripcionTipo());
             fila[4]=Numeros.ConvertirNumero(cotizacion.getTotal());
             fila[5]=String.valueOf(cotizacion.getIdRemito());
@@ -270,7 +285,7 @@ public class Facturas implements Facturable{
     @Override
     public ArrayList listarPorClienteNoRemitidas(Integer idClient) {
        ArrayList listado=new ArrayList();
-       String sql="select *,(select tipocomprobantes.descripcion from tipocomprobantes where tipocomprobantes.id=facturas.tipo)as descripcionTipo,(select remitos.numeroremito from remitos where remitos.id=idremito)as remito from facturas where idremito = 0 or saldo > 0 and idcliente="+idClient;
+       String sql="select *,(select tipocomprobantes.descripcion from tipocomprobantes where tipocomprobantes.id=facturas.tipo)as descripcionTipo,(select remitos.numeroremito from remitos where remitos.id=idremito)as remito,(SELECT facturaelectronica.afipplastcbte from facturaelectronica where facturaelectronica.idfactura=facturas.id)as fiscal from facturas where idremito = 0 or saldo > 0 and idcliente="+idClient;
        Transaccionable tra=new Conecciones();
        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
        Facturas factura;
@@ -289,6 +304,7 @@ public class Facturas implements Facturable{
                 factura.setTotal(rs.getDouble("saldo"));
                 factura.setMontoOriginal(rs.getDouble("total"));
                 factura.setDescripcionTipo(rs.getString("descripciontipo"));
+                factura.setNumeroFiscal(rs.getString("fiscal"));
                 listado.add(factura);
             }
         } catch (SQLException ex) {

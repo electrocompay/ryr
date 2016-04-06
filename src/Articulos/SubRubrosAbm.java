@@ -26,10 +26,13 @@ public class SubRubrosAbm extends javax.swing.JInternalFrame {
      */
     public SubRubrosAbm() {
         initComponents();
-        Rubrable perR=new SubRubros();
-
-    lstRubros=perR.listarPorRubro(0);
-    modelo=perR.mostrarListado(lstRubros);
+        Rubros rubro=new Rubros();
+        Rubrable rble=new Rubros();
+        lstRubros=rble.listarPorRubro(0);
+        
+        modelo=rble.mostrarListado(lstRubros);
+    //lstRubros=perR.listarPorRubro(0);
+    //modelo=perR.mostrarListado(lstRubros);
     this.jTable1.setModel(modelo);
     
     }

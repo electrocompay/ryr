@@ -97,28 +97,67 @@ public class ImprimirRemitos {
         
         pagina = pj.getGraphics();
         try{
-        //BufferedImage imagen= ImageIO.read(new File("C://Gestion//imagen//logo.png"));
+        //BufferedImage imagen= ImageIO.read(new File("logo.png"));
         //pagina.drawImage(imagen,63,20,174,93,null);
+        //pagina.drawImage(imagen,30,20,232,144,null);
         pagina.setFont(fuente6);
         pagina.setColor(Color.black);
         Double monto=0.00; //caja.getMontoMovimiento()* -1;
         
         pagina.setFont(fuente6);
-        //pagina.drawString("REMITO N° 001-0000000"+cotizacion.getNumeroDeRemito(), 420,80);
-        pagina.drawString("FECHA: "+fec, 420,110);
-        //pagina.drawString("ORIGINAL", 420,110);
-        pagina.drawString("RAZON SOCIAL: "+cliente.getRazonSocial(),30,185);
-        pagina.drawString("C.U.I.T.: "+cliente.getNumeroDeCuit(), 350,185);
-        pagina.drawString("DIRECCION: "+cliente.getDireccion(),30,200);
-        pagina.drawString("LOCALIDAD: "+cliente.getLocalidad(),350,200);
-        pagina.drawString("COND IVA: "+cliente.getCondicionIva(),30,215);
-        pagina.drawString("FC: "+cotizacion.getIdComprobante(),350,215);
+       // pagina.drawString("N° "+cotizacion.getDescripcionTipo()+"-0000000"+cotizacion.getNumeroFactura(), 420,80);
+        pagina.drawString("FECHA: "+fec, 420,50);
+        String len=String.valueOf(cotizacion.getNumeroDeRemito());
+        int cantiL=len.length();
+        String cero="0";
+        int reemplazo= 8 - cantiL;
+        int finall=reemplazo + 1;
+        reemplazo=reemplazo -1;
+        String numero = "0";
+        for(int a=1;a < finall;a++){
+            numero+=cero;
+            if(a == reemplazo){
+                a=finall;
+                numero+=len;
+            }
+            
+        }
+        /*
+        StringBuffer numero=new StringBuffer();
+        numero.ensureCapacity(reemplazo);
+        numero=numero.append(len);
+        */
+        pagina.drawString("N° 0001-"+numero, 420,70);
+        pagina.drawString("RAZON SOCIAL: "+cliente.getRazonSocial(),30,145);
+        pagina.drawString("C.U.I.T.: "+cliente.getNumeroDeCuit(), 350,145);
+        pagina.drawString("DIRECCION: "+cliente.getDireccion(),30,160);
+        pagina.drawString("LOCALIDAD: "+cliente.getLocalidad(),350,160);
+        pagina.drawString("COND IVA: "+cliente.getCondicionIva(),30,175);
         
-        pagina.drawString("CODIGO",20,250);
-        pagina.drawString("DESCRIPCION",160,250);
-        pagina.drawString("CANTIDAD", 350,250);
+        len=String.valueOf(cotizacion.getIdComprobante());
+        cantiL=len.length();
+        cero="0";
+        reemplazo= 8 - cantiL;
+        finall=reemplazo + 1;
+        reemplazo=reemplazo -1;
+        numero = "0";
+        for(int a=1;a < finall;a++){
+            numero+=cero;
+            if(a == reemplazo){
+                a=finall;
+                numero+=len;
+            }
+            
+        }
+
+        
+        pagina.drawString("FC: 0003-"+cotizacion.getIdComprobante(),350,175);
+        
+        pagina.drawString("CODIGO",20,230);
+        pagina.drawString("DESCRIPCION",160,230);
+        pagina.drawString("CANTIDAD", 350,230);
         Double cantidadTotal=0.00;
-        int renglon=260;
+        int renglon=240;
         Iterator it=listadoDetalle.listIterator();
         String unitario="";
         while(it.hasNext()){

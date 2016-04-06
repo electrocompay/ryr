@@ -51,7 +51,7 @@
                               <Group type="102" attributes="0">
                                   <Component id="jScrollPane2" min="-2" pref="310" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jScrollPane3" pref="321" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane3" pref="0" max="32767" attributes="0"/>
                               </Group>
                               <Component id="jLabel6" max="32767" attributes="0"/>
                           </Group>
@@ -128,7 +128,7 @@
         </Container>
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Filtrar por Rubros - Seleccione o des seleccione los rubros a incluir // Para subRubros - seleccione y luego presione F1"/>
+            <Property name="text" type="java.lang.String" value="Filtrar por Rubros - Seleccione o des seleccione los rubros a incluir // Para subRubros - seleccione y luego presione F1 - Para seleccionar/ des seleccionar F2"/>
           </Properties>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane3">

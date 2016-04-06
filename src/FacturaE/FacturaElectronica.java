@@ -61,7 +61,27 @@ public class FacturaElectronica implements FacturableE{
     private String importeTotal;
     private String importeNeto;
     private String impuestoLiquido;
+    private String condVta;
+    private Integer estado;
 
+    public Integer getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Integer estado) {
+        this.estado = estado;
+    }
+
+    
+    public String getCondVta() {
+        return condVta;
+    }
+
+    public void setCondVta(String condVta) {
+        this.condVta = condVta;
+    }
+
+    
     public Integer getIdFactura() {
         return idFactura;
     }
@@ -231,6 +251,7 @@ public class FacturaElectronica implements FacturableE{
         Integer tipComprobante=0;
         FacturaElectronica fE=new FacturaElectronica();
         String idCliente=compro.getCliente().getNumeroDeCuit();
+        fE.setEstado(compro.getPagado());
         if(idCliente.length() == 8 || idCliente.length()==11){
             
         }else{

@@ -112,7 +112,7 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
         });
         jScrollPane2.setViewportView(jTable2);
 
-        jLabel6.setText("Filtrar por Rubros - Seleccione o des seleccione los rubros a incluir // Para subRubros - seleccione y luego presione F1");
+        jLabel6.setText("Filtrar por Rubros - Seleccione o des seleccione los rubros a incluir // Para subRubros - seleccione y luego presione F1 - Para seleccionar/ des seleccionar F2");
 
         jTable3.setModel(modelo3);
         jTable3.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -239,7 +239,7 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE))
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -365,6 +365,7 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
             //articulo.setIdLista(listaDePrecios.getId());
             //articulo.setObservaciones(observaciones);
             resultado.add(articulo);
+            articulo.setConfirmado(false);
             }
         }
         
@@ -425,6 +426,7 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
          this.jTable1.setModel(modelo1);
          columna=this.jTable1.getColumn("Descripcion");
         columna.setPreferredWidth(400);
+        this.jTable1.requestFocus();
     }
     }//GEN-LAST:event_jTable3KeyPressed
 
@@ -437,6 +439,15 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
 
     private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
         int cantidad=this.jTable1.getRowCount();
+        if(evt.getKeyCode()==KeyEvent.VK_F2){
+            for(int b=0;b < cantidad;b++){
+            if((Boolean)this.jTable1.getValueAt(b, 0)){
+                this.jTable1.setValueAt(false, b,0);
+        }else{
+                this.jTable1.setValueAt(true, b,0);
+            }
+        }
+        }else{
         ArrayList resTado=new ArrayList();
         Articulos articu;
         for(int b=0;b < cantidad;b++){
@@ -463,6 +474,7 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
          porcentajeGanancia=(porcentajeGanancia -1) * 100;
         this.jTextField3.setText(String.valueOf(Math.round(porcentajeGanancia)));
         //this.jTable1.setModel(modelo1);
+        }
     }//GEN-LAST:event_jTable1KeyPressed
 
     private void jCheckBox1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCheckBox1MouseClicked

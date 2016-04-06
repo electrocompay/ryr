@@ -235,7 +235,7 @@ public class ArticulosAsignados implements Articulable{
             articulos=(ArticulosAsignados)it.next();
             fila[0]=true;
             fila[1]=articulos.getDescripcion();
-            fila[2]=articulos.getPrecioUnitario();
+            fila[2]=Numeros.ConvertirNumero(articulos.getPrecioUnitario());
             fila[3]=articulos.getPrecioDeCosto();
             fila[4]=articulos.getDescLista();
             fila[5]=articulos.getObservaciones();

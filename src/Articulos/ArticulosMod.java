@@ -60,7 +60,7 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
         int rengl=0;
         int posicion=0;
         Integer rubroI=0;
-        Integer artI=arti.getRubroId();
+        int artI=arti.getRubroId();
         while(itR.hasNext()){
             rubro=(Rubros)itR.next();
             rubroI=rubro.getId();
@@ -80,10 +80,11 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
         while(itSr.hasNext()){
             sub=(SubRubros)itSr.next();
             rubroI=sub.getId();
-            System.out.println("subrubro: "+rubroI);
-            if(rubroI==artI){
+            
+            if(rubroI == artI){
                 posicion=rengl;
             }
+            System.out.println("subrubro: "+rubroI+" señalador "+artI);
             rengl++;
         }
         System.out.println("posicion "+posicion+"cantidad "+lstSubRubros.size()+" seleccionado "+artI);
