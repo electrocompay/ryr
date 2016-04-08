@@ -28,6 +28,9 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import Articulos.Articulos;
+import Pedidos.DetallePedidos;
+import Pedidos.Pedable;
+import Pedidos.Pedidos;
 import facturacion.clientes.DetalleFacturas;
 import facturacion.clientes.Facturable;
 import facturacion.clientes.Facturas;
@@ -54,6 +57,8 @@ public class IngresoDeRemitos extends javax.swing.JInternalFrame {
     private static Comprobantes comp=new Comprobantes();
     private Integer fc;
     private Facturas factura=new Facturas();
+    private Pedidos pedido=new Pedidos();
+    
     
     public IngresoDeRemitos() {
         //Articulos.CargarMap();
@@ -75,6 +80,22 @@ public class IngresoDeRemitos extends javax.swing.JInternalFrame {
         detalleDelPedido=fac.convertirAArticulos(listadoDeBusqueda);
         //detalleDelPedido=listado;
         initComponents();
+        agregarRenglonTabla();
+        this.jTextField1.setText(cliT.getDireccionDeEntrega());
+        this.jTextField2.setText(cliT.getLocalidad());
+    }
+    public IngresoDeRemitos(Clientes ccl,Pedidos fc) {
+        cliT=(Clientes)ccl;
+        pedido=(Pedidos)fc;
+        //fc=pedido.getId();
+        DetallePedidos detallePedido=new DetallePedidos();
+        Pedable detP=new DetallePedidos();
+        listadoDeBusqueda=detP.cargarDetallePedido(pedido.getId());
+        detalleDelPedido=detP.convertirAArticulos(listadoDeBusqueda);
+        //detalleDelPedido=listado;
+        initComponents();
+        factura.setNumeroFactura(pedido.getId());
+        factura.setIdPedido(pedido.getId());
         agregarRenglonTabla();
         this.jTextField1.setText(cliT.getDireccionDeEntrega());
         this.jTextField2.setText(cliT.getLocalidad());
@@ -326,7 +347,12 @@ public class IngresoDeRemitos extends javax.swing.JInternalFrame {
         String fecha2=ano+"-"+mes+"-"+dia;
         //comp.setFechaComprobante(fecha2);
         //comp.setFechaComprobante(fecha);
-        int comprobanteTipo=7;
+        int comprobanteTipo;
+        if(pedido!=null){
+            comprobanteTipo=5;
+        }else{
+        comprobanteTipo=7;
+        }
         
         Comprobantes comprobante=new Comprobantes();
         comprobante.setCliente(cliT);
@@ -348,9 +374,11 @@ public class IngresoDeRemitos extends javax.swing.JInternalFrame {
         remito.setTipoComprobantte(comprobanteTipo);
         remito.setObservaciones(this.jTextField4.getText());
         if(factura.getNumeroFiscal()!=null){
-        remito.setIdComprobante(factura.getNumeroFactura());
-        }else{
+            
             remito.setIdComprobante(Integer.parseInt(factura.getNumeroFiscal()));
+        }else{
+            
+            remito.setIdComprobante(factura.getNumeroFactura());
         }
         remito.setDomicilioDeEntrega(this.jTextField1.getText());
         remito.setLocalidad(this.jTextField2.getText());
@@ -365,6 +393,7 @@ public class IngresoDeRemitos extends javax.swing.JInternalFrame {
         if(this.jRadioButton3.isSelected()){
             remito.setTipoBulto(3);
         }
+        
         remito.setId(remm.nuevo(remito));
         Iterator itD=detalleDelPedido.listIterator();
         Articulos arr=new Articulos();
@@ -373,7 +402,12 @@ public class IngresoDeRemitos extends javax.swing.JInternalFrame {
             arr=(Articulos)itD.next();
             detalleR=new DetalleRemitos();
             detalleR.setIdRemito(remito.getId());
+            if(pedido.getId()!= null){
+            detalleR.setIdPedido(pedido.getId());    
+            }else{
             detalleR.setIdFactura(factura.getId());
+            }
+            
             detalleR.setIdArticulo(arr.getNumeroId());
             detalleR.setDescripcionArticulo(arr.getDescripcionArticulo());
             detalleR.setCantidadRemitida(arr.getCantidad());

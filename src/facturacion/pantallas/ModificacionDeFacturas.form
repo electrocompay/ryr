@@ -148,7 +148,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/imagen/printer32.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="IMPRIMIR"/>
+            <Property name="text" type="java.lang.String" value="FACT ELECT"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>

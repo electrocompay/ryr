@@ -31,6 +31,8 @@ import Articulos.Modificable;
 import Articulos.Rubrable;
 import Articulos.Rubros;
 import Articulos.SubRubros;
+import FacturaE.FacturaElectronica;
+import FacturaE.pdfsJavaGenerador;
 import ListasDePrecios.Articulable;
 import ListasDePrecios.ArticulosAsignados;
 import Pedidos.DetallePedidos;
@@ -40,11 +42,15 @@ import Sucursales.ListasDePrecios;
 import facturacion.clientes.Facturable;
 import facturacion.clientes.Facturas;
 import facturacion.clientes.ImprimirFactura;
+import static facturacion.pantallas.IngresoDeFacturas.cliT;
+import static facturacion.pantallas.IngresoDeFacturas.jTextField1;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import javax.xml.parsers.ParserConfigurationException;
 import objetos.Comprobantes;
 import objetos.Conecciones;
+import org.xml.sax.SAXException;
 import tablas.MiModeloTablaBuscarCliente;
 import tablas.MiModeloTablaFacturacion;
 
@@ -223,7 +229,7 @@ public class ModificacionDeFacturas extends javax.swing.JInternalFrame {
         jLabel1.setText("TOTAL FACTURA :");
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/printer32.png"))); // NOI18N
-        jButton1.setText("IMPRIMIR");
+        jButton1.setText("FACT ELECT");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -817,6 +823,7 @@ public class ModificacionDeFacturas extends javax.swing.JInternalFrame {
         
         
         Comprobantes comprobante=new Comprobantes();
+        comprobante.setFe(true);
         comprobante.setCliente(cliT);
         comprobante.setTipoMovimiento(1);
         comprobante.setTipoComprobante(comprobanteTipo);
@@ -852,7 +859,7 @@ public class ModificacionDeFacturas extends javax.swing.JInternalFrame {
         }
         comprobante.setMontoTotal(montoTotal);
         int noFacturar=0;
-        if(ModificacionDeFacturas.jCheckBox2.isSelected()){
+        if(IngresoDeFacturas.jCheckBox2.isSelected()){
             comprobante.setPagado(1);
         }else{
             comprobante.setPagado(0);
@@ -870,14 +877,39 @@ public class ModificacionDeFacturas extends javax.swing.JInternalFrame {
         if(noFacturar==0){
         Facturar fat=new Comprobantes();
         comprobante=(Comprobantes)fat.guardar(comprobante);
+        // aqui hago el envio a factura  electronica, si aprueba no imprime
+        
+        FacturaElectronica fe=new FacturaElectronica();
+        try {
+            
+           fe=(FacturaElectronica) fe.leer(comprobante);
+           if(fe.getRespuesta().equals("OK")){
+               //JOptionPane.showMessageDialog(this,"aprobada id: "+fe.getId());
+               pdfsJavaGenerador pdf=new pdfsJavaGenerador();
+               pdf.setDoc(fe);
+               pdf.setCliente(cliT);
+               pdf.run();
+              /*         
         ImprimirFactura imprimir=new ImprimirFactura();
             try {
                 imprimir.ImprimirFactura(comprobante.getNumero(),comprobante.getTipoComprobante());
-                Facturable ffb=new Facturas();
-                ffb.identificarPedidoAFactura(factura.getIdPedido(),comprobante.getIdFactura());
             } catch (IOException ex) {
-                Logger.getLogger(ModificacionDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
             }
+            */
+            
+           }else{
+               if(fe.getRespuesta().equals("PARAMETROS"))JOptionPane.showMessageDialog(this,"Error en los parametros del cliente, modifiquelos en cae pendientes");
+                              JOptionPane.showMessageDialog(this,"error en la coneccion, intentelo mas tarde");
+           }
+        } catch (IOException ex) {
+            Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println(ex);
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
+            Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
+        }
         /*
          * ACA DEBO LIMPIAR TODOS LOS CAMPOS Y VARIABLES DE LA PANTALLA
          * 
@@ -900,6 +932,8 @@ public class ModificacionDeFacturas extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this,"El cliente supera el límite de crédito, debe abonar la venta");
             noFacturar=0;
         }
+         
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

@@ -113,7 +113,12 @@ public class DetalleRemitos implements Remitable{
         DetalleRemitos detalle=new DetalleRemitos();
         detalle=(DetalleRemitos)remi;
         int id=0;
-        sql="insert into detalleremitos (idremito,idarticulo,cantidadremitida,descrpcionarticulo,idfactura) values ("+detalle.getIdRemito()+","+detalle.getIdArticulo()+","+detalle.getCantidadRemitida()+",'"+detalle.descripcionArticulo+"',"+detalle.getIdFactura()+")";
+        if(detalle.getIdFactura() == null){
+            sql="insert into detalleremitos (idremito,idarticulo,cantidadremitida,descrpcionarticulo,idpedido,idfactura) values ("+detalle.getIdRemito()+","+detalle.getIdArticulo()+","+detalle.getCantidadRemitida()+",'"+detalle.descripcionArticulo+"',"+detalle.getIdPedido()+",0)";
+            
+        }else{
+            sql="insert into detalleremitos (idremito,idarticulo,cantidadremitida,descrpcionarticulo,idfactura) values ("+detalle.getIdRemito()+","+detalle.getIdArticulo()+","+detalle.getCantidadRemitida()+",'"+detalle.descripcionArticulo+"',"+detalle.getIdFactura()+")";
+        }
         tra.guardarRegistro(sql);
         sql="update detallefacturas set cantidadremitida="+detalle.getCantidadRemitida()+" where idfactura="+detalle.getIdFactura()+" and idarticulo="+detalle.getIdArticulo();
         tra.guardarRegistro(sql);
@@ -154,7 +159,7 @@ public class DetalleRemitos implements Remitable{
         try{
         while(rs.next()){
             detRem=new DetalleRemitos();
-            detRem.setCantidadFacturada(rs.getDouble("cantidadfacturada"));
+            detRem.setCantidadFacturada(rs.getDouble("cantidadfacturada") - rs.getDouble("cantidadremitida"));
             detRem.setIdArticulo(rs.getInt("idarticulo"));
             detRem.setDescripcionArticulo(rs.getString("descrpcionarticulo"));
             detRem.setCantidadRemitida(rs.getDouble("cantidadremitida"));

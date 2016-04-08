@@ -147,7 +147,11 @@ public class Remitos implements Remitable{
         }
         sql="update tipocomprobantes set numeroactivo=numeroactivo +1 where id=7";
         tra.guardarRegistro(sql);
-        sql="update facturas set estado=2,idremito="+numeroId+" where id="+remito.getIdComprobante();
+        if(remito.getTipoComprobantte()==5){
+            sql="update pedidos set estado=2, idremito="+numeroId+" where id="+remito.getIdComprobante();
+        }else{
+            sql="update facturas set estado=2,idremito="+numeroId+" where id="+remito.getIdComprobante();
+        }
         tra.guardarRegistro(sql);
         return numeroId;
     }
