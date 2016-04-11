@@ -1061,7 +1061,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
         columnaNumero=this.jTable3.getColumn("Recibo");
         columnaNumero.setPreferredWidth(40);
         columnaNumero.setMaxWidth(40);
-        columnaNumero=this.jTable3.getColumn("Tipo");
+        columnaNumero=this.jTable3.getColumn("Monto");
         columnaNumero.setPreferredWidth(60);
         columnaNumero.setMaxWidth(60);
     }//GEN-LAST:event_formInternalFrameActivated

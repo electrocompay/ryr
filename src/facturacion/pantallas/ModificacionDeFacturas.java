@@ -859,7 +859,7 @@ public class ModificacionDeFacturas extends javax.swing.JInternalFrame {
         }
         comprobante.setMontoTotal(montoTotal);
         int noFacturar=0;
-        if(IngresoDeFacturas.jCheckBox2.isSelected()){
+        if(this.jCheckBox2.isSelected()){
             comprobante.setPagado(1);
         }else{
             comprobante.setPagado(0);

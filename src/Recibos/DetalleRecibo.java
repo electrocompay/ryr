@@ -35,6 +35,16 @@ public class DetalleRecibo implements Recidable{
     private static Transaccionable tra=new Conecciones();
     private static ResultSet rs;
     private String sql;
+    private String montoFcatura;
+
+    public String getMontoFcatura() {
+        return montoFcatura;
+    }
+
+    public void setMontoFcatura(String montoFcatura) {
+        this.montoFcatura = montoFcatura;
+    }
+    
 
     public Integer getNumeroFc() {
         return numeroFc;

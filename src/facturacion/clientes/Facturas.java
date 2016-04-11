@@ -241,7 +241,7 @@ public class Facturas implements Facturable{
         listado1.addColumn("Recibo");
         listado1.addColumn("Fecha");
         listado1.addColumn("Numero");
-        listado1.addColumn("Tipo");
+        listado1.addColumn("Monto");
         listado1.addColumn("Saldo");
         listado1.addColumn("Remito");
         Object[] fila=new Object[6];
@@ -254,7 +254,7 @@ public class Facturas implements Facturable{
             }else{
                 fila[2]=String.valueOf(cotizacion.getNumeroFiscal());
             }
-            fila[3]=String.valueOf(cotizacion.getDescripcionTipo());
+            fila[3]=String.valueOf(cotizacion.getMontoOriginal());
             fila[4]=Numeros.ConvertirNumero(cotizacion.getTotal());
             fila[5]=String.valueOf(cotizacion.getIdRemito());
             listado1.addRow(fila);

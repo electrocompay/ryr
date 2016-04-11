@@ -410,8 +410,12 @@ public class AbmRecibos extends javax.swing.JDialog {
             }
             saldoAImputar=saldoAImputar - factura.getTotal();
             detalle.setFecha(factura.getFecha());
+            if(factura.getNumeroFiscal()!=null){
             detalle.setNumeroFc(factura.getNumeroFactura());
-            
+            }else{
+                detalle.setNumeroFc(Integer.parseInt(factura.getNumeroFiscal()));
+            }
+            detalle.setMontoFcatura(Numeros.ConvertirNumero(factura.getTotal()));
             det.nuevo(detalle);
             det.imputarAFactura(factura);
             listadoDet.add(detalle);
@@ -435,9 +439,10 @@ public class AbmRecibos extends javax.swing.JDialog {
             }
             montt=montt + pago.getMonto();
         }
-        if(montt >= recibo.getMonto()){
+        //if(montt >= recibo.getMonto()){
             recibo.setMonto(montt);
-        }
+            
+        //}
         ImprimirRecibo imprimir=new ImprimirRecibo();
         try {
             imprimir.ImprimirOrdenDeTrabajo(recibo, listadoDet, detallePagos);
@@ -500,6 +505,7 @@ public class AbmRecibos extends javax.swing.JDialog {
         saldo=montoTotal;
         jLabel2.setText(" $"+total);
         jLabel9.setText("Saldo: "+saldo);
+        this.jTextField1.setText(String.valueOf(total));
         this.jComboBox1.requestFocus();
         }
     }//GEN-LAST:event_jTable1KeyPressed
