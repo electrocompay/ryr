@@ -403,9 +403,10 @@ public class AbmRecibos extends javax.swing.JDialog {
             detalle.setIdRecibo(recibo.getId());
             
             if(factura.getTotal() < saldoAImputar){
-            detalle.setMonto(factura.getTotal());
+                detalle.setMonto(factura.getTotal());
             }else{
-                factura.setTotal(saldoAImputar);
+                //factura.setTotal(saldoAImputar);
+                
                 detalle.setMonto(saldoAImputar);
             }
             saldoAImputar=saldoAImputar - factura.getTotal();
@@ -413,7 +414,12 @@ public class AbmRecibos extends javax.swing.JDialog {
             if(factura.getNumeroFiscal()!=null){
             detalle.setNumeroFc(factura.getNumeroFactura());
             }else{
-                detalle.setNumeroFc(Integer.parseInt(factura.getNumeroFiscal()));
+                if(factura.getNumeroFiscal()!=null){
+                    detalle.setNumeroFc(Integer.parseInt(factura.getNumeroFiscal()));
+                }else{
+                    
+                    detalle.setNumeroFc(factura.getId());
+                }
             }
             detalle.setMontoFcatura(Numeros.ConvertirNumero(factura.getTotal()));
             det.nuevo(detalle);

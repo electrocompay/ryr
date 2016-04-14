@@ -285,7 +285,8 @@ public class Facturas implements Facturable{
     @Override
     public ArrayList listarPorClienteNoRemitidas(Integer idClient) {
        ArrayList listado=new ArrayList();
-       String sql="select *,(select tipocomprobantes.descripcion from tipocomprobantes where tipocomprobantes.id=facturas.tipo)as descripcionTipo,(select remitos.numeroremito from remitos where remitos.id=idremito)as remito,(SELECT facturaelectronica.afipplastcbte from facturaelectronica where facturaelectronica.idfactura=facturas.id)as fiscal from facturas where idremito = 0 or saldo > 0 and idcliente="+idClient;
+       String sql="select *,(select tipocomprobantes.descripcion from tipocomprobantes where tipocomprobantes.id=facturas.tipo)as descripcionTipo,(select remitos.numeroremito from remitos where remitos.id=idremito)as remito,(SELECT facturaelectronica.afipplastcbte from facturaelectronica where facturaelectronica.idfactura=facturas.id)as fiscal from facturas where estado < 2 and idcliente="+idClient;
+       System.out.println(sql);
        Transaccionable tra=new Conecciones();
        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
        Facturas factura;

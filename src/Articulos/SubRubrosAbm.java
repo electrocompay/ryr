@@ -7,8 +7,10 @@ package Articulos;
 import Articulos.Rubros;
 import Conversores.Numeros;
 import interfaces.Personalizable;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 public class SubRubrosAbm extends javax.swing.JInternalFrame {
     private ArrayList lstRubros=new ArrayList();
     private SubRubros subRubro=new SubRubros();
+    private Rubros rubro=new Rubros();
     private ArrayList lstSeleccion=new ArrayList();
     private int nuevo=0;
     private DefaultTableModel modelo=new DefaultTableModel();
@@ -34,7 +37,7 @@ public class SubRubrosAbm extends javax.swing.JInternalFrame {
     //lstRubros=perR.listarPorRubro(0);
     //modelo=perR.mostrarListado(lstRubros);
     this.jTable1.setModel(modelo);
-    
+    this.jPanel2.setVisible(false);
     }
 
     /**
@@ -51,14 +54,13 @@ public class SubRubrosAbm extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
 
         setClosable(true);
         setMaximizable(true);
@@ -82,6 +84,8 @@ public class SubRubrosAbm extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
+        jLabel4.setText("Para seleccionar el rubro marquelo y presione F1");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -94,7 +98,11 @@ public class SubRubrosAbm extends javax.swing.JInternalFrame {
                 .addContainerGap(36, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addComponent(jScrollPane1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -106,7 +114,9 @@ public class SubRubrosAbm extends javax.swing.JInternalFrame {
                     .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel4)
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         jLabel2.setText("Nombre");
@@ -119,20 +129,6 @@ public class SubRubrosAbm extends javax.swing.JInternalFrame {
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
-            }
-        });
-
-        jButton3.setText("Modificar Precio");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-        jButton4.setText("Modificar Costo");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
             }
         });
 
@@ -150,11 +146,8 @@ public class SubRubrosAbm extends javax.swing.JInternalFrame {
                     .addComponent(jTextField1)
                     .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(64, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,11 +161,7 @@ public class SubRubrosAbm extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addGap(8, 8, 8)
-                .addComponent(jButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -202,49 +191,46 @@ public class SubRubrosAbm extends javax.swing.JInternalFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         subRubro=new SubRubros();
         nuevo=1;
+        if(this.jPanel2.isVisible()){
+            
+        }else{
+            this.jPanel2.setVisible(true);
+        }
         this.jTextField1.requestFocus();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         subRubro.setDescripcion(this.jTextField1.getText());
-        Rubrable rub=new SubRubros();
-        if(nuevo==1){
-            rub.nuevo(subRubro);
+        if(rubro.getId()!=null){
+            subRubro.setIdRubro(rubro.getId());
+            Rubrable rub=new SubRubros();
+            if(nuevo==1){
+                rub.nuevo(subRubro);
+            }else{
+                rub.modificar(subRubro);
+            }
         }else{
-            rub.modificar(subRubro);
+            JOptionPane.showMessageDialog(this,"Seleccione el rubro");
         }
+        this.jPanel2.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Rubrable rub=new SubRubros();
-        Double coeficiente=Numeros.ConvertirStringADouble(this.jTextField2.getText());
-        rub.modificarPrecioRubro(subRubro.getId(), coeficiente);
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        Rubrable rub=new SubRubros();
-        Double coeficiente=Numeros.ConvertirStringADouble(this.jTextField2.getText());
-        Iterator itS=lstSeleccion.listIterator();
-        while(itS.hasNext()){
-            subRubro=(SubRubros)itS.next();
-            rub.modificarCostoPorRubro(subRubro.getId(), coeficiente);
-        }
-    }//GEN-LAST:event_jButton4ActionPerformed
-
     private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
-        SubRubros sub=new SubRubros();
-        sub=(SubRubros)lstRubros.get(this.jTable1.getSelectedRow());
-        lstSeleccion.add(sub);
+        if(evt.getKeyCode()==KeyEvent.VK_F1){
+            rubro=(Rubros)lstRubros.get(this.jTable1.getSelectedRow());
+            this.jPanel2.setVisible(true);
+        }
+        //lstSeleccion.add(sub);
+        //as
     }//GEN-LAST:event_jTable1KeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

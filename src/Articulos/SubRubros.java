@@ -67,7 +67,7 @@ public class SubRubros implements Rubrable{
         SubRubros subRubro=new SubRubros();
         subRubro=(SubRubros)rubro;
         
-        String sql="insert into subrubros(descripcion) values ('"+subRubro.getDescripcion()+"')";
+        String sql="insert into tipos (tipo,id_clasificacion,etiqueta,eliminado) values ('"+subRubro.getDescripcion()+"',"+subRubro.getIdRubro()+",'NN','N')";
         Transaccionable tra=new Conecciones();
         tra.guardarRegistro(sql);
         int ultimo=0;
@@ -87,7 +87,7 @@ public class SubRubros implements Rubrable{
     public Boolean modificar(Object rubros) {
         SubRubros rubro=new SubRubros();
         rubro=(SubRubros)rubros;
-        String sql="update subrubros set descripcion='"+rubro.getDescripcion()+"' where id="+rubro.getId();
+        String sql="update tipos set tipo='"+rubro.getDescripcion()+"' where id="+rubro.getId();
         Transaccionable tra=new Conecciones();
         tra.guardarRegistro(sql);
         return true;
@@ -164,7 +164,10 @@ public class SubRubros implements Rubrable{
 
     @Override
     public void eliminar(Integer idRubro) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        String sql="delete from tipos where id="+idRubro;
+        Transaccionable tra=new Conecciones();
+        tra.guardarRegistro(sql);
     }
 
     @Override

@@ -117,17 +117,20 @@ public class ImprimirRecibo {
         pagina.setFont(fuente);
         pagina.drawString("",20,250);
         pagina.drawString("DETALLE",100,250);
-        pagina.drawString("MONTO FC", 350,250);
-        pagina.drawString("MONTO", 450,250);
+        pagina.drawString("MONTO FC", 300,250);
+        pagina.drawString("MONTO", 400,250);
+        pagina.drawString("SALDO", 500,250);
         int renglon=260;
         Iterator it=detalle.listIterator();
+        Double saldoI=0.00;
         while(it.hasNext()){
             det=(DetalleRecibo)it.next();
             //pagina.drawString(String.valueOf(det.get),40,renglon);
             pagina.drawString("Factura N° "+String.valueOf(det.getNumeroFc())+" fecha "+det.getFecha(),80,renglon);
-            pagina.drawString(det.getMontoFcatura(),350,renglon);
-            pagina.drawString(String.valueOf(det.getMonto()),450,renglon);
-            
+            pagina.drawString(det.getMontoFcatura(),300,renglon);
+            pagina.drawString(Numeros.ConvertirNumero(det.getMonto()),400,renglon);
+            saldoI=Numeros.ConvertirStringADouble(det.getMontoFcatura()) - det.getMonto();
+            pagina.drawString(Numeros.ConvertirNumero(saldoI),500,renglon);
             renglon=renglon + 10;
         }
         //formulario derecho

@@ -1055,6 +1055,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
         columnaNumero.setMaxWidth(40);
         Facturable ff=new Facturas();
         Facturas factura=new Facturas();
+        
         listadoFac=ff.listarPorClienteNoRemitidas(cliTa.getCodigoId());
         modelo2=ff.mostrarListado(listadoFac);
         this.jTable3.setModel(modelo2);
