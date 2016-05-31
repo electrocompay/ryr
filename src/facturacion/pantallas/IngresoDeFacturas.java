@@ -208,9 +208,15 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
             }
         });
 
-        jTextField3.setEnabled(false);
+        jTextField3.setText("0");
+        jTextField3.setToolTipText("Presione Enter para aplicar descuento general");
+        jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField3KeyPressed(evt);
+            }
+        });
 
-        jLabel5.setText("FECHA");
+        jLabel5.setText("% DESCUENTO");
         jLabel5.setEnabled(false);
 
         jCheckBox2.setText("PAGADO");
@@ -467,9 +473,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -1238,6 +1242,32 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
 
         }
     }//GEN-LAST:event_jTable2KeyPressed
+
+    private void jTextField3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyPressed
+        if(KeyEvent.VK_ENTER==evt.getKeyCode()){
+            Double descuentoGral=Numeros.ConvertirStringADouble(this.jTextField3.getText());
+            descuentoGral=descuentoGral / 100;
+            Iterator it=detalleDelPedido.listIterator();
+            Articulos art;
+            Double precio=0.00;
+            montoTotal=0.00;
+            Double monto=0.00;
+            while(it.hasNext()){
+                art=(Articulos)it.next();
+                art.setDescuento(1);
+                precio=art.getPrecioUnitarioNeto() * descuentoGral;
+                precio=art.getPrecioUnitarioNeto() - precio;
+                art.setPrecioUnitarioNeto(precio);
+                art.setPrecioUnitario(precio);
+                monto=art.getPrecioUnitarioNeto() * art.getCantidad();
+                montoTotal=montoTotal + monto;
+            }
+            //cargarLista(detalleDelPedido);
+            montrarMonto();
+            agregarRenglonTabla();
+            
+        }
+    }//GEN-LAST:event_jTextField3KeyPressed
 private void cargarLista(ArrayList lista){
     DefaultTableModel modelo=new DefaultTableModel();
     Iterator il=lista.listIterator();

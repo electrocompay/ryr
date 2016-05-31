@@ -201,9 +201,15 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
             }
         });
 
-        jTextField3.setEnabled(false);
+        jTextField3.setText("0");
+        jTextField3.setToolTipText("Presione enter para aplicar descuento general");
+        jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField3KeyPressed(evt);
+            }
+        });
 
-        jLabel5.setText("FECHA");
+        jLabel5.setText("% DESCUENTO");
         jLabel5.setEnabled(false);
 
         jCheckBox2.setSelected(true);
@@ -469,7 +475,7 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -477,10 +483,10 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 202, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap(72, Short.MAX_VALUE))
         );
 
@@ -1057,6 +1063,32 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
 
         }
     }//GEN-LAST:event_jTable2KeyPressed
+
+    private void jTextField3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyPressed
+        if(KeyEvent.VK_ENTER==evt.getKeyCode()){
+            Double descuentoGral=Numeros.ConvertirStringADouble(this.jTextField3.getText());
+            descuentoGral=descuentoGral / 100;
+            Iterator it=detalleDelPedido.listIterator();
+            Articulos art;
+            Double precio=0.00;
+            montoTotal=0.00;
+            Double monto=0.00;
+            while(it.hasNext()){
+                art=(Articulos)it.next();
+                art.setDescuento(1);
+                precio=art.getPrecioUnitarioNeto() * descuentoGral;
+                precio=art.getPrecioUnitarioNeto() - precio;
+                art.setPrecioUnitarioNeto(precio);
+                art.setPrecioUnitario(precio);
+                monto=art.getPrecioUnitarioNeto() * art.getCantidad();
+                montoTotal=montoTotal + monto;
+            }
+            //cargarLista(detalleDelPedido);
+            montrarMonto();
+            agregarRenglonTabla();
+            
+        }
+    }//GEN-LAST:event_jTextField3KeyPressed
 private void cargarLista(ArrayList lista){
     DefaultTableModel modelo=new DefaultTableModel();
     Iterator il=lista.listIterator();

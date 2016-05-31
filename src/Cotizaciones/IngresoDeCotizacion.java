@@ -203,10 +203,15 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
             }
         });
 
-        jTextField3.setEnabled(false);
+        jTextField3.setText("0");
+        jTextField3.setToolTipText("Presione enter para aplicar descuento general");
+        jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField3KeyPressed(evt);
+            }
+        });
 
-        jLabel5.setText("FECHA");
-        jLabel5.setEnabled(false);
+        jLabel5.setText("% DESCUENTO");
 
         jCheckBox2.setSelected(true);
         jCheckBox2.setText("PAGADO");
@@ -240,8 +245,8 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
                         .addGap(200, 200, 200)
                         .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -276,7 +281,7 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
                     .addComponent(jLabel5)
                     .addComponent(jCheckBox2)
                     .addComponent(jButton1))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         jPanel2.setMaximumSize(new java.awt.Dimension(521, 202));
@@ -818,6 +823,7 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
         comprobante1.setId(nuevaCotizacion);
         Iterator iArt=detalleDelPedido.listIterator();
         Articulos articulo=new Articulos();
+        
         while(iArt.hasNext()){
             articulo=(Articulos)iArt.next();
             detalle=new DetalleCotizacion();
@@ -826,8 +832,11 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
             detalle.setIdCliente(cliT.getCodigoId());
             detalle.setIdCotizacion(nuevaCotizacion);
             detalle.setCantidad(articulo.getCantidad());
+            
             detalle.setPrecioUnitario(articulo.getPrecioUnitarioNeto());
+            
             detalle.setDescuento(articulo.getDescuento());
+            
             det.nuevaCotizacion(detalle);
             
         }
@@ -1066,6 +1075,32 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
         }
 
     }//GEN-LAST:event_jTable2KeyPressed
+
+    private void jTextField3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyPressed
+        if(KeyEvent.VK_ENTER==evt.getKeyCode()){
+            Double descuentoGral=Numeros.ConvertirStringADouble(this.jTextField3.getText());
+            descuentoGral=descuentoGral / 100;
+            Iterator it=detalleDelPedido.listIterator();
+            Articulos art;
+            Double precio=0.00;
+            montoTotal=0.00;
+            Double monto=0.00;
+            while(it.hasNext()){
+                art=(Articulos)it.next();
+                art.setDescuento(1);
+                precio=art.getPrecioUnitarioNeto() * descuentoGral;
+                precio=art.getPrecioUnitarioNeto() - precio;
+                art.setPrecioUnitarioNeto(precio);
+                art.setPrecioUnitario(precio);
+                monto=art.getPrecioUnitarioNeto() * art.getCantidad();
+                montoTotal=montoTotal + monto;
+            }
+            //cargarLista(detalleDelPedido);
+            montrarMonto();
+            agregarRenglonTabla();
+            
+        }
+    }//GEN-LAST:event_jTextField3KeyPressed
 private void cargarLista(ArrayList lista){
     DefaultTableModel modelo=new DefaultTableModel();
     Iterator il=lista.listIterator();
