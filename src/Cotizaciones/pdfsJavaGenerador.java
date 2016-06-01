@@ -130,12 +130,14 @@ public class pdfsJavaGenerador {
             cb.setFontAndSize(bf,10);
             Iterator itl=listado.listIterator();
             vencimiento="Esta cotización tendrá vigencia 30 días ";
+            Double montoCIva=0.00;
             while(itl.hasNext()){
                 saldo=(DetalleCotizacion)itl.next();
                 //vencimiento=saldo.getVencimientoString();
                 
                 descripcion="Numero Resumen de cta ";
-                monto=Numeros.ConvertirNumero(saldo.getPrecioUnitario() * 1.21);
+                montoCIva=saldo.getPrecioUnitario() * 1.21;
+                monto=Numeros.ConvertirNumero(montoCIva);
                 recargo="10%";
                 total="nada";
                 //recargo=String.valueOf(saldo.getRecargo());
@@ -150,7 +152,7 @@ public class pdfsJavaGenerador {
                 cb.setTextMatrix(380,renglon);
                 cb.showText(String.valueOf(saldo.getCantidad()));
                 cb.setTextMatrix(440,renglon);
-                tot=saldo.getCantidad() * saldo.getPrecioUnitario();
+                tot=saldo.getCantidad() * montoCIva;
                 //tot=tot * 1.21;
                 cb.showText(Numeros.ConvertirNumero(tot));
                 renglon=renglon - 20;
