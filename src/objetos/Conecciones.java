@@ -47,10 +47,10 @@ public class Conecciones implements Transaccionable{
                 MysqlDataSource dataSource=new MysqlDataSource();
 		try{
 			//Class.forName(driver1).newInstance();
-                    dataSource.setUser("ryrsistema");//("ryrsistema");//("root");//
+                    dataSource.setUser("root");//("ryrsistema");//("root");//
                     dataSource.setDatabaseName("ryr");//ryr
-                    dataSource.setPassword("Remoto");//("Remoto");//4FTfQRKWPDe4KF9d//("");//
-                    dataSource.setServerName("10.0.0.201");//10.0.0.201//("localhost");//
+                    dataSource.setPassword("");//("Remoto");//4FTfQRKWPDe4KF9d//("");//
+                    dataSource.setServerName("localhost");//10.0.0.201//("localhost");//
                     /*
                     DATOS DE ROOT
                     USUARIO:ROOT

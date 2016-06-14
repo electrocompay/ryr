@@ -13,18 +13,15 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
 import facturacion.clientes.Clientes;
-import interfaceGraficas.Inicio;
 import java.io.File;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -131,6 +128,9 @@ public class pdfsJavaGenerador {
             Iterator itl=listado.listIterator();
             vencimiento="Esta cotización tendrá vigencia 30 días ";
             Double montoCIva=0.00;
+            Double descuento=0.00;
+            Double descUnitario=0.00;
+            Double descTotal=0.00;
             while(itl.hasNext()){
                 saldo=(DetalleCotizacion)itl.next();
                 //vencimiento=saldo.getVencimientoString();
@@ -153,11 +153,24 @@ public class pdfsJavaGenerador {
                 cb.showText(String.valueOf(saldo.getCantidad()));
                 cb.setTextMatrix(440,renglon);
                 tot=saldo.getCantidad() * montoCIva;
+                
                 //tot=tot * 1.21;
                 cb.showText(Numeros.ConvertirNumero(tot));
+                if(saldo.getDescuento()==1){
+                    
+                    descuento=descuento + saldo.getMontoDescuento();
+                }
+                //descuento=descuento+saldo.getDescuento();
                 renglon=renglon - 20;
                 
             }
+            renglon=renglon - 20;
+            Double subTotal=doc.getTotal() + descuento;
+            
+            cb.setTextMatrix(150,renglon);
+            cb.showText("SUBTOTAL "+Numeros.ConvertirNumero(subTotal));
+            cb.setTextMatrix(280,renglon);
+            cb.showText("DES "+Numeros.ConvertirNumero(descuento));
             totalFinal=Numeros.ConvertirNumero(doc.getTotal());
             cb.setTextMatrix(380,renglon);
             cb.showText("TOTAL "+totalFinal);

@@ -854,6 +854,7 @@ public class ModificacionDeCotizacion extends javax.swing.JInternalFrame {
             detalle.setIdCotizacion(comprobante1.getId());
             detalle.setCantidad(articulo.getCantidad());
             detalle.setPrecioUnitario(articulo.getPrecioUnitarioNeto());
+            detalle.setMontoDescuento(articulo.getMontoDescuento());
             detalle.setDescuento(articulo.getDescuento());
             det.nuevaCotizacion(detalle);
             }
@@ -995,8 +996,11 @@ public class ModificacionDeCotizacion extends javax.swing.JInternalFrame {
         Double precio=Double.parseDouble(JOptionPane.showInputDialog("Ingrese el nuevo valor unitario s/iva",pedidos.getPrecioUnitarioNeto()));
         Double cantidad=Double.parseDouble(JOptionPane.showInputDialog("Ingrese la cantidad",pedidos.getCantidad()));
         pedidos.setCantidad(cantidad);
-
+Double descuento=pedidos.getPrecioUnitarioNeto() - precio;
         pedidos.setPrecioUnitarioNeto(precio);
+        if(descuento > 0){
+            pedidos.setMontoDescuento(descuento * cantidad);
+        }
         pedidos.setDescuento(1);
         //detalleDelPedido.clear();
         agregarRenglonTabla();
@@ -1109,6 +1113,7 @@ public class ModificacionDeCotizacion extends javax.swing.JInternalFrame {
                 art=(Articulos)it.next();
                 art.setDescuento(1);
                 precio=art.getPrecioUnitarioNeto() * descuentoGral;
+                art.setMontoDescuento(precio * art.getCantidad());
                 precio=art.getPrecioUnitarioNeto() - precio;
                 art.setPrecioUnitarioNeto(precio);
                 art.setPrecioUnitario(precio);

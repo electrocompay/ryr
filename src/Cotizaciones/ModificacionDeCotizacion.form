@@ -58,10 +58,10 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel8" min="-2" pref="20" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jPanel2" pref="218" max="32767" attributes="0"/>
+                  <Component id="jPanel2" pref="219" max="32767" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jPanel1" pref="354" max="32767" attributes="0"/>
+              <Component id="jPanel1" pref="355" max="32767" attributes="0"/>
               <EmptySpace pref="57" max="32767" attributes="0"/>
           </Group>
       </Group>

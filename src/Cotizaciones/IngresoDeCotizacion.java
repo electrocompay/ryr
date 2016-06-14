@@ -734,7 +734,8 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
                     
                     
                     articul.setPrecioDeCosto(arti.getPrecioDeCosto());
-                    articul.setPrecioUnitario(arti.getPrecioUnitarioNeto());
+                    
+                    articul.setPrecioUnitario(arti.getPrecioUnitario());
                     
                     articul.setIdCombo(arti.getIdCombo());
                     articul.setCombo(arti.getCombo());
@@ -834,9 +835,9 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
             detalle.setCantidad(articulo.getCantidad());
             
             detalle.setPrecioUnitario(articulo.getPrecioUnitarioNeto());
-            
+            detalle.setPrecioUnitarioNeto(articulo.getPrecioUnitario());
             detalle.setDescuento(articulo.getDescuento());
-            
+            detalle.setMontoDescuento(articulo.getMontoDescuento());
             det.nuevaCotizacion(detalle);
             
         }
@@ -972,8 +973,11 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
         Double cantidad=Double.parseDouble(JOptionPane.showInputDialog("Ingrese la cantidad",pedidos.getCantidad()));
         pedidos.setCantidad(cantidad);
 
-        
+        Double descuento=pedidos.getPrecioUnitarioNeto() - precio;
         pedidos.setPrecioUnitarioNeto(precio);
+        if(descuento > 0){
+            pedidos.setMontoDescuento(descuento * cantidad);
+        }
         pedidos.setDescuento(1);
         //detalleDelPedido.clear();
         agregarRenglonTabla();
@@ -1088,11 +1092,14 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
             while(it.hasNext()){
                 art=(Articulos)it.next();
                 art.setDescuento(1);
+                
                 precio=art.getPrecioUnitarioNeto() * descuentoGral;
+                art.setMontoDescuento(precio * art.getCantidad());
                 precio=art.getPrecioUnitarioNeto() - precio;
                 art.setPrecioUnitarioNeto(precio);
-                art.setPrecioUnitario(precio);
+                //art.setPrecioUnitario(precio);
                 monto=art.getPrecioUnitarioNeto() * art.getCantidad();
+                
                 montoTotal=montoTotal + monto;
             }
             //cargarLista(detalleDelPedido);

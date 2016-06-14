@@ -73,6 +73,16 @@ public class Articulos implements Facturar,Editables,Comparables,Modificable{
     private static ResultSet rs;
     private static Double totalVenta;
     private static Double totalCosto;
+    private Double montoDescuento;
+
+    public Double getMontoDescuento() {
+        return montoDescuento;
+    }
+
+    public void setMontoDescuento(Double montoDescuento) {
+        this.montoDescuento = montoDescuento;
+    }
+    
 
     public static Double getTotalVenta() {
         return totalVenta;
