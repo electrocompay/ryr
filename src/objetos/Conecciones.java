@@ -7,7 +7,6 @@ package objetos;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import interfaceGraficas.Inicio;
 import interfaces.Transaccionable;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,7 +14,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -47,10 +45,10 @@ public class Conecciones implements Transaccionable{
                 MysqlDataSource dataSource=new MysqlDataSource();
 		try{
 			//Class.forName(driver1).newInstance();
-                    dataSource.setUser("ryrsistema");//("ryrsistema");//("root");//
+                    dataSource.setUser("root");//("ryrsistema");//("root");//
                     dataSource.setDatabaseName("ryr");//ryr
-                    dataSource.setPassword("Remoto");//("Remoto");//4FTfQRKWPDe4KF9d//("");//
-                    dataSource.setServerName("10.0.0.201");//10.0.0.201//("localhost");//
+                    dataSource.setPassword("");//("Remoto");//4FTfQRKWPDe4KF9d//("");//
+                    dataSource.setServerName("localhost");//10.0.0.201//("localhost");//
                     /*
                     DATOS DE ROOT
                     USUARIO:ROOT
