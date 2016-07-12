@@ -70,8 +70,11 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
         columna2.setPreferredWidth(50);
         columna2.setMaxWidth(50);
         columna3=this.jTable1.getColumn("% de Ganancia");
-        columna3.setPreferredWidth(50);
-        columna3.setMaxWidth(50);
+        columna3.setPreferredWidth(80);
+        columna3.setMaxWidth(80);
+        columna=this.jTable2.getColumn("Seleccion");
+        columna.setPreferredWidth(50);
+        columna.setMaxWidth(50);
         this.jTable3.setVisible(false);
         
     }
@@ -231,7 +234,7 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
                     .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         jTable1.setModel(modelo1);
@@ -268,24 +271,26 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(341, 341, 341))
+                        .addGap(79, 79, 79))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(28, 28, 28)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE))
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(11, 11, 11)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(11, 11, 11)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -295,6 +300,7 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
                                 .addGap(31, 31, 31)))
                         .addGap(70, 70, 70))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
@@ -363,9 +369,24 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
         this.jTextField3.setText(String.valueOf(Math.round(porcentajeGanancia)));
         this.jTable3.setVisible(true);
         this.jTable3.setModel(modelo3);
+        
         this.jTable1.setModel(modelo1);
-        columna=this.jTable1.getColumn("Descripcion");
-        columna.setPreferredWidth(400);
+        columna=this.jTable1.getColumn("Listar");
+        columna.setPreferredWidth(50);
+        columna.setMaxWidth(50);
+        
+        columna1=this.jTable1.getColumn("Precio");
+        columna1.setPreferredWidth(50);
+        columna1.setMaxWidth(50);
+        columna2=this.jTable1.getColumn("Costo");
+        columna2.setPreferredWidth(50);
+        columna2.setMaxWidth(50);
+        columna3=this.jTable1.getColumn("% de Ganancia");
+        columna3.setPreferredWidth(80);
+        columna3.setMaxWidth(80);
+        columna=this.jTable3.getColumn("Seleccion");
+        columna.setPreferredWidth(50);
+        columna.setMaxWidth(50);
     }//GEN-LAST:event_jTable2KeyPressed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -449,8 +470,19 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
         this.jTextField3.setText(String.valueOf(Math.round(porcentajeGanancia)));
          this.jTable3.setModel(modelo3);
          this.jTable1.setModel(modelo1);
-         columna=this.jTable1.getColumn("Descripcion");
-        columna.setPreferredWidth(400);
+         columna=this.jTable1.getColumn("Listar");
+        columna.setPreferredWidth(50);
+        columna.setMaxWidth(50);
+        
+        columna1=this.jTable1.getColumn("Precio");
+        columna1.setPreferredWidth(50);
+        columna1.setMaxWidth(50);
+        columna2=this.jTable1.getColumn("Costo");
+        columna2.setPreferredWidth(50);
+        columna2.setMaxWidth(50);
+        columna3=this.jTable1.getColumn("% de Ganancia");
+        columna3.setPreferredWidth(80);
+        columna3.setMaxWidth(80);
         this.jTable1.requestFocus();
     }
     }//GEN-LAST:event_jTable3KeyPressed

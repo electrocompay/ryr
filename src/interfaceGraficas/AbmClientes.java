@@ -13,6 +13,7 @@ import facturacion.pantallas.IngresoDeFacturas;
 import Pedidos.IngresoDePedidos;
 import interfacesPrograma.Busquedas;
 import interfacesPrograma.Facturar;
+import java.awt.event.KeyEvent;
 import java.beans.PropertyVetoException;
 import java.io.File;
 import java.sql.SQLException;
@@ -142,6 +143,11 @@ public class AbmClientes extends javax.swing.JInternalFrame {
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
+            }
+        });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField1KeyPressed(evt);
             }
         });
 
@@ -393,6 +399,22 @@ columnaCodigo=this.jTable1.getColumn("COD CLIENTE");
         clienteNuevo.setVisible(true);
         clienteNuevo.toFront();
     }//GEN-LAST:event_jMenu5MouseClicked
+
+    private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+                    String nombre=jTextField1.getText();
+        Clientes resCli=new Clientes();
+        Busquedas mcli=new Clientes();
+        listadoClientes.clear();
+        //ArrayList resultado=new ArrayList();
+        listadoClientes=mcli.listar(nombre.toUpperCase());
+        int cant=listadoClientes.size();
+        //Iterator ir=resultado.listIterator();
+        //this.jPanel2.setVisible(true);
+        cargarTabla();
+        //this.jList1.setModel(modelo);
+        }
+    }//GEN-LAST:event_jTextField1KeyPressed
 private void cargarTabla(){
         MiModeloTablaBuscarCliente busC=new MiModeloTablaBuscarCliente();
         this.jTable1.removeAll();

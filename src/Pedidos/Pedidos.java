@@ -36,6 +36,34 @@ public class Pedidos implements Pedable{
     private static Transaccionable tra=new Conecciones();
     private static ResultSet rs;
     private static String sql;
+    private Double subTotal;
+    private Double descuento;
+    private Double porcentajeDescuento;
+
+    public Double getSubTotal() {
+        return subTotal;
+    }
+
+    public void setSubTotal(Double subTotal) {
+        this.subTotal = subTotal;
+    }
+
+    public Double getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(Double descuento) {
+        this.descuento = descuento;
+    }
+
+    public Double getPorcentajeDescuento() {
+        return porcentajeDescuento;
+    }
+
+    public void setPorcentajeDescuento(Double porcentajeDescuento) {
+        this.porcentajeDescuento = porcentajeDescuento;
+    }
+    
 
     public Integer getId() {
         return id;
@@ -122,7 +150,7 @@ public class Pedidos implements Pedable{
         Pedidos pedido=new Pedidos();
         pedido=(Pedidos)ped;
         Integer verif=0;
-        sql="insert into pedidos (idcliente,fecha,total,idusuario,idcotizacion,estado) values ("+pedido.getIdCliente()+",'"+pedido.getFecha()+"',"+pedido.getTotal()+","+pedido.getIdUsuario()+","+pedido.getIdCotizacion()+",0)";
+        sql="insert into pedidos (idcliente,fecha,total,idusuario,idcotizacion,estado,subtotal,descuento,porcentajed) values ("+pedido.getIdCliente()+",'"+pedido.getFecha()+"',"+pedido.getTotal()+","+pedido.getIdUsuario()+","+pedido.getIdCotizacion()+",0,round("+pedido.getSubTotal()+",4),round("+pedido.getDescuento()+",4),"+pedido.getPorcentajeDescuento()+")";
         //Transaccionable tra=new Conecciones();
         tra.guardarRegistro(sql);
         sql="select LAST_INSERT_ID()";
@@ -162,6 +190,9 @@ public class Pedidos implements Pedable{
                 pedido.setIdRemito(rs.getInt("idremito"));
                 pedido.setIdUsuario(rs.getInt("idusuario"));
                 pedido.setTotal(rs.getDouble("total"));
+                pedido.setSubTotal(rs.getDouble("subtotal"));
+                pedido.setDescuento(rs.getDouble("descuento"));
+                pedido.setPorcentajeDescuento(rs.getDouble("porcentajed"));
                 //listado.add(pedido);
             }
         } catch (SQLException ex) {
@@ -190,6 +221,9 @@ public class Pedidos implements Pedable{
                 pedido.setIdRemito(rs.getInt("idremito"));
                 pedido.setIdUsuario(rs.getInt("idusuario"));
                 pedido.setTotal(rs.getDouble("total"));
+                pedido.setSubTotal(rs.getDouble("subtotal"));
+                pedido.setDescuento(rs.getDouble("descuento"));
+                pedido.setPorcentajeDescuento(rs.getDouble("porcentajed"));
                 listado.add(pedido);
             }
         } catch (SQLException ex) {
@@ -218,6 +252,9 @@ public class Pedidos implements Pedable{
                 pedido.setIdRemito(rs.getInt("idremito"));
                 pedido.setIdUsuario(rs.getInt("idusuario"));
                 pedido.setTotal(rs.getDouble("total"));
+                pedido.setSubTotal(rs.getDouble("subtotal"));
+                pedido.setDescuento(rs.getDouble("descuento"));
+                pedido.setPorcentajeDescuento(rs.getDouble("porcentajed"));
                 listado.add(pedido);
             }
         } catch (SQLException ex) {
@@ -246,6 +283,9 @@ public class Pedidos implements Pedable{
                 pedido.setIdRemito(rs.getInt("idremito"));
                 pedido.setIdUsuario(rs.getInt("idusuario"));
                 pedido.setTotal(rs.getDouble("total"));
+                pedido.setSubTotal(rs.getDouble("subtotal"));
+                pedido.setDescuento(rs.getDouble("descuento"));
+                pedido.setPorcentajeDescuento(rs.getDouble("porcentajed"));
                 listado.add(pedido);
             }
         } catch (SQLException ex) {
@@ -260,7 +300,7 @@ public class Pedidos implements Pedable{
         Boolean verif=true;
         Pedidos pedido=new Pedidos();
         pedido=(Pedidos)ped;
-        String sql="update pedidos set total="+pedido.getTotal()+",idcotizacion="+pedido.getIdCotizacion()+",idfactura="+pedido.getIdFactura()+",idremito="+pedido.getIdRemito()+",idremito="+pedido.getIdRemito()+",estado="+pedido.getEstado()+" where id="+pedido.getId();
+        String sql="update pedidos set total=round("+pedido.getTotal()+",4),subtotal=round("+pedido.getSubTotal()+",4),descuento=round("+pedido.getDescuento()+",4),porcentajed="+pedido.getPorcentajeDescuento()+",idcotizacion="+pedido.getIdCotizacion()+",idfactura="+pedido.getIdFactura()+",idremito="+pedido.getIdRemito()+",idremito="+pedido.getIdRemito()+",estado="+pedido.getEstado()+" where id="+pedido.getId();
         Transaccionable tra=new Conecciones();
         tra.guardarRegistro(sql);
         

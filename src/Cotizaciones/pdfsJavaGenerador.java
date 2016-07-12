@@ -166,15 +166,24 @@ public class pdfsJavaGenerador {
             }
             renglon=renglon - 20;
             Double subTotal=doc.getTotal() + descuento;
+            Double porc=doc.getPorcentajeDescuento() * 100;
+            cb.setTextMatrix(300,renglon);
+            cb.showText("SUBTOTAL ");
+            cb.setTextMatrix(440,renglon);
+            cb.showText(Numeros.ConvertirNumero(doc.getSubTotal()));
             
-            cb.setTextMatrix(150,renglon);
-            cb.showText("SUBTOTAL "+Numeros.ConvertirNumero(subTotal));
-            cb.setTextMatrix(280,renglon);
-            cb.showText("DES "+Numeros.ConvertirNumero(descuento));
+            renglon= renglon - 10;
+            cb.setTextMatrix(300,renglon);
+            cb.showText("DESCUENTO "+porc+" %: ");
+            cb.setTextMatrix(440,renglon);
+            cb.showText(Numeros.ConvertirNumero(doc.getDescuento()));
+            
             totalFinal=Numeros.ConvertirNumero(doc.getTotal());
-            cb.setTextMatrix(380,renglon);
-            cb.showText("TOTAL "+totalFinal);
-            
+            renglon= renglon - 10;
+            cb.setTextMatrix(300,renglon);
+            cb.showText("TOTAL ");
+            cb.setTextMatrix(440,renglon);
+            cb.showText(totalFinal);
             //pie de documento
             renglon=renglon - 60;
             cb.setTextMatrix(40,renglon);

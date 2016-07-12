@@ -902,6 +902,7 @@ public class Articulos implements Facturar,Editables,Comparables,Modificable{
         //articulo=(Articulos)listadoBarr.get(codigoDeBarra);
         
         String sql="select id,nombre,idrubro,idsubrubro,barras,precio,equivalencia,costo,minimo,stock,servicio,servicio1,modificaprecio,modificaservicio,stock,recargo,idcombo from articulos where BARRAS like '"+codigoDeBarra+"' and INHABILITADO=0";
+        System.out.println(sql);
         Transaccionable tra=new Conecciones();
         ResultSet rr=tra.leerConjuntoDeRegistros(sql);
         Articulos articulo=new Articulos();
@@ -1311,7 +1312,7 @@ public class Articulos implements Facturar,Editables,Comparables,Modificable{
         Iterator it=rubro1.listIterator();
         while(it.hasNext()){
             rubro=(SubRubros)it.next();
-            sql="select * from articulos where idsubrubro="+rubro.getId()+" order by nombre";
+            sql="select * from articulos where idsubrubro="+rubro.getId()+" and inhabilitado=0 order by nombre";
             ResultSet rs=tra.leerConjuntoDeRegistros(sql);
             System.out.println(sql);
         Double precio=0.00;

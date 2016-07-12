@@ -8,7 +8,6 @@ import Conversores.Numeros;
 import facturacion.clientes.Clientes;
 import interfaceGraficas.NuevoCliente;
 import facturacion.pantallas.SeleccionDeClientes;
-
 import interfaceGraficas.Inicio;
 import interfaces.Comparables;
 import interfacesPrograma.Facturar;
@@ -69,6 +68,8 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
     private DefaultComboBoxModel combox=new DefaultComboBoxModel();
     private TableColumn columnaCodigo;
     private String valorCargado;
+    private Double porcentajeDescuento;
+    private Double subTotal;
     
     
     public IngresoDeCotizacion() {
@@ -78,6 +79,8 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
         //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
         initComponents();
+        porcentajeDescuento=0.00;
+        subTotal=0.00;
         this.jLabel6.setText(cliT.getRazonSocial());
         this.jLabel7.setVisible(false);
         this.jTextField4.setVisible(false);
@@ -99,6 +102,8 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
 //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
         initComponents();
+        porcentajeDescuento=0.00;
+        subTotal=0.00;
         this.jButton3.setVisible(false);
         this.jButton5.setVisible(false);
         this.jLabel6.setText(cliT.getRazonSocial());
@@ -816,7 +821,26 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
         comprobante1.setFecha(Date.valueOf(fecha2));
         comprobante1.setVencimiento(Date.valueOf(vencimiento));
         comprobante1.setIdUsuario(Inicio.usuario.getNumero());
-        comprobante1.setTotal(montoTotal);
+        
+        
+        
+        subTotal=montoTotal;
+        Double ivv=subTotal * 0.21;
+        Double sub=0.00;
+        Double tot=montoTotal + ivv;
+        if(porcentajeDescuento > 0.00){
+            sub = subTotal * porcentajeDescuento;
+            sub= montoTotal - sub;
+        }else{
+            sub=montoTotal;
+        }
+        
+        comprobante1.setTotal(sub);
+        comprobante1.setSubTotal(montoTotal);
+        Double descuen=montoTotal - sub;
+        comprobante1.setDescuento(descuen);
+        comprobante1.setPorcentajeDescuento(porcentajeDescuento);
+        System.out.println("subtotal "+montoTotal+" descuento "+descuen+" total "+subTotal);
         Cotizable cCoti=new Cotizacion();
         Cotizable det=new DetalleCotizacion();
         DetalleCotizacion detalle;
@@ -836,8 +860,13 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
             
             detalle.setPrecioUnitario(articulo.getPrecioUnitarioNeto());
             detalle.setPrecioUnitarioNeto(articulo.getPrecioUnitario());
+            
             detalle.setDescuento(articulo.getDescuento());
+            if(articulo.getMontoDescuento()!=null){
             detalle.setMontoDescuento(articulo.getMontoDescuento());
+            }else{
+                detalle.setMontoDescuento(0.00);
+            }
             det.nuevaCotizacion(detalle);
             
         }
@@ -1007,6 +1036,9 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
 
     private void jTextField5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField5KeyPressed
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            String rub=this.jTextField5.getText();
+            
+            listadoR=ruble.buscar(rub);
             rubro=new Rubros();
             Rubrable subRuble=new SubRubros();
             Iterator iR=listadoR.listIterator();
@@ -1031,10 +1063,11 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
             this.jTextField1.selectAll();
             this.jTextField1.requestFocus();
         }else{
+            /*
             String rub=this.jTextField5.getText();
             
             listadoR=ruble.buscar(rub);
-            
+            */
             //this.jTable2.setModel(ruble.mostrarEnCombo(listadoR));
         }
         
@@ -1084,11 +1117,14 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
         if(KeyEvent.VK_ENTER==evt.getKeyCode()){
             Double descuentoGral=Numeros.ConvertirStringADouble(this.jTextField3.getText());
             descuentoGral=descuentoGral / 100;
+            porcentajeDescuento=descuentoGral;
+            /*
             Iterator it=detalleDelPedido.listIterator();
             Articulos art;
             Double precio=0.00;
             montoTotal=0.00;
             Double monto=0.00;
+            
             while(it.hasNext()){
                 art=(Articulos)it.next();
                 art.setDescuento(1);
@@ -1102,6 +1138,7 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
                 
                 montoTotal=montoTotal + monto;
             }
+                    */
             //cargarLista(detalleDelPedido);
             montrarMonto();
             agregarRenglonTabla();
@@ -1143,10 +1180,10 @@ private void agregarRenglonTabla(){
         Articulos pedidos;
         busC.addColumn("CODIGO");
         busC.addColumn("DESCRIPCION");
+        busC.addColumn("COSTO");
+        busC.addColumn("PRECIO UNITARIO S/IVA");
         busC.addColumn("CANTIDAD");
         busC.addColumn("PRECIO TOTAL");
-        busC.addColumn("PRECIO UNITARIO S/IVA");
-        busC.addColumn("COSTO");
         busC.addColumn("IVA");
         busC.addColumn("PRECIO FINAL");
         Object[] fila=new Object[8];
@@ -1161,7 +1198,6 @@ private void agregarRenglonTabla(){
             
             fila[0]=codig;
             fila[1]=desc;
-            fila[2]=cant;
             Double precioUnitario=pedidos.getPrecioUnitarioNeto();
             
             //precioUnitario=precioUnitario * cliT.getCoeficienteListaDeprecios();
@@ -1174,15 +1210,54 @@ private void agregarRenglonTabla(){
             String val=Numeros.ConvertirNumero(valor);
             montoTotal=montoTotal + valor;
             //precioUnitario=precioUnitario * cliT.getCoeficienteListaDeprecios();
-            fila[3]=val;
-            fila[4]=Numeros.ConvertirNumero(precioUnitario);
-            fila[5]=Numeros.ConvertirNumero(pedidos.getPrecioDeCosto());
+            //fila[2]=cant;
+            
+            fila[5]=val;
+            fila[3]=Numeros.ConvertirNumero(precioUnitario);
+            fila[2]=Numeros.ConvertirNumero(pedidos.getPrecioDeCosto());
             Double iva=valor * 0.21;
             fila[6]=Numeros.ConvertirNumero(iva);
+            fila[4]=cant;
             Double pFinal=valor + iva;
             fila[7]=Numeros.ConvertirNumero(pFinal);
             busC.addRow(fila);
         }
+        subTotal=montoTotal;
+        Double ivv=subTotal *0.21;
+        Double sub=subTotal + ivv;
+        Double tot=montoTotal + ivv;
+        if(porcentajeDescuento > 0.00){
+            sub = sub * porcentajeDescuento;
+            sub= tot - sub;
+        }
+        fila[0]="";
+        fila[1]="<html><strong>SUBTOTAL</strong></html>";
+        fila[2]="";
+        fila[3]="";
+        fila[4]="";
+        fila[5]="";
+        fila[6]="";
+        fila[7]="<html><strong>"+Numeros.ConvertirNumero(tot)+"</strong></html>";
+        Double descuen=tot - sub;
+        busC.addRow(fila);
+        fila[0]="";
+        fila[1]="<html><strong>DESCUENTO </strong></html>";
+        fila[2]="";
+        fila[3]="";
+        fila[4]="";
+        fila[5]="";
+        fila[6]="";
+        fila[7]="<html><strong> - "+Numeros.ConvertirNumero(descuen)+"</strong></html>";
+        busC.addRow(fila);
+        fila[0]="";
+        fila[1]="<html><strong>TOTAL</strong></html>";
+        fila[2]="";
+        fila[3]="";
+        fila[4]="";
+        fila[5]="";
+        fila[6]="";
+        fila[7]="<html><strong>"+Numeros.ConvertirNumero(sub)+"</strong></html>";
+        busC.addRow(fila);
         columnaCodigo=this.jTable1.getColumn("CODIGO");
         columnaCodigo.setPreferredWidth(40);
         columnaCodigo.setMaxWidth(40);
@@ -1209,6 +1284,7 @@ private void agregarRenglonTabla(){
 private void montrarMonto(){
     //System.err.println("DESCUENTO :"+cliT.getDescuento());
     Double total=montoTotal;
+    subTotal = montoTotal;
     //Double total=montoTotal * cliT.getDescuento();
     //comp.setMontoTotal(total);
     this.jLabel1.setText("<html>TOTAL COTIZACION:  "+Numeros.ConvertirNumero(total)+"</html>");

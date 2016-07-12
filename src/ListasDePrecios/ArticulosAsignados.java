@@ -302,12 +302,17 @@ public class ArticulosAsignados implements Articulable{
         while(it.hasNext()){
             art=(ArticulosAsignados)it.next();
             articulo=new Articulos();
+            
             articulo=(Articulos) comp.cargarPorCodigoAsignado(art.getId());
-            articulo.setPrecioDeCosto(Numeros.ConvertirStringADouble(String.valueOf(art.getPrecioDeCosto())));
+            if(articulo !=null){
+                System.out.println(art.getId()+" // "+art.getDescripcion()+" // "+art.getPrecioDeCosto()+" // "+articulo.getPrecioDeCosto());
+                articulo.setPrecioDeCosto(art.getPrecioDeCosto());
+                
+            
             articulo.setPrecioUnitario(Numeros.ConvertirStringADouble(String.valueOf(art.getPrecioUnitario())));
             articulo.setPrecioUnitarioNeto(Numeros.ConvertirStringADouble(String.valueOf(art.getPrecioUnitario())));
             listadoArticulos.add(articulo);
-            
+            }
         }
         
         return listadoArticulos;

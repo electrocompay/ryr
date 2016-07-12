@@ -34,6 +34,36 @@ public class Cotizacion implements Cotizable{
     private int estado;
     private Integer idPedido;
     private String archivo;
+    private Double subTotal;
+    private Double descuento;
+    private Double porcentajeDescuento;
+
+    public Double getPorcentajeDescuento() {
+        return porcentajeDescuento;
+    }
+
+    public void setPorcentajeDescuento(Double porcentajeDescuento) {
+        this.porcentajeDescuento = porcentajeDescuento;
+    }
+
+    public Double getSubTotal() {
+        return subTotal;
+    }
+
+    public void setSubTotal(Double subTotal) {
+        this.subTotal = subTotal;
+    }
+
+    public Double getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(Double descuento) {
+        this.descuento = descuento;
+    }
+
+    
+    
 
     public Integer getId() {
         return id;
@@ -126,6 +156,9 @@ public class Cotizacion implements Cotizable{
                 cotizacion.setIdUsuario(rs.getInt("idusuario"));
                 cotizacion.setTotal(rs.getDouble("total"));
                 cotizacion.setVencimiento(rs.getDate("vencimiento"));
+                cotizacion.setSubTotal(rs.getDouble("subtotal"));
+                cotizacion.setDescuento(rs.getDouble("descuento"));
+                cotizacion.setPorcentajeDescuento(rs.getDouble("porcentajed"));
                 
             }
         } catch (SQLException ex) {
@@ -158,6 +191,9 @@ public class Cotizacion implements Cotizable{
                 cotizacion.setIdUsuario(rs.getInt("idusuario"));
                 cotizacion.setTotal(rs.getDouble("total"));
                 cotizacion.setVencimiento(rs.getDate("vencimiento"));
+                cotizacion.setSubTotal(rs.getDouble("subtotal"));
+                cotizacion.setDescuento(rs.getDouble("descuento"));
+                cotizacion.setPorcentajeDescuento(rs.getDouble("porcentajed"));
                 listado.add(cotizacion);
             }
         } catch (SQLException ex) {
@@ -185,6 +221,9 @@ public class Cotizacion implements Cotizable{
                 cotizacion.setIdUsuario(rs.getInt("idusuario"));
                 cotizacion.setTotal(rs.getDouble("total"));
                 cotizacion.setVencimiento(rs.getDate("vencimiento"));
+                cotizacion.setSubTotal(rs.getDouble("subtotal"));
+                cotizacion.setDescuento(rs.getDouble("descuento"));
+                cotizacion.setPorcentajeDescuento(rs.getDouble("porcentajed"));
                 listado.add(cotizacion);
             }
         } catch (SQLException ex) {
@@ -212,6 +251,9 @@ public class Cotizacion implements Cotizable{
                 cotizacion.setIdUsuario(rs.getInt("idusuario"));
                 cotizacion.setTotal(rs.getDouble("total"));
                 cotizacion.setVencimiento(rs.getDate("vencimiento"));
+                cotizacion.setSubTotal(rs.getDouble("subtotal"));
+                cotizacion.setDescuento(rs.getDouble("descuento"));
+                cotizacion.setPorcentajeDescuento(rs.getDouble("porcentajed"));
                 listado.add(cotizacion);
             }
         } catch (SQLException ex) {
@@ -244,7 +286,7 @@ public class Cotizacion implements Cotizable{
     public Integer nuevaCotizacion(Object coti) {
         Cotizacion cotizacion=new Cotizacion();
         cotizacion=(Cotizacion)coti;
-        String sql="insert into cotizaciones (idcliente,fecha,vencimiento,total,idusuario) values ("+cotizacion.getIdCliente()+",'"+cotizacion.getFecha()+"','"+cotizacion.getVencimiento()+"',round("+cotizacion.getTotal()+",4),"+cotizacion.getIdUsuario()+")";
+        String sql="insert into cotizaciones (idcliente,fecha,vencimiento,total,idusuario,subtotal,descuento,porcentajed) values ("+cotizacion.getIdCliente()+",'"+cotizacion.getFecha()+"','"+cotizacion.getVencimiento()+"',round("+cotizacion.getTotal()+",4),"+cotizacion.getIdUsuario()+",round("+cotizacion.getSubTotal()+",4),round("+cotizacion.getDescuento()+",4),"+cotizacion.getPorcentajeDescuento()+")";
         Transaccionable tra=new Conecciones();
         tra.guardarRegistro(sql);
         int ultimo=0;
@@ -265,7 +307,7 @@ public class Cotizacion implements Cotizable{
     public Object modificarCotizacion(Object coti) {
         Cotizacion cotizacion=new Cotizacion();
         cotizacion=(Cotizacion)coti;
-        String sql="update cotizaciones set total=round("+cotizacion.getTotal()+",4), estado="+cotizacion.getEstado()+",idpedido="+cotizacion.getIdPedido()+" where id="+cotizacion.getId();
+        String sql="update cotizaciones set total=round("+cotizacion.getTotal()+",4),subtotal=round("+cotizacion.getSubTotal()+",4),descuento=round("+cotizacion.getDescuento()+",4),porcentajed="+cotizacion.getPorcentajeDescuento()+", estado="+cotizacion.getEstado()+",idpedido="+cotizacion.getIdPedido()+" where id="+cotizacion.getId();
         Transaccionable tra=new Conecciones();
         tra.guardarRegistro(sql);
         
@@ -324,6 +366,9 @@ public class Cotizacion implements Cotizable{
         pedido.setIdRemito(0);
         pedido.setIdUsuario(Inicio.usuario.getNumeroId());
         pedido.setTotal(cotizacion.getTotal());
+        pedido.setSubTotal(cotizacion.getSubTotal());
+        pedido.setDescuento(cotizacion.getDescuento());
+        pedido.setPorcentajeDescuento(cotizacion.getPorcentajeDescuento());
         pedido.setId(pedPedido.nuevoPedido(pedido));
         cotizacion.setEstado(1);
         cotiza.modificarCotizacion(cotizacion);
