@@ -1135,10 +1135,10 @@ private void agregarRenglonTabla(){
         Articulos pedidos;
         busC.addColumn("CODIGO");
         busC.addColumn("DESCRIPCION");
+        busC.addColumn("COSTO");
+        busC.addColumn("PRECIO UNITARIO S/IVA");
         busC.addColumn("CANTIDAD");
         busC.addColumn("PRECIO TOTAL");
-        busC.addColumn("PRECIO UNITARIO S/IVA");
-        busC.addColumn("COSTO");
         busC.addColumn("IVA");
         busC.addColumn("PRECIO FINAL");
         Object[] fila=new Object[8];
@@ -1153,7 +1153,6 @@ private void agregarRenglonTabla(){
             
             fila[0]=codig;
             fila[1]=desc;
-            fila[2]=cant;
             Double precioUnitario=pedidos.getPrecioUnitarioNeto();
             
             //precioUnitario=precioUnitario * cliT.getCoeficienteListaDeprecios();
@@ -1166,11 +1165,14 @@ private void agregarRenglonTabla(){
             String val=Numeros.ConvertirNumero(valor);
             montoTotal=montoTotal + valor;
             //precioUnitario=precioUnitario * cliT.getCoeficienteListaDeprecios();
-            fila[3]=val;
-            fila[4]=Numeros.ConvertirNumero(precioUnitario);
-            fila[5]=Numeros.ConvertirNumero(pedidos.getPrecioDeCosto());
+            //fila[2]=cant;
+            
+            fila[5]=val;
+            fila[3]=Numeros.ConvertirNumero(precioUnitario);
+            fila[2]=Numeros.ConvertirNumero(pedidos.getPrecioDeCosto());
             Double iva=valor * 0.21;
             fila[6]=Numeros.ConvertirNumero(iva);
+            fila[4]=cant;
             Double pFinal=valor + iva;
             fila[7]=Numeros.ConvertirNumero(pFinal);
             busC.addRow(fila);
