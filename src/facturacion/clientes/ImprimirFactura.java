@@ -160,10 +160,16 @@ public class ImprimirFactura {
         String unitario="";
         Double descuentoTotal=0.00;
         String descuento;
+        String descripcionArt=null;
         while(it.hasNext()){
             detalleDeCotizacion=(DetalleFacturas)it.next();
             pagina.drawString(String.valueOf(detalleDeCotizacion.getIdArticulo()),40,renglon);
-            pagina.drawString(detalleDeCotizacion.getDescripcionArticulo(),80,renglon);
+            if(detalleDeCotizacion.getDescripcionArticulo().length() > 40){
+            descripcionArt=detalleDeCotizacion.getDescripcionArticulo().substring(0, 40);
+            }else{
+                descripcionArt=detalleDeCotizacion.getDescripcionArticulo();
+            }
+            pagina.drawString(descripcionArt,80,renglon);
             if(detalleDeCotizacion.getDescuento()!=null){
                 descuentoTotal=descuentoTotal + detalleDeCotizacion.getDescuento();
                 descuento=String.valueOf(detalleDeCotizacion.getDescuento());

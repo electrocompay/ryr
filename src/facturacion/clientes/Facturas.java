@@ -37,6 +37,34 @@ public class Facturas implements Facturable{
     private String descripcionTipo;
     private Double montoOriginal;
     private String numeroFiscal;
+    private Double subTotal;
+    private Double descuento;
+    private Double porcentajeDescuento;
+
+    public Double getSubTotal() {
+        return subTotal;
+    }
+
+    public void setSubTotal(Double subTotal) {
+        this.subTotal = subTotal;
+    }
+
+    public Double getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(Double descuento) {
+        this.descuento = descuento;
+    }
+
+    public Double getPorcentajeDescuento() {
+        return porcentajeDescuento;
+    }
+
+    public void setPorcentajeDescuento(Double porcentajeDescuento) {
+        this.porcentajeDescuento = porcentajeDescuento;
+    }
+    
 
     public String getNumeroFiscal() {
         return numeroFiscal;
@@ -161,7 +189,7 @@ public class Facturas implements Facturable{
         Facturas factura=new Facturas();
         factura=(Facturas)ped;
         Transaccionable tra=new Conecciones();
-        String sql="insert into facturas (idcliente,total,tipo,idusuario,idpedido,idremito,numerofactura,estado,saldo) values ("+factura.getIdCliente()+",round("+factura.getTotal()+",4),"+factura.getTipo()+","+factura.getIdUsuario()+","+factura.getIdPedido()+","+factura.getIdRemito()+","+factura.getNumeroFactura()+","+factura.getEstado()+",round("+factura.getTotal()+",4))";
+        String sql="insert into facturas (idcliente,total,tipo,idusuario,idpedido,idremito,numerofactura,estado,saldo,subtotal,descuento,porcentajeD) values ("+factura.getIdCliente()+",round("+factura.getTotal()+",4),"+factura.getTipo()+","+factura.getIdUsuario()+","+factura.getIdPedido()+","+factura.getIdRemito()+","+factura.getNumeroFactura()+","+factura.getEstado()+",round("+factura.getTotal()+",4),"+factura.getSubTotal()+","+factura.getDescuento()+","+factura.getPorcentajeDescuento()+")";
         tra.guardarRegistro(sql);
         int idNuevo=0;
         sql="select LAST_INSERT_ID()";
@@ -200,6 +228,9 @@ public class Facturas implements Facturable{
                 factura.setTipo(rs.getInt("tipo"));
                 factura.setTotal(rs.getDouble("total"));
                 factura.setDescripcionTipo(rs.getString("descripcionTipo"));
+                factura.setSubTotal(rs.getDouble("subtotal"));
+                factura.setDescuento(rs.getDouble("descuento"));
+                factura.setPorcentajeDescuento(rs.getDouble("porcentajeD"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(Facturas.class.getName()).log(Level.SEVERE, null, ex);
@@ -306,6 +337,9 @@ public class Facturas implements Facturable{
                 factura.setMontoOriginal(rs.getDouble("total"));
                 factura.setDescripcionTipo(rs.getString("descripciontipo"));
                 factura.setNumeroFiscal(rs.getString("fiscal"));
+                factura.setSubTotal(rs.getDouble("subtotal"));
+                factura.setDescuento(rs.getDouble("descuento"));
+                factura.setPorcentajeDescuento(rs.getDouble("porcentajeD"));
                 listado.add(factura);
             }
         } catch (SQLException ex) {
@@ -354,6 +388,9 @@ public class Facturas implements Facturable{
                 factura.setTipo(rs.getInt("tipo"));
                 factura.setTotal(rs.getDouble("total"));
                 factura.setDescripcionTipo(rs.getString("descripcionTipo"));
+                factura.setSubTotal(rs.getDouble("subtotal"));
+                factura.setDescuento(rs.getDouble("descuento"));
+                factura.setPorcentajeDescuento(rs.getDouble("porcentajeD"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(Facturas.class.getName()).log(Level.SEVERE, null, ex);

@@ -122,10 +122,16 @@ public class ImprimirPedido {
         pagina.drawString("CANTIDAD", 350,90);
         int renglon=100;
         Iterator it=listadoDetalle.listIterator();
+        String descripcionArt=null;
         while(it.hasNext()){
             detalleDeCotizacion=(DetallePedidos)it.next();
             pagina.drawString(String.valueOf(detalleDeCotizacion.getIdArticulo()),40,renglon);
-            pagina.drawString(detalleDeCotizacion.getDescripcionArticulo(),80,renglon);
+            if(detalleDeCotizacion.getDescripcionArticulo().length() > 40){
+            descripcionArt=detalleDeCotizacion.getDescripcionArticulo().substring(0, 40);
+            }else{
+                descripcionArt=detalleDeCotizacion.getDescripcionArticulo();
+            }
+            pagina.drawString(descripcionArt,80,renglon);
             pagina.drawString(String.valueOf(detalleDeCotizacion.getCantidad()),370,renglon);
             renglon=renglon + 10;
         }
@@ -194,10 +200,12 @@ public class ImprimirPedido {
         int renglon=260;
         Iterator it=listadoDetalle.listIterator();
         Double generalT=0.00;
+        String descripcionArt=null;
         while(it.hasNext()){
             detalleDeCotizacion=(DetallePedidos)it.next();
             pagina.drawString(String.valueOf(detalleDeCotizacion.getIdArticulo()),40,renglon);
-            pagina.drawString(detalleDeCotizacion.getDescripcionArticulo(),80,renglon);
+            descripcionArt=detalleDeCotizacion.getDescripcionArticulo().substring(0, 40);
+            pagina.drawString(descripcionArt,80,renglon);
             pagina.drawString(String.valueOf(detalleDeCotizacion.getCantidad()),370,renglon);
             pagina.drawString(Numeros.ConvertirNumero(detalleDeCotizacion.getPrecioUnitario() * 1.21),410,renglon);
             Double total=detalleDeCotizacion.getCantidad() * (detalleDeCotizacion.getPrecioUnitario() * 1.21);

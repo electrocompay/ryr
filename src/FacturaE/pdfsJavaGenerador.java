@@ -223,6 +223,7 @@ public class pdfsJavaGenerador {
             cb.setFontAndSize(bf,10);
             Iterator itl=listado.listIterator();
             vencimiento="C.A.E.: "+doc.getCae()+"    C.A.E. vencimiento: "+doc.getCaeVto();
+            String descripcionArt=null;
             while(itl.hasNext()){
                 saldo=(DetalleFacturas)itl.next();
                 //vencimiento=saldo.getVencimientoString();
@@ -237,7 +238,12 @@ public class pdfsJavaGenerador {
                 cb.setTextMatrix(40,renglon);
                 cb.showText(String.valueOf(saldo.getIdArticulo()));
                 cb.setTextMatrix(70,renglon);
-                cb.showText(saldo.getDescripcionArticulo());
+                if(saldo.getDescripcionArticulo().length() > 40){
+            descripcionArt=saldo.getDescripcionArticulo().substring(0, 40);
+            }else{
+                descripcionArt=saldo.getDescripcionArticulo();
+            }
+                cb.showText(descripcionArt);
                 cb.setTextMatrix(330,renglon);
                 cb.showText(String.valueOf(saldo.getCantidad()));
                 tot=saldo.getCantidad() * saldo.getPrecioUnitario();

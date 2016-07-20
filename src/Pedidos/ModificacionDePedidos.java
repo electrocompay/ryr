@@ -71,6 +71,8 @@ public class ModificacionDePedidos extends javax.swing.JInternalFrame {
     private DefaultComboBoxModel combox=new DefaultComboBoxModel();
     private TableColumn columnaCodigo;
     private String valorCargado;
+    private Double porcentajeDescuento;
+    private Double subTotal;
     
     public ModificacionDePedidos() {
         //Articulos.CargarMap();
@@ -102,10 +104,12 @@ public class ModificacionDePedidos extends javax.swing.JInternalFrame {
         lista=new ListasDePrecios(cliT.getListaDePrecios());
         listadoPed=detP.cargarDetallePedido(pedido.getId());
         detalleDelPedido=detP.convertirAArticulos(listadoPed);
-        
+        porcentajeDescuento=pedido.getPorcentajeDescuento();
+        subTotal=0.00;
 //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
         initComponents();
+        this.jTextField3.setText(String.valueOf(porcentajeDescuento * 100));
         this.jButton3.setVisible(false);
         this.jButton5.setVisible(false);
         this.jLabel6.setText(cliT.getRazonSocial());
@@ -812,10 +816,30 @@ public class ModificacionDePedidos extends javax.swing.JInternalFrame {
         comprobante1.setFecha(Date.valueOf(fecha2));
         comprobante1.setIdCotizacion(0);
         comprobante1.setIdUsuario(Inicio.usuario.getNumero());
+        
+        
+        subTotal=montoTotal;
+        Double ivv=subTotal * 0.21;
+        Double sub=0.00;
+        Double tot=montoTotal + ivv;
+        if(porcentajeDescuento > 0.00){
+            sub = subTotal * porcentajeDescuento;
+            sub= montoTotal - sub;
+        }else{
+            sub=montoTotal;
+        }
+        
+        comprobante1.setTotal(sub);
+        comprobante1.setSubTotal(montoTotal);
+        Double descuen=montoTotal - sub;
+        comprobante1.setDescuento(descuen);
+        comprobante1.setPorcentajeDescuento(porcentajeDescuento);
+        System.out.println("subtotal "+montoTotal+" descuento "+descuen+" total "+subTotal);
+        
         comprobante1.setEstado(0);
         comprobante1.setIdFactura(0);
         comprobante1.setIdRemito(0);
-        comprobante1.setTotal(montoTotal);
+        //comprobante1.setTotal(montoTotal);
         Pedable cCoti=new Pedidos();
         Pedable det=new DetallePedidos();
         DetallePedidos detalle;
@@ -1097,21 +1121,7 @@ public class ModificacionDePedidos extends javax.swing.JInternalFrame {
         if(KeyEvent.VK_ENTER==evt.getKeyCode()){
             Double descuentoGral=Numeros.ConvertirStringADouble(this.jTextField3.getText());
             descuentoGral=descuentoGral / 100;
-            Iterator it=detalleDelPedido.listIterator();
-            Articulos art;
-            Double precio=0.00;
-            montoTotal=0.00;
-            Double monto=0.00;
-            while(it.hasNext()){
-                art=(Articulos)it.next();
-                art.setDescuento(1);
-                precio=art.getPrecioUnitarioNeto() * descuentoGral;
-                precio=art.getPrecioUnitarioNeto() - precio;
-                art.setPrecioUnitarioNeto(precio);
-                art.setPrecioUnitario(precio);
-                monto=art.getPrecioUnitarioNeto() * art.getCantidad();
-                montoTotal=montoTotal + monto;
-            }
+            porcentajeDescuento=descuentoGral;
             //cargarLista(detalleDelPedido);
             montrarMonto();
             agregarRenglonTabla();
@@ -1193,6 +1203,42 @@ private void agregarRenglonTabla(){
             fila[7]=Numeros.ConvertirNumero(pFinal);
             busC.addRow(fila);
         }
+        subTotal=montoTotal;
+        Double ivv=subTotal *0.21;
+        Double sub=subTotal + ivv;
+        Double tot=montoTotal + ivv;
+        if(porcentajeDescuento > 0.00){
+            sub = sub * porcentajeDescuento;
+            sub= tot - sub;
+        }
+        fila[0]="";
+        fila[1]="<html><strong>SUBTOTAL</strong></html>";
+        fila[2]="";
+        fila[3]="";
+        fila[4]="";
+        fila[5]="";
+        fila[6]="";
+        fila[7]="<html><strong>"+Numeros.ConvertirNumero(tot)+"</strong></html>";
+        Double descuen=tot - sub;
+        busC.addRow(fila);
+        fila[0]="";
+        fila[1]="<html><strong>DESCUENTO </strong></html>";
+        fila[2]="";
+        fila[3]="";
+        fila[4]="";
+        fila[5]="";
+        fila[6]="";
+        fila[7]="<html><strong> - "+Numeros.ConvertirNumero(descuen)+"</strong></html>";
+        busC.addRow(fila);
+        fila[0]="";
+        fila[1]="<html><strong>TOTAL</strong></html>";
+        fila[2]="";
+        fila[3]="";
+        fila[4]="";
+        fila[5]="";
+        fila[6]="";
+        fila[7]="<html><strong>"+Numeros.ConvertirNumero(sub)+"</strong></html>";
+        busC.addRow(fila);
         columnaCodigo=this.jTable1.getColumn("CODIGO");
         columnaCodigo.setPreferredWidth(40);
         columnaCodigo.setMaxWidth(40);

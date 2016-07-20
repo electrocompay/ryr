@@ -48,6 +48,36 @@ public class Comprobantes implements Facturar{
     private Date vencimiento;
     private Integer idFactura;
     private Boolean fe;
+    private Double subTotal;
+    private Double porcentajeDescuento;
+    private Double descuento;
+
+    public Double getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(Double descuento) {
+        this.descuento = descuento;
+    }
+    
+
+    public Double getSubTotal() {
+        return subTotal;
+    }
+
+    public void setSubTotal(Double subTotal) {
+        this.subTotal = subTotal;
+    }
+
+    public Double getPorcentajeDescuento() {
+        return porcentajeDescuento;
+    }
+
+    public void setPorcentajeDescuento(Double porcentajeDescuento) {
+        this.porcentajeDescuento = porcentajeDescuento;
+    }
+    
+    
 
     public Boolean getFe() {
         return fe;
@@ -306,6 +336,9 @@ public class Comprobantes implements Facturar{
         factura.setIdCliente(comp.getCliente().getCodigoId());
         factura.setIdPedido(0);
         factura.setIdRemito(0);
+        factura.setSubTotal(comp.getSubTotal());
+        factura.setDescuento(comp.getDescuento());
+        factura.setPorcentajeDescuento(comp.getPorcentajeDescuento());
         factura.setIdUsuario(Inicio.usuario.getNumeroId());
         factura.setNumeroFactura(numeroComprobante);
         factura.setTipo(comp.getTipoComprobante());

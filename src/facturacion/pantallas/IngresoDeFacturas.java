@@ -74,6 +74,8 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
     private DefaultComboBoxModel combox=new DefaultComboBoxModel();
     private TableColumn columnaCodigo;
     private String valorCargado;
+    private Double porcentajeDescuento;
+    private Double subTotal;
     
     public IngresoDeFacturas() {
         //Articulos.CargarMap();
@@ -81,6 +83,8 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
         //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
         initComponents();
+        porcentajeDescuento=0.00;
+        subTotal=0.00;
         this.jCheckBox2.setEnabled(true);
         this.jCheckBox2.isSelected();
         this.jLabel6.setText(cliT.getRazonSocial());
@@ -99,6 +103,8 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
 //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
         initComponents();
+        porcentajeDescuento=0.00;
+        subTotal=0.00;
         this.jButton3.setVisible(false);
         this.jButton5.setVisible(false);
         //this.jCheckBox2.isSelected();
@@ -854,7 +860,23 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
            }
             }
         }
-        comprobante.setMontoTotal(montoTotal);
+        subTotal=montoTotal;
+        Double ivv=subTotal * 0.21;
+        Double sub=0.00;
+        Double tot=montoTotal + ivv;
+        if(porcentajeDescuento > 0.00){
+            sub = subTotal * porcentajeDescuento;
+            sub= montoTotal - sub;
+        }else{
+            sub=montoTotal;
+        }
+        
+        comprobante.setMontoTotal(sub);
+        comprobante.setSubTotal(montoTotal);
+        Double descuen=montoTotal - sub;
+        comprobante.setDescuento(descuen);
+        comprobante.setPorcentajeDescuento(porcentajeDescuento);
+        
         int noFacturar=0;
         if(IngresoDeFacturas.jCheckBox2.isSelected()){
             comprobante.setPagado(1);
@@ -1249,21 +1271,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
         if(KeyEvent.VK_ENTER==evt.getKeyCode()){
             Double descuentoGral=Numeros.ConvertirStringADouble(this.jTextField3.getText());
             descuentoGral=descuentoGral / 100;
-            Iterator it=detalleDelPedido.listIterator();
-            Articulos art;
-            Double precio=0.00;
-            montoTotal=0.00;
-            Double monto=0.00;
-            while(it.hasNext()){
-                art=(Articulos)it.next();
-                art.setDescuento(1);
-                precio=art.getPrecioUnitarioNeto() * descuentoGral;
-                precio=art.getPrecioUnitarioNeto() - precio;
-                art.setPrecioUnitarioNeto(precio);
-                art.setPrecioUnitario(precio);
-                monto=art.getPrecioUnitarioNeto() * art.getCantidad();
-                montoTotal=montoTotal + monto;
-            }
+            porcentajeDescuento=descuentoGral;
             //cargarLista(detalleDelPedido);
             montrarMonto();
             agregarRenglonTabla();
@@ -1345,6 +1353,42 @@ private void agregarRenglonTabla(){
             fila[7]=Numeros.ConvertirNumero(pFinal);
             busC.addRow(fila);
         }
+        subTotal=montoTotal;
+        Double ivv=subTotal *0.21;
+        Double sub=subTotal + ivv;
+        Double tot=montoTotal + ivv;
+        if(porcentajeDescuento > 0.00){
+            sub = sub * porcentajeDescuento;
+            sub= tot - sub;
+        }
+        fila[0]="";
+        fila[1]="<html><strong>SUBTOTAL</strong></html>";
+        fila[2]="";
+        fila[3]="";
+        fila[4]="";
+        fila[5]="";
+        fila[6]="";
+        fila[7]="<html><strong>"+Numeros.ConvertirNumero(tot)+"</strong></html>";
+        Double descuen=tot - sub;
+        busC.addRow(fila);
+        fila[0]="";
+        fila[1]="<html><strong>DESCUENTO </strong></html>";
+        fila[2]="";
+        fila[3]="";
+        fila[4]="";
+        fila[5]="";
+        fila[6]="";
+        fila[7]="<html><strong> - "+Numeros.ConvertirNumero(descuen)+"</strong></html>";
+        busC.addRow(fila);
+        fila[0]="";
+        fila[1]="<html><strong>TOTAL</strong></html>";
+        fila[2]="";
+        fila[3]="";
+        fila[4]="";
+        fila[5]="";
+        fila[6]="";
+        fila[7]="<html><strong>"+Numeros.ConvertirNumero(sub)+"</strong></html>";
+        busC.addRow(fila);
         columnaCodigo=this.jTable1.getColumn("CODIGO");
         columnaCodigo.setPreferredWidth(40);
         columnaCodigo.setMaxWidth(40);

@@ -349,7 +349,7 @@ public class FacturaElectronica implements FacturableE{
 
 	Element primerElemento = (Element) primerNodo;
         //Configuracion conf=new Configuracion();
-
+        
 	        org.w3c.dom.NodeList primerNombreElementoLista =primerElemento.getElementsByTagName("RESPONSE");
 	Element primerNombreElemento =(Element) primerNombreElementoLista.item(0);
 	        org.w3c.dom.NodeList primerNombre = primerNombreElemento.getChildNodes();
@@ -394,6 +394,7 @@ public class FacturaElectronica implements FacturableE{
 	System.out.println("afipplastcbte : "  + fE.getAfipPlastCbte());
         //conf.setClave(clave);
         //listadoConecciones.add(conf);
+        
 	}
         }
         in.close();

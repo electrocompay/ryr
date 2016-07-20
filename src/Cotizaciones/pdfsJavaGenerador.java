@@ -113,7 +113,7 @@ public class pdfsJavaGenerador {
                 cb.showText("COD");
                 cb.setTextMatrix(70,renglon);
                 cb.showText("DESCRIPCION");
-                cb.setTextMatrix(330,renglon);
+                cb.setTextMatrix(320,renglon);
                 cb.showText("P. UNIT.");
                 cb.setTextMatrix(380,renglon);
                 cb.showText("CANT.");
@@ -131,6 +131,7 @@ public class pdfsJavaGenerador {
             Double descuento=0.00;
             Double descUnitario=0.00;
             Double descTotal=0.00;
+            String descripcionArt=null;
             while(itl.hasNext()){
                 saldo=(DetalleCotizacion)itl.next();
                 //vencimiento=saldo.getVencimientoString();
@@ -146,7 +147,12 @@ public class pdfsJavaGenerador {
                 cb.setTextMatrix(40,renglon);
                 cb.showText(String.valueOf(saldo.getIdArticulo()));
                 cb.setTextMatrix(70,renglon);
-                cb.showText(saldo.getDescripcionArticulo());
+                if(saldo.getDescripcionArticulo().length() > 40){
+            descripcionArt=saldo.getDescripcionArticulo().substring(0, 40);
+            }else{
+                descripcionArt=saldo.getDescripcionArticulo();
+            }
+                cb.showText(descripcionArt);
                 cb.setTextMatrix(330,renglon);
                 cb.showText(monto);
                 cb.setTextMatrix(380,renglon);
