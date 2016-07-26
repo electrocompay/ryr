@@ -746,7 +746,9 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
        }
        ListasDePrecios lista=new ListasDePrecios();
        lista=(ListasDePrecios)listadoL.get(this.jComboBox2.getSelectedIndex());
+       
        cli.setListaDePrecios(lista.getNumeroLista());
+       cli.setCoeficienteListaDeprecios(lista.getPorcentaje());
        cli.setTipoIva(tipo);
        cli.setCondicionIva(condicion1);
        cli.setNumeroDeCuit(this.jTextField3.getText());

@@ -372,9 +372,11 @@ public class ArticulosMod extends javax.swing.JInternalFrame {
         cant=Numeros.ConvertirStringADouble(this.jTextField5.getText());
         arti.setPrecioUnitarioNeto(cant);
         //cant=Numeros.ConvertirStringADouble(this.jTextField6.getText());
-        arti.setPrecioServicio(cant);
+        arti.setPrecioServicio(0.0000);
         //cant=Numeros.ConvertirStringADouble(this.jTextField9.getText());
-        arti.setPrecioServicio1(cant);
+        arti.setPrecioServicio1(0.0000);
+        arti.setModificaPrecio(false);
+        arti.setModificaServicio(false);
         //arti.setModificaPrecio(this.jCheckBox1.isSelected());
         //arti.setModificaServicio(this.jCheckBox2.isSelected());
         
