@@ -12,7 +12,6 @@ import Actualizaciones.BkDeConeccion;
 import Articulos.AbmArticulos;
 import Proveedores.Proveedores;
 import Depositos.Depositos;
-import Excel.InformeMensual;
 import Sucursales.Cajas;
 import Sucursales.ListasDePrecios;
 import Sucursales.Sucursales;
@@ -26,12 +25,9 @@ import interfacesPrograma.Cajeables;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyVetoException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -43,12 +39,10 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.Timer;
 import Articulos.Articulos;
 import Articulos.SubRubrosAbm;
 import FacturaE.AbmFacturaElectronica;
 import Recibos.ChequesAbm;
-import objetos.GastosF;
 
 /**
  *
@@ -725,6 +719,7 @@ public class Inicio extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
        SubRubrosAbm sub=new SubRubrosAbm();
+       
        Inicio.jDesktopPane1.add(sub);
        sub.setVisible(true);
        sub.toFront();

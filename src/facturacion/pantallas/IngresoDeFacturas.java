@@ -750,8 +750,8 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
                     Double precio=comparar.comparaConCotizaciones(cliT.getCodigoId(),arti.getNumeroId());
                     String precio2=comparar.comparaConPedidos(cliT.getCodigoId(),arti.getNumeroId());
                     // aca tengo que modificar el precio unitario segun el coeficiente del cliente y la lista
-                    Double precioU=arti.getPrecioUnitarioNeto() * lista.getCoeficiente();
-                    precioU= precioU * cliT.getCoeficienteListaDeprecios();
+                    //Double precioU=arti.getPrecioUnitarioNeto();// * lista.getCoeficiente();
+                    Double precioU= arti.getPrecioUnitarioNeto() * cliT.getCoeficienteListaDeprecios();
                     articul.setPrecioUnitarioNeto(precioU);
                     
                     if(precio > 0){

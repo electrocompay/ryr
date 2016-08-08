@@ -147,8 +147,8 @@ public class pdfsJavaGenerador {
                 cb.setTextMatrix(40,renglon);
                 cb.showText(String.valueOf(saldo.getIdArticulo()));
                 cb.setTextMatrix(60,renglon);
-                if(saldo.getDescripcionArticulo().length() > 50){
-            descripcionArt=saldo.getDescripcionArticulo().substring(0, 50);
+                if(saldo.getDescripcionArticulo().length() > 40){
+            descripcionArt=saldo.getDescripcionArticulo().substring(0, 40);
             }else{
                 descripcionArt=saldo.getDescripcionArticulo();
             }

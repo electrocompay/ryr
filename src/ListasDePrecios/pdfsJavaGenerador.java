@@ -117,9 +117,9 @@ public class pdfsJavaGenerador {
                 cb.showText("COD");
                 cb.setTextMatrix(70,renglon);
                 cb.showText("DESCRIPCION");
-                cb.setTextMatrix(380,renglon);
+                cb.setTextMatrix(450,renglon);
                 cb.showText("P. UNIT.");
-                cb.setTextMatrix(430,renglon);
+                cb.setTextMatrix(500,renglon);
                 cb.showText("OBS");
                 renglon=renglon - 20;
             
@@ -142,11 +142,25 @@ public class pdfsJavaGenerador {
                 cb.setTextMatrix(40,renglon);
                 cb.showText(String.valueOf(saldo.getId()));
                 cb.setTextMatrix(70,renglon);
-                cb.showText(saldo.getDescripcion());
-                cb.setTextMatrix(380,renglon);
+                String descA;
+                if(saldo.getDescripcion().length() > 50){
+                    descA=saldo.getDescripcion().substring(0,50);
+                }else{
+                    descA=saldo.getDescripcion();
+                }
+                cb.showText(descA);
+                cb.setTextMatrix(450,renglon);
                 cb.showText(monto);
-                cb.setTextMatrix(430,renglon);
-                cb.showText(saldo.getObservaciones());
+                cb.setTextMatrix(500,renglon);
+                String obs="";
+                if(saldo.getObservaciones()!=null){
+                if(saldo.getObservaciones().length()> 30){
+                    obs=saldo.getObservaciones().substring(0,30);
+                }else{
+                    obs=saldo.getObservaciones();
+                }
+                }
+                cb.showText(obs);
                 
                 renglon=renglon - 20;
                 if(renglon < 30){
