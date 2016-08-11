@@ -138,7 +138,7 @@ public class ListasDePrecios implements Editables{
         Transaccionable tra=new Conecciones();
         Double coe=listaDePrecios.getCoeficiente() / 100;
         coe=coe + 1;
-        String sql="update coeficienteslistas set coeficiente="+coe+",descripcion='"+listaDePrecios.getDesccripcion()+" where id="+listaDePrecios.getId();
+        String sql="update coeficienteslistas set coeficiente="+coe+",descripcion='"+listaDePrecios.getDesccripcion()+"' where id="+listaDePrecios.getId();
         tra.guardarRegistro(sql);
         cargarMap();
         return verif;

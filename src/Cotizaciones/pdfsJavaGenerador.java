@@ -87,10 +87,15 @@ public class pdfsJavaGenerador {
             cb.showText("Razon Social :"+cliente.getRazonSocial());
             cb.setTextMatrix(410,690);
             cb.showText("Fecha "+Numeros.ConvertirFecha(doc.getFecha()));
+            cb.setTextMatrix(40,680);
+            cb.showText("Nombre de Fantasia: "+cliente.getFantasia());
             cb.setTextMatrix(40,670);
             cb.showText("Direccion: "+cliente.getDireccion());
+            
             cb.setTextMatrix(380,670);
             cb.showText("Mail :"+cliente.getCelular());
+            cb.setTextMatrix(40,660);
+            cb.showText("Localidad: "+cliente.getCodigoPostal()+" - "+cliente.getLocalidad());
             cb.setTextMatrix(40,650);
             cb.showText("Telefono: "+cliente.getTelefono());
             cb.setTextMatrix(380,650);
@@ -111,13 +116,13 @@ public class pdfsJavaGenerador {
             cb.setFontAndSize(bf,10);
             cb.setTextMatrix(40,renglon);
                 cb.showText("COD");
-                cb.setTextMatrix(60,renglon);
+                cb.setTextMatrix(70,renglon);
                 cb.showText("DESCRIPCION");
-                cb.setTextMatrix(330,renglon);
+                cb.setTextMatrix(380,renglon);
                 cb.showText("P. UNIT.");
-                cb.setTextMatrix(400,renglon);
-                cb.showText("CANT.");
                 cb.setTextMatrix(450,renglon);
+                cb.showText("CANT.");
+                cb.setTextMatrix(500,renglon);
                 //tot=saldo.getCantidad() * saldo.getPrecioUnitario();
                 cb.showText("TOTAL");
                 renglon=renglon - 20;
@@ -146,18 +151,18 @@ public class pdfsJavaGenerador {
                 //total=String.valueOf(saldo.getTotal());
                 cb.setTextMatrix(40,renglon);
                 cb.showText(String.valueOf(saldo.getIdArticulo()));
-                cb.setTextMatrix(60,renglon);
-                if(saldo.getDescripcionArticulo().length() > 40){
-            descripcionArt=saldo.getDescripcionArticulo().substring(0, 40);
+                cb.setTextMatrix(70,renglon);
+                if(saldo.getDescripcionArticulo().length() > 50){
+            descripcionArt=saldo.getDescripcionArticulo().substring(0, 50);
             }else{
                 descripcionArt=saldo.getDescripcionArticulo();
             }
                 cb.showText(descripcionArt);
-                cb.setTextMatrix(330,renglon);
+                cb.setTextMatrix(380,renglon);
                 cb.showText(monto);
-                cb.setTextMatrix(400,renglon);
-                cb.showText(String.valueOf(saldo.getCantidad()));
                 cb.setTextMatrix(450,renglon);
+                cb.showText(String.valueOf(saldo.getCantidad()));
+                cb.setTextMatrix(500,renglon);
                 tot=saldo.getCantidad() * montoCIva;
                 
                 //tot=tot * 1.21;
@@ -173,22 +178,22 @@ public class pdfsJavaGenerador {
             renglon=renglon - 20;
             Double subTotal=doc.getTotal() + descuento;
             Double porc=doc.getPorcentajeDescuento() * 100;
-            cb.setTextMatrix(300,renglon);
+            cb.setTextMatrix(350,renglon);
             cb.showText("SUBTOTAL ");
-            cb.setTextMatrix(440,renglon);
+            cb.setTextMatrix(490,renglon);
             cb.showText(Numeros.ConvertirNumero(doc.getSubTotal()));
             
             renglon= renglon - 10;
-            cb.setTextMatrix(300,renglon);
+            cb.setTextMatrix(350,renglon);
             cb.showText("DESCUENTO "+porc+" %: ");
-            cb.setTextMatrix(440,renglon);
+            cb.setTextMatrix(490,renglon);
             cb.showText(Numeros.ConvertirNumero(doc.getDescuento()));
             
             totalFinal=Numeros.ConvertirNumero(doc.getTotal());
             renglon= renglon - 10;
-            cb.setTextMatrix(300,renglon);
+            cb.setTextMatrix(350,renglon);
             cb.showText("TOTAL ");
-            cb.setTextMatrix(440,renglon);
+            cb.setTextMatrix(490,renglon);
             cb.showText(totalFinal);
             //pie de documento
             renglon=renglon - 60;

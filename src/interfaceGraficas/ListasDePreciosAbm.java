@@ -229,7 +229,8 @@ public class ListasDePreciosAbm extends javax.swing.JInternalFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         Editables edi=new ListasDePrecios();
         if(opcion==0){
-            
+            listaDePrecios.setDesccripcion(this.jTextField1.getText());
+            listaDePrecios.setCoeficiente(Numeros.ConvertirStringADouble(this.jTextField2.getText()));
             edi.ModificaionObjeto(listaDePrecios);
         }else{
             listaDePrecios.setDesccripcion(this.jTextField1.getText());
