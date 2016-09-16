@@ -5,28 +5,45 @@
  */
 package objetos;
 
+import Articulos.Rubrable;
+import interfaces.Componable;
 import interfaces.Personalizable;
 import interfaces.Transaccionable;
 import interfacesPrograma.Busquedas;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author mauro di
  */
-public class Localidades implements Busquedas,Personalizable{
+public class Localidades implements Busquedas,Personalizable,Componable,Rubrable{
     private Integer id;
     private String descripcion;
     private Integer provincia;
     private String descripcionProvincia;
+    private String codigoPostal;
     private static Transaccionable tra=new Conecciones();
     private static String sql;
     private static ResultSet rs;
 
+    public String getCodigoPostal() {
+        return codigoPostal;
+    }
+
+    public void setCodigoPostal(String codigoPostal) {
+        this.codigoPostal = codigoPostal;
+    }
+
+    
     public Integer getId() {
         return id;
     }
@@ -81,6 +98,7 @@ public class Localidades implements Busquedas,Personalizable{
                 localidad.setId(rs.getInt("id"));
                 localidad.setDescripcion(rs.getString("localidad"));
                 localidad.setProvincia(rs.getInt("id_provincia"));
+                localidad.setCodigoPostal(rs.getString("codigo_postal"));
                 listado.add(localidad);
             }
         } catch (SQLException ex) {
@@ -112,12 +130,21 @@ public class Localidades implements Busquedas,Personalizable{
 
     @Override
     public Boolean agregar(Object objeto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Localidades localidad;
+        localidad=(Localidades) objeto;
+        sql="insert into localidades (localidad,codigo_postal,id_provincia,codigo_interno) values ('"+localidad.getDescripcion()+"','"+localidad.getCodigoPostal()+"',"+localidad.getProvincia()+",(select last_insert_id()))";
+        tra.guardarRegistro(sql);
+        return true;
+        
     }
 
     @Override
     public Boolean modificar(Object objeto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Localidades localidad;
+        localidad=(Localidades) objeto;
+        sql="update localidades set localidad='"+localidad.getDescripcion()+"',codigo_postal='"+localidad.getCodigoPostal()+"',id_provincia="+localidad.getProvincia()+" where id="+localidad.getId();
+        tra.guardarRegistro(sql);
+        return true;
     }
 
     @Override
@@ -134,6 +161,7 @@ public class Localidades implements Busquedas,Personalizable{
             while(rs.next()){
                 localidad.setDescripcion(rs.getString("localidad"));
                 localidad.setId(rs.getInt("id"));
+                localidad.setCodigoPostal(rs.getString("codigo_postal"));
             }
             rs.close();
         } catch (SQLException ex) {
@@ -154,7 +182,24 @@ public class Localidades implements Busquedas,Personalizable{
 
     @Override
     public ArrayList listar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList listado=new ArrayList();
+        
+        sql="select * from localidades order by localidad";
+        rs=tra.leerConjuntoDeRegistros(sql);
+        try {
+            while(rs.next()){
+                Localidades localidad=new Localidades();
+                localidad.setId(rs.getInt("id"));
+                localidad.setDescripcion(rs.getString("localidad"));
+                localidad.setProvincia(rs.getInt("id_provincia"));
+                localidad.setCodigoPostal(rs.getString("codigo_postal"));
+                listado.add(localidad);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Localidades.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return listado;
     }
 
     @Override
@@ -165,6 +210,83 @@ public class Localidades implements Busquedas,Personalizable{
     @Override
     public ArrayList listarPorCuit(String cuit) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public DefaultListModel LlenarList(Integer id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public DefaultTableModel LlenarTabla(Integer id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ComboBoxModel LlenarCombo(Integer id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public DefaultListModel LlenarListConArray(ArrayList listado) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public DefaultTableModel LlenarTablaConArray(ArrayList listado) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Integer nuevo(Object rubro) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void modificarPrecioRubro(Integer idRubro, Double precio) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList listarPorRubro(Integer idRubro) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList listarPorSubRubro(ArrayList idSubRubro) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void eliminar(Integer idRubro) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void modificarCostoPorRubro(Integer idRubro, Double precio) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public DefaultTableModel mostrarListado(ArrayList listado) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public DefaultListModel mostrarEnCombo(ArrayList listado) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public DefaultComboBoxModel mostrarEnBox(ArrayList listado) {
+        Iterator it=listado.listIterator();
+        DefaultComboBoxModel modelo=new DefaultComboBoxModel();
+        Localidades localidad;
+        while(it.hasNext()){
+            localidad=(Localidades) it.next();
+            modelo.addElement(localidad.getDescripcion());
+        }
+        return modelo;
     }
     
     

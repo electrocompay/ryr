@@ -840,7 +840,7 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
 
     @Override
     public Object cargarPorCodigoAsignado(Integer id) {
-        String sql="select *,(select condicionesiva.tipocomprobante from condicionesiva where condicionesiva.id=clientes.tipo_iva)as tipocomprobante,(select localidades.localidad from localidades where localidades.id=clientes.localidad)as localidadD,(select condicionesiva.descripcion from condicionesiva where condicionesiva.id=clientes.tipo_iva)as tipocondicion from clientes where id="+id;
+        String sql="select *,(select condicionesiva.tipocomprobante from condicionesiva where condicionesiva.id=clientes.tipo_iva)as tipocomprobante,(select localidades.localidad from localidades where localidades.id=clientes.localidad)as localidadD,(select localidades.codigo_postal from localidades where localidades.id=clientes.localidad)as postal,(select condicionesiva.descripcion from condicionesiva where condicionesiva.id=clientes.tipo_iva)as tipocondicion from clientes where id="+id;
         String sql1="";
         Clientes cli=new Clientes();
         
@@ -863,6 +863,7 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
                     cli.setTipoIva(rs.getInt("tipo_iva"));
                     cli.setTelefono(rs.getString("TELEFONO_1"));
                     cli.setLocalidad(rs.getString("localidadD"));
+                    cli.setCodigoPostal(rs.getString("postal"));
                     cli.setCoeficienteListaDeprecios(rs.getDouble("coeficiente"));
                     cli.setCupoDeCredito(rs.getDouble("cupodecredito"));
                     cli.setResponsable(rs.getString("responsable"));

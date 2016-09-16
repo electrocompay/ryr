@@ -4,6 +4,7 @@
  */
 package interfaceGraficas;
 
+import Articulos.Rubrable;
 import Conversores.Numeros;
 import Cotizaciones.Cotizable;
 import Cotizaciones.Cotizacion;
@@ -192,6 +193,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
         jButton11 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
+        jButton20 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -295,7 +297,12 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
 
         jLabel9.setText("Cupo de Credito :");
 
-        jTextField5.setText("jTextField5");
+        jTextField5.setText("0.00");
+        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField5ActionPerformed(evt);
+            }
+        });
 
         jLabel10.setText("Dirección de Entrega:");
 
@@ -347,6 +354,13 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
 
         jButton13.setText("DETALLE DE SALDO");
 
+        jButton20.setText("Nueva Localidad");
+        jButton20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton20ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -387,7 +401,10 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
                             .addComponent(jTextField10, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
                             .addComponent(jTextField11)
                             .addComponent(jTextField12)
-                            .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jButton12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
@@ -460,7 +477,8 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton20))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -1036,6 +1054,11 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
 
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
        //this.setTitle("MODIFICACION DATOS DEL CLIENTE");
+        Personalizable per=new Localidades();
+        Rubrable rub=new Localidades();
+        listadoLoc.clear();
+        listadoLoc=per.listar();
+        this.jComboBox3.setModel(rub.mostrarEnBox(listadoLoc));
         Cotizable cotizable=new Cotizacion();
         Cotizacion cotizacion=new Cotizacion();
         listadoCot=cotizable.listarPorEstado(cliTa.getCodigoId(),0);
@@ -1069,6 +1092,17 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
         columnaNumero.setPreferredWidth(60);
         columnaNumero.setMaxWidth(60);
     }//GEN-LAST:event_formInternalFrameActivated
+
+    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField5ActionPerformed
+
+    private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
+        LocalidadesAbm loca=new LocalidadesAbm();
+        Inicio.jDesktopPane1.add(loca);
+        loca.setVisible(true);
+        loca.toFront();
+    }//GEN-LAST:event_jButton20ActionPerformed
     private void ControlaInstancia(JInternalFrame inter){
         /*
         boolean mostrar=true;
@@ -1094,6 +1128,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton20;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;

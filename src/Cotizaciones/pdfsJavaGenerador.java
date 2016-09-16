@@ -174,6 +174,75 @@ public class pdfsJavaGenerador {
                 //descuento=descuento+saldo.getDescuento();
                 renglon=renglon - 20;
                 
+                if(renglon < 30){
+                    
+                    renglon=610;
+                    cb.endText();
+                    documento.newPage();
+                    
+                    cb.beginText();
+                    bf = BaseFont.createFont(BaseFont.COURIER_BOLD,BaseFont.CP1252,BaseFont.NOT_EMBEDDED);
+            cb.setFontAndSize(bf,16);
+            
+            cb.setTextMatrix(100,750);
+            cb.showText("eR&Re");
+            
+            cb.setFontAndSize(bf,10);
+            cb.setTextMatrix(100, 740);
+            cb.showText("PAPELES");
+            bf = BaseFont.createFont(BaseFont.COURIER,BaseFont.CP1252,BaseFont.NOT_EMBEDDED);
+            cb.setFontAndSize(bf,8);
+            cb.setTextMatrix(40,720);
+            cb.showText("de Rivadeneira Enrique y Rivadeneira Jorge S.H.");
+            bf = BaseFont.createFont(BaseFont.COURIER_BOLD,BaseFont.CP1252,BaseFont.NOT_EMBEDDED);
+            cb.setFontAndSize(bf,14);
+            cb.setTextMatrix(300,750);
+            cb.showText("COTIZACION N°: "+doc.getId());
+            bf = BaseFont.createFont(BaseFont.COURIER,BaseFont.CP1252,BaseFont.NOT_EMBEDDED);
+            cb.setFontAndSize(bf,10);
+            cb.setTextMatrix(40,690);
+            cb.showText("Razon Social :"+cliente.getRazonSocial());
+            cb.setTextMatrix(410,690);
+            cb.showText("Fecha "+Numeros.ConvertirFecha(doc.getFecha()));
+            cb.setTextMatrix(40,680);
+            cb.showText("Nombre de Fantasia: "+cliente.getFantasia());
+            cb.setTextMatrix(40,670);
+            cb.showText("Direccion: "+cliente.getDireccion());
+            
+            cb.setTextMatrix(380,670);
+            cb.showText("Mail :"+cliente.getCelular());
+            cb.setTextMatrix(40,660);
+            cb.showText("Localidad: "+cliente.getCodigoPostal()+" - "+cliente.getLocalidad());
+            cb.setTextMatrix(40,650);
+            cb.showText("Telefono: "+cliente.getTelefono());
+            cb.setTextMatrix(380,650);
+            cb.showText("Cuit: "+cliente.getNumeroDeCuit());
+            
+            
+            //aca empieza la iteracion
+            
+            //encabezados
+            bf = BaseFont.createFont(BaseFont.COURIER_BOLD,BaseFont.CP1252,BaseFont.NOT_EMBEDDED);
+            cb.setFontAndSize(bf,10);
+            cb.setTextMatrix(40,renglon);
+                cb.showText("COD");
+                cb.setTextMatrix(70,renglon);
+                cb.showText("DESCRIPCION");
+                cb.setTextMatrix(380,renglon);
+                cb.showText("P. UNIT.");
+                cb.setTextMatrix(450,renglon);
+                cb.showText("CANT.");
+                cb.setTextMatrix(500,renglon);
+                //tot=saldo.getCantidad() * saldo.getPrecioUnitario();
+                cb.showText("TOTAL");
+                renglon=renglon - 20;
+            
+            //fin encabezados
+            bf = BaseFont.createFont(BaseFont.COURIER,BaseFont.CP1252,BaseFont.NOT_EMBEDDED);
+            cb.setFontAndSize(bf,10);
+                    
+                }
+                
             }
             renglon=renglon - 20;
             Double subTotal=doc.getTotal() + descuento;

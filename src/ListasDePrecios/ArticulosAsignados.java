@@ -335,7 +335,7 @@ public class ArticulosAsignados implements Articulable{
         Iterator it=rubro1.listIterator();
         while(it.hasNext()){
             rubro=(SubRubros)it.next();
-            sql="select articulos.id,articulos.nombre,articulos.costo,articulos.precio,articulos.idrubro,articulos.idsubrubro,(select aplicacion.coeficiente from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+")as coeficienteA,(select aplicacion.observaciones from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+")as observaciones,(select aplicacion.idlista from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+")as idlista from articulos where idsubrubro="+rubro.getId()+" and nombre like '%"+ttx+"%' order by nombre";
+            sql="select articulos.id,articulos.nombre,articulos.costo,articulos.precio,articulos.idrubro,articulos.idsubrubro,(select aplicacion.coeficiente from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+" limit 0,1)as coeficienteA,(select aplicacion.observaciones from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+" limit 0,1)as observaciones,(select aplicacion.idlista from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+" limit 0,1)as idlista from articulos where idsubrubro="+rubro.getId()+" and nombre like '%"+ttx+"%' order by nombre";
             rs=tra.leerConjuntoDeRegistros(sql);
             //System.out.println(sql);
         Double precio=0.00;

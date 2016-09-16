@@ -80,7 +80,7 @@ public class ImprimirPedido {
         DetallePedidos detalleDeCotizacion=new DetallePedidos();
         Pedable cotiz=new DetallePedidos();
         listadoDetalle=cotiz.cargarDetallePedido(cotizacion.getId());
-        Clientes cliente=new Clientes();
+        Clientes cliente;
         Facturar factu=new Clientes();
         cliente=(Clientes)factu.cargarPorCodigoAsignado(cotizacion.getIdCliente());
         Calendar fecha=new GregorianCalendar();
@@ -109,18 +109,19 @@ public class ImprimirPedido {
         pagina.drawString("USUARIO :"+Inicio.usuario.getNombre(),320,20);
         pagina.setFont(fuente6);
         Double monto=0.00; //caja.getMontoMovimiento()* -1;
+        pagina.drawLine(20, 40, 600, 40);
+        pagina.drawString("RAZON SOCIAL: "+cliente.getRazonSocial(),30,55);
+        pagina.drawString("C.U.I.T.: "+cliente.getNumeroDeCuit(), 350,55);
+        pagina.drawString("DIRECCION: "+cliente.getDireccion(),30,70);
         
-        pagina.drawString("RAZON SOCIAL: "+cliente.getRazonSocial(),30,45);
-        pagina.drawString("C.U.I.T.: "+cliente.getNumeroDeCuit(), 350,45);
-        pagina.drawString("DIRECCION: "+cliente.getDireccion(),30,60);
-        
-        pagina.drawString("LOCALIDAD: "+cliente.getLocalidad(),350,60);
-        pagina.drawString("COND IVA: "+cliente.getCondicionIva(),30,75);
+        pagina.drawString("LOCALIDAD: ("+cliente.getCodigoPostal()+") "+cliente.getLocalidad(),350,70);
+        pagina.drawString("COND IVA: "+cliente.getCondicionIva(),30,85);
+        pagina.drawLine(20, 95, 600, 95);
         pagina.setFont(fuente);
-        pagina.drawString("CODIGO",20,90);
-        pagina.drawString("DESCRIPCION",100,90);
-        pagina.drawString("CANTIDAD", 350,90);
-        int renglon=100;
+        pagina.drawString("CODIGO",20,105);
+        pagina.drawString("DESCRIPCION",100,105);
+        pagina.drawString("CANTIDAD", 450,105);
+        int renglon=115;
         Iterator it=listadoDetalle.listIterator();
         String descripcionArt=null;
         while(it.hasNext()){
@@ -132,7 +133,7 @@ public class ImprimirPedido {
                 descripcionArt=detalleDeCotizacion.getDescripcionArticulo();
             }
             pagina.drawString(descripcionArt,60,renglon);
-            pagina.drawString(String.valueOf(detalleDeCotizacion.getCantidad()),370,renglon);
+            pagina.drawString(String.valueOf(detalleDeCotizacion.getCantidad()),470,renglon);
             renglon=renglon + 10;
         }
         //formulario derecho
@@ -177,45 +178,54 @@ public class ImprimirPedido {
         //pagina.drawImage(imagen,63,20,174,93,null);
         pagina.setFont(fuente6);
         pagina.setColor(Color.black);
-        pagina.drawString("PEDIDO N° 00"+Inicio.sucursal.getNumero()+"-000"+cotizacion.getId(),20,110);
+        pagina.drawString("PEDIDO N° 00"+Inicio.sucursal.getNumero()+"-000"+cotizacion.getId(),20,20);
         pagina.setFont(fuente);
-        pagina.drawString("FECHA IMPRESION:"+fec, 20,120);
+        pagina.drawString("FECHA IMPRESION:"+fec, 20,30);
         //pagina.drawString(" :"+Inicio.sucursal.getDescripcion(),20,150);
-        pagina.drawString("USUARIO :"+Inicio.usuario.getNombre(),320,110);
+        pagina.drawString("USUARIO :"+Inicio.usuario.getNombre(),320,20);
         pagina.setFont(fuente6);
         Double monto=0.00; //caja.getMontoMovimiento()* -1;
+        pagina.drawLine(20, 35, 600, 35);
+        pagina.drawString("RAZON SOCIAL: "+cliente.getRazonSocial(),30,45);
+        pagina.drawString("C.U.I.T.: "+cliente.getNumeroDeCuit(), 350,45);
+        pagina.drawString("DIRECCION: "+cliente.getDireccion(),30,60);
         
-        pagina.drawString("RAZON SOCIAL: "+cliente.getRazonSocial(),30,185);
-        pagina.drawString("C.U.I.T.: "+cliente.getNumeroDeCuit(), 350,185);
-        pagina.drawString("DIRECCION: "+cliente.getDireccion(),30,200);
-        
-        pagina.drawString("LOCALIDAD: "+cliente.getLocalidad(),350,200);
-        pagina.drawString("COND IVA: "+cliente.getCondicionIva(),30,215);
+        pagina.drawString("LOCALIDAD: ("+cliente.getCodigoPostal()+") "+cliente.getLocalidad(),350,60);
+        pagina.drawString("COND IVA: "+cliente.getCondicionIva(),30,75);
+        pagina.drawLine(20, 85, 600, 85);
         pagina.setFont(fuente);
-        pagina.drawString("CODIGO",20,250);
-        pagina.drawString("DESCRIPCION",100,250);
-        pagina.drawString("CANTIDAD", 350,250);
-        pagina.drawString("PRECIO U",400,250);
-        pagina.drawString("PRECIO",450,250);
-        int renglon=260;
+        pagina.drawString("CODIGO",20,95);
+        pagina.drawString("DESCRIPCION",100,95);
+        pagina.drawString("CANTIDAD", 400,95);
+        pagina.drawString("PRECIO U",450,95);
+        pagina.drawString("PRECIO",500,95);
+        int renglon=105;
         Iterator it=listadoDetalle.listIterator();
         Double generalT=0.00;
         String descripcionArt=null;
         while(it.hasNext()){
             detalleDeCotizacion=(DetallePedidos)it.next();
             pagina.drawString(String.valueOf(detalleDeCotizacion.getIdArticulo()),20,renglon);
+            
+            if(detalleDeCotizacion.getDescripcionArticulo().length() > 50){
             descripcionArt=detalleDeCotizacion.getDescripcionArticulo().substring(0, 50);
+            }else{
+                descripcionArt=detalleDeCotizacion.getDescripcionArticulo();
+            }
+            
+            //descripcionArt=detalleDeCotizacion.getDescripcionArticulo().substring(0, 50);
+            
             pagina.drawString(descripcionArt,60,renglon);
-            pagina.drawString(String.valueOf(detalleDeCotizacion.getCantidad()),370,renglon);
-            pagina.drawString(Numeros.ConvertirNumero(detalleDeCotizacion.getPrecioUnitario() * 1.21),410,renglon);
+            pagina.drawString(String.valueOf(detalleDeCotizacion.getCantidad()),420,renglon);
+            pagina.drawString(Numeros.ConvertirNumero(detalleDeCotizacion.getPrecioUnitario() * 1.21),470,renglon);
             Double total=detalleDeCotizacion.getCantidad() * (detalleDeCotizacion.getPrecioUnitario() * 1.21);
             generalT=generalT + total;
-            pagina.drawString(Numeros.ConvertirNumero(total),460,renglon);
+            pagina.drawString(Numeros.ConvertirNumero(total),510,renglon);
             renglon=renglon + 10;
         }
         renglon=renglon + 10;
         pagina.setFont(fuente1);
-        pagina.drawString("TOTAL: "+String.valueOf(generalT),40,renglon);
+        pagina.drawString("TOTAL: "+Numeros.ConvertirNumero(generalT),40,renglon);
         //formulario derecho
         
         //pagina.drawImage(imagen,363,20,174,93,null);

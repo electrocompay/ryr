@@ -145,6 +145,12 @@ public class SubRubrosAbm extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Para eliminar seleccione");
 
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -259,6 +265,13 @@ public class SubRubrosAbm extends javax.swing.JInternalFrame {
             
         }
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        subRubro=(SubRubros) lstSubRubros.get(this.jComboBox1.getSelectedIndex());
+        this.jTextField1.setText(subRubro.getDescripcion());
+        nuevo=2;
+        //this.jTextField2.setText(String.valueOf(subRubro));
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
