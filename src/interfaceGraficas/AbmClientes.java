@@ -24,6 +24,7 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.TableColumn;
 import tablas.MiModeloTablaArticulos;
 import tablas.MiModeloTablaBuscarCliente;
@@ -68,6 +69,7 @@ public class AbmClientes extends javax.swing.JInternalFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
+        jMenu6 = new javax.swing.JMenu();
 
         setClosable(true);
         setMaximizable(true);
@@ -244,6 +246,15 @@ public class AbmClientes extends javax.swing.JInternalFrame {
         });
         jMenuBar1.add(jMenu5);
 
+        jMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/sub_black_delete.png"))); // NOI18N
+        jMenu6.setText("Eliminar Cliente");
+        jMenu6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu6MouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenu6);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -415,6 +426,18 @@ columnaCodigo=this.jTable1.getColumn("COD CLIENTE");
         //this.jList1.setModel(modelo);
         }
     }//GEN-LAST:event_jTextField1KeyPressed
+
+    private void jMenu6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu6MouseClicked
+        if(JOptionPane.showConfirmDialog(this,"Seguro de Eliminar este cliente?","Eliminar Cliente",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==1){
+            
+        }else{
+            Clientes clienteTango=new Clientes();
+            clienteTango=(Clientes)listadoClientes.get(this.jTable1.getSelectedRow());
+            Busquedas bus=new Clientes();
+            bus.eliminar(clienteTango.getCodigoId());
+            this.dispose();
+        }
+    }//GEN-LAST:event_jMenu6MouseClicked
 private void cargarTabla(){
         MiModeloTablaBuscarCliente busC=new MiModeloTablaBuscarCliente();
         this.jTable1.removeAll();
@@ -487,6 +510,7 @@ columnaCodigo=this.jTable1.getColumn("COD CLIENTE");
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

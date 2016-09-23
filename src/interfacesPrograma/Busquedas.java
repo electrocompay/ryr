@@ -17,5 +17,6 @@ public interface Busquedas {
     public ArrayList listarPorContacto(String cliente);
     public ArrayList listarPorFantasia(String cliente);
     public void marcarContactado(Integer item);
-    public void modificarDatosCliente(Object cliente);    
+    public void modificarDatosCliente(Object cliente);
+    public void eliminar(Integer id);
 }

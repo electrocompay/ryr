@@ -1059,6 +1059,23 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
         listadoLoc.clear();
         listadoLoc=per.listar();
         this.jComboBox3.setModel(rub.mostrarEnBox(listadoLoc));
+        
+        String loc=cliTa.getLocalidad();
+        String loc2="";
+        Integer rengl=0;
+        Integer posicion=0;
+        Iterator itLoc=listadoLoc.listIterator();
+        while(itLoc.hasNext()){
+            localidad=(Localidades)itLoc.next();
+            loc2=localidad.getDescripcion();
+            if(loc.equals(loc2)){
+                posicion=rengl;
+            }
+            rengl++;
+        }
+        this.jComboBox3.setSelectedIndex(posicion);
+        
+        
         Cotizable cotizable=new Cotizacion();
         Cotizacion cotizacion=new Cotizacion();
         listadoCot=cotizable.listarPorEstado(cliTa.getCodigoId(),0);

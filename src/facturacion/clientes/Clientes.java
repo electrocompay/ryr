@@ -930,5 +930,11 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
        GuardarNumeroRecibo();
        return factProv;
     }
+
+    @Override
+    public void eliminar(Integer id) {
+        String sql="delete from clientes where id="+id;
+        tra.guardarRegistro(sql);
+    }
         
 }
