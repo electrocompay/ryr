@@ -8,6 +8,7 @@ import Conversores.Numeros;
 import facturacion.clientes.Clientes;
 import facturacion.clientes.Facturable;
 import facturacion.clientes.ListasDePrecios;
+import interfaceGraficas.BarraDeProgreso;
 import interfaces.Comparables;
 import interfaces.Editables;
 import interfaces.Personalizable;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JProgressBar;
 import javax.swing.table.DefaultTableModel;
 import objetos.Conecciones;
 import tablas.MiModeloTablaContacto;
@@ -205,13 +207,32 @@ public class ArticulosAsignados implements Articulable{
         Iterator itA=listado.listIterator();
         String sql="";
         Transaccionable tra=new Conecciones();
+        ResultSet rs;
+        //BarraDeProgreso progreso=new BarraDeProgreso(listado.size());
+        //progreso.setTitle("Progreso de Modificacion de Lista de Precio");
+        
+        //JProgressBar barra=new JProgressBar(0,listado.size());
+        //barra.setMaximum(listado.size());
+        
+        //progreso.setVisible(true);
+        //progreso.toFront();
+        //barra.setStringPainted(true);
+        
+        int aaa=0;
         while(itA.hasNext()){
             arti=(ArticulosAsignados)itA.next();
-            if(arti.getOrigen()!=null){
-                
-            }else{
-                arti.setOrigen(0);
+            sql="select * from aplicacion where idcliente="+arti.getIdCliente()+" and idarticulo="+arti.getId();
+            rs=tra.leerConjuntoDeRegistros(sql);
+            arti.setOrigen(0);
+            try {
+                while(rs.next()){
+                    arti.setOrigen(1);
+                }
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ArticulosAsignados.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
             if(arti.getOrigen()==0){
                 //nuevo
                 sql="insert into aplicacion (idcliente,idarticulo,idlista,coeficiente,observaciones) values ("+arti.getIdCliente()+","+arti.getId()+","+arti.getIdLista()+","+arti.getCoeficiente()+",'"+arti.getObservaciones()+"')";
@@ -221,7 +242,11 @@ public class ArticulosAsignados implements Articulable{
                 sql="update aplicacion set idlista="+arti.getIdLista()+",coeficiente="+arti.getCoeficiente()+",observaciones='"+arti.getObservaciones()+"' where idcliente="+arti.getIdCliente()+" and idarticulo="+arti.getId();
                 tra.guardarRegistro(sql);
             }
+            aaa++;
+            //BarraDeProgreso.agregar(aaa);
+            System.out.println(aaa+" "+sql);
         }
+        //progreso.dispose();
     }
 
     @Override
