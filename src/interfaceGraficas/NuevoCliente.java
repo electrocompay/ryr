@@ -30,6 +30,7 @@ import facturacion.pantallas.IngresoDeFacturas;
 import facturacion.pantallas.ModificacionDeFacturas;
 import interfaceGraficas.AbmClientes;
 import interfaceGraficas.Inicio;
+import interfaces.Componable;
 import interfaces.Personalizable;
 import interfacesPrograma.Busquedas;
 import interfacesPrograma.Facturar;
@@ -46,6 +47,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import objetos.CondicionesIva;
 import objetos.Localidades;
+import objetos.Transportes;
 
 /**
  *
@@ -69,6 +71,9 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
     private Localidades localidad=new Localidades();
     private ArrayList listadoFac=new ArrayList();
     private TableColumn columnaNumero;
+    private ArrayList listadoTransporte;
+    private Transportes transp;
+    
     
     /**
      * Creates new form NuevoCliente
@@ -110,6 +115,16 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
             rengl++;
         }
         this.jComboBox2.setSelectedIndex(posicion);
+        
+        
+        listadoTransporte=new ArrayList();
+        /*
+        Componable comp=new Transportes();
+        Personalizable per=new Transportes();
+        listadoTransporte=per.listar();
+        this.jComboBox4.setModel(comp.LlenarComboConArray(listadoTransporte));
+        */
+        
         String loc=cliTa.getLocalidad();
         String loc2="";
         rengl=0;
@@ -123,6 +138,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
             }
             rengl++;
         }
+        
         this.jComboBox3.setSelectedIndex(posicion);
         this.jTextField5.setText(String.valueOf(cliTa.getCupoDeCredito()));
         Double coef=0.00;
@@ -367,6 +383,11 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
         jLabel19.setText("Transporte:");
 
         jButton21.setText("Nuevo Transporte");
+        jButton21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton21ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -801,6 +822,8 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
        cli.setEmail(this.jTextField12.getText());
        localidad=(Localidades)listadoLoc.get(this.jComboBox3.getSelectedIndex());
        cli.setLocalidad(String.valueOf(localidad.getId()));
+       transp=(Transportes) listadoTransporte.get(this.jComboBox4.getSelectedIndex());
+       cli.setIdTransporte(transp.getId());
        
        Facturar fact=new Clientes();
        if(modificacion==1){
@@ -1125,6 +1148,30 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
         columnaNumero=this.jTable3.getColumn("Monto");
         columnaNumero.setPreferredWidth(60);
         columnaNumero.setMaxWidth(60);
+        
+        
+        Componable comp=new Transportes();
+        Personalizable perT=new Transportes();
+        listadoTransporte=perT.listar();
+        this.jComboBox4.setModel(comp.LlenarComboConArray(listadoTransporte));
+        
+        
+        Iterator itTra=listadoTransporte.listIterator();
+        Integer idTranp=cliTa.getIdTransporte();
+        Integer posicion1=0;
+        Transportes transp1;
+        rengl=0;
+        while(itTra.hasNext()){
+            transp1=(Transportes) itTra.next();
+            if(idTranp == transp1.getId()){
+                posicion1=rengl;
+            }
+            rengl++;
+        }
+        if(posicion1 > 0){
+            this.jComboBox4.setSelectedIndex(posicion1);
+        }
+        
     }//GEN-LAST:event_formInternalFrameActivated
 
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
@@ -1137,6 +1184,15 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
         loca.setVisible(true);
         loca.toFront();
     }//GEN-LAST:event_jButton20ActionPerformed
+
+    private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
+        TransporteAbm trans=new TransporteAbm();
+        Inicio.jDesktopPane1.add(trans);
+        trans.setVisible(true);
+        trans.toFront();
+        
+        
+    }//GEN-LAST:event_jButton21ActionPerformed
     private void ControlaInstancia(JInternalFrame inter){
         /*
         boolean mostrar=true;

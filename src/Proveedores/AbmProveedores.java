@@ -336,7 +336,7 @@ public class AbmProveedores extends javax.swing.JInternalFrame {
         InformesClientes informes=new InformesClientes();
         try {
 
-            informes.GenerarInforme(listadoClientes,fecha1,fecha2);
+            informes.GenerarInforme(listadoClientes);
         } catch (SQLException ex) {
             Logger.getLogger(AbmClientes.class.getName()).log(Level.SEVERE, null, ex);
         }

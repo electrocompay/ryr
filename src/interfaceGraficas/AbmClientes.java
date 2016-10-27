@@ -4,6 +4,7 @@
  */
 package interfaceGraficas;
 
+import Articulos.Rubrable;
 import Conversores.Numeros;
 import Cotizaciones.IngresoDeCotizacion;
 import Excel.InformesClientes;
@@ -11,6 +12,8 @@ import Excel.LeerExcelClientes;
 import facturacion.clientes.Clientes;
 import facturacion.pantallas.IngresoDeFacturas;
 import Pedidos.IngresoDePedidos;
+import interfaces.Adeudable;
+import interfaces.Personalizable;
 import interfacesPrograma.Busquedas;
 import interfacesPrograma.Facturar;
 import java.awt.event.KeyEvent;
@@ -26,6 +29,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableColumn;
+import objetos.Localidades;
 import tablas.MiModeloTablaArticulos;
 import tablas.MiModeloTablaBuscarCliente;
 
@@ -36,13 +40,20 @@ import tablas.MiModeloTablaBuscarCliente;
 public class AbmClientes extends javax.swing.JInternalFrame {
     private ArrayList listadoClientes=new ArrayList();
     private TableColumn columnaCodigo;
+    private ArrayList listadoLoc;
     /**
      * Creates new form AbmClientes
      */
     public AbmClientes() {
         initComponents();
+        listadoLoc=new ArrayList();
         columnaCodigo=this.jTable1.getColumn("COD CLIENTE");
         columnaCodigo.setPreferredWidth(30);
+        Personalizable per=new Localidades();
+        Rubrable rub=new Localidades();
+        
+        listadoLoc=per.listar();
+        this.jComboBox1.setModel(rub.mostrarEnBox(listadoLoc));
     }
 
     /**
@@ -60,11 +71,10 @@ public class AbmClientes extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        dateChooserCombo3 = new datechooser.beans.DateChooserCombo();
-        jLabel4 = new javax.swing.JLabel();
-        dateChooserCombo4 = new datechooser.beans.DateChooserCombo();
         jButton3 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox();
+        jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -160,15 +170,22 @@ public class AbmClientes extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel3.setText("Desde :");
-
-        jLabel4.setText("Hasta :");
-
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/excel_icone.png"))); // NOI18N
-        jButton3.setText("Informe de Clientes");
+        jButton3.setText("Listado de Clientes");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Filtrar por Localidad");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jButton1.setText("Filtrar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -187,16 +204,17 @@ public class AbmClientes extends javax.swing.JInternalFrame {
                                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(dateChooserCombo3, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16)
-                        .addComponent(dateChooserCombo4, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 149, Short.MAX_VALUE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -204,19 +222,19 @@ public class AbmClientes extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel3)
-                        .addComponent(dateChooserCombo3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel4)
-                        .addComponent(dateChooserCombo4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton1)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(24, 24, 24))
         );
 
         jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/folder_new.png"))); // NOI18N
@@ -270,7 +288,7 @@ public class AbmClientes extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 46, Short.MAX_VALUE))
+                .addGap(0, 43, Short.MAX_VALUE))
         );
 
         pack();
@@ -283,25 +301,14 @@ public class AbmClientes extends javax.swing.JInternalFrame {
         SimpleDateFormat dia=new SimpleDateFormat("dd/mm/yyyy");
         //Date mes=Calendar.getInstance().getTime();
         //dateChooserCombo1.setDateFormat(dia);
-        Calendar fechaNueva=dateChooserCombo3.getSelectedDate();
-        Calendar fechaHasta=dateChooserCombo4.getSelectedDate();
+        //Calendar fechaNueva=dateChooserCombo3.getSelectedDate();
+        //Calendar fechaHasta=dateChooserCombo4.getSelectedDate();
         //mes=dia.format(fechaNueva,null,null);
-        Double pesoDia=0.00;
-        int ano=fechaNueva.get(Calendar.YEAR);
-        int mes=fechaNueva.get(Calendar.MONTH);
-        mes++;
-        int dd=fechaNueva.get(Calendar.DAY_OF_MONTH);
-        String fecha1=ano+"-"+mes+"-"+dd;
-        ano=fechaHasta.get(Calendar.YEAR);
-        mes=fechaHasta.get(Calendar.MONTH);
-        mes++;
-        dd=fechaHasta.get(Calendar.DAY_OF_MONTH);
-        String fecha2=ano+"-"+mes+"-"+dd;
-
+        
+        
         InformesClientes informes=new InformesClientes();
         try {
-
-            informes.GenerarInforme(listadoClientes,fecha1,fecha2);
+            informes.GenerarInforme(listadoClientes);
         } catch (SQLException ex) {
             Logger.getLogger(AbmClientes.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -438,6 +445,21 @@ columnaCodigo=this.jTable1.getColumn("COD CLIENTE");
             this.dispose();
         }
     }//GEN-LAST:event_jMenu6MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Integer posic=this.jComboBox1.getSelectedIndex();
+        Localidades localidad;
+        localidad=(Localidades) listadoLoc.get(posic);
+        Clientes resCli=new Clientes();
+        Adeudable mcli=new Clientes();
+        listadoClientes.clear();
+        //ArrayList resultado=new ArrayList();
+        listadoClientes=mcli.ListarPorLocalidad(localidad.getId());
+        int cant=listadoClientes.size();
+        //Iterator ir=resultado.listIterator();
+        //this.jPanel2.setVisible(true);
+        cargarTabla();
+    }//GEN-LAST:event_jButton1ActionPerformed
 private void cargarTabla(){
         MiModeloTablaBuscarCliente busC=new MiModeloTablaBuscarCliente();
         this.jTable1.removeAll();
@@ -500,13 +522,12 @@ columnaCodigo=this.jTable1.getColumn("COD CLIENTE");
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private datechooser.beans.DateChooserCombo dateChooserCombo3;
-    private datechooser.beans.DateChooserCombo dateChooserCombo4;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu5;

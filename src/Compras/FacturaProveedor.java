@@ -373,6 +373,11 @@ public class FacturaProveedor implements Comprobable,Facturar,Adeudable{
        GuardarNumeroRecibo();
        return factProv;
     }
+
+    @Override
+    public ArrayList ListarPorLocalidad(Integer idLocalidad) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
 }

@@ -951,5 +951,47 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
         String sql="delete from clientes where id="+id;
         tra.guardarRegistro(sql);
     }
+
+    @Override
+    public ArrayList ListarPorLocalidad(Integer idLocalidad) {
+        ArrayList listadoP=new ArrayList();
+        String sql="select *,(select condicionesiva.tipocomprobante from condicionesiva where condicionesiva.id=clientes.tipo_iva)as tipocomprobante,(select localidades.localidad from localidades where localidades.id=clientes.localidad)as localidadD,(select localidades.codigo_postal from localidades where localidades.id=clientes.localidad)as postal,(select condicionesiva.descripcion from condicionesiva where condicionesiva.id=clientes.tipo_iva)as tipocondicion from clientes where localidad="+idLocalidad;
+        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        Clientes cli;
+            try {
+                while(rs.next()){
+                    cli=new Clientes();
+                    cli.setCodigoId(rs.getInt("id"));
+                    cli.setCodigoCliente(rs.getString("id"));
+                    cli.setRazonSocial(rs.getString("RAZON_SOCI"));
+                    cli.setDireccion(rs.getString("DOMICILIO"));
+                    cli.setCondicionDeVenta(rs.getInt("COND_VTA"));
+                    cli.setListaDePrecios(rs.getInt("listadeprecio"));
+                    //Double descuento=Double.parseDouble(rs.getString("PORC_DESC"));
+                    cli.setDescuento(rs.getDouble("coeficiente"));
+                    //cli.setDescuento(descuento);
+                    cli.setNumeroDeCuit(rs.getString("numerodecuit"));
+                    cli.setEmpresa(rs.getString("empresa"));
+                    cli.setCondicionIva(rs.getString("tipocondicion"));
+                    cli.setTipoIva(rs.getInt("tipo_iva"));
+                    cli.setTelefono(rs.getString("TELEFONO_1"));
+                    cli.setLocalidad(rs.getString("localidadD"));
+                    cli.setCodigoPostal(rs.getString("postal"));
+                    cli.setCoeficienteListaDeprecios(rs.getDouble("coeficiente"));
+                    cli.setCupoDeCredito(rs.getDouble("cupodecredito"));
+                    cli.setResponsable(rs.getString("responsable"));
+                    cli.setFantasia(rs.getString("fantasia"));
+                    cli.setCelular(rs.getString("celular"));
+                    cli.setFax(rs.getString("fax"));
+                    cli.setTipoComprobante(rs.getInt("tipocomprobante"));
+                    cli.setIdTransporte(rs.getInt("idtransporte"));
+                    listadoP.add(cli);
+                }
+            
+            } catch (SQLException ex) {
+                Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return listadoP;
+    }
         
 }

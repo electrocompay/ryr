@@ -31,10 +31,10 @@ import org.apache.poi.ss.usermodel.IndexedColors;
  * @author mauro di
  */
 public class InformesClientes {
-   public void GenerarInforme(ArrayList listadoClientes,String desde,String hasta) throws SQLException{
+   public void GenerarInforme(ArrayList listadoClientes) throws SQLException{
               HSSFWorkbook libro=new HSSFWorkbook();
         HSSFSheet hoja=libro.createSheet("Saldos de Clientes");
-        HSSFSheet hoja1=libro.createSheet("Detalle de Saldos");
+        //HSSFSheet hoja1=libro.createSheet("Detalle de Saldos");
         
         /*
          * GENERAR LAS SIGUIENTES HOJAS
@@ -91,10 +91,16 @@ public class InformesClientes {
             celda3.setCellValue("Teléfono");
             celda4=fila.createCell(4);
             celda4.setCellStyle(titulo);
-            celda4.setCellValue("Cupo de Crédito");
+            celda4.setCellValue("Localidad");
             celda5=fila.createCell(5);
             celda5.setCellStyle(titulo);
-            celda5.setCellValue("Saldo");
+            celda5.setCellValue("Celular");
+            celda6=fila.createCell(6);
+            celda6.setCellStyle(titulo);
+            celda6.setCellValue("Contacto");
+            celda7=fila.createCell(7);
+            celda7.setCellStyle(titulo);
+            celda7.setCellValue("Nombre de Fantasia");
             }
             while(iCli.hasNext()){
                 cliente=(Clientes)iCli.next();
@@ -124,102 +130,26 @@ public class InformesClientes {
             celda3.setCellType(HSSFCell.CELL_TYPE_STRING);
             celda3.setCellValue(cliente.getTelefono());
             celda4=fila.createCell(4);
-            celda4.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
-            celda4.setCellValue(cliente.getCupoDeCredito());
+            celda4.setCellType(HSSFCell.CELL_TYPE_STRING);
+            celda4.setCellValue(cliente.getLocalidad());
             
            
             celda5=fila.createCell(5);
             //celda5.setCellFormula(rs.getString("observaciones"));
-            celda5.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
-            celda5.setCellValue(cliente.getSaldo());
+            celda5.setCellType(HSSFCell.CELL_TYPE_STRING);
+            celda5.setCellValue(cliente.getCelular());
+            celda6=fila.createCell(6);
+            celda6.setCellType(HSSFCell.CELL_TYPE_STRING);
+            celda6.setCellValue(cliente.getResponsable());
+            celda7=fila.createCell(7);
+            celda7.setCellType(HSSFCell.CELL_TYPE_STRING);
+            celda7.setCellValue(cliente.getFantasia());
             //celda5.setCellValue(rs.getDate("fecha"));
             
         }
-          /*
-           * segunda hoja
-           */  
-           Busquedas bus=new Clientes();
-            sql="select numeroProveedor,fecha,monto,numeroComprobante,idUsuario,idCaja,tipoComprobante,idSucursal,(select clientes.razon_soci from clientes where clientes.id=numeroProveedor)as nombreP from movimientosclientes where numeroProveedor > 1 and fecha between '"+desde+"' and '"+hasta+"' order by numeroProveedor";
-            System.out.println(sql);
-        //fuente.setFontHeight((short)21);
-        fuente.setFontName(fuente.FONT_ARIAL);
-        fuente.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
-        form=null;
-        //String sql="SELECT *,(select proveedores.nombre from proveedores where proveedores.numero=movimientosproveedores.numeroProveedor)as nombreP,if(pagado=0,'pendiente','pagado')as estado FROM movimientosproveedores where fecha between '"+desde+"' and '"+hasta+"'";
-        //System.out.println(sql);
-        //tra=new Conecciones();
-        rs=tra.leerConjuntoDeRegistros(sql);
-        titulo.setFont(fuente);
-        //titulo.setFillBackgroundColor((short)22);
-        titulo.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
-        titulo.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-        //for(int a=0;a < 100;a++){
-        col=0;
-        a=0;
-            if(a==0){
-                fila=hoja1.createRow(a);
-            celda=fila.createCell(0);
-            celda.setCellStyle(titulo);
-            celda.setCellValue("Cliente");
-            celda1=fila.createCell(1);
-            celda1.setCellStyle(titulo);
-            celda1.setCellValue("Sucursal");
-            celda2=fila.createCell(2);
-            celda2.setCellStyle(titulo);
-            celda2.setCellValue("Fecha");
-            celda3=fila.createCell(3);
-            celda3.setCellStyle(titulo);
-            celda3.setCellValue("Monto");
-            celda4=fila.createCell(4);
-            celda4.setCellStyle(titulo);
-            celda4.setCellValue("Caja Numero");
-            celda5=fila.createCell(5);
-            celda5.setCellStyle(titulo);
-            celda5.setCellValue("tipo de comprobante");
-            }
-            while(rs.next()){
-            a++;
-            //col=rs.getInt("tipoMovimiento");
-            switch(col){
-                case 1:
-                    
-                    break;
-                default:
-                    
-                    break;
-            }
-            fila=hoja1.createRow(a);
-            celda=fila.createCell(0);
-            ttx=ttx;
-            
-            celda.setCellType(HSSFCell.CELL_TYPE_STRING);
-            celda.setCellValue(rs.getString("nombreP"));
-            celda1=fila.createCell(1);
-            ttx=ttx;
-            celda1.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
-            celda1.setCellValue(rs.getInt("idSucursal"));
-            celda2=fila.createCell(2);
-            celda2.setCellType(HSSFCell.CELL_TYPE_STRING);
-            celda2.setCellValue(" "+rs.getString("fecha"));
-            celda3=fila.createCell(3);
-            celda3.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
-            celda3.setCellValue(rs.getDouble("monto"));
-            celda4=fila.createCell(4);
-            celda4.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
-            celda4.setCellValue(rs.getInt("idCaja"));
-            celda5=fila.createCell(5);
-            celda5.setCellType(HSSFCell.CELL_TYPE_STRING);
-            if(rs.getInt("tipoComprobante")==11){
-                celda5.setCellValue("Recibo de Pago");
-            }else{
-                celda5.setCellValue("Venta");
-            }
-        } 
-         
-            
-        rs.close();
+          
         //texto+="\r\n";
-        String ruta="C://Informes//"+desde+"_"+hasta+"_informeDeClientes.xls";
+        String ruta="C://Informes//informeDeClientes.xls";
         try {
             FileOutputStream elFichero=new FileOutputStream(ruta);
             try {
