@@ -1105,6 +1105,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
         Integer rengl=0;
         Integer posicion=0;
         Iterator itLoc=listadoLoc.listIterator();
+        if(loc !=null){
         while(itLoc.hasNext()){
             localidad=(Localidades)itLoc.next();
             loc2=localidad.getDescripcion();
@@ -1114,7 +1115,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame implements Internal
             rengl++;
         }
         this.jComboBox3.setSelectedIndex(posicion);
-        
+        }
         
         Cotizable cotizable=new Cotizacion();
         Cotizacion cotizacion=new Cotizacion();
