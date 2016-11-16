@@ -28,7 +28,9 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import javax.imageio.ImageIO;
 import Articulos.Articulos;
+import interfaces.Personalizable;
 import javax.print.attribute.standard.Copies;
+import objetos.Transportes;
 
 
 
@@ -83,6 +85,9 @@ public class ImprimirPedido {
         Clientes cliente;
         Facturar factu=new Clientes();
         cliente=(Clientes)factu.cargarPorCodigoAsignado(cotizacion.getIdCliente());
+        Transportes transporte=new Transportes();
+        Personalizable perT=new Transportes();
+        transporte=(Transportes) perT.buscarPorNumero(cliente.getIdTransporte());
         Calendar fecha=new GregorianCalendar();
         int dia=fecha.get(Calendar.DAY_OF_MONTH);
         int mes=fecha.get(Calendar.MONTH);
@@ -112,10 +117,14 @@ public class ImprimirPedido {
         pagina.drawLine(20, 40, 600, 40);
         pagina.drawString("RAZON SOCIAL: "+cliente.getRazonSocial(),30,55);
         pagina.drawString("C.U.I.T.: "+cliente.getNumeroDeCuit(), 350,55);
-        pagina.drawString("DIRECCION: "+cliente.getDireccion(),30,70);
+        pagina.drawString("NOMBRE FANTASIA: "+cliente.getFantasia(),30,65);
+        pagina.drawString("TELEFONO: "+cliente.getTelefono(),350,65);
+        pagina.drawString("DIRECCION: "+cliente.getDireccion(),30,75);
         
-        pagina.drawString("LOCALIDAD: ("+cliente.getCodigoPostal()+") "+cliente.getLocalidad(),350,70);
+        pagina.drawString("LOCALIDAD: ("+cliente.getCodigoPostal()+") "+cliente.getLocalidad(),350,75);
+        
         pagina.drawString("COND IVA: "+cliente.getCondicionIva(),30,85);
+        pagina.drawString("MAIL: "+cliente.getEmail(),350, 85);
         pagina.drawLine(20, 95, 600, 95);
         pagina.setFont(fuente);
         pagina.drawString("CODIGO",20,105);
@@ -137,7 +146,25 @@ public class ImprimirPedido {
             renglon=renglon + 10;
         }
         //formulario derecho
+        pagina.drawLine(20, renglon, 600,renglon);
+        renglon=renglon + 30;
+        pagina.drawString("ENVIAR POR: "+transporte.getDescripcion(), 30,renglon);
+        pagina.drawString("ENCARGADO: "+transporte.getEncargado(),350,renglon);
+        renglon=renglon + 10;
+        pagina.drawString("DIRECCION: "+transporte.getDireccion()+"- ("+transporte.getCodigoPostal()+") "+transporte.getLocalidad(), 30, renglon);
+        renglon=renglon + 10;
+        pagina.drawString("TELEFONO: "+transporte.getTelefono(),30,renglon);
+        pagina.drawString("CUIT: "+transporte.getCuit(),350,renglon);
         
+        renglon=renglon + 10;
+        pagina.drawLine(20, renglon, 600,renglon);
+        renglon=renglon + 30;
+        pagina.setFont(fuente11);
+        if(cliente.getDireccionDeEntrega()!=null){
+            pagina.drawString("ENTREGAR EN: "+cliente.getDireccionDeEntrega()+" - ("+cliente.getCodigoPostal()+") "+cliente.getLocalidad(), 30,renglon);
+        }else{
+            pagina.drawString("ENTREGAR EN: "+cliente.getDireccion()+" - ("+cliente.getCodigoPostal()+") "+cliente.getLocalidad(), 30,renglon);
+        }
         //pagina.drawImage(imagen,363,20,174,93,null);
         
         
@@ -160,6 +187,9 @@ public class ImprimirPedido {
         Clientes cliente=new Clientes();
         Facturar factu=new Clientes();
         cliente=(Clientes)factu.cargarPorCodigoAsignado(cotizacion.getIdCliente());
+        Transportes transporte=new Transportes();
+        Personalizable perT=new Transportes();
+        transporte=(Transportes) perT.buscarPorNumero(cliente.getIdTransporte());
         Calendar fecha=new GregorianCalendar();
         int dia=fecha.get(Calendar.DAY_OF_MONTH);
         int mes=fecha.get(Calendar.MONTH);
@@ -188,10 +218,14 @@ public class ImprimirPedido {
         pagina.drawLine(20, 35, 600, 35);
         pagina.drawString("RAZON SOCIAL: "+cliente.getRazonSocial(),30,45);
         pagina.drawString("C.U.I.T.: "+cliente.getNumeroDeCuit(), 350,45);
-        pagina.drawString("DIRECCION: "+cliente.getDireccion(),30,60);
+        pagina.drawString("NOMBRE FANTASIA: "+cliente.getFantasia(),30,55);
+        pagina.drawString("TELEFONO: "+cliente.getTelefono(),350,55);
+        pagina.drawString("DIRECCION: "+cliente.getDireccion(),30,65);
         
-        pagina.drawString("LOCALIDAD: ("+cliente.getCodigoPostal()+") "+cliente.getLocalidad(),350,60);
+        pagina.drawString("LOCALIDAD: ("+cliente.getCodigoPostal()+") "+cliente.getLocalidad(),350,65);
+        
         pagina.drawString("COND IVA: "+cliente.getCondicionIva(),30,75);
+        pagina.drawString("MAIL: "+cliente.getEmail(),350, 75);
         pagina.drawLine(20, 85, 600, 85);
         pagina.setFont(fuente);
         pagina.drawString("CODIGO",20,95);
@@ -227,9 +261,28 @@ public class ImprimirPedido {
         pagina.setFont(fuente1);
         pagina.drawString("TOTAL: "+Numeros.ConvertirNumero(generalT),40,renglon);
         //formulario derecho
-        
+        renglon=renglon + 30;
         //pagina.drawImage(imagen,363,20,174,93,null);
+        pagina.setFont(fuente);
+        pagina.drawLine(20, renglon, 600,renglon);
+        renglon=renglon + 10;
+        pagina.drawString("ENVIAR POR: "+transporte.getDescripcion(), 30,renglon);
+        pagina.drawString("ENCARGADO: "+transporte.getEncargado(),350,renglon);
+        renglon=renglon + 10;
+        pagina.drawString("DIRECCION: "+transporte.getDireccion()+"- ("+transporte.getCodigoPostal()+") "+transporte.getLocalidad(), 30, renglon);
+        renglon=renglon + 10;
+        pagina.drawString("TELEFONO: "+transporte.getTelefono(),30,renglon);
+        pagina.drawString("CUIT: "+transporte.getCuit(),350,renglon);
         
+        renglon=renglon + 10;
+        pagina.drawLine(20, renglon, 600,renglon);
+        renglon=renglon + 30;
+        pagina.setFont(fuente11);
+        if(cliente.getDireccionDeEntrega()!=null){
+            pagina.drawString("ENTREGAR EN: "+cliente.getDireccionDeEntrega()+" - ("+cliente.getCodigoPostal()+") "+cliente.getLocalidad(), 30,renglon);
+        }else{
+            pagina.drawString("ENTREGAR EN: "+cliente.getDireccion()+" - ("+cliente.getCodigoPostal()+") "+cliente.getLocalidad(), 30,renglon);
+        }
         
         pagina.dispose();
         pj.end();

@@ -29,6 +29,8 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import javax.imageio.ImageIO;
 import Articulos.Articulos;
+import interfaces.Personalizable;
+import objetos.Transportes;
 
 
 
@@ -83,6 +85,9 @@ public class ImprimirRemitos {
         Clientes cliente=new Clientes();
         Facturar factu=new Clientes();
         cliente=(Clientes)factu.cargarPorCodigoAsignado(cotizacion.getIdCliente());
+        Transportes transporte=new Transportes();
+        Personalizable perT=new Transportes();
+        transporte=(Transportes) perT.buscarPorNumero(cliente.getIdTransporte());
         Calendar fecha=new GregorianCalendar();
         int dia=fecha.get(Calendar.DAY_OF_MONTH);
         int mes=fecha.get(Calendar.MONTH);
@@ -130,9 +135,12 @@ public class ImprimirRemitos {
         pagina.drawString("N° 0001-"+numero, 420,70);
         pagina.drawString("RAZON SOCIAL: "+cliente.getRazonSocial(),30,145);
         pagina.drawString("C.U.I.T.: "+cliente.getNumeroDeCuit(), 350,145);
-        pagina.drawString("DIRECCION: "+cliente.getDireccion(),30,160);
-        pagina.drawString("LOCALIDAD: "+cliente.getLocalidad(),350,160);
+        pagina.drawString("NOMBRE FANTASIA: "+cliente.getFantasia(),30,155);
+        pagina.drawString("TELEFONO: "+cliente.getTelefono(),350,155);
+        pagina.drawString("DIRECCION: "+cliente.getDireccion(),30,165);
+        pagina.drawString("LOCALIDAD: ("+cliente.getCodigoPostal()+") "+cliente.getLocalidad(),350,165);
         pagina.drawString("COND IVA: "+cliente.getCondicionIva(),30,175);
+        pagina.drawString("MAIL: "+cliente.getEmail(),350,175);
         
         len=String.valueOf(cotizacion.getIdComprobante());
         cantiL=len.length();
@@ -187,6 +195,13 @@ public class ImprimirRemitos {
         }
         pagina.drawString("CANTIDAD "+tipo+": "+cotizacion.getCantidadBultos(),40,720);
         pagina.drawString("OBSERVACIONES: "+cotizacion.getObservaciones(),40,730);
+        pagina.drawLine(20, 740, 600,740);
+        pagina.drawString("TRANSPORTE: "+transporte.getDescripcion(),40,750);
+        pagina.drawString("ENCARGADO: "+transporte.getEncargado(),350,750);
+        pagina.drawString("DIRECCION: "+transporte.getDireccion()+"- ("+transporte.getCodigoPostal()+") "+transporte.getLocalidad(),40,760);
+        pagina.drawString("TELEFONO: "+transporte.getTelefono(), 40,770);
+        pagina.drawString("CUIT: "+transporte.getCuit(),350,770);
+        
         //pagina.drawString("CANT. TOTAL", 450, 750);
         //pagina.drawString(String.valueOf(cantidadTotal),440,760);
         

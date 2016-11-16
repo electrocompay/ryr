@@ -235,7 +235,7 @@ public class Cotizacion implements Cotizable{
     @Override
     public ArrayList listarPorEstado(Integer idCliente, int estado) {
        ArrayList listado=new ArrayList();
-        String sql="select * from cotizaciones where idcliente="+idCliente+" and estado="+estado+" and vencimiento > '"+Inicio.fechaDia+"' order by id desc";
+        String sql="select * from cotizaciones where idcliente="+idCliente+" and estado="+estado+" order by id desc";
         Transaccionable tra=new Conecciones();
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         Cotizacion cotizacion;
