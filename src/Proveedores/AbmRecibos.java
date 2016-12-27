@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Recibos;
+package Proveedores;
 
+import Recibos.*;
 import Conversores.Numeros;
 import Proveedores.Proveedores;
+import Proveedores.objetos.MovimientoProveedores;
 import facturacion.clientes.Clientes;
 import facturacion.clientes.Facturas;
 import java.awt.event.KeyEvent;
@@ -34,6 +36,7 @@ public class AbmRecibos extends javax.swing.JDialog {
     private String vencimiento;
     private Clientes cli;
     private Proveedores cliP;
+    private MovimientoProveedores mov;
 
     
     /**
@@ -65,10 +68,12 @@ public class AbmRecibos extends javax.swing.JDialog {
     public AbmRecibos(ArrayList listado,Double monto,Proveedores cliente) {
         initComponents();
         cliP=(Proveedores)cliente;
-        Recidable reci=new DetalleRecibo();
+        DetalleRecibo reci=new DetalleRecibo();
         listadoFc=listado;
         montoTotal=monto;
-        modelo4=reci.mostrarARecibir(listadoFc);
+        mov=new MovimientoProveedores();
+        modelo4=mov.mostrarARecibir(listadoFc);
+        //modelo4=reci.mostrarARecibir(listadoFc);
         this.jTable1.setModel(modelo4);
         this.jLabel2.setText(" $"+montoTotal);
         saldo=montoTotal;
@@ -554,6 +559,7 @@ public class AbmRecibos extends javax.swing.JDialog {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(AbmRecibos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */

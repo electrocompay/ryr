@@ -11,22 +11,10 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Nuevo Proveedor"/>
           </Properties>
-        </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu2">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagen/currency_black_dollar.png"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Saldo"/>
-          </Properties>
-        </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu3">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagen/documents_black.png"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Facturacion"/>
-          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jMenu1MouseClicked"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenu1ActionPerformed"/>
+          </Events>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu5">
           <Properties>
@@ -67,9 +55,8 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jPanel1" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -91,29 +78,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="826" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jButton1" max="32767" attributes="0"/>
-                      <Component id="jLabel1" max="32767" attributes="0"/>
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jTextField1" min="-2" pref="156" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jButton2" min="-2" pref="101" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <Component id="jTextField2" min="-2" pref="156" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jButton4" min="-2" pref="101" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="jLabel2" alignment="0" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="0" pref="8" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -121,29 +86,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Component id="jButton1" min="-2" pref="39" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jLabel1" min="-2" pref="30" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jTextField1" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
-                              <Component id="jButton2" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="jTextField2" min="-2" pref="29" max="-2" attributes="0"/>
-                              <Component id="jButton4" min="-2" pref="29" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      </Group>
-                      <Component id="jScrollPane1" pref="448" max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="jScrollPane1" pref="448" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -164,150 +107,11 @@
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="MiModeloTablaArticulos miTabla=new MiModeloTablaArticulos();&#xa;Busquedas bus=new facturacion.clientes.Clientes();&#xa;listadoClientes=bus.listar(&quot;&quot;);&#xa;Iterator listC=listadoClientes.listIterator();&#xa;miTabla.addColumn(&quot;COD PROVEEDOR&quot;);&#xa;miTabla.addColumn(&quot;RAZON SOCIAL&quot;);&#xa;miTabla.addColumn(&quot;DIRECCION&quot;);&#xa;miTabla.addColumn(&quot;TELEFONO&quot;);&#xa;miTabla.addColumn(&quot;LOCALIDAD&quot;);&#xa;miTabla.addColumn(&quot;CONTACTO&quot;);&#xa;miTabla.addColumn(&quot;CUIT&quot;);&#xa;Object[] fila=new Object[7];&#xa;facturacion.clientes.Clientes cliente=new facturacion.clientes.Clientes();&#xa;while(listC.hasNext()){&#xa;    cliente=(facturacion.clientes.Clientes)listC.next();&#xa;    fila[0]=cliente.getCodigoId();&#xa;fila[1]=cliente.getRazonSocial();&#xa;fila[2]=cliente.getDireccion();&#xa;fila[3]=cliente.getTelefono();&#xa;fila[4]=cliente.getCupoDeCredito();&#xa;fila[5]=cliente.getSaldo();&#xa;fila[6]=cliente.getListaDePrecios();&#xa;miTabla.addRow(fila);&#xa;}"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="MiModeloTablaArticulos miTabla=new MiModeloTablaArticulos();&#xa;Personalizable bus=new Proveedores();&#xa;listadoProveedores=bus.listar();&#xa;Iterator listC=listadoProveedores.listIterator();&#xa;miTabla.addColumn(&quot;COD PROVEEDOR&quot;);&#xa;miTabla.addColumn(&quot;RAZON SOCIAL&quot;);&#xa;miTabla.addColumn(&quot;DIRECCION&quot;);&#xa;miTabla.addColumn(&quot;TELEFONO&quot;);&#xa;miTabla.addColumn(&quot;LOCALIDAD&quot;);&#xa;miTabla.addColumn(&quot;SALDO&quot;);&#xa;//miTabla.addColumn(&quot;CUIT&quot;);&#xa;Object[] fila=new Object[6];&#xa;Proveedores cliente=new Proveedores();&#xa;while(listC.hasNext()){&#xa;    cliente=(Proveedores)listC.next();&#xa;    fila[0]=cliente.getNumero();&#xa;fila[1]=cliente.getNombre();&#xa;fila[2]=cliente.getDireccion();&#xa;fila[3]=cliente.getTelefono();&#xa;fila[4]=cliente.getDescripcionLocalidad();&#xa;fila[5]=Numeros.ConvertirNumero(cliente.getSaldo());&#xa;//fila[6]=cliente.getListaDePrecios();&#xa;miTabla.addRow(fila);&#xa;}"/>
               </AuxValues>
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="jButton1">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagen/sub_black_accept.png"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Guardar"/>
-            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[101, 39]"/>
-            </Property>
-            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[101, 39]"/>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
-          </Events>
-        </Component>
-        <Container class="javax.swing.JPanel" name="jPanel2">
-
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jButton3" pref="224" max="32767" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="jLabel3" pref="81" max="32767" attributes="0"/>
-                                  <Component id="jLabel4" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="dateChooserCombo4" pref="133" max="32767" attributes="0"/>
-                                  <Component id="dateChooserCombo3" pref="0" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
-                          <Component id="jButton5" alignment="0" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jLabel3" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="dateChooserCombo3" alignment="1" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jLabel4" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="dateChooserCombo4" alignment="1" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jButton3" min="-2" pref="39" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton5" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-          </Layout>
-          <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabel3">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Desde :"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabel4">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Hasta :"/>
-              </Properties>
-            </Component>
-            <Component class="datechooser.beans.DateChooserCombo" name="dateChooserCombo3">
-            </Component>
-            <Component class="datechooser.beans.DateChooserCombo" name="dateChooserCombo4">
-            </Component>
-            <Component class="javax.swing.JButton" name="jButton3">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagen/excel_icone.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Informe de Proveedores"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="jButton5">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagen/excel_icone.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Leer Excel"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
-              </Events>
-            </Component>
-          </SubComponents>
-        </Container>
-        <Component class="javax.swing.JLabel" name="jLabel1">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Buscar por Nombre"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="jTextField1">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField1ActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="jButton2">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagen/black_folder_search.png"/>
-            </Property>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="jTextField2">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField2ActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="jButton4">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagen/black_folder_search.png"/>
-            </Property>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel2">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Buscar Por Contacto"/>
-          </Properties>
-        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

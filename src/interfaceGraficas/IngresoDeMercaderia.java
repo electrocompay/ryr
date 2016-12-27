@@ -4,6 +4,7 @@
  */
 package interfaceGraficas;
 
+import Proveedores.ProveedoresAbm;
 import Articulos.ArticulosMod;
 import Compras.FacturaProveedor;
 import Proveedores.Proveedores;

@@ -4,6 +4,7 @@
  */
 package interfaceGraficas;
 
+import Proveedores.ProveedoresAbm;
 import Proveedores.Proveedores;
 import Conversores.Numeros;
 import interfaces.Editables;

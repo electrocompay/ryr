@@ -156,6 +156,7 @@ public class DetalleRecibo implements Recidable{
         
         Object[] fila=new Object[5];
         while(iL.hasNext()){
+            
             cotizacion=(Facturas)iL.next();
             fila[0]=false;
             
