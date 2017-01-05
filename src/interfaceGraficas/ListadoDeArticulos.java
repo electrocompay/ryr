@@ -4,6 +4,7 @@
  */
 package interfaceGraficas;
 
+import Articulos.Articulos;
 import java.awt.event.KeyEvent;
 
 /**
@@ -11,7 +12,7 @@ import java.awt.event.KeyEvent;
  * @author mauro
  */
 public class ListadoDeArticulos extends javax.swing.JDialog {
-
+    public static Articulos articulo;
     /**
      * Creates new form ListadoDeArticulos
      */
@@ -22,6 +23,7 @@ public class ListadoDeArticulos extends javax.swing.JDialog {
 
     ListadoDeArticulos() {
         initComponents();
+       // articulo=new Articulos();
     }
 
     /**
@@ -59,14 +61,14 @@ public class ListadoDeArticulos extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 663, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

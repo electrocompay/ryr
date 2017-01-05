@@ -169,7 +169,7 @@ public class ArticulosAsignados implements Articulable{
         Iterator it=rubro1.listIterator();
         while(it.hasNext()){
             rubro=(SubRubros)it.next();
-            sql="select articulos.id,articulos.nombre,articulos.costo,articulos.precio,articulos.idrubro,articulos.idsubrubro,(select aplicacion.coeficiente from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+idC+" limit 0,1)as coeficienteA,(select aplicacion.observaciones from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+idC+" limit 0,1)as observaciones,(select aplicacion.idlista from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+idC+" limit 0,1)as idlista from articulos where idsubrubro="+rubro.getId()+" order by nombre";
+            sql="select articulos.id,articulos.nombre,articulos.costo,articulos.precio,articulos.idrubro,articulos.idsubrubro,(select aplicacion.coeficiente from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+idC+" limit 0,1)as coeficienteA,(select aplicacion.observaciones from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+idC+" limit 0,1)as observaciones,(select aplicacion.idlista from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+idC+" limit 0,1)as idlista,(select articulosMov.cantidad from articulosMov where articulosMov.idArticulo=articulos.ID)as sst from articulos where idsubrubro="+rubro.getId()+" order by nombre";
             rs=tra.leerConjuntoDeRegistros(sql);
             //System.out.println(sql);
         Double precio=0.00;
@@ -179,6 +179,7 @@ public class ArticulosAsignados implements Articulable{
         try {
             while(rs.next()){
                 articulo=new ArticulosAsignados();
+                
                 articulo.setId(rs.getInt("id"));
                 
                 articulo.setDescripcion(rs.getString("nombre"));
@@ -203,6 +204,7 @@ public class ArticulosAsignados implements Articulable{
                 articulo.setPrecioDeCosto(rs.getDouble("costo"));
                 precio=rs.getDouble("precio") * coeficiente;
                 articulo.setPrecioUnitario(precio);
+                
                 listado.add(articulo);
             }
         } catch (SQLException ex) {
@@ -294,7 +296,7 @@ public class ArticulosAsignados implements Articulable{
         Clientes cliente=new Clientes();
         cliente=(Clientes)idCliente;
         ArrayList listado=new ArrayList();
-        String sql="select articulos.id,articulos.nombre,articulos.costo,articulos.precio,articulos.idrubro,articulos.idsubrubro,(select aplicacion.coeficiente from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+" limit 0,1)as coeficienteA,(select aplicacion.observaciones from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+" limit 0,1)as observaciones,(select aplicacion.idlista from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+" limit 0,1)as idlista from articulos order by nombre";
+        String sql="select articulos.id,articulos.nombre,articulos.costo,articulos.precio,articulos.idrubro,articulos.idsubrubro,(select aplicacion.coeficiente from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+" limit 0,1)as coeficienteA,(select aplicacion.observaciones from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+" limit 0,1)as observaciones,(select aplicacion.idlista from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+cliente.getCodigoId()+" limit 0,1)as idlista,(select articulosMov.cantidad from articulosMov where articulosMov.idArticulo=articulos.ID)as sst from articulos order by nombre";
         Transaccionable tra=new Conecciones();
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         Double precio=0.00;
@@ -304,6 +306,7 @@ public class ArticulosAsignados implements Articulable{
         try {
             while(rs.next()){
                 articulo=new ArticulosAsignados();
+                
                 articulo.setId(rs.getInt("id"));
                 
                 articulo.setDescripcion(rs.getString("nombre"));
@@ -384,7 +387,7 @@ public class ArticulosAsignados implements Articulable{
         Iterator it=rubro1.listIterator();
         while(it.hasNext()){
             rubro=(SubRubros)it.next();
-            sql="select articulos.id,articulos.nombre,articulos.costo,articulos.precio,articulos.idrubro,articulos.idsubrubro,(select aplicacion.coeficiente from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+idC+" limit 0,1)as coeficienteA,(select aplicacion.observaciones from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+idC+" limit 0,1)as observaciones,(select aplicacion.idlista from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+idC+" limit 0,1)as idlista from articulos where idsubrubro="+rubro.getId()+" and nombre like '%"+ttx+"%' order by nombre";
+            sql="select articulos.id,articulos.nombre,articulos.costo,articulos.precio,articulos.idrubro,articulos.idsubrubro,(select aplicacion.coeficiente from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+idC+" limit 0,1)as coeficienteA,(select aplicacion.observaciones from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+idC+" limit 0,1)as observaciones,(select aplicacion.idlista from aplicacion where aplicacion.idarticulo=articulos.id and aplicacion.idcliente="+idC+" limit 0,1)as idlista,(select articulosMov.cantidad from articulosMov where articulosMov.idArticulo=articulos.ID)as sst from articulos where idsubrubro="+rubro.getId()+" and nombre like '%"+ttx+"%' order by nombre";
             rs=tra.leerConjuntoDeRegistros(sql);
             //System.out.println(sql);
         Double precio=0.00;
@@ -394,6 +397,7 @@ public class ArticulosAsignados implements Articulable{
         try {
             while(rs.next()){
                 articulo=new ArticulosAsignados();
+                
                 articulo.setId(rs.getInt("id"));
                 
                 articulo.setDescripcion(rs.getString("nombre"));

@@ -26,4 +26,6 @@ public interface Modificable {
     public void depurarFiltrador(ArrayList rubro1);
     public ArrayList modificarPreciosValor(ArrayList listado,Double porcPrecio,Double porcCosto);
     public DefaultTableModel actualizarListado(ArrayList listado);
+    public DefaultTableModel mostrarModificacionStock(ArrayList listado);
+    public void cargarMovimientoDeAjuste(Object articulo);
 }

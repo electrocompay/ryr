@@ -172,6 +172,7 @@ public class Inicio extends javax.swing.JFrame {
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
+        jMenuItem18 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem22 = new javax.swing.JMenuItem();
@@ -311,6 +312,14 @@ public class Inicio extends javax.swing.JFrame {
         jMenuItem13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/documents_black.png"))); // NOI18N
         jMenuItem13.setText("Consultas");
         jMenu2.add(jMenuItem13);
+
+        jMenuItem18.setText("Ajustar Stock");
+        jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem18ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem18);
 
         jMenuBar1.add(jMenu2);
 
@@ -743,6 +752,14 @@ public class Inicio extends javax.swing.JFrame {
         fe.toFront();
     }//GEN-LAST:event_jMenuItem25ActionPerformed
 
+    private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
+        StockAbm stock=new StockAbm();
+        Inicio.jDesktopPane1.add(stock);
+        stock.setVisible(true);
+        stock.toFront();
+                
+    }//GEN-LAST:event_jMenuItem18ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -818,6 +835,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
+    private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem21;
     private javax.swing.JMenuItem jMenuItem22;
