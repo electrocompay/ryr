@@ -169,7 +169,7 @@ public class ModificacionDeCotizacion extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Ingreso de Cotizacion");
+        setTitle("Modificacion de Cotizacion");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
@@ -942,9 +942,13 @@ public class ModificacionDeCotizacion extends javax.swing.JInternalFrame {
         Articulos artic=new Articulos();
         artic=(Articulos)detalleDelPedido.get(posicion);
         int idDetalle=artic.getIdRenglon();
-        detalleDelPedido.remove(posicion);
+        
         Cotizable coti=new DetalleCotizacion();
         coti.eliminarCotizacion(idDetalle);
+        detPed=coti.cargarDetalle(comprobante1.getId());
+        detalleDelPedido.clear();
+        detalleDelPedido=coti.convertirAArticulos(detPed);
+        detalleDelPedido.remove(posicion);
         //detalleDelPedido.clear();
         agregarRenglonTabla();
         jTextField1.setText("");

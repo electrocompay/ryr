@@ -35,17 +35,17 @@ import Articulos.Articulos;
  */
 public class ImprimirOrdenDePedidos {
 
-    Font fuente = new Font("Arial", Font.PLAIN, 9);
-    Font fuente1=new Font("Arial",Font.BOLD,16);
-    Font fuente3 = new Font("Arial", Font.PLAIN, 7);
-    Font fuente4 = new Font("Arial", Font.BOLD,7);
-    Font fuente5=new Font("Arial",Font.PLAIN,16);
-    Font fuente6 = new Font("Arial", Font.BOLD, 9);
-    Font fuente7=new Font("Sans Serif", Font.BOLD,7);
-    Font fuente8=new Font("Arial",Font.PLAIN,8);
-    Font fuente9 = new Font("Arial", Font.BOLD, 5);
-    Font fuente10 = new Font("Arial", Font.PLAIN, 6);
-    Font fuente11=new Font("Arial",Font.BOLD,11);
+    Font fuente = new Font("Courier", Font.PLAIN, 9);
+    Font fuente1=new Font("Courier",Font.BOLD,16);
+    Font fuente3 = new Font("Courier", Font.PLAIN, 7);
+    Font fuente4 = new Font("Courier", Font.BOLD,7);
+    Font fuente5=new Font("Courier",Font.PLAIN,16);
+    Font fuente6 = new Font("Courier", Font.BOLD, 9);
+    Font fuente7=new Font("Courier", Font.BOLD,7);
+    Font fuente8=new Font("Courier",Font.PLAIN,8);
+    Font fuente9 = new Font("Courier", Font.BOLD, 5);
+    Font fuente10 = new Font("Courier", Font.PLAIN, 6);
+    Font fuente11=new Font("Courier",Font.BOLD,11);
 	PrintJob pj;	
 	Graphics pagina;
 	
