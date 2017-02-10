@@ -1060,7 +1060,7 @@ private void agregarRenglonTabla(){
         fila[3]="";
         fila[4]="";
         
-        fila[5]="<html><strong> - "+Numeros.ConvertirNumero(sub)+"</strong></html>";
+        fila[5]="<html><strong> "+Numeros.ConvertirNumero(sub)+"</strong></html>";
         busC.addRow(fila);
         fila[0]="";
         fila[1]="<html><strong>TOTAL</strong></html>";
