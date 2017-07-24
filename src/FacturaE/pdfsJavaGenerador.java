@@ -40,7 +40,7 @@ import objetos.Localidades;
  * @author mauro di
  */
 public class pdfsJavaGenerador {
-    private FacturaElectronica doc=new FacturaElectronica();
+    private FEl doc=new FEl();
     private Clientes cliente=new Clientes();
 
     public void setCliente(Clientes cliente) {
@@ -48,7 +48,7 @@ public class pdfsJavaGenerador {
     }
     
     
-    public void setDoc(FacturaElectronica doc) {
+    public void setDoc(FEl doc) {
         this.doc = doc;
     }
     

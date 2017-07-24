@@ -8,7 +8,7 @@ import interfaceGraficas.NuevoCliente;
 import Pedidos.IngresoDePedidos;
 import Conversores.Numeros;
 import facturacion.clientes.Clientes;
-import FacturaE.FacturaElectronica;
+import FacturaE.FEl;
 import interfaceGraficas.Inicio;
 import interfacesPrograma.Facturar;
 import java.awt.event.KeyEvent;
@@ -900,10 +900,10 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame implements Key
         comprobante=(Comprobantes)fat.guardar(comprobante);
         // aqui hago el envio a factura  electronica, si aprueba no imprime
         
-        FacturaElectronica fe=new FacturaElectronica();
+        FEl fe=new FEl();
         try {
             
-           fe=(FacturaElectronica) fe.leer(comprobante);
+           fe=(FEl) fe.leer(comprobante);
            if(fe.getRespuesta().equals("OK")){
                //JOptionPane.showMessageDialog(this,"aprobada id: "+fe.getId());
                pdfsJavaGenerador pdf=new pdfsJavaGenerador();

@@ -16,15 +16,15 @@ import javax.swing.table.DefaultTableModel;
 public class AbmFacturaElectronica extends javax.swing.JInternalFrame {
     DefaultTableModel modelo;
     ArrayList listadoFe;
-    FacturaElectronica faE;
+    FEl faE;
     /**
      * Creates new form AbmFacturaElectronica
      */
     public AbmFacturaElectronica() {
         modelo=new DefaultTableModel();
         listadoFe=new ArrayList();
-        faE=new FacturaElectronica();
-        FacturableE ff=new FacturaElectronica();
+        faE=new FEl();
+        FacturableE ff=new FEl();
         listadoFe=ff.listarPorEstado(0);
         modelo=ff.mostrarListado(listadoFe);
         
@@ -140,9 +140,9 @@ public class AbmFacturaElectronica extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        faE=(FacturaElectronica) listadoFe.get(this.jTable1.getSelectedRow());
-        FacturableE ffE=new FacturaElectronica();
-        faE=(FacturaElectronica) ffE.reEnviar(faE);
+        faE=(FEl) listadoFe.get(this.jTable1.getSelectedRow());
+        FacturableE ffE=new FEl();
+        faE=(FEl) ffE.reEnviar(faE);
         if(faE.getRespuesta().equals("OK")){
             ffE.reimprimir(faE);
         
@@ -159,8 +159,8 @@ public class AbmFacturaElectronica extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        faE=(FacturaElectronica) listadoFe.get(this.jTable1.getSelectedRow());
-        FacturableE ffE=new FacturaElectronica();
+        faE=(FEl) listadoFe.get(this.jTable1.getSelectedRow());
+        FacturableE ffE=new FEl();
         
         if(faE.getRespuesta().equals("OK")){
             ffE.reimprimir(faE);

@@ -31,7 +31,7 @@ import Articulos.Modificable;
 import Articulos.Rubrable;
 import Articulos.Rubros;
 import Articulos.SubRubros;
-import FacturaE.FacturaElectronica;
+import FacturaE.FEl;
 import FacturaE.pdfsJavaGenerador;
 import ListasDePrecios.Articulable;
 import ListasDePrecios.ArticulosAsignados;
@@ -903,10 +903,10 @@ public class ModificacionDeFacturas extends javax.swing.JInternalFrame {
         comprobante=(Comprobantes)fat.guardar(comprobante);
         // aqui hago el envio a factura  electronica, si aprueba no imprime
         
-        FacturaElectronica fe=new FacturaElectronica();
+        FEl fe=new FEl();
         try {
             
-           fe=(FacturaElectronica) fe.leer(comprobante);
+           fe=(FEl) fe.leer(comprobante);
            if(fe.getRespuesta().equals("OK")){
                //JOptionPane.showMessageDialog(this,"aprobada id: "+fe.getId());
                pdfsJavaGenerador pdf=new pdfsJavaGenerador();

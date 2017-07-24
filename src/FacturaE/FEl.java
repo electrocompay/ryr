@@ -1,5 +1,6 @@
 package FacturaE;
 
+import Objetos.FacturaElectronica;
 import facturacion.clientes.Clientes;
 import facturacion.clientes.Facturable;
 import facturacion.clientes.Facturas;
@@ -35,13 +36,14 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import Interface.Electronicable;
 
 
 
 
 
 
-public class FacturaElectronica implements FacturableE{
+public class FEl implements FacturableE{
     private String valor;
     private String resultado;
     private String respuesta;
@@ -249,7 +251,10 @@ public class FacturaElectronica implements FacturableE{
         String cuit=compro.getCliente().getNumeroDeCuit().trim();
         Integer tipDocumento=0;
         Integer tipComprobante=0;
-        FacturaElectronica fE=new FacturaElectronica();
+        //FEl fE=new FEl();
+        FacturaElectronica fact=new FacturaElectronica();
+        Electronicable fBle=new FacturaElectronica();
+        FEl fE=new FEl();
         String idCliente=compro.getCliente().getNumeroDeCuit();
         fE.setEstado(compro.getPagado());
         if(idCliente.length() == 8 || idCliente.length()==11){
@@ -284,23 +289,22 @@ public class FacturaElectronica implements FacturableE{
         String importeEx="0.0";
         String impuestoLiq=String.valueOf(compro.getMontoIva());
         
-        
-        HttpURLConnection con = (HttpURLConnection)url.openConnection();
-        Authenticator au = new Authenticator() {
-         @Override
-         protected PasswordAuthentication
-            getPasswordAuthentication() {
-            return new PasswordAuthentication
-               ("mauro@bambusoft.com.ar", "SUtter001".toCharArray());
-         }
-      };
-      Authenticator.setDefault(au);
-      con.setDoOutput(true);
-      con.setRequestMethod("POST");
-      try{
-      OutputStreamWriter out=new OutputStreamWriter(
-      con.getOutputStream());
       
+        fact.setPuntoDeVenta("3");
+        fact.setTipoComprobante(tipoComprobante);//11
+        fact.setArchivoCrt("bambusoft.crt");
+        fact.setArchivoKey("bambusoft.key");
+        fact.setCuit("20229053834");
+        fact.setConcepto("1");
+        fact.setTipoDocumento(tipoDocumento);
+        fact.setNumeroDocumento(idCliente);
+        fact.setImporteTotal(importeTotal);
+        fact.setImporteTotalConcepto("0.00");
+        fact.setImporteNeto(importeNeto);
+        fact.setImporteIva(impuestoLiq);
+        fact.setImporteTributo("0.00");
+        fact.setImporteOperacionesExp("0.00");
+        /*
       out.write("TYPE="+tipo);
       out.write("&PUBLIC_KEY="+key);
       out.write("&CUSTOMERID="+idCliente);
@@ -311,112 +315,27 @@ public class FacturaElectronica implements FacturableE{
       out.write("&IMP_OP_EX="+importeEx);
       out.write("&IMPTO_LIQ="+impuestoLiq);
       out.close();
-      
-      BufferedReader in=new BufferedReader(new InputStreamReader(con.getInputStream()));
-      String response;
-      String cadena="";
-      while((response=in.readLine())!=null){
-          System.out.println(response);
-          cadena=response;
-      }
-          
-                  
-      //String cadena=response;
-      //in.close();
-      
-      DocumentBuilderFactory dbf=DocumentBuilderFactory.newInstance();
-        DocumentBuilder db=dbf.newDocumentBuilder();
-        //System.err.println(cadena);
-        InputSource archivo=new InputSource();
+        */
         
-        archivo.setCharacterStream(new StringReader(cadena));
-        Document documento=db.parse(archivo);
-        //Document documento=db.parse(response);
-        documento.getDocumentElement().normalize();
-        org.w3c.dom.NodeList nodeLista=documento.getElementsByTagName("AFIP");
-        int cantidad=nodeLista.getLength();
-        System.out.println("Informacion de conecciones");
+        fBle.Solicitar(fact);
         
-        for (int s = 0; s < cantidad; s++) {
-            
-	Node primerNodo = nodeLista.item(s);
-	String titulo;
-	String autor;
-	String hits;
-        System.err.println("numero nodo "+s);
+        fE.setAfipPlastCbte(fact.getAfipPlastCbte());
+        fE.setAfipPlastId(fact.getAfipPlastId());
+        fE.setAfipQty(fact.getAfipQty());
+        fE.setCae(fact.getCae());
+        fE.setCaeVto(fact.getCaeVto());
+        fE.setCustomerTypeDoc(fact.getTipoComprobante());
+        fE.setCustomerTypeDoc(fact.getTipoDocumento());
+        fE.setFecha(fact.getFechaCae());
+        fE.setFechaCae(fact.getFechaCae());
+        //fE.setIdCliente(idCliente);
+        fE.setImporteNeto(fact.getImporteNeto());
+        fE.setImporteTotal(fact.getImporteTotal());
+        fE.setImpuestoLiquido(fact.getImporteIva());
+        fE.setResultado(fact.getResultado());
+        fE.setTipoComprobante(fact.getTipoComprobante());
         
-	if (primerNodo.getNodeType() == Node.ELEMENT_NODE) {
-
-	Element primerElemento = (Element) primerNodo;
-        //Configuracion conf=new Configuracion();
-        
-	        org.w3c.dom.NodeList primerNombreElementoLista =primerElemento.getElementsByTagName("RESPONSE");
-	Element primerNombreElemento =(Element) primerNombreElementoLista.item(0);
-	        org.w3c.dom.NodeList primerNombre = primerNombreElemento.getChildNodes();
-	 fE.setRespuesta(((Node) primerNombre.item(0)).getNodeValue().toString());
-	System.out.println("respuesta : "  + fE.getRespuesta());
-        //conf.setNombreConeccion(nombreConeccion);
-	        org.w3c.dom.NodeList segundoNombreElementoLista =primerElemento.getElementsByTagName("CAE");
-	Element segundoNombreElemento =(Element) segundoNombreElementoLista.item(0);
-	        org.w3c.dom.NodeList segundoNombre = segundoNombreElemento.getChildNodes();
-
-	fE.setCae(((Node) segundoNombre.item(0)).getNodeValue().toString());
-	System.out.println("cae : "  + fE.getCae());
-        //conf.setStringDeUrl(stringDeUrl);
-	        org.w3c.dom.NodeList tercerNombreElementoLista =primerElemento.getElementsByTagName("CAE_VTO");
-	Element tercerNombreElemento =(Element) tercerNombreElementoLista.item(0);
-	        org.w3c.dom.NodeList tercerNombre = tercerNombreElemento.getChildNodes();
-    	fE.setCaeVto(((Node) tercerNombre.item(0)).getNodeValue().toString());
-	System.out.println("cae vencimiento : "  + fE.getCaeVto());
-        //conf.setUsuario(usuario);
-        org.w3c.dom.NodeList cuartoNombreElementoLista =primerElemento.getElementsByTagName("FECHA_CAE");
-	Element cuartoNombreElemento =(Element) cuartoNombreElementoLista.item(0);
-	        org.w3c.dom.NodeList cuartoNombre = cuartoNombreElemento.getChildNodes();
-    	fE.setFechaCae(((Node) cuartoNombre.item(0)).getNodeValue().toString());
-	System.out.println("fecha cae : "  + fE.getFechaCae());
-        //conf.setUsuario(usuario);
-        org.w3c.dom.NodeList quintoNombreElementoLista =primerElemento.getElementsByTagName("AFIPQTY");
-	Element quintoNombreElemento =(Element) quintoNombreElementoLista.item(0);
-	        org.w3c.dom.NodeList quintoNombre = quintoNombreElemento.getChildNodes();
-    	fE.setAfipQty(((Node) quintoNombre.item(0)).getNodeValue().toString());
-	System.out.println("afipqty : "  + fE.getAfipQty());
-        //conf.setUsuario(usuario);
-        org.w3c.dom.NodeList sextoNombreElementoLista =primerElemento.getElementsByTagName("AFIPLASTID");
-	Element sextoNombreElemento =(Element) sextoNombreElementoLista.item(0);
-	        org.w3c.dom.NodeList sextoNombre = sextoNombreElemento.getChildNodes();
-    	fE.setAfipPlastId(((Node) sextoNombre.item(0)).getNodeValue().toString());
-	System.out.println("afipplastid : "  + fE.getAfipPlastId());
-        //conf.setUsuario(usuario);
-        org.w3c.dom.NodeList septimoNombreElementoLista =primerElemento.getElementsByTagName("AFIPLASTCBTE");
-	Element septimoNombreElemento =(Element) septimoNombreElementoLista.item(0);
-	        org.w3c.dom.NodeList septimoNombre = septimoNombreElemento.getChildNodes();
-    	fE.setAfipPlastCbte(((Node) septimoNombre.item(0)).getNodeValue().toString());
-	System.out.println("afipplastcbte : "  + fE.getAfipPlastCbte());
-        //conf.setClave(clave);
-        //listadoConecciones.add(conf);
-        
-	}
-        }
-        in.close();
-        }catch(java.net.UnknownHostException ex){
-          Logger.getLogger(FacturaElectronica.class.getName()).log(Level.SEVERE, null, ex);
-            System.err.println("En factura electronica: "+ex);
-            fE.setRespuesta("ERROR");
-        }catch(java.lang.NullPointerException ey){
-          Logger.getLogger(FacturaElectronica.class.getName()).log(Level.SEVERE, null, ey);
-            System.err.println("Parametros invalidos: "+ey);
-            fE.setRespuesta("PARAMETROS");  
-        }
-        
-        fE.setIdFactura(compro.getIdFactura());
-        fE.setIdCliente(compro.getCliente().getCodigoId());
-        fE.setCustomerId(idCliente);
-        fE.setCustomerTypeDoc(tipoDocumento);
-        fE.setTipoComprobante(tipoComprobante);
-        fE.setImporteTotal(importeTotal);
-        fE.setImporteNeto(importeNeto);
-        fE.setImpuestoLiquido(impuestoLiq);
-        
+                
         fE.setId(guardar(fE));
         
         
@@ -431,8 +350,8 @@ public class FacturaElectronica implements FacturableE{
     @Override
     public Integer guardar(Object Fe) {
         Transaccionable tra=new Conecciones();
-        FacturaElectronica ffE=new FacturaElectronica();
-        ffE=(FacturaElectronica)Fe;
+        FEl ffE=new FEl();
+        ffE=(FEl)Fe;
         Integer estado=0;
         Integer id=0;
         if(ffE.getRespuesta().equals("OK"))estado=1;
@@ -445,15 +364,15 @@ public class FacturaElectronica implements FacturableE{
                 id=rs.getInt(1);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaElectronica.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FEl.class.getName()).log(Level.SEVERE, null, ex);
         }
                 return id;
     }
 
     @Override
     public Object modificar(Object Fe) {
-        FacturaElectronica fE=new FacturaElectronica();
-        fE=(FacturaElectronica)Fe;
+        FEl fE=new FEl();
+        fE=(FEl)Fe;
         String sql="update facturaelectronica set cae='"+fE.getCae()+"',cae_vto='"+fE.getCaeVto()+"',fecha_cae='"+fE.getFechaCae()+"',afipqty='"+fE.getAfipQty()+"',afipplastid='"+fE.getAfipPlastId()+"',afipplastcbte='"+fE.getAfipPlastCbte()+"', estado=1 where id="+fE.getId();
         Transaccionable tra=new Conecciones();
         tra.guardarRegistro(sql);
@@ -466,10 +385,10 @@ public class FacturaElectronica implements FacturableE{
         String sql="select * from facturaelectronica where estado="+estado;
         Transaccionable tra=new Conecciones();
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
-        FacturaElectronica factE;
+        FEl factE;
         try {
             while(rs.next()){
-                factE=new FacturaElectronica();
+                factE=new FEl();
                 factE.setId(rs.getInt("id"));
                 factE.setCae(rs.getString("cae"));
                 factE.setCaeVto(rs.getString("cae_vto"));
@@ -496,7 +415,7 @@ public class FacturaElectronica implements FacturableE{
             }
             rs.close();
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaElectronica.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FEl.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return listado;
@@ -510,7 +429,7 @@ public class FacturaElectronica implements FacturableE{
     @Override
     public DefaultTableModel mostrarListado(ArrayList listadoC) {
         MiModeloTablaArticulos listado=new MiModeloTablaArticulos();
-        FacturaElectronica cotizacion;
+        FEl cotizacion;
         Clientes cliente;
         Facturar bus=new Clientes();
         Facturable ff=new Facturas();
@@ -523,7 +442,7 @@ public class FacturaElectronica implements FacturableE{
         listado.addColumn("Estado");
         Object[] fila=new Object[5];
         while(iL.hasNext()){
-            cotizacion=(FacturaElectronica)iL.next();
+            cotizacion=(FEl)iL.next();
             cliente=new Clientes();
             factura=new Facturas();
             fila[0]=String.valueOf(cotizacion.getFecha());
@@ -545,8 +464,8 @@ public class FacturaElectronica implements FacturableE{
 
     @Override
     public Object reEnviar(Object fe) {
-        FacturaElectronica fE=new FacturaElectronica();
-            fE=(FacturaElectronica)fe;
+        FEl fE=new FEl();
+            fE=(FEl)fe;
         try {
             
             URL url = new URL("https://tufacturaelectronica.net/api/v1/SANDBOX");
@@ -684,23 +603,23 @@ public class FacturaElectronica implements FacturableE{
                 }
                 in.close();
             }catch(java.net.UnknownHostException ex){
-                Logger.getLogger(FacturaElectronica.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FEl.class.getName()).log(Level.SEVERE, null, ex);
                 System.err.println("En factura electronica: "+ex);
                 fE.setRespuesta("ERROR");
             }catch(java.lang.NullPointerException ey){
-                Logger.getLogger(FacturaElectronica.class.getName()).log(Level.SEVERE, null, ey);
+                Logger.getLogger(FEl.class.getName()).log(Level.SEVERE, null, ey);
                 System.err.println("Parametros invalidos: "+ey);
                 fE.setRespuesta("PARAMETROS");
             } catch (ParserConfigurationException ex) {
-                Logger.getLogger(FacturaElectronica.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FEl.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SAXException ex) {
-                Logger.getLogger(FacturaElectronica.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FEl.class.getName()).log(Level.SEVERE, null, ex);
             }
             
         } catch (MalformedURLException ex) {
-            Logger.getLogger(FacturaElectronica.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FEl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(FacturaElectronica.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FEl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return fE;
         
@@ -713,8 +632,8 @@ public class FacturaElectronica implements FacturableE{
 
     @Override
     public String reimprimir(Object fe) {
-        FacturaElectronica fE=new FacturaElectronica();
-        fE=(FacturaElectronica)fe;
+        FEl fE=new FEl();
+        fE=(FEl)fe;
         pdfsJavaGenerador pdf=new pdfsJavaGenerador();
         Clientes cliente=new Clientes();
         Facturar fac=new Clientes();
