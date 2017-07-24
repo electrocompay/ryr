@@ -103,6 +103,8 @@ public class pdfsJavaGenerador {
             cb.showText("Telefono: "+cliente.getTelefono());
             cb.setTextMatrix(380,650);
             cb.showText("Cuit: "+cliente.getNumeroDeCuit());
+            cb.setTextMatrix(40,640);
+            cb.showText("Cond IVA: "+cliente.getCondicionIva());
             
             int renglon=610;
             String vencimiento;
