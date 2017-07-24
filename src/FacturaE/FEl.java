@@ -318,27 +318,29 @@ public class FEl implements FacturableE{
         */
         
         fBle.Solicitar(fact);
-        
-        fE.setAfipPlastCbte(fact.getAfipPlastCbte());
-        fE.setAfipPlastId(fact.getAfipPlastId());
-        fE.setAfipQty(fact.getAfipQty());
-        fE.setCae(fact.getCae());
-        fE.setCaeVto(fact.getCaeVto());
-        fE.setCustomerTypeDoc(fact.getTipoComprobante());
-        fE.setCustomerTypeDoc(fact.getTipoDocumento());
-        fE.setFecha(fact.getFechaCae());
-        fE.setFechaCae(fact.getFechaCae());
-        //fE.setIdCliente(idCliente);
-        fE.setImporteNeto(fact.getImporteNeto());
-        fE.setImporteTotal(fact.getImporteTotal());
-        fE.setImpuestoLiquido(fact.getImporteIva());
-        fE.setResultado(fact.getResultado());
-        fE.setTipoComprobante(fact.getTipoComprobante());
-        
-                
-        fE.setId(guardar(fE));
-        
-        
+        if(fE.getCae().equals("")){
+            
+        }else{
+            fE.setAfipPlastCbte(fact.getAfipPlastCbte());
+            fE.setAfipPlastId(fact.getAfipPlastId());
+            fE.setAfipQty(fact.getAfipQty());
+            fE.setCae(fact.getCae());
+            fE.setCaeVto(fact.getCaeVto());
+            fE.setCustomerTypeDoc(fact.getTipoComprobante());
+            fE.setCustomerTypeDoc(fact.getTipoDocumento());
+            fE.setFecha(fact.getFechaCae());
+            fE.setFechaCae(fact.getFechaCae());
+            //fE.setIdCliente(idCliente);
+            fE.setImporteNeto(fact.getImporteNeto());
+            fE.setImporteTotal(fact.getImporteTotal());
+            fE.setImpuestoLiquido(fact.getImporteIva());
+            fE.setResultado(fact.getResultado());
+            fE.setTipoComprobante(fact.getTipoComprobante());
+
+
+            fE.setId(guardar(fE));
+
+        }
       return fE;
     }
 

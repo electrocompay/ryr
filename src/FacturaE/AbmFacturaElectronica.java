@@ -77,6 +77,7 @@ public class AbmFacturaElectronica extends javax.swing.JInternalFrame {
         );
 
         jButton1.setText("Eliminar");
+        jButton1.setEnabled(false);
 
         jButton2.setText("Reintentar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -86,6 +87,7 @@ public class AbmFacturaElectronica extends javax.swing.JInternalFrame {
         });
 
         jButton3.setText("Reimprimir");
+        jButton3.setEnabled(false);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
