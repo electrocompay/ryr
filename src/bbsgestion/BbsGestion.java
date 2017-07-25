@@ -5,6 +5,7 @@
 package bbsgestion;
 
 import Compras.Remitos;
+import Configuracion.Propiedades;
 import Sucursales.Usuarios;
 import interfaceGraficas.Inicio;
 import interfaceGraficas.LoguinBbsGestion;
@@ -17,7 +18,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import objetos.ConeccionLocal;
 import objetos.Conecciones;
@@ -40,6 +44,7 @@ public class BbsGestion {
         File folder=new File("C:\\GestionRyR");
         File archivos=new File("C:\\Informes");
         File bases=new File("C:\\GestionRyR\\DB");
+        File configuracion=new File("Configuracion");
         //File imagenes=new File("C:\\Gestion\\imagenes\\saynomore.jpg");
         File bk;
         //FileInputStream fregis = new FileInputStream("C:\\Users\\mauro\\Pictures\\Camera Uploads\\snm.jpg"); 
@@ -51,7 +56,7 @@ public class BbsGestion {
         if(!bases.isDirectory()){
             JOptionPane.showMessageDialog(null,"INICIANDO CONFIGURACION Y CREACION DE LA BASE DE DATOS");
             bases.mkdirs();
-            ConeccionLocal.CrearDb();
+            //ConeccionLocal.CrearDb();
             
         }
         if(!folder.isDirectory()){
@@ -62,6 +67,7 @@ public class BbsGestion {
             
         }
         if(!archivos.isDirectory())archivos.mkdirs();
+        if(!configuracion.isDirectory())configuracion.mkdirs();
         /*
         if(!imagenes.isFile()){
             //imagenes.mkdirs();
@@ -119,46 +125,50 @@ public class BbsGestion {
          }catch (Exception e2){ 
             e2.printStackTrace();
          }
-      }
+         }
           File archivo1=null;
         
          archivo = new File ("C:\\Gestion\\idEquipo.txt");
-        /*
-         if(archivo1.exists()){
-         fr = new FileReader (archivo1);
-         br = new BufferedReader(fr);
- 
-          Lectura del fichero
-         Integer numeroEquipo;
-         String linea;
-         String host;
-         String usuario;
-         String clv;
-         int a=0;
-          Transaccionable tra=new Conecciones();
-         while((linea=br.readLine())!=null){
-             a++;
+        try {
+            /*
+            if(archivo1.exists()){
+            fr = new FileReader (archivo1);
+            br = new BufferedReader(fr);
+            
+            Lectura del fichero
+            Integer numeroEquipo;
+            String linea;
+            String host;
+            String usuario;
+            String clv;
+            int a=0;
+            Transaccionable tra=new Conecciones();
+            while((linea=br.readLine())!=null){
+            a++;
             System.out.println("Equipo Numero :"+linea);
             switch (a){
-                case 1:
-                    numeroEquipo=Integer.parseInt(linea);
-                    break;
-                case 2:
-                    host=linea;
-                    break;
-                case 3:
-                    usuario=linea;
-                    break;
-                case 4:
-                    clv=linea;
-                    break;
+            case 1:
+            numeroEquipo=Integer.parseInt(linea);
+            break;
+            case 2:
+            host=linea;
+            break;
+            case 3:
+            usuario=linea;
+            break;
+            case 4:
+            clv=linea;
+            break;
             }
            
             if(tra.guardarRegistro(linea));
-      }
-         }
-        */
-        
+            }
+            }
+            */
+            Propiedades.CargarPropiedades();
+        } catch (ParseException ex) {
+            Logger.getLogger(BbsGestion.class.getName()).log(Level.SEVERE, null, ex);
+        }
         LoguinBbsGestion lBb=new LoguinBbsGestion();
         lBb.setVisible(true);
         lBb.pack();

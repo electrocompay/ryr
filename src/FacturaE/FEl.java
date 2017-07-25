@@ -1,5 +1,6 @@
 package FacturaE;
 
+import Configuracion.Propiedades;
 import Objetos.FacturaElectronica;
 import facturacion.clientes.Clientes;
 import facturacion.clientes.Facturable;
@@ -290,11 +291,11 @@ public class FEl implements FacturableE{
         String impuestoLiq=String.valueOf(compro.getMontoIva());
         
       
-        fact.setPuntoDeVenta("3");
+        fact.setPuntoDeVenta(Propiedades.getPUNTODEVENTA());
         fact.setTipoComprobante(tipoComprobante);//11
-        fact.setArchivoCrt("bambusoft.crt");
-        fact.setArchivoKey("bambusoft.key");
-        fact.setCuit("20229053834");
+        fact.setArchivoCrt(Propiedades.getARCHIVOBCRT());
+        fact.setArchivoKey(Propiedades.getARCHIVOKEY());
+        fact.setCuit(Propiedades.getCUIT());
         fact.setConcepto("1");
         fact.setTipoDocumento(tipoDocumento);
         fact.setNumeroDocumento(idCliente);
