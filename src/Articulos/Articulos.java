@@ -1043,7 +1043,7 @@ public class Articulos implements Facturar,Editables,Comparables,Modificable{
             
         //}
         
-        
+        tra=new Conecciones();
         ResultSet rr=tra.leerConjuntoDeRegistros(sql);
         String codA="";
         try {

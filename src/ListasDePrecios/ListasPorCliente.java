@@ -223,6 +223,10 @@ public class ListasPorCliente extends javax.swing.JInternalFrame {
         pdf.setCliente(cliT);
         pdf.setDoc(listadoSeleccion);
         pdf.run();
+        CotizacionEnExcel exc=new CotizacionEnExcel();
+        exc.setCliente(cliT);
+        exc.setDoc(listadoSeleccion);
+        exc.GenerarInforme();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTable2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable2KeyPressed

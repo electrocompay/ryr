@@ -305,23 +305,12 @@ public class FEl implements FacturableE{
         fact.setImporteIva(impuestoLiq);
         fact.setImporteTributo("0.00");
         fact.setImporteOperacionesExp("0.00");
-        /*
-      out.write("TYPE="+tipo);
-      out.write("&PUBLIC_KEY="+key);
-      out.write("&CUSTOMERID="+idCliente);
-      out.write("&CUSTOMERTYPEDOC="+tipoDocumento);
-      out.write("&TIPO_COMPROBANTE="+tipoComprobante);
-      out.write("&IMPORTE_TOTAL="+importeTotal);
-      out.write("&IMPORTE_NETO="+importeNeto);
-      out.write("&IMP_OP_EX="+importeEx);
-      out.write("&IMPTO_LIQ="+impuestoLiq);
-      out.close();
-        */
         
-        fBle.Solicitar(fact);
-        if(fE.getCae().equals("")){
+        
+        fact=(FacturaElectronica) fBle.Solicitar(fact);
+        if(fE.getCae()!=null){
             
-        }else{
+        
             fE.setAfipPlastCbte(fact.getAfipPlastCbte());
             fE.setAfipPlastId(fact.getAfipPlastId());
             fE.setAfipQty(fact.getAfipQty());
@@ -341,7 +330,9 @@ public class FEl implements FacturableE{
 
             fE.setId(guardar(fE));
 
-        }
+        }else{
+               JOptionPane.showMessageDialog(null,fact.getRespuesta());
+                }
       return fE;
     }
 

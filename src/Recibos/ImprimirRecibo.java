@@ -115,12 +115,14 @@ public class ImprimirRecibo {
         pagina.drawString("LOCALIDAD: "+cliente.getLocalidad(),350,200);
         pagina.drawString("COND IVA: "+cliente.getCondicionIva(),30,215);
         pagina.setFont(fuente);
+        pagina.drawLine(20, 240, 600, 240);
         pagina.drawString("",20,250);
         pagina.drawString("DETALLE",100,250);
         pagina.drawString("MONTO FC", 300,250);
         pagina.drawString("MONTO", 400,250);
         pagina.drawString("SALDO", 500,250);
         int renglon=260;
+        //pagina.drawLine(20, 260, 600, 260);
         Iterator it=detalle.listIterator();
         Double saldoI=0.00;
         while(it.hasNext()){
@@ -134,6 +136,10 @@ public class ImprimirRecibo {
             renglon=renglon + 10;
         }
         //formulario derecho
+        
+        pagina.drawString("Saldo Total: $ "+cliente.getSaldoActual(),80,renglon);
+        renglon=renglon +10;
+        pagina.drawLine(20, renglon, 600, renglon);
         renglon=renglon + 20;
         pagina.drawString("DETALLE PAGO",100,renglon);
         pagina.drawString("MONTO", 350,renglon);
@@ -151,6 +157,7 @@ public class ImprimirRecibo {
             renglon=renglon + 10;
         }
         //pagina.drawImage(imagen,363,20,174,93,null);
+        pagina.drawLine(20, renglon, 600, renglon);
         renglon=renglon + 20;
         String letras=NumberToLetterConverter.convertNumberToLetter(rec.getMonto());
         pagina.drawString("SON PESOS: "+letras,40,renglon);        

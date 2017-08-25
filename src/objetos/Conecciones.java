@@ -184,9 +184,11 @@ public class Conecciones implements Transaccionable{
             }else{
              */
             //System.out.println("ERROR EN SENTENCIA "+sql);
-            st=con.prepareStatement(sql);
-            st.execute();
-            rs=st.getResultSet();
+           if(con!=null){
+                st=con.prepareStatement(sql);
+                st.execute();
+                rs=st.getResultSet();
+           }
             //}
         } catch (SQLException ex) {
             Inicio.coneccionRemota=false;

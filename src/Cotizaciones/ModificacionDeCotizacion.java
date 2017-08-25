@@ -948,7 +948,8 @@ public class ModificacionDeCotizacion extends javax.swing.JInternalFrame {
         detPed=coti.cargarDetalle(comprobante1.getId());
         detalleDelPedido.clear();
         detalleDelPedido=coti.convertirAArticulos(detPed);
-        detalleDelPedido.remove(posicion);
+        //detalleDelPedido.remove(posicion);
+        
         //detalleDelPedido.clear();
         agregarRenglonTabla();
         jTextField1.setText("");
