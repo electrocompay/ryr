@@ -10,6 +10,6 @@ package interfaces;
  * @author mauro di
  */
 public interface Comparables {
-    public Double comparaConCotizaciones(Integer idCliente,Integer idArticulo);
+    public Double comparaConCotizaciones(Integer idCliente,Integer idArticulo,Double coeficienteCliente);
     public String comparaConPedidos(Integer idCliente,Integer idArticulo);
 }

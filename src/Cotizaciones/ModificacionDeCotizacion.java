@@ -748,18 +748,30 @@ public class ModificacionDeCotizacion extends javax.swing.JInternalFrame {
                     articul.setCodigoDeBarra(arti.getCodigoDeBarra());
                     articul.setDescripcionArticulo(arti.getDescripcionArticulo());
                     articul.setNumeroId(arti.getNumeroId());
-                    Double precio=comparar.comparaConCotizaciones(cliT.getCodigoId(),arti.getNumeroId());
+                    Double precio=comparar.comparaConCotizaciones(cliT.getCodigoId(),arti.getNumeroId(),cliT.getCoeficienteListaDeprecios());
                     String precio2=comparar.comparaConPedidos(cliT.getCodigoId(),arti.getNumeroId());
                     // aca tengo que modificar el precio unitario segun el coeficiente del cliente y la lista
                     //Double precioU=arti.getPrecioUnitarioNeto();// * lista.getCoeficiente();
-                    Double precioU= arti.getPrecioUnitarioNeto() * cliT.getCoeficienteListaDeprecios();
-                    articul.setPrecioUnitarioNeto(precioU);
+                    articul.setPrecioUnitarioNeto(arti.getPrecioUnitarioNeto());
+                    // aca tengo que modificar el precio unitario segun el coeficiente del cliente y la lista
+                    //Double precioU=arti.getPrecioUnitarioNeto();// * lista.getCoeficiente();
                     
-                    if(precio > 0){
+                    
+                    if(precio != cliT.getCoeficienteListaDeprecios()){
                         precio=articul.getPrecioUnitarioNeto()* precio;
                         String cartel="precio asignado: "+precio+" "+precio2;
-                        if(JOptionPane.showConfirmDialog(this, cartel)==0)articul.setPrecioUnitarioNeto(precio);
+                        if(JOptionPane.showConfirmDialog(this, cartel)==0){
+                            articul.setPrecioUnitarioNeto(precio);
+                            
+                        }else{
+                            Double precioU= arti.getPrecioUnitarioNeto() * cliT.getCoeficienteListaDeprecios();
+                            articul.setPrecioUnitarioNeto(precioU);
+                        }
+                    }else{
+                        Double precioU= arti.getPrecioUnitarioNeto() * cliT.getCoeficienteListaDeprecios();
+                        articul.setPrecioUnitarioNeto(precioU);
                     }
+                    
                     articul.setPrecioDeCosto(arti.getPrecioDeCosto());
                     articul.setPrecioUnitario(arti.getPrecioUnitarioNeto());
                     

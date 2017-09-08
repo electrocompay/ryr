@@ -1121,7 +1121,7 @@ public class Articulos implements Facturar,Editables,Comparables,Modificable{
     
 
     @Override
-    public Double comparaConCotizaciones(Integer idCliente, Integer idArticulo) {
+    public Double comparaConCotizaciones(Integer idCliente, Integer idArticulo,Double coeficienteCliente) {
         Double precio=0.00;
         String sql="select aplicacion.coeficiente from aplicacion where idcliente="+idCliente+" and idarticulo="+idArticulo+" limit 0,1";
         Transaccionable tra=new Conecciones();
@@ -1130,6 +1130,7 @@ public class Articulos implements Facturar,Editables,Comparables,Modificable{
             while(rs.next()){
                 precio=rs.getDouble("coeficiente");
             }
+            if(precio==0.00)precio=coeficienteCliente;
         } catch (SQLException ex) {
             Logger.getLogger(Articulos.class.getName()).log(Level.SEVERE, null, ex);
         }
