@@ -165,7 +165,7 @@ public class BbsGestion {
             }
             }
             */
-            Propiedades.CargarPropiedades();
+            Propiedades.CargarPropiedades1();
         } catch (ParseException ex) {
             Logger.getLogger(BbsGestion.class.getName()).log(Level.SEVERE, null, ex);
         }

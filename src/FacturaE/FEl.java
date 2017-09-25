@@ -1,6 +1,7 @@
 package FacturaE;
 
 import Configuracion.Propiedades;
+import Conversores.Numeros;
 import Objetos.FacturaElectronica;
 import facturacion.clientes.Clientes;
 import facturacion.clientes.Facturable;
@@ -38,6 +39,8 @@ import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import Interface.Electronicable;
+import java.io.File;
+import static java.lang.Thread.sleep;
 
 
 
@@ -242,9 +245,12 @@ public class FEl implements FacturableE{
     
     
     
-    public Object leer(Object comp) throws MalformedURLException, IOException, ParserConfigurationException, SAXException{
+    public Object leer(Object comp) throws MalformedURLException, IOException, ParserConfigurationException, SAXException, InterruptedException{
         Comprobantes compro=new Comprobantes();
         compro=(Comprobantes)comp;
+        Runtime jpfBatch=Runtime.getRuntime();
+        String resultadoA="Error";
+        
         URL url = new URL("https://tufacturaelectronica.net/api/v1/SANDBOX");
         String charSet="UTF-8";
         String tipo="xml";
@@ -285,12 +291,29 @@ public class FEl implements FacturableE{
         if(compro.getTipoComprobante()==12)tipComprobante=8;
         
         String tipoComprobante=String.valueOf(tipComprobante);
-        String importeTotal=String.valueOf(compro.getMontoTotal());
-        String importeNeto=String.valueOf(compro.getMontoBruto());
-        String importeEx="0.0";
-        String impuestoLiq=String.valueOf(compro.getMontoIva());
+        String importeTotal=Numeros.ConvertirNumeroAfip(compro.getMontoTotal());
+        String importeNeto=Numeros.ConvertirNumeroAfip(compro.getSubTotal());
+        String importeTotalConcepto="0.00";
+        String importeEx="0.00";
+        String impuestoLiq=Numeros.ConvertirNumeroAfip(compro.getMontoIva());
+        String importeTributo="0.00";
+        String idIva="5";
+         /*   
+        String sentencia="java -jar FacturaElectronica.jar "+tipoComprobante+" "+tipoDocumento+" "+idCliente+" "+importeTotal+" "+importeTotalConcepto+" "+importeNeto+" "+impuestoLiq+" "+importeTributo+" "+importeEx+" "+idIva;
+        System.out.println(sentencia);
+        jpfBatch.exec("java -jar FacturaElectronica.jar "+tipoComprobante+" "+tipoDocumento+" "+idCliente+" "+importeTotal+" "+importeTotalConcepto+" "+importeNeto+" "+impuestoLiq+" "+importeTributo+" "+importeEx+" "+idIva);
+        //jpfBatch.wait(1000);
         
-      
+//wait(1000);
+        //sleep(10000);
+        File salida=new File("fe.out");
+        if(salida.exists()){
+            resultadoA="OK";
+            JOptionPane.showMessageDialog(null,"POR FIN");
+            
+        }
+        */
+         
         fact.setPuntoDeVenta(Propiedades.getPUNTODEVENTA());
         fact.setTipoComprobante(tipoComprobante);//11
         fact.setArchivoCrt(Propiedades.getARCHIVOBCRT());
@@ -334,6 +357,9 @@ public class FEl implements FacturableE{
                JOptionPane.showMessageDialog(null,fact.getRespuesta());
                 }
       return fE;
+      
+        //fE.setRespuesta(resultadoA);
+      //return fE;
     }
 
     @Override

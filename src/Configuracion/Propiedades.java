@@ -91,7 +91,7 @@ public class Propiedades {
 
     
     
-    public static void CargarPropiedades() throws ParseException, IOException{
+    public static void CargarPropiedades1() throws ParseException, IOException{
         File archivo = new File ("Configuracion\\bbsGestion.properties");
         Properties p=new Properties();
          if(archivo.exists()){

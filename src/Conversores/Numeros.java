@@ -28,6 +28,16 @@ public class Numeros {
         doble=formato.format(num);
         return doble;
     }
+    public static String ConvertirNumeroAfip(Double num){
+        if(num != null){
+        DecimalFormat formato=new DecimalFormat("####.##");
+        doble=formato.format(num);
+        doble=doble.replace(",",".");
+        }else{
+            doble="0.00";
+        }
+        return doble;
+    }
     public static String ConvertirFecha(Date ff){
         DecimalFormat fr=new DecimalFormat("00");
         Calendar c1=Calendar.getInstance();

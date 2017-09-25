@@ -44,6 +44,7 @@ import facturacion.clientes.Facturas;
 import facturacion.clientes.ImprimirFactura;
 import static facturacion.pantallas.IngresoDeFacturas.cliT;
 import static facturacion.pantallas.IngresoDeFacturas.jTextField1;
+import java.net.MalformedURLException;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -866,22 +867,28 @@ public class ModificacionDeFacturas extends javax.swing.JInternalFrame {
             }
         }
         subTotal=montoTotal;
-        Double ivv=subTotal * 0.21;
         Double sub=0.00;
-        Double tot=montoTotal + ivv;
+        Double descuen=0.00;
+        //Double tot=montoTotal + ivv;
         if(porcentajeDescuento > 0.00){
-            sub = subTotal * porcentajeDescuento;
-            sub= montoTotal - sub;
+            descuen = subTotal * porcentajeDescuento;
+            
+            sub= montoTotal - descuen;
         }else{
             sub=montoTotal;
         }
         
+        //Double subT=sub * 0.21;
+        Double subT=sub / 1.21;
+        Double ivv=sub - subT;
+        
         comprobante.setMontoTotal(sub);
-        comprobante.setSubTotal(montoTotal);
-        Double descuen=montoTotal - sub;
+        //subT=montoTotal - ivv;
+        comprobante.setSubTotal(subT);
+        //Double descuen=montoTotal - sub;
         comprobante.setDescuento(descuen);
         comprobante.setPorcentajeDescuento(porcentajeDescuento);
-        
+        comprobante.setMontoIva(ivv);
         int noFacturar=0;
         if(this.jCheckBox2.isSelected()){
             comprobante.setPagado(1);
@@ -906,13 +913,15 @@ public class ModificacionDeFacturas extends javax.swing.JInternalFrame {
         FEl fe=new FEl();
         try {
             
-           fe=(FEl) fe.leer(comprobante);
+           fe=(FEl)fe.leer(comprobante);
            if(fe.getRespuesta().equals("OK")){
                //JOptionPane.showMessageDialog(this,"aprobada id: "+fe.getId());
+               /*
                pdfsJavaGenerador pdf=new pdfsJavaGenerador();
                pdf.setDoc(fe);
                pdf.setCliente(cliT);
                pdf.run();
+               */
               /*         
         ImprimirFactura imprimir=new ImprimirFactura();
             try {
@@ -933,7 +942,9 @@ public class ModificacionDeFacturas extends javax.swing.JInternalFrame {
             Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SAXException ex) {
             Logger.getLogger(IngresoDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } catch (InterruptedException ex) {
+                Logger.getLogger(ModificacionDeFacturas.class.getName()).log(Level.SEVERE, null, ex);
+            }
         /*
          * ACA DEBO LIMPIAR TODOS LOS CAMPOS Y VARIABLES DE LA PANTALLA
          * 
