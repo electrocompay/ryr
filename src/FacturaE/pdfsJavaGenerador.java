@@ -57,8 +57,8 @@ public class pdfsJavaGenerador {
     public void run(){
         Document documento=new Document();
         int i=1;
-        String arch="\\\\Diseno\\c\\Users\\RyR\\Documents\\Facturas Electronicas\\"+doc.getIdCliente()+"_"+doc.getAfipPlastCbte()+"_factura.pdf";
-        
+        //String arch="\\\\Diseno\\c\\Users\\RyR\\Documents\\Facturas Electronicas\\"+doc.getIdCliente()+"_"+doc.getAfipPlastCbte()+"_factura.pdf";
+        String arch="Facturas Electronicas\\"+doc.getIdCliente()+"_"+doc.getAfipPlastCbte()+"_factura.pdf";
         
         File fich=new File(arch);
         while(fich.exists()){
@@ -134,6 +134,9 @@ public class pdfsJavaGenerador {
                     break;
                 case 8:
                     cb.showText("NTA DE CREDITO B");
+                    break;
+                default:
+                    cb.showText("FACTURA B");
                     break;
             }
             cb.setTextMatrix(370,790);

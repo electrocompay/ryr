@@ -315,23 +315,33 @@ public class FEl implements FacturableE{
         */
          
         fact.setPuntoDeVenta(Propiedades.getPUNTODEVENTA());
-        fact.setTipoComprobante(tipoComprobante);//11
+        fact.setTipoComprobante("11");//11
         fact.setArchivoCrt(Propiedades.getARCHIVOBCRT());
         fact.setArchivoKey(Propiedades.getARCHIVOKEY());
         fact.setCuit(Propiedades.getCUIT());
         fact.setConcepto("1");
         fact.setTipoDocumento(tipoDocumento);
         fact.setNumeroDocumento(idCliente);
-        fact.setImporteTotal(importeTotal);
-        fact.setImporteTotalConcepto("0.00");
-        fact.setImporteNeto(importeNeto);
-        fact.setImporteIva(impuestoLiq);
-        fact.setImporteTributo("0.00");
-        fact.setImporteOperacionesExp("0.00");
-        
-        
+        if(fact.getTipoComprobante().equals("11")){
+            fact.setImporteTotal(importeTotal);
+            fact.setImporteTotalConcepto("0.00");
+            fact.setImporteNeto(importeTotal);
+            fact.setImporteIva("0.00");
+            fact.setImporteTributo("0.00");
+            fact.setImporteOperacionesExp("0.00");
+        }else{
+            fact.setImporteTotal(importeTotal);
+            fact.setImporteTotalConcepto(importeTotalConcepto);
+            fact.setImporteNeto(importeNeto);
+            fact.setImporteIva(impuestoLiq);
+            fact.setImporteTributo(importeTributo);
+            fact.setImporteOperacionesExp(importeEx);
+        }
+        fact.setIvaId(idIva);
+        fact.setIdFactura(compro.getIdFactura());
+        fact.setIdCliente(compro.getCliente().getCodigoId());
         fact=(FacturaElectronica) fBle.Solicitar(fact);
-        if(fE.getCae()!=null){
+        if(fact.getCae()!=null){
             
         
             fE.setAfipPlastCbte(fact.getAfipPlastCbte());
@@ -349,9 +359,11 @@ public class FEl implements FacturableE{
             fE.setImpuestoLiquido(fact.getImporteIva());
             fE.setResultado(fact.getResultado());
             fE.setTipoComprobante(fact.getTipoComprobante());
-
-
+            fE.setIdFactura(fact.getIdFactura());
+            fE.setIdCliente(fact.getIdCliente());
             fE.setId(guardar(fE));
+            fE.setRespuesta("OK");
+            
 
         }else{
                JOptionPane.showMessageDialog(null,fact.getRespuesta());
@@ -374,8 +386,9 @@ public class FEl implements FacturableE{
         ffE=(FEl)Fe;
         Integer estado=0;
         Integer id=0;
-        if(ffE.getRespuesta().equals("OK"))estado=1;
+        if(ffE.getResultado().equals("R"))estado=1;
         String sql="insert into facturaelectronica (cae,cae_vto,fecha_cae,afipqty,afipplastid,afipplastcbte,idfactura,idcliente,estado,customerid,customertypedoc,tipo_comprobante,importe_total,importe_neto,impto_liq) values ('"+ffE.getCae()+"','"+ffE.getCaeVto()+"','"+ffE.getFechaCae()+"','"+ffE.getAfipQty()+"','"+ffE.getAfipPlastId()+"','"+ffE.getAfipPlastCbte()+"',"+ffE.getIdFactura()+","+ffE.getIdCliente()+","+estado+",'"+ffE.getCustomerId()+"','"+ffE.getCustomerTypeDoc()+"','"+ffE.getTipoComprobante()+"','"+ffE.getImporteTotal()+"','"+ffE.getImporteNeto()+"','"+ffE.getImpuestoLiquido()+"')";
+        System.out.println(sql);
         tra.guardarRegistro(sql);
         sql="select LAST_INSERT_ID()";
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);

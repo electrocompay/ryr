@@ -5,35 +5,16 @@
  */
 package Configuracion;
 
-import Conversores.Numeros;
-import com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException;
-import interfaceGraficas.Inicio;
-import interfaces.Transaccionable;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import static java.lang.Thread.sleep;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.DecimalFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Enumeration;
-import java.util.GregorianCalendar;
-import java.util.Iterator;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import objetos.ConeccionLocal;
-import objetos.Conecciones;
 
 /**
  *

@@ -916,12 +916,12 @@ public class ModificacionDeFacturas extends javax.swing.JInternalFrame {
            fe=(FEl)fe.leer(comprobante);
            if(fe.getRespuesta().equals("OK")){
                //JOptionPane.showMessageDialog(this,"aprobada id: "+fe.getId());
-               /*
+               
                pdfsJavaGenerador pdf=new pdfsJavaGenerador();
                pdf.setDoc(fe);
                pdf.setCliente(cliT);
                pdf.run();
-               */
+               
               /*         
         ImprimirFactura imprimir=new ImprimirFactura();
             try {
