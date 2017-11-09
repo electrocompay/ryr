@@ -71,6 +71,7 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
     private String valorCargado;
     private Double porcentajeDescuento;
     private Double subTotal;
+    private String rub;
     
     public IngresoDePedidos() {
         //Articulos.CargarMap();
@@ -79,6 +80,7 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
         //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
         initComponents();
+        rub="";
         porcentajeDescuento=0.00;
         subTotal=0.00;
         this.jLabel6.setText(cliT.getRazonSocial());
@@ -99,6 +101,7 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
 //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
         initComponents();
+        rub="";
         porcentajeDescuento=0.00;
         subTotal=0.00;
         this.jButton3.setVisible(false);
@@ -290,7 +293,7 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
 
         jPanel2.setMaximumSize(new java.awt.Dimension(570, 230));
 
-        jLabel3.setText("Descripcion");
+        jLabel3.setText("Descripcion (F1 Busca)");
 
         jLabel4.setText("CANTIDAD :");
 
@@ -578,21 +581,6 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
         columnaCodigo.setPreferredWidth(60);
         columnaCodigo.setMaxWidth(60);
             this.jTable2.requestFocus();
-        }else{
-            Facturar fart=new Articulos();
-            this.jTable2.removeAll();
-            Modificable modiA=new Articulos();
-            Articulable modi=new ArticulosAsignados();
-            listadoDeBusqueda.clear();
-            listadoDeBusqueda=modi.convertirListadoEnArticulos(modi.filtradorDeFormularios(listadoSubRubros, listadoR, cliT,this.jTextField1.getText()));
-            //listadoDeBusqueda=modi.filtrador(listadoSubRubros,listadoR);
-            this.jTable2.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
-            columnaCodigo=this.jTable2.getColumn("Descripcion");
-        columnaCodigo.setPreferredWidth(600);
-        columnaCodigo.setMaxWidth(600);
-                columnaCodigo=this.jTable2.getColumn("Stock");
-        columnaCodigo.setPreferredWidth(60);
-        columnaCodigo.setMaxWidth(60);
         }
         if(evt.getKeyCode()==KeyEvent.VK_F4){
                     //verificar();
@@ -1062,7 +1050,7 @@ public class IngresoDePedidos extends javax.swing.JInternalFrame {
             jTextField1.selectAll();
             this.jTextField1.requestFocus();
         }else{
-            String rub=this.jTextField5.getText();
+            rub=this.jTextField5.getText();
 
             listadoR=ruble.buscar(rub);
 

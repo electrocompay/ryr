@@ -537,7 +537,10 @@ public class IngresoDeMercaderia extends javax.swing.JInternalFrame {
         comprobante.setIdUsuario(Inicio.usuario.getNumero());
         Comprobable comp=new Remitos();
         Integer idRemito=0;
-        idRemito=comp.nuevoComprobante(comprobante);
+        if(listadoArt.size() > 0){
+            idRemito=comp.nuevoComprobante(comprobante);
+        }
+        
         if(this.jCheckBox1.isSelected()){
             
             facturaProveedor.setNombreProveedor(proveedor.getNombre());

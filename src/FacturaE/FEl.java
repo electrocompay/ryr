@@ -251,10 +251,7 @@ public class FEl implements FacturableE{
         Runtime jpfBatch=Runtime.getRuntime();
         String resultadoA="Error";
         
-        URL url = new URL("https://tufacturaelectronica.net/api/v1/SANDBOX");
-        String charSet="UTF-8";
-        String tipo="xml";
-        String key="NTYyNjI0ODI1OTUwMy0xNTEwMjAwODI0NTA=";
+        
         String cuit=compro.getCliente().getNumeroDeCuit().trim();
         Integer tipDocumento=0;
         Integer tipComprobante=0;
@@ -315,7 +312,7 @@ public class FEl implements FacturableE{
         */
          
         fact.setPuntoDeVenta(Propiedades.getPUNTODEVENTA());
-        fact.setTipoComprobante("11");//11
+        fact.setTipoComprobante(tipoComprobante);//11
         fact.setArchivoCrt(Propiedades.getARCHIVOBCRT());
         fact.setArchivoKey(Propiedades.getARCHIVOKEY());
         fact.setCuit(Propiedades.getCUIT());

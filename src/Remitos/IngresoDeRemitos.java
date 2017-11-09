@@ -373,13 +373,14 @@ public class IngresoDeRemitos extends javax.swing.JInternalFrame {
         remito.setNumeroDeRemito(numeroCaja);
         remito.setTipoComprobantte(comprobanteTipo);
         remito.setObservaciones(this.jTextField4.getText());
+        /*
         if(factura.getNumeroFiscal()!=null){
             
             remito.setIdComprobante(Integer.parseInt(factura.getNumeroFiscal()));
         }else{
-            
+          */  
             remito.setIdComprobante(factura.getNumeroFactura());
-        }
+        //}
         remito.setDomicilioDeEntrega(this.jTextField1.getText());
         remito.setLocalidad(this.jTextField2.getText());
         remito.setCantidadBultos(Integer.parseInt(this.jTextField3.getText()));

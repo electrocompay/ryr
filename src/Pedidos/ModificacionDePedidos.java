@@ -298,7 +298,7 @@ public class ModificacionDePedidos extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        jLabel3.setText("Descripcion");
+        jLabel3.setText("Descripcion (F1 Busca)");
 
         jLabel4.setText("CANTIDAD :");
 
@@ -582,21 +582,6 @@ public class ModificacionDePedidos extends javax.swing.JInternalFrame {
         columnaCodigo.setPreferredWidth(60);
         columnaCodigo.setMaxWidth(60);
             this.jTable2.requestFocus();
-        }else{
-            Facturar fart=new Articulos();
-            this.jTable2.removeAll();
-            Modificable modiA=new Articulos();
-            Articulable modi=new ArticulosAsignados();
-            listadoDeBusqueda.clear();
-            listadoDeBusqueda=modi.convertirListadoEnArticulos(modi.filtradorDeFormularios(listadoSubRubros, listadoR, cliT,this.jTextField1.getText()));
-            //listadoDeBusqueda=modi.filtrador(listadoSubRubros,listadoR);
-            this.jTable2.setModel(modiA.mostrarListadoBusqueda(listadoDeBusqueda));
-            columnaCodigo=this.jTable2.getColumn("Descripcion");
-        columnaCodigo.setPreferredWidth(600);
-        columnaCodigo.setMaxWidth(600);
-                columnaCodigo=this.jTable2.getColumn("Stock");
-        columnaCodigo.setPreferredWidth(60);
-        columnaCodigo.setMaxWidth(60);
         }
         if(evt.getKeyCode()==KeyEvent.VK_F4){
                     //verificar();
