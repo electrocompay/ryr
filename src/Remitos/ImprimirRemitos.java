@@ -111,7 +111,7 @@ public class ImprimirRemitos {
         
         pagina.setFont(fuente6);
        // pagina.drawString("N° "+cotizacion.getDescripcionTipo()+"-0000000"+cotizacion.getNumeroFactura(), 420,80);
-        pagina.drawString("FECHA: "+fec, 420,15);
+        pagina.drawString("FECHA: "+fec, 420,95);
         String len=String.valueOf(cotizacion.getNumeroDeRemito());
         int cantiL=len.length();
         String cero="0";
@@ -132,15 +132,15 @@ public class ImprimirRemitos {
         numero.ensureCapacity(reemplazo);
         numero=numero.append(len);
         */
-        pagina.drawString("N° 0001-"+numero, 420,85);
-        pagina.drawString("RAZON SOCIAL: "+cliente.getRazonSocial(),30,160);
-        pagina.drawString("C.U.I.T.: "+cliente.getNumeroDeCuit(), 350,160);
-        pagina.drawString("NOMBRE FANTASIA: "+cliente.getFantasia(),30,170);
-        pagina.drawString("TELEFONO: "+cliente.getTelefono(),350,170);
-        pagina.drawString("DIRECCION: "+cliente.getDireccion(),30,180);
-        pagina.drawString("LOCALIDAD: ("+cliente.getCodigoPostal()+") "+cliente.getLocalidad(),350,180);
-        pagina.drawString("COND IVA: "+cliente.getCondicionIva(),30,190);
-        pagina.drawString("MAIL: "+cliente.getEmail(),350,190);
+        //pagina.drawString("N° 0001-"+numero, 420,105);
+        pagina.drawString("RAZON SOCIAL: "+cliente.getRazonSocial(),30,180);
+        pagina.drawString("C.U.I.T.: "+cliente.getNumeroDeCuit(), 350,180);
+        pagina.drawString("NOMBRE FANTASIA: "+cliente.getFantasia(),30,190);
+        pagina.drawString("TELEFONO: "+cliente.getTelefono(),350,190);
+        pagina.drawString("DIRECCION: "+cliente.getDireccion(),30,200);
+        pagina.drawString("LOCALIDAD: ("+cliente.getCodigoPostal()+") "+cliente.getLocalidad(),350,200);
+        pagina.drawString("COND IVA: "+cliente.getCondicionIva(),30,210);
+        pagina.drawString("MAIL: "+cliente.getEmail(),350,210);
         
         len=String.valueOf(cotizacion.getIdComprobante());
         cantiL=len.length();
@@ -159,7 +159,7 @@ public class ImprimirRemitos {
         }
 
         
-        pagina.drawString("FC: 0003-"+cotizacion.getIdComprobante(),350,190);
+        //pagina.drawString("FC: 0003-"+cotizacion.getIdComprobante(),350,220);
         
         pagina.drawString("CODIGO",20,245);
         pagina.drawString("DESCRIPCION",160,245);
