@@ -83,7 +83,7 @@ public class Conecciones implements Transaccionable{
         mes=fr.format(me);
         fechaDia=ano+"-"+mes+"-"+dia;
             try {
-                fichero = new FileWriter("C:\\Gestion\\"+fechaDia+" - erroresDeLectura.txt",true);
+                fichero = new FileWriter("Gestion\\"+fechaDia+" - erroresDeLectura.txt",true);
                 pw=new PrintWriter(fichero);
                 pw.println(ex);
             } catch (IOException ex1) {
