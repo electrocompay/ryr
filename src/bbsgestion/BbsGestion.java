@@ -15,6 +15,7 @@ import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 /**
  *
@@ -31,6 +32,13 @@ public class BbsGestion {
         Usuarios usuarios=new Usuarios();
         usuariosList=usuarios.listarUsuario();
         */
+        try{
+           // UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+            //UIManager.setLookAndFeel("com.jtattoo.plaf.aero.AeroLookAndFeel");
+            UIManager.setLookAndFeel("com.jtattoo.plaf.aluminium.AluminiumLookAndFeel");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         File folder=new File("C:\\GestionRyR");
         File archivos=new File("C:\\Informes");
         File bases=new File("C:\\GestionRyR\\DB");
