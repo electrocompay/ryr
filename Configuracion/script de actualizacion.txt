@@ -1,0 +1,20 @@
+//crear tabla impuestos
+
+id
+descripcion
+tasa
+
+// crear tabla moviemtosImpuestos
+
+id
+idfactura
+idimpuesto
+monto
+
+
+
+// agregar a columna en movimientoproveedores
+subtotal double
+
+
+

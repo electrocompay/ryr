@@ -8,7 +8,9 @@ package Proveedores;
 import Recibos.*;
 import Conversores.Numeros;
 import Proveedores.Proveedores;
+import Proveedores.objetos.DetalleOrdenDePago;
 import Proveedores.objetos.MovimientoProveedores;
+import Proveedores.objetos.OrdenDePago;
 import facturacion.clientes.Clientes;
 import facturacion.clientes.Facturas;
 import java.awt.event.KeyEvent;
@@ -24,28 +26,30 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author mauro di
  */
-public class AbmRecibos extends javax.swing.JDialog {
+public class AbmOrdenDePagos extends javax.swing.JDialog {
     private DefaultTableModel modelo4=new DefaultTableModel();
     private ArrayList detallePagos=new ArrayList();
     FormasDePago pago;
     private Double montoTotal;
     private Double saldo;
-    private ArrayList listadoFc=new ArrayList();
+    private ArrayList listadoFc;
     private DefaultListModel modeloL=new DefaultListModel();
     private String banco;
     private String vencimiento;
     private Clientes cli;
     private Proveedores cliP;
     private MovimientoProveedores mov;
+    private int origen;
 
     
     /**
      * Creates new form AbmRecibos
      */
-    public AbmRecibos(java.awt.Frame parent, boolean modal) {
+    public AbmOrdenDePagos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        listadoFc=new ArrayList();
         initComponents();
-        Recidable reci=new DetalleRecibo();
+        Recidable reci=new DetalleOrdenDePago();
         modelo4=reci.mostrarARecibir(listadoFc);
         this.jTable1.setModel(modelo4);
         this.jLabel2.setText(" $"+montoTotal);
@@ -53,11 +57,12 @@ public class AbmRecibos extends javax.swing.JDialog {
         this.jLabel9.setText("Saldo: $"+saldo);
     }
 
-    public AbmRecibos(ArrayList listado,Double monto,Clientes cliente) {
+    public AbmOrdenDePagos(ArrayList listado,Double monto,Clientes cliente) {
+        listadoFc=new ArrayList();
         initComponents();
         cli=(Clientes)cliente;
-        Recidable reci=new DetalleRecibo();
-        listadoFc=listado;
+        Recidable reci=new DetalleOrdenDePago();
+        listadoFc=listado;//TENER EN CUENTA QUE ES MOVIMIENTO DE PROVEEDOR
         montoTotal=monto;
         modelo4=reci.mostrarARecibir(listadoFc);
         this.jTable1.setModel(modelo4);
@@ -65,10 +70,12 @@ public class AbmRecibos extends javax.swing.JDialog {
         saldo=montoTotal;
         this.jLabel9.setText("Saldo: $"+saldo);
     }
-    public AbmRecibos(ArrayList listado,Double monto,Proveedores cliente) {
+    public AbmOrdenDePagos(ArrayList listado,Double monto,Proveedores cliente) {
+        listadoFc=new ArrayList();
+        origen=1;
         initComponents();
         cliP=(Proveedores)cliente;
-        DetalleRecibo reci=new DetalleRecibo();
+        DetalleOrdenDePago reci=new DetalleOrdenDePago();
         listadoFc=listado;
         montoTotal=monto;
         mov=new MovimientoProveedores();
@@ -227,7 +234,7 @@ public class AbmRecibos extends javax.swing.JDialog {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 49, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -396,9 +403,9 @@ public class AbmRecibos extends javax.swing.JDialog {
     }//GEN-LAST:event_jList1MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Recibo recibo=new Recibo();
-        DetalleRecibo detalle;
-        Recidable det=new DetalleRecibo();
+        OrdenDePago recibo=new OrdenDePago();
+        DetalleOrdenDePago detalle;
+        Recidable det=new DetalleOrdenDePago();
         recibo.setIdCliente(cli.getCodigoId());
         recibo.setMonto(montoTotal);
         Recidable recc=new Recibo();
@@ -415,7 +422,7 @@ public class AbmRecibos extends javax.swing.JDialog {
             
             factura=(Facturas)itF.next();
             if((Boolean)this.jTable1.getValueAt(contador,0)){
-            detalle=new DetalleRecibo();
+            detalle=new DetalleOrdenDePago();
             detalle.setIdCliente(cli.getCodigoId());
             detalle.setIdFactura(factura.getId());
             detalle.setIdRecibo(recibo.getId());
@@ -471,7 +478,7 @@ public class AbmRecibos extends javax.swing.JDialog {
         try {
             imprimir.ImprimirOrdenDeTrabajo(recibo, listadoDet, detallePagos);
         } catch (IOException ex) {
-            Logger.getLogger(AbmRecibos.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbmOrdenDePagos.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -479,32 +486,36 @@ public class AbmRecibos extends javax.swing.JDialog {
     private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
         if(evt.getKeyCode()==KeyEvent.VK_F1){
             int cantidad=this.jTable1.getRowCount();
-        Double total=0.00;
-        Double parte=0.00;
-        Facturas factu;
-        Recidable reci=new DetalleRecibo();
-        ArrayList aEliminar=new ArrayList();
-        for(int a=0;a < cantidad;a++){
-            if((Boolean)this.jTable1.getValueAt(a, 0)){
-                parte=Numeros.ConvertirStringADouble((String) this.jTable1.getValueAt(a, 4));
-                factu=(Facturas)listadoFc.get(a);
-                //factu.setEstado(1);
-                factu.setTotal(parte);
-                total=total + parte;
-            }else{
-                //listadoFc.remove(a);
-                aEliminar.add(a);
+            cantidad=cantidad -1;
+            Double total=0.00;
+            Double parte=0.00;
+            Facturas factu;
+            Recidable reci=new DetalleOrdenDePago();
+            ArrayList aEliminar=new ArrayList();
+            for(int a=cantidad;a > -1;a--){
+                if((Boolean)this.jTable1.getValueAt(a, 0)){
+                   /*
+                    parte=Numeros.ConvertirStringADouble((String) this.jTable1.getValueAt(a, 3));
+                    
+                    factu=(Facturas)listadoFc.get(a);
+                    //factu.setEstado(1);
+                    factu.setTotal(parte);
+                    total=total + parte;
+                    */
+                }else{
+                    //listadoFc.remove(a);
+                    aEliminar.add(a);
+                }
+
             }
-            
-        }
-        Iterator iEl=aEliminar.listIterator();
-        int orden=0;
-        while(iEl.hasNext()){
-            orden=(int)iEl.next();
-            listadoFc.remove(orden);
-        }
-        
-        modelo4=reci.mostrarARecibir(listadoFc);
+            Iterator iEl=aEliminar.listIterator();
+            int orden=0;
+            while(iEl.hasNext()){
+                orden=(int)iEl.next();
+                listadoFc.remove(orden);
+            }
+
+            modelo4=reci.mostrarARecibir(listadoFc);
                 this.jTable1.setModel(modelo4);
         
         }
@@ -513,7 +524,7 @@ public class AbmRecibos extends javax.swing.JDialog {
         Double total=0.00;
         Double parte=0.00;
         Facturas factu;
-        Recidable reci=new DetalleRecibo();
+        Recidable reci=new DetalleOrdenDePago();
         ArrayList aEliminar=new ArrayList();
         for(int a=0;a < cantidad;a++){
             if((Boolean)this.jTable1.getValueAt(a, 0)){
@@ -551,21 +562,23 @@ public class AbmRecibos extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AbmRecibos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AbmOrdenDePagos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AbmRecibos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AbmOrdenDePagos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AbmRecibos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AbmOrdenDePagos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AbmRecibos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AbmOrdenDePagos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                AbmRecibos dialog = new AbmRecibos(new javax.swing.JFrame(), true);
+                AbmOrdenDePagos dialog = new AbmOrdenDePagos(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

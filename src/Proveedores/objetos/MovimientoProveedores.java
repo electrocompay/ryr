@@ -29,6 +29,26 @@ public class MovimientoProveedores implements FacturableE{
     private String numeroComprobante;
     private Integer tipoComprobante;
     private String descripcionTipoComprobante;
+    private Double subTotal;
+    private Double saldo;
+
+    public Double getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(Double saldo) {
+        this.saldo = saldo;
+    }
+    
+
+    public Double getSubTotal() {
+        return subTotal;
+    }
+
+    public void setSubTotal(Double subTotal) {
+        this.subTotal = subTotal;
+    }
+    
 
     public Integer getId() {
         return id;
@@ -109,8 +129,9 @@ public class MovimientoProveedores implements FacturableE{
                 mov.setMonto(rs.getDouble("monto"));
                 mov.setNumeroComprobante(rs.getString("numeroComprobante"));
                 mov.setTipoComprobante(rs.getInt("tipoComprobante"));
+                mov.setSaldo(rs.getDouble("saldo"));
                 if(mov.getTipoComprobante()==1)mov.setDescripcionTipoComprobante("FACTURA PROVEEDOR");
-                if(mov.getTipoComprobante()==2)mov.setDescripcionTipoComprobante("RECIBO PROVEEDOR");
+                if(mov.getTipoComprobante()==2)mov.setDescripcionTipoComprobante("ORDEN DE PAGO");
                 
                 listado.add(mov);
             }
@@ -154,7 +175,7 @@ public class MovimientoProveedores implements FacturableE{
         Integer id=0;
         MovimientoProveedores mov=(MovimientoProveedores) Fe;
         Transaccionable tra=new Conecciones();
-        String sql="insert into movimientosproveedores (numeroProveedor,monto,numeroComprobante,idUsuario,tipoComprobante) values ("+mov.getIdProveedor()+",round("+mov.getMonto()+",4),'"+mov.getNumeroComprobante()+"',"+Inicio.usuario.getNumeroId()+","+mov.getTipoComprobante()+")";
+        String sql="insert into movimientosproveedores (numeroProveedor,monto,numeroComprobante,idUsuario,tipoComprobante,subtotal,saldo) values ("+mov.getIdProveedor()+",round("+mov.getMonto()+",4),'"+mov.getNumeroComprobante()+"',"+Inicio.usuario.getNumeroId()+","+mov.getTipoComprobante()+","+mov.getSubTotal()+","+mov.getSaldo()+")";
         tra.guardarRegistro(sql);
         sql="select LAST_INSERT_ID()";
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
@@ -191,8 +212,9 @@ public class MovimientoProveedores implements FacturableE{
                 mov.setMonto(rs.getDouble("monto"));
                 mov.setNumeroComprobante(rs.getString("numeroComprobante"));
                 mov.setTipoComprobante(rs.getInt("tipoComprobante"));
+                mov.setSaldo(rs.getDouble("saldo"));
                 if(mov.getTipoComprobante()==1)mov.setDescripcionTipoComprobante("FACTURA PROVEEDOR");
-                if(mov.getTipoComprobante()==2)mov.setDescripcionTipoComprobante("RECIBO PROVEEDOR");
+                if(mov.getTipoComprobante()==2)mov.setDescripcionTipoComprobante("ORDEN DE PAGO");
                 
                 listado.add(mov);
             }
@@ -205,7 +227,32 @@ public class MovimientoProveedores implements FacturableE{
 
     @Override
     public Object cargar(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //LO VOY A UTILIZAR PARA LISTAR POR PROVEEDOR
+        String sql="select * from movimientosproveedores where id="+id;
+        Transaccionable tra=new Conecciones();
+        ArrayList listado=new ArrayList();
+        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        MovimientoProveedores mov = null;
+        try {
+            while(rs.next()){
+                mov=new MovimientoProveedores();
+                mov.setFecha(rs.getString("fecha"));
+                mov.setId(rs.getInt("id"));
+                mov.setIdProveedor(rs.getInt("numeroProveedor"));
+                mov.setMonto(rs.getDouble("monto"));
+                mov.setNumeroComprobante(rs.getString("numeroComprobante"));
+                mov.setTipoComprobante(rs.getInt("tipoComprobante"));
+                mov.setSaldo(rs.getDouble("saldo"));
+                if(mov.getTipoComprobante()==1)mov.setDescripcionTipoComprobante("FACTURA PROVEEDOR");
+                if(mov.getTipoComprobante()==2)mov.setDescripcionTipoComprobante("ORDEN DE PAGO");
+                
+                //listado.add(mov);
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(MovimientoProveedores.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return mov;
     }
 
     @Override

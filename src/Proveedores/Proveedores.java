@@ -275,7 +275,7 @@ public class Proveedores implements Personalizable{
         }
     }
     @Override
-    public Boolean agregar(Object objeto) {
+    public Integer agregar(Object objeto) {
        Proveedores prov=(Proveedores)objeto;
        Boolean veri=false;
        String sql="insert into proveedores (NOMBRE,DOMICILIO,LOCALIDAD,TELEFONO,mail,responsable,celular,cuit) values ('"+prov.getNombre()+"','"+prov.getDireccion()+"','"+prov.getLocalidad()+"','"+prov.getTelefono()+"','"+prov.getMail()+"','"+prov.getResponsable()+"','"+prov.getCelular()+"','"+prov.getCuit()+"')";
@@ -299,7 +299,7 @@ public class Proveedores implements Personalizable{
        }
        
        
-       return veri;
+       return numero;
     }
 
     @Override

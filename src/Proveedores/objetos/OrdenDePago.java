@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Recibos;
+package Proveedores.objetos;
 
+import Recibos.*;
 import interfaces.Transaccionable;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -19,7 +20,7 @@ import objetos.Conecciones;
  *
  * @author mauro di
  */
-public class Recibo implements Recidable{
+public class OrdenDePago implements Recidable{
     private Integer id;
     private Integer idCliente;
     private Double monto;
@@ -27,6 +28,16 @@ public class Recibo implements Recidable{
     private static Transaccionable tra=new Conecciones();
     private static ResultSet rs;
     private String sql;
+    private String numeroRecibo;
+
+    public String getNumeroRecibo() {
+        return numeroRecibo;
+    }
+
+    public void setNumeroRecibo(String numeroRecibo) {
+        this.numeroRecibo = numeroRecibo;
+    }
+    
 
     public Integer getId() {
         return id;
@@ -58,10 +69,10 @@ public class Recibo implements Recidable{
 
     @Override
     public Integer nuevo(Object rec) {
-        Recibo recibo=new Recibo();
-        recibo=(Recibo)rec;
+        OrdenDePago recibo=new OrdenDePago();
+        recibo=(OrdenDePago)rec;
         int numero=0;
-        sql="insert into recibos (idcliente,monto) values ("+recibo.getIdCliente()+","+recibo.getMonto()+")";
+        sql="insert into ordendepagos (idcliente,monto,numerorecibo) values ("+recibo.getIdCliente()+","+recibo.getMonto()+",'"+recibo.getNumeroRecibo()+"')";
         tra.guardarRegistro(sql);
         sql="select LAST_INSERT_ID()";
         rs=tra.leerConjuntoDeRegistros(sql);
@@ -77,22 +88,23 @@ public class Recibo implements Recidable{
 
     @Override
     public ArrayList listar(Integer id) {
-        Recibo recibo;
-        //recibo=(Recibo)rec;
+        OrdenDePago recibo;
+        //recibo=(OrdenDePago)rec;
         ArrayList numero=new ArrayList();
-        sql="select * from recibos where id="+id;
+        sql="select * from ordendepagos where id="+id;
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {
             while(rs.next()){
-                recibo=new Recibo();
+                recibo=new OrdenDePago();
                 recibo.setId(rs.getInt("id"));
                 recibo.setFecha(rs.getDate("fecha"));
                 recibo.setIdCliente(rs.getInt("idcliente"));
                 recibo.setMonto(rs.getDouble("monto"));
+                recibo.setNumeroRecibo(rs.getString("numerorecibo"));
                 numero.add(recibo);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Recibo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OrdenDePago.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return numero;
