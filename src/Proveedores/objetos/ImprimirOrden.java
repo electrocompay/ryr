@@ -1,4 +1,4 @@
-package Recibos;
+package Proveedores.objetos;
 
 /*
  * To change this template, choose Tools | Templates
@@ -9,6 +9,7 @@ package Recibos;
 
 import Conversores.NumberToLetterConverter;
 import Conversores.Numeros;
+import Recibos.FormasDePago;
 import facturacion.clientes.Clientes;
 import interfaceGraficas.Inicio;
 import interfacesPrograma.Facturar;
@@ -31,7 +32,7 @@ import java.util.Iterator;
  *
  * @author hernan
  */
-public class ImprimirRecibo {
+public class ImprimirOrden {
 
     Font fuente = new Font("Courier", Font.PLAIN, 9);
     Font fuente1=new Font("Courier",Font.BOLD,12);
@@ -52,7 +53,7 @@ public class ImprimirRecibo {
 	*	A continuación el constructor de la clase. Aquí lo único que	*
 	*	hago es tomar un objeto de impresion.							*
 	********************************************************************/
-	public ImprimirRecibo()
+	public ImprimirOrden()
 	{
 		pj = Toolkit.getDefaultToolkit().getPrintJob(new Frame(), "SCAT", null);
                 
@@ -68,8 +69,8 @@ public class ImprimirRecibo {
 
     
     public void ImprimirOrdenDeTrabajo(Object recibo,ArrayList detalle,ArrayList pagos) throws IOException{
-        Recibo rec=new Recibo();
-        DetalleRecibo det=new DetalleRecibo();
+        OrdenDePago rec=new OrdenDePago();
+        DetalleOrdenDePago det=new DetalleOrdenDePago();
         FormasDePago formas=new FormasDePago();
         /*
         cotizacion=(Pedidos)cotizable.cargarEncabezadoPedido(idCotizacion);
@@ -78,7 +79,7 @@ public class ImprimirRecibo {
         Pedable cotiz=new DetallePedidos();
         listadoDetalle=cotiz.cargarDetallePedido(cotizacion.getId());
         */
-        rec=(Recibo)recibo;
+        rec=(OrdenDePago)recibo;
         Clientes cliente=new Clientes();
         Facturar factu=new Clientes();
         cliente=(Clientes)factu.cargarPorCodigoAsignado(rec.getIdCliente());
@@ -100,7 +101,7 @@ public class ImprimirRecibo {
         //pagina.drawImage(imagen,63,20,174,93,null);
         pagina.setFont(fuente6);
         pagina.setColor(Color.black);
-        pagina.drawString("RECIBO N° 0000"+Inicio.sucursal.getNumero()+"-000"+rec.getId(),20,110);
+        pagina.drawString("ORDEN DE PAGO N° 0000"+Inicio.sucursal.getNumero()+"-000"+rec.getId(),20,110);
         pagina.setFont(fuente);
         pagina.drawString("FECHA IMPRESION:"+fec, 20,120);
         //pagina.drawString(" :"+Inicio.sucursal.getDescripcion(),20,150);
@@ -126,7 +127,7 @@ public class ImprimirRecibo {
         Iterator it=detalle.listIterator();
         Double saldoI=0.00;
         while(it.hasNext()){
-            det=(DetalleRecibo)it.next();
+            det=(DetalleOrdenDePago)it.next();
             //pagina.drawString(String.valueOf(det.get),40,renglon);
             pagina.drawString("Factura N° "+String.valueOf(det.getNumeroFc())+" fecha "+det.getFecha(),80,renglon);
             pagina.drawString(det.getMontoFcatura(),300,renglon);

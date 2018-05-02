@@ -9,7 +9,7 @@ import Cotizaciones.Cotizacion;
 import Cotizaciones.IngresoDeCotizacion;
 import FacturaE.FacturableE;
 import Proveedores.objetos.MovimientoProveedores;
-import Recibos.Recibo;
+import Recibos.OrdenDePago;
 import Recibos.Recidable;
 import facturacion.clientes.ListasDePrecios;
 import interfaceGraficas.Inicio;
@@ -363,7 +363,7 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
         });
 
         jButton14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/List.png"))); // NOI18N
-        jButton14.setText("Reimprimir Recibo");
+        jButton14.setText("Reimprimir Orden De Pago");
         jButton14.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton14ActionPerformed(evt);
@@ -543,8 +543,8 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
        int posicion=this.jTable3.getSelectedRow();
        MovimientoProveedores mov=(MovimientoProveedores) listadoCot.get(posicion);
        if(mov.getTipoComprobante()==2){
-           Recibo recibo=new Recibo();
-           Recidable reci=new Recibo();
+           OrdenDePago recibo=new OrdenDePago();
+           Recidable reci=new OrdenDePago();
            //ArrayList lstR=reci.listar(mov.getNumeroComprobante());
            //Iterator it=
            

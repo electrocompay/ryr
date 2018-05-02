@@ -17,7 +17,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,7 +24,6 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import Articulos.Articulos;
 import Articulos.Modificable;
@@ -36,27 +34,15 @@ import FacturaE.FEl;
 import FacturaE.pdfsJavaGenerador;
 import ListasDePrecios.Articulable;
 import ListasDePrecios.ArticulosAsignados;
-import Pedidos.DetallePedidos;
-import Pedidos.Pedable;
-import Pedidos.Pedidos;
 import Proveedores.objetos.Impuestos;
 import Proveedores.objetos.MovimientoProveedores;
 import Proveedores.objetos.Proveer;
-import Sucursales.ListasDePrecios;
-import facturacion.clientes.Facturable;
-import facturacion.clientes.Facturas;
-import facturacion.clientes.ImprimirFactura;
-import static facturacion.pantallas.IngresoDeFacturas.cliT;
-import static facturacion.pantallas.IngresoDeFacturas.jTextField1;
-import java.net.MalformedURLException;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.xml.parsers.ParserConfigurationException;
 import objetos.Comprobantes;
-import objetos.Conecciones;
 import org.xml.sax.SAXException;
-import tablas.MiModeloTablaBuscarCliente;
 import tablas.MiModeloTablaFacturacion;
 
 
@@ -75,7 +61,7 @@ public class ModificacionDeFacturas extends javax.swing.JInternalFrame {
     private static ArrayList listadoDeBusqueda=new ArrayList();
     private static Double montoTotal=0.00;
     private static Comprobantes comp=new Comprobantes();
-    private Facturas factura;
+    private MovimientoProveedores factura;
     private Rubros rubro=new Rubros();
     private SubRubros subRubro;
     private ArrayList listadoSubRubros;
@@ -109,7 +95,7 @@ public class ModificacionDeFacturas extends javax.swing.JInternalFrame {
     }
     
     public ModificacionDeFacturas(MovimientoProveedores ped){
-        factura=new Facturas();
+        factura=new MovimientoProveedores();
         MovimientoProveedores pedido=new MovimientoProveedores();
         ArrayList listadoPed=new ArrayList();
         pedido=(MovimientoProveedores)ped;

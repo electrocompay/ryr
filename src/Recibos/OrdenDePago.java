@@ -19,7 +19,7 @@ import objetos.Conecciones;
  *
  * @author mauro di
  */
-public class Recibo implements Recidable{
+public class OrdenDePago implements Recidable{
     private Integer id;
     private Integer idCliente;
     private Double monto;
@@ -58,8 +58,8 @@ public class Recibo implements Recidable{
 
     @Override
     public Integer nuevo(Object rec) {
-        Recibo recibo=new Recibo();
-        recibo=(Recibo)rec;
+        OrdenDePago recibo=new OrdenDePago();
+        recibo=(OrdenDePago)rec;
         int numero=0;
         sql="insert into recibos (idcliente,monto) values ("+recibo.getIdCliente()+","+recibo.getMonto()+")";
         tra.guardarRegistro(sql);
@@ -77,14 +77,14 @@ public class Recibo implements Recidable{
 
     @Override
     public ArrayList listar(Integer id) {
-        Recibo recibo;
-        //recibo=(Recibo)rec;
+        OrdenDePago recibo;
+        //recibo=(OrdenDePago)rec;
         ArrayList numero=new ArrayList();
         sql="select * from recibos where id="+id;
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {
             while(rs.next()){
-                recibo=new Recibo();
+                recibo=new OrdenDePago();
                 recibo.setId(rs.getInt("id"));
                 recibo.setFecha(rs.getDate("fecha"));
                 recibo.setIdCliente(rs.getInt("idcliente"));
@@ -92,7 +92,7 @@ public class Recibo implements Recidable{
                 numero.add(recibo);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Recibo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OrdenDePago.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return numero;

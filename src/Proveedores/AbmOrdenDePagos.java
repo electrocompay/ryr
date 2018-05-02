@@ -7,19 +7,19 @@ package Proveedores;
 
 import Recibos.*;
 import Conversores.Numeros;
-import Proveedores.Proveedores;
 import Proveedores.objetos.DetalleOrdenDePago;
 import Proveedores.objetos.MovimientoProveedores;
 import Proveedores.objetos.OrdenDePago;
 import facturacion.clientes.Clientes;
-import facturacion.clientes.Facturas;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -36,7 +36,6 @@ public class AbmOrdenDePagos extends javax.swing.JDialog {
     private DefaultListModel modeloL=new DefaultListModel();
     private String banco;
     private String vencimiento;
-    private Clientes cli;
     private Proveedores cliP;
     private MovimientoProveedores mov;
     private int origen;
@@ -60,7 +59,7 @@ public class AbmOrdenDePagos extends javax.swing.JDialog {
     public AbmOrdenDePagos(ArrayList listado,Double monto,Clientes cliente) {
         listadoFc=new ArrayList();
         initComponents();
-        cli=(Clientes)cliente;
+        //cliP=(Clientes)cliente;
         Recidable reci=new DetalleOrdenDePago();
         listadoFc=listado;//TENER EN CUENTA QUE ES MOVIMIENTO DE PROVEEDOR
         montoTotal=monto;
@@ -406,47 +405,50 @@ public class AbmOrdenDePagos extends javax.swing.JDialog {
         OrdenDePago recibo=new OrdenDePago();
         DetalleOrdenDePago detalle;
         Recidable det=new DetalleOrdenDePago();
-        recibo.setIdCliente(cli.getCodigoId());
-        recibo.setMonto(montoTotal);
-        Recidable recc=new Recibo();
+        Double saldoAImputar=montoTotal - saldo;
+        recibo.setIdCliente(cliP.getNumero());
+        recibo.setMonto(saldoAImputar);
+        recibo.setNumeroRecibo(JOptionPane.showInputDialog("INGRESE EL NUMERO DEL RECIBO DEL PROVEEDOR: "));
+        Recidable recc=new OrdenDePago();
         int numero=0;
         numero=recc.nuevo(recibo);
         recibo.setId(numero);
         Iterator itF=listadoFc.listIterator();
         //int cantRecibos=listadoFc.size();
         ArrayList listadoDet=new ArrayList();
-        Facturas factura;
+        MovimientoProveedores factura;
         int contador=0;
-        Double saldoAImputar=montoTotal - saldo;
+        
         while(itF.hasNext()){
             
-            factura=(Facturas)itF.next();
+            factura=(MovimientoProveedores)itF.next();
             if((Boolean)this.jTable1.getValueAt(contador,0)){
             detalle=new DetalleOrdenDePago();
-            detalle.setIdCliente(cli.getCodigoId());
+            detalle.setIdCliente(cliP.getNumero());
             detalle.setIdFactura(factura.getId());
             detalle.setIdRecibo(recibo.getId());
             
-            if(factura.getTotal() < saldoAImputar){
-                detalle.setMonto(factura.getTotal());
+            if(factura.getSaldo() < saldoAImputar){
+                detalle.setMonto(factura.getMonto());
             }else{
                 //factura.setTotal(saldoAImputar);
                 
                 detalle.setMonto(saldoAImputar);
             }
-            saldoAImputar=saldoAImputar - factura.getTotal();
-            detalle.setFecha(factura.getFecha());
-            if(factura.getNumeroFiscal()!=null){
-            detalle.setNumeroFc(factura.getNumeroFactura());
+            saldoAImputar=saldoAImputar - factura.getSaldo();
+            Date fecc=Numeros.ConvertirStringEnDate(factura.getFecha());
+            detalle.setFecha(fecc);
+            if(factura.getNumeroComprobante()!=null){
+            detalle.setNumeroFc(factura.getId());
             }else{
-                if(factura.getNumeroFiscal()!=null){
-                    detalle.setNumeroFc(Integer.parseInt(factura.getNumeroFiscal()));
+                if(factura.getNumeroComprobante()!=null){
+                    detalle.setNumeroFc(Integer.parseInt(factura.getNumeroComprobante()));
                 }else{
                     
                     detalle.setNumeroFc(factura.getId());
                 }
             }
-            detalle.setMontoFcatura(Numeros.ConvertirNumero(factura.getTotal()));
+            detalle.setMontoFcatura(Numeros.ConvertirNumero(factura.getSaldo()));
             det.nuevo(detalle);
             det.imputarAFactura(factura);
             listadoDet.add(detalle);
@@ -459,7 +461,7 @@ public class AbmOrdenDePagos extends javax.swing.JDialog {
         Double montt=0.00;
         while(itP.hasNext()){
             pago=(FormasDePago)itP.next();
-            pago.setIdCliente(cli.getCodigoId());
+            pago.setIdCliente(cliP.getNumero());
             pago.setIdRecibo(recibo.getId());
             if(pago.getDescripcion().equals("Cheque")){
                // mando a formable
@@ -474,7 +476,7 @@ public class AbmOrdenDePagos extends javax.swing.JDialog {
             recibo.setMonto(montt);
             
         //}
-        ImprimirRecibo imprimir=new ImprimirRecibo();
+        ImprimirOrden imprimir=new ImprimirOrden();
         try {
             imprimir.ImprimirOrdenDeTrabajo(recibo, listadoDet, detallePagos);
         } catch (IOException ex) {
@@ -489,7 +491,7 @@ public class AbmOrdenDePagos extends javax.swing.JDialog {
             cantidad=cantidad -1;
             Double total=0.00;
             Double parte=0.00;
-            Facturas factu;
+            MovimientoProveedores factu;
             Recidable reci=new DetalleOrdenDePago();
             ArrayList aEliminar=new ArrayList();
             for(int a=cantidad;a > -1;a--){
@@ -497,7 +499,7 @@ public class AbmOrdenDePagos extends javax.swing.JDialog {
                    /*
                     parte=Numeros.ConvertirStringADouble((String) this.jTable1.getValueAt(a, 3));
                     
-                    factu=(Facturas)listadoFc.get(a);
+                    factu=(MovimientoProveedores)listadoFc.get(a);
                     //factu.setEstado(1);
                     factu.setTotal(parte);
                     total=total + parte;
@@ -523,15 +525,15 @@ public class AbmOrdenDePagos extends javax.swing.JDialog {
             int cantidad=this.jTable1.getRowCount();
         Double total=0.00;
         Double parte=0.00;
-        Facturas factu;
+        MovimientoProveedores factu;
         Recidable reci=new DetalleOrdenDePago();
         ArrayList aEliminar=new ArrayList();
         for(int a=0;a < cantidad;a++){
             if((Boolean)this.jTable1.getValueAt(a, 0)){
                 parte=Numeros.ConvertirStringADouble((String) this.jTable1.getValueAt(a, 4));
-                factu=(Facturas)listadoFc.get(a);
+                factu=(MovimientoProveedores)listadoFc.get(a);
                 //factu.setEstado(1);
-                factu.setTotal(parte);
+                factu.setSaldo(parte);
                 total=total + parte;
             }
             

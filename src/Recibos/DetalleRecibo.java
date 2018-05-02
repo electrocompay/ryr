@@ -5,7 +5,7 @@
  */
 package Recibos;
 
-import facturacion.clientes.Facturas;
+import facturacion.clientes.MovimientoProveedores;
 import interfaces.Transaccionable;
 
 import java.sql.Date;
@@ -135,8 +135,8 @@ public class DetalleRecibo implements Recidable{
 
     @Override
     public Double imputarAFactura(Object rec) {
-        Facturas factura=new Facturas();
-        factura=(Facturas)rec;
+        MovimientoProveedores factura=new MovimientoProveedores();
+        factura=(MovimientoProveedores)rec;
         sql="update facturas set saldo=(total - "+factura.getTotal()+") where id="+factura.getId();
         System.out.println(sql);
         tra.guardarRegistro(sql);
@@ -146,7 +146,7 @@ public class DetalleRecibo implements Recidable{
     @Override
     public DefaultTableModel mostrarARecibir(ArrayList listado) {
         MiModeloTablaContacto listado1=new MiModeloTablaContacto();
-        Facturas cotizacion;
+        MovimientoProveedores cotizacion;
         Iterator iL=listado.listIterator();
         listado1.addColumn("Recibo");
         listado1.addColumn("Fecha");
@@ -157,7 +157,7 @@ public class DetalleRecibo implements Recidable{
         Object[] fila=new Object[5];
         while(iL.hasNext()){
             
-            cotizacion=(Facturas)iL.next();
+            cotizacion=(MovimientoProveedores)iL.next();
             fila[0]=false;
             
             fila[1]=String.valueOf(cotizacion.getFecha());

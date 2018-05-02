@@ -77,9 +77,9 @@ public class ImprimirFactura {
 
     
     public void ImprimirFactura(Integer idCotizacion,Integer tipo) throws IOException{
-        Facturable cotizable=new Facturas();
-        Facturas cotizacion=new Facturas();
-        cotizacion=(Facturas)cotizable.cargarEncabezadoFactura(idCotizacion, tipo);
+        Facturable cotizable=new MovimientoProveedores();
+        MovimientoProveedores cotizacion=new MovimientoProveedores();
+        cotizacion=(MovimientoProveedores)cotizable.cargarEncabezadoFactura(idCotizacion, tipo);
         ArrayList listadoDetalle=new ArrayList();
         DetalleFacturas detalleDeCotizacion=new DetalleFacturas();
         Facturable cotiz=new DetalleFacturas();
@@ -225,9 +225,9 @@ public class ImprimirFactura {
 
     }
     public void ImprimirfacturaProveedor(Integer idCotizacion){
-        Facturable cotizable=new Facturas();
-        Facturas cotizacion=new Facturas();
-        cotizacion=(Facturas)cotizable.cargarEncabezadoFactura(idCotizacion,2);
+        Facturable cotizable=new MovimientoProveedores();
+        MovimientoProveedores cotizacion=new MovimientoProveedores();
+        cotizacion=(MovimientoProveedores)cotizable.cargarEncabezadoFactura(idCotizacion,2);
         ArrayList listadoDetalle=new ArrayList();
         DetalleFacturas detalleDeCotizacion=new DetalleFacturas();
         Facturable cotiz=new DetalleFacturas();

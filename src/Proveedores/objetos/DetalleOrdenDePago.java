@@ -5,17 +5,13 @@
  */
 package Proveedores.objetos;
 
-import Recibos.*;
-import facturacion.clientes.Facturas;
+import Recibos.Recidable;
 import interfaces.Transaccionable;
-
-import java.sql.Date;
 import java.sql.ResultSet;
-
 import java.util.ArrayList;
+import java.util.Date;
 import objetos.Conecciones;
 import java.util.Iterator;
-
 import javax.swing.table.DefaultTableModel;
 import tablas.MiModeloTablaContacto;
 
@@ -136,9 +132,9 @@ public class DetalleOrdenDePago implements Recidable{
 
     @Override
     public Double imputarAFactura(Object rec) {
-        Facturas factura=new Facturas();
-        factura=(Facturas)rec;
-        sql="update facturas set saldo=(total - "+factura.getTotal()+") where id="+factura.getId();
+        MovimientoProveedores factura=new MovimientoProveedores();
+        factura=(MovimientoProveedores)rec;
+        sql="update movimientosproveedores set saldo=(saldo - "+factura.getSaldo()+") where id="+factura.getId();
         System.out.println(sql);
         tra.guardarRegistro(sql);
         return 0.00;
@@ -147,7 +143,7 @@ public class DetalleOrdenDePago implements Recidable{
     @Override
     public DefaultTableModel mostrarARecibir(ArrayList listado) {
         MiModeloTablaContacto listado1=new MiModeloTablaContacto();
-        Facturas cotizacion;
+        MovimientoProveedores cotizacion;
         Iterator iL=listado.listIterator();
         listado1.addColumn("Orden");
         listado1.addColumn("Fecha");
@@ -158,13 +154,13 @@ public class DetalleOrdenDePago implements Recidable{
         Object[] fila=new Object[5];
         while(iL.hasNext()){
             
-            cotizacion=(Facturas)iL.next();
+            cotizacion=(MovimientoProveedores)iL.next();
             fila[0]=false;
             
             fila[1]=String.valueOf(cotizacion.getFecha());
-            fila[2]=String.valueOf(cotizacion.getNumeroFactura());
-            fila[3]=String.valueOf(cotizacion.getMontoOriginal());
-            fila[4]=String.valueOf(cotizacion.getTotal());
+            fila[2]=String.valueOf(cotizacion.getNumeroComprobante());
+            fila[3]=String.valueOf(cotizacion.getMonto());
+            fila[4]=String.valueOf(cotizacion.getSaldo());
             listado1.addRow(fila);
         }
         return listado1;

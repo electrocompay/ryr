@@ -5,7 +5,7 @@ import Conversores.Numeros;
 import Objetos.FacturaElectronica;
 import facturacion.clientes.Clientes;
 import facturacion.clientes.Facturable;
-import facturacion.clientes.Facturas;
+import facturacion.clientes.MovimientoProveedores;
 import interfaces.Transaccionable;
 import interfacesPrograma.Busquedas;
 import interfacesPrograma.Facturar;
@@ -462,8 +462,8 @@ public class FEl implements FacturableE{
         FEl cotizacion;
         Clientes cliente;
         Facturar bus=new Clientes();
-        Facturable ff=new Facturas();
-        Facturas factura;
+        Facturable ff=new MovimientoProveedores();
+        MovimientoProveedores factura;
         Iterator iL=listadoC.listIterator();
         listado.addColumn("Fecha");
         listado.addColumn("Cliente");
@@ -474,12 +474,12 @@ public class FEl implements FacturableE{
         while(iL.hasNext()){
             cotizacion=(FEl)iL.next();
             cliente=new Clientes();
-            factura=new Facturas();
+            factura=new MovimientoProveedores();
             fila[0]=String.valueOf(cotizacion.getFecha());
             cliente=(Clientes)bus.cargarPorCodigoAsignado(cotizacion.getIdCliente());
             fila[1]=cliente.getRazonSocial();
             fila[2]=cliente.getNumeroDeCuit();
-            //factura=(Facturas)ff.
+            //factura=(MovimientoProveedores)ff.
             fila[3]=String.valueOf(cotizacion.getImporteTotal());
             if(cotizacion.getRespuesta().equals("OK")){
                 fila[4]="Aprobada";
