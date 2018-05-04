@@ -224,7 +224,25 @@ public class FormasDePago implements Formable{
 
     @Override
     public ArrayList listarPagosProveedores(Integer orden) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        FormasDePago forma;
+        ArrayList listado=new ArrayList();
+        sql="select * from detallepagos where idcomprobante="+orden;
+        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        try {
+            while(rs.next()){
+                forma=new FormasDePago();
+                forma.setIdRecibo(rs.getInt("idcomprobante"));
+                forma.setDescripcion(rs.getString("descripcion"));
+                forma.setBanco(rs.getString("banco"));
+                forma.setNumero(rs.getString("numero"));
+                forma.setVencimiento(rs.getString("vencimiento"));
+                forma.setMonto(rs.getDouble("monto"));
+                listado.add(forma);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FormasDePago.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listado;
     }
 
     @Override

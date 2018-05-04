@@ -8,8 +8,9 @@ import Proveedores.Proveedores;
 import Cotizaciones.Cotizacion;
 import Cotizaciones.IngresoDeCotizacion;
 import FacturaE.FacturableE;
+import Proveedores.objetos.ImprimirOrdenDeTrabajo;
 import Proveedores.objetos.MovimientoProveedores;
-import Recibos.OrdenDePago;
+import Proveedores.objetos.OrdenDePago;
 import Recibos.Recidable;
 import facturacion.clientes.ListasDePrecios;
 import interfaceGraficas.Inicio;
@@ -17,6 +18,7 @@ import interfaceGraficas.NuevoCliente;
 import interfaces.Personalizable;
 import interfacesPrograma.Busquedas;
 import java.beans.PropertyVetoException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -364,7 +366,6 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
 
         jButton14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/List.png"))); // NOI18N
         jButton14.setText("Reimprimir Orden De Pago");
-        jButton14.setEnabled(false);
         jButton14.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton14ActionPerformed(evt);
@@ -546,8 +547,15 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
        if(mov.getTipoComprobante()==2){
            OrdenDePago recibo=new OrdenDePago();
            Recidable reci=new OrdenDePago();
-           //ArrayList lstR=reci.listar(mov.getNumeroComprobante());
-           //Iterator it=
+           recibo=(OrdenDePago) reci.cargar(mov.getIdComprobante());
+           ImprimirOrdenDeTrabajo imprimir=new ImprimirOrdenDeTrabajo();
+           try {
+               imprimir.ReImprimirOrdenDeTrabajo(recibo);
+               //ArrayList lstR=reci.listar(mov.getNumeroComprobante());
+               //Iterator it=
+           } catch (IOException ex) {
+               Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+           }
            
        }else{
            JOptionPane.showMessageDialog(null,"Seleccione un recibo por favor");

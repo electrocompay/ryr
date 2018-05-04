@@ -141,6 +141,30 @@ public class OrdenDePago implements Recidable{
     public DefaultTableModel mostrarARecibirSuma(ArrayList listado) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public Object cargar(Integer id) {
+        OrdenDePago recibo = null;
+        //recibo=(OrdenDePago)rec;
+        //ArrayList numero=new ArrayList();
+        sql="select * from ordendepagos where id="+id;
+        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        try {
+            while(rs.next()){
+                recibo=new OrdenDePago();
+                recibo.setId(rs.getInt("id"));
+                recibo.setFecha(rs.getDate("fecha"));
+                recibo.setIdCliente(rs.getInt("idcliente"));
+                recibo.setMonto(rs.getDouble("monto"));
+                recibo.setNumeroRecibo(rs.getString("numerorecibo"));
+                //numero.add(recibo);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrdenDePago.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return recibo;
+    }
     
     
     

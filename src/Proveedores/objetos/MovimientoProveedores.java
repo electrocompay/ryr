@@ -30,6 +30,16 @@ public class MovimientoProveedores implements FacturableE{
     private String descripcionTipoComprobante;
     private Double subTotal;
     private Double saldo;
+    private Integer idComprobante;
+
+    public Integer getIdComprobante() {
+        return idComprobante;
+    }
+
+    public void setIdComprobante(Integer idComprobante) {
+        this.idComprobante = idComprobante;
+    }
+    
 
     public Double getSaldo() {
         return saldo;
@@ -129,6 +139,7 @@ public class MovimientoProveedores implements FacturableE{
                 mov.setNumeroComprobante(rs.getString("numeroComprobante"));
                 mov.setTipoComprobante(rs.getInt("tipoComprobante"));
                 mov.setSaldo(rs.getDouble("saldo"));
+                mov.setIdComprobante(rs.getInt("idcomprobante"));
                 if(mov.getTipoComprobante()==1)mov.setDescripcionTipoComprobante("FACTURA PROVEEDOR");
                 if(mov.getTipoComprobante()==2)mov.setDescripcionTipoComprobante("ORDEN DE PAGO");
                 
@@ -157,6 +168,7 @@ public class MovimientoProveedores implements FacturableE{
                 mov.setNumeroComprobante(rs.getString("numeroComprobante"));
                 mov.setTipoComprobante(rs.getInt("tipoComprobante"));
                 mov.setSaldo(rs.getDouble("saldo"));
+                mov.setIdComprobante(rs.getInt("idcomprobante"));
                 if(mov.getTipoComprobante()==1)mov.setDescripcionTipoComprobante("FACTURA PROVEEDOR");
                 if(mov.getTipoComprobante()==2)mov.setDescripcionTipoComprobante("ORDEN DE PAGO");
                 
@@ -240,6 +252,7 @@ public class MovimientoProveedores implements FacturableE{
                 mov.setNumeroComprobante(rs.getString("numeroComprobante"));
                 mov.setTipoComprobante(rs.getInt("tipoComprobante"));
                 mov.setSaldo(rs.getDouble("saldo"));
+                mov.setIdComprobante(rs.getInt("idcomprobante"));
                 if(mov.getTipoComprobante()==1)mov.setDescripcionTipoComprobante("FACTURA PROVEEDOR");
                 if(mov.getTipoComprobante()==2)mov.setDescripcionTipoComprobante("ORDEN DE PAGO");
                 
@@ -270,6 +283,7 @@ public class MovimientoProveedores implements FacturableE{
                 mov.setNumeroComprobante(rs.getString("numeroComprobante"));
                 mov.setTipoComprobante(rs.getInt("tipoComprobante"));
                 mov.setSaldo(rs.getDouble("saldo"));
+                mov.setIdComprobante(rs.getInt("idcomprobante"));
                 if(mov.getTipoComprobante()==1)mov.setDescripcionTipoComprobante("FACTURA PROVEEDOR");
                 if(mov.getTipoComprobante()==2)mov.setDescripcionTipoComprobante("ORDEN DE PAGO");
                 

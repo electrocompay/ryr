@@ -179,7 +179,13 @@ public class DetalleOrdenDePago implements Recidable{
         try {
             while(rs.next()){
                 detalle=new DetalleOrdenDePago();
-                detalle.setNumeroStringFac(rs.getString(""));
+                detalle.setNumeroStringFac(rs.getString("numerocomprobante"));
+                detalle.setFecha(rs.getDate("fecha"));
+                detalle.setMontoFacturaDouble(rs.getDouble("montofactura"));
+                detalle.setMonto(rs.getDouble("monto"));
+                detalle.setSaldoItem(rs.getDouble("saldo"));
+                listado.add(detalle);
+                
             }
         } catch (SQLException ex) {
             Logger.getLogger(DetalleOrdenDePago.class.getName()).log(Level.SEVERE, null, ex);
@@ -230,6 +236,11 @@ public class DetalleOrdenDePago implements Recidable{
 
     @Override
     public DefaultTableModel mostrarARecibirSuma(ArrayList listado) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Object cargar(Integer id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

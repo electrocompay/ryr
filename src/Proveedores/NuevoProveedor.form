@@ -315,7 +315,6 @@
               <Image iconType="3" name="/imagen/List.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Reimprimir Orden De Pago"/>
-            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton14ActionPerformed"/>

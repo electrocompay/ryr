@@ -10,7 +10,9 @@ package Proveedores.objetos;
 import Conversores.NumberToLetterConverter;
 import Conversores.Numeros;
 import Proveedores.Proveedores;
+import Recibos.Formable;
 import Recibos.FormasDePago;
+import Recibos.Recidable;
 import interfaceGraficas.Inicio;
 import interfaces.Personalizable;
 import interfacesPrograma.Facturar;
@@ -176,8 +178,13 @@ public class ImprimirOrdenDeTrabajo {
         OrdenDePago rec=new OrdenDePago();
         DetalleOrdenDePago det=new DetalleOrdenDePago();
         FormasDePago formas=new FormasDePago();
+        rec=(OrdenDePago)recibo;
         ArrayList detalle=new ArrayList();
         ArrayList pagos=new ArrayList();
+        Recidable reci=new DetalleOrdenDePago();
+        Formable ff=new FormasDePago();
+        detalle=reci.listar(rec.getId());
+        pagos=ff.listarPagosProveedores(rec.getId());
         /*
         cotizacion=(Pedidos)cotizable.cargarEncabezadoPedido(idCotizacion);
         ArrayList listadoDetalle=new ArrayList();
@@ -185,7 +192,7 @@ public class ImprimirOrdenDeTrabajo {
         Pedable cotiz=new DetallePedidos();
         listadoDetalle=cotiz.cargarDetallePedido(cotizacion.getId());
         */
-        rec=(OrdenDePago)recibo;
+        
         Proveedores cliente=new Proveedores();
         Personalizable factu=new Proveedores();
         cliente=(Proveedores)factu.buscarPorNumero(rec.getIdCliente());
@@ -236,7 +243,7 @@ public class ImprimirOrdenDeTrabajo {
             det=(DetalleOrdenDePago)it.next();
             //pagina.drawString(String.valueOf(det.get),40,renglon);
             pagina.drawString("Factura: "+det.getNumeroStringFac()+" fecha "+Numeros.ConvertirFecha(det.getFecha()),30,renglon);
-            pagina.drawString(det.getMontoFac(),300,renglon);
+            pagina.drawString(Numeros.ConvertirNumero(det.getMontoFacturaDouble()),300,renglon);
             pagina.drawString(Numeros.ConvertirNumero(det.getMonto()),400,renglon);
             saldoI=saldoI + det.getSaldoItem();
             pagina.drawString(Numeros.ConvertirNumero(det.getSaldoItem()),500,renglon);
