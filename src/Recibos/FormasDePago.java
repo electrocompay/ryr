@@ -38,6 +38,25 @@ public class FormasDePago implements Formable{
     private static Transaccionable tra=new Conecciones();
     private static ResultSet rs;
     private String sql;
+    private Integer idTipoComprobante;
+    private Integer idPago;
+
+    public Integer getIdTipoComprobante() {
+        return idTipoComprobante;
+    }
+
+    public void setIdTipoComprobante(Integer idTipoComprobante) {
+        this.idTipoComprobante = idTipoComprobante;
+    }
+
+    public Integer getIdPago() {
+        return idPago;
+    }
+
+    public void setIdPago(Integer idPago) {
+        this.idPago = idPago;
+    }
+    
 
     public Integer getIdRecibo() {
         return idRecibo;
@@ -201,6 +220,20 @@ public class FormasDePago implements Formable{
     @Override
     public DefaultListModel mostrarChequesEnListado(ArrayList listado) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList listarPagosProveedores(Integer orden) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Boolean guardarPagoAProveedores(Object pagos) {
+        FormasDePago forma=new FormasDePago();
+        forma=(FormasDePago)pagos;
+        sql="insert into detallepagos (idtipocomprobante,idcomprobante,idpago,descripcion,banco,monto,vencimiento,numero) values ("+forma.getIdTipoComprobante()+","+forma.getIdRecibo()+","+forma.getIdPago()+",'"+forma.getDescripcion()+"','"+forma.getBanco()+"',"+forma.getMonto()+",'"+forma.getVencimiento()+"',"+forma.getNumero()+")";
+        tra.guardarRegistro(sql);
+        return true;
     }
     
     

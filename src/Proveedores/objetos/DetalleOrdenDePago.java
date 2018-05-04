@@ -8,10 +8,13 @@ package Proveedores.objetos;
 import Recibos.Recidable;
 import interfaces.Transaccionable;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import objetos.Conecciones;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import tablas.MiModeloTablaContacto;
 
@@ -33,6 +36,46 @@ public class DetalleOrdenDePago implements Recidable{
     private static ResultSet rs;
     private String sql;
     private String montoFcatura;
+    private String numeroStringFac;
+    private String montoFac;
+    private Double saldoItem;
+    private Double montoFacturaDouble;
+    //private Double 
+
+    public Double getMontoFacturaDouble() {
+        return montoFacturaDouble;
+    }
+
+    public void setMontoFacturaDouble(Double montoFacturaDouble) {
+        this.montoFacturaDouble = montoFacturaDouble;
+    }
+
+    public Double getSaldoItem() {
+        return saldoItem;
+    }
+
+    public void setSaldoItem(Double saldoItem) {
+        this.saldoItem = saldoItem;
+    }
+    
+    
+
+    public String getNumeroStringFac() {
+        return numeroStringFac;
+    }
+
+    public void setNumeroStringFac(String numeroStringFac) {
+        this.numeroStringFac = numeroStringFac;
+    }
+
+    public String getMontoFac() {
+        return montoFac;
+    }
+
+    public void setMontoFac(String montoFac) {
+        this.montoFac = montoFac;
+    }
+    
 
     public String getMontoFcatura() {
         return montoFcatura;
@@ -120,21 +163,40 @@ public class DetalleOrdenDePago implements Recidable{
     public Integer nuevo(Object rec) {
         DetalleOrdenDePago detalle=new DetalleOrdenDePago();
         detalle=(DetalleOrdenDePago)rec;
-        sql="insert into detalleordendepagos (idorden,idcliente,monto,idfactura) values ("+detalle.getIdRecibo()+","+detalle.getIdCliente()+","+detalle.getMonto()+","+detalle.getIdFactura()+")";
+        sql="insert into detalleordendepagos (idorden,idcliente,monto,idfactura,saldo,montofactura) values ("+detalle.getIdRecibo()+","+detalle.getIdCliente()+","+detalle.getMonto()+","+detalle.getIdFactura()+","+detalle.getSaldoItem()+","+detalle.getMontoFacturaDouble()+")";
         tra.guardarRegistro(sql);
         return 0;
     }
 
     @Override
     public ArrayList listar(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //DetalleOrdenDePago detalle=new DetalleOrdenDePago();
+        ArrayList listado=new ArrayList();
+        //detalle=(DetalleOrdenDePago)rec;
+        sql="select *,(select movimientosproveedores.numerocomprobante from movimientosproveedores where movimientosproveedores.id=detalleordendepagos.idfactura)as numerocomprobante from detalleordendepagos where idorden="+id;
+        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        DetalleOrdenDePago detalle=null;
+        try {
+            while(rs.next()){
+                detalle=new DetalleOrdenDePago();
+                detalle.setNumeroStringFac(rs.getString(""));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DetalleOrdenDePago.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //tra.guardarRegistro(sql);
+        return listado;
     }
 
     @Override
     public Double imputarAFactura(Object rec) {
         MovimientoProveedores factura=new MovimientoProveedores();
         factura=(MovimientoProveedores)rec;
-        sql="update movimientosproveedores set saldo=(saldo - "+factura.getSaldo()+") where id="+factura.getId();
+        if(factura.getSaldo() > 0){
+            sql="update movimientosproveedores set saldo="+factura.getSaldo()+" where id="+factura.getId();
+        }else{
+            sql="update movimientosproveedores set saldo="+factura.getSaldo()+",pagado=1 where id="+factura.getId();
+        }
         System.out.println(sql);
         tra.guardarRegistro(sql);
         return 0.00;

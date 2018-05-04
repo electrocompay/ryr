@@ -199,6 +199,11 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
         setResizable(true);
         setTitle("FACTURACION - CARGA DE NUEVO PROVEEDOR");
         setAutoscrolls(true);
+        addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                formFocusGained(evt);
+            }
+        });
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
                 formInternalFrameActivated(evt);
@@ -219,11 +224,6 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
                 formComponentShown(evt);
-            }
-        });
-        addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                formFocusGained(evt);
             }
         });
         addKeyListener(new java.awt.event.KeyAdapter() {
@@ -364,6 +364,7 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
 
         jButton14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/List.png"))); // NOI18N
         jButton14.setText("Reimprimir Orden De Pago");
+        jButton14.setEnabled(false);
         jButton14.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton14ActionPerformed(evt);
@@ -503,7 +504,7 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         MovimientoProveedores mov=new MovimientoProveedores();
         listadoFac=mov.listarFacturasProveedor(cliTa.getNumero());
-        AbmOrdenDePagos recibo=new AbmOrdenDePagos(listadoFac,cliTa.getSaldo(),cliTa);
+        AbmOrdenDePagos recibo=new AbmOrdenDePagos(cliTa.getSaldo(),cliTa);
         recibo.setVisible(true);
         recibo.toFront();
         //Inicio.jDesktopPane1.add(recibo);
@@ -591,6 +592,7 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
 
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
         FacturableE factu=new MovimientoProveedores();
+        
         listadoCot=factu.listarPorEstado(cliTa.getNumero());
         this.jTable3.setModel(factu.mostrarListado(listadoCot));
     }//GEN-LAST:event_formInternalFrameActivated

@@ -4,6 +4,9 @@ id
 descripcion
 tasa
 
+//crear tabla detallepagos
+
+
 // crear tabla moviemtosImpuestos
 
 id
@@ -14,7 +17,17 @@ monto
 
 
 // agregar a columna en movimientoproveedores
-subtotal double
+idcomprobante
 
+// crear tabla ordendepago
+
+// agregar a tabla ordendeapago
+numerorecibo
+saldo
+
+//crear tabla detalleordendepago
+
+saldo
+montofactura
 
 

@@ -29,6 +29,16 @@ public class OrdenDePago implements Recidable{
     private static ResultSet rs;
     private String sql;
     private String numeroRecibo;
+    private Double saldoProveedor;
+
+    public Double getSaldoProveedor() {
+        return saldoProveedor;
+    }
+
+    public void setSaldoProveedor(Double saldoProveedor) {
+        this.saldoProveedor = saldoProveedor;
+    }
+    
 
     public String getNumeroRecibo() {
         return numeroRecibo;
@@ -72,7 +82,7 @@ public class OrdenDePago implements Recidable{
         OrdenDePago recibo=new OrdenDePago();
         recibo=(OrdenDePago)rec;
         int numero=0;
-        sql="insert into ordendepagos (idcliente,monto,numerorecibo) values ("+recibo.getIdCliente()+","+recibo.getMonto()+",'"+recibo.getNumeroRecibo()+"')";
+        sql="insert into ordendepagos (idcliente,monto,numerorecibo,saldo) values ("+recibo.getIdCliente()+","+recibo.getMonto()+",'"+recibo.getNumeroRecibo()+"',"+recibo.getSaldoProveedor()+")";
         tra.guardarRegistro(sql);
         sql="select LAST_INSERT_ID()";
         rs=tra.leerConjuntoDeRegistros(sql);
@@ -83,6 +93,9 @@ public class OrdenDePago implements Recidable{
         }catch(SQLException ex){
             System.err.println("error "+ex);
         }
+        Double monto=recibo.getMonto() * (-1);
+        sql="insert into movimientosproveedores (numeroProveedor,monto,numeroComprobante,idUsuario,tipoComprobante,subtotal,saldo,idcomprobante) values ("+recibo.getIdCliente()+",round("+monto+",4),'"+recibo.getNumeroRecibo()+"',1,2,0.00,0.00,"+numero+")";
+        tra.guardarRegistro(sql);
         return numero;
     }
 

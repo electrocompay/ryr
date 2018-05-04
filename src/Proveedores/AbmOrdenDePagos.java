@@ -5,11 +5,15 @@
  */
 package Proveedores;
 
-import Recibos.*;
+
 import Conversores.Numeros;
 import Proveedores.objetos.DetalleOrdenDePago;
+import Proveedores.objetos.ImprimirOrdenDeTrabajo;
 import Proveedores.objetos.MovimientoProveedores;
 import Proveedores.objetos.OrdenDePago;
+import Recibos.Formable;
+import Recibos.FormasDePago;
+import Recibos.Recidable;
 import facturacion.clientes.Clientes;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -69,15 +73,16 @@ public class AbmOrdenDePagos extends javax.swing.JDialog {
         saldo=montoTotal;
         this.jLabel9.setText("Saldo: $"+saldo);
     }
-    public AbmOrdenDePagos(ArrayList listado,Double monto,Proveedores cliente) {
+    public AbmOrdenDePagos(Double monto,Proveedores cliente) {
         listadoFc=new ArrayList();
         origen=1;
         initComponents();
         cliP=(Proveedores)cliente;
         DetalleOrdenDePago reci=new DetalleOrdenDePago();
-        listadoFc=listado;
-        montoTotal=monto;
         mov=new MovimientoProveedores();
+        listadoFc=mov.lsitarFacturasProveedorOrdenadas(cliP.getNumero());
+        montoTotal=monto;
+        
         modelo4=mov.mostrarARecibir(listadoFc);
         //modelo4=reci.mostrarARecibir(listadoFc);
         this.jTable1.setModel(modelo4);
@@ -335,6 +340,7 @@ public class AbmOrdenDePagos extends javax.swing.JDialog {
             Double monto=0.00;
             monto=Numeros.ConvertirStringADouble(this.jTextField1.getText());
             pago.setMonto(monto);
+            pago.setIdPago(this.jComboBox1.getSelectedIndex());
             if(this.jComboBox1.getSelectedIndex()==1){
                 pago.setDescripcion("Cheque");
                 this.jTextField2.selectAll();
@@ -343,6 +349,7 @@ public class AbmOrdenDePagos extends javax.swing.JDialog {
             }else{
                 pago.setDescripcion("Efectivo");
                 pago.setMonto(monto);
+               
                 detallePagos.add(pago);
                 modeloL.addElement(pago.getDescripcion()+" $"+pago.getMonto());
                 this.jList1.setModel(modeloL);
@@ -411,6 +418,8 @@ public class AbmOrdenDePagos extends javax.swing.JDialog {
         recibo.setNumeroRecibo(JOptionPane.showInputDialog("INGRESE EL NUMERO DEL RECIBO DEL PROVEEDOR: "));
         Recidable recc=new OrdenDePago();
         int numero=0;
+        Double sP=cliP.getSaldo() - saldo;
+        recibo.setSaldoProveedor(sP);
         numero=recc.nuevo(recibo);
         recibo.setId(numero);
         Iterator itF=listadoFc.listIterator();
@@ -418,7 +427,7 @@ public class AbmOrdenDePagos extends javax.swing.JDialog {
         ArrayList listadoDet=new ArrayList();
         MovimientoProveedores factura;
         int contador=0;
-        
+        Double varia=0.00;
         while(itF.hasNext()){
             
             factura=(MovimientoProveedores)itF.next();
@@ -429,13 +438,19 @@ public class AbmOrdenDePagos extends javax.swing.JDialog {
             detalle.setIdRecibo(recibo.getId());
             
             if(factura.getSaldo() < saldoAImputar){
-                detalle.setMonto(factura.getMonto());
+                
+                detalle.setMonto(factura.getSaldo());
+                saldoAImputar=saldoAImputar - factura.getSaldo();
+                factura.setSaldo(0.00);
+                
             }else{
                 //factura.setTotal(saldoAImputar);
                 
                 detalle.setMonto(saldoAImputar);
+                varia=factura.getSaldo()-saldoAImputar;
+                factura.setSaldo(varia);
             }
-            saldoAImputar=saldoAImputar - factura.getSaldo();
+            detalle.setSaldoItem(factura.getSaldo());
             Date fecc=Numeros.ConvertirStringEnDate(factura.getFecha());
             detalle.setFecha(fecc);
             if(factura.getNumeroComprobante()!=null){
@@ -448,7 +463,10 @@ public class AbmOrdenDePagos extends javax.swing.JDialog {
                     detalle.setNumeroFc(factura.getId());
                 }
             }
-            detalle.setMontoFcatura(Numeros.ConvertirNumero(factura.getSaldo()));
+            detalle.setMontoFcatura(Numeros.ConvertirNumero(saldoAImputar));
+            detalle.setNumeroStringFac(factura.getNumeroComprobante());
+            detalle.setMontoFac(Numeros.ConvertirNumero(factura.getMonto()));
+            detalle.setMontoFacturaDouble(factura.getMonto());
             det.nuevo(detalle);
             det.imputarAFactura(factura);
             listadoDet.add(detalle);
@@ -463,20 +481,17 @@ public class AbmOrdenDePagos extends javax.swing.JDialog {
             pago=(FormasDePago)itP.next();
             pago.setIdCliente(cliP.getNumero());
             pago.setIdRecibo(recibo.getId());
-            if(pago.getDescripcion().equals("Cheque")){
-               // mando a formable
-                ff.guardarCheques(pago);
-            }else{
-                // mando a movimientos caja
-                ff.guardarEfectivo(pago);
-            }
+            //pago.setBanco(this.jTextField2.getText());
+            pago.setIdTipoComprobante(2);
+            
+            ff.guardarPagoAProveedores(pago);
             montt=montt + pago.getMonto();
         }
         //if(montt >= recibo.getMonto()){
             recibo.setMonto(montt);
             
         //}
-        ImprimirOrden imprimir=new ImprimirOrden();
+        ImprimirOrdenDeTrabajo imprimir=new ImprimirOrdenDeTrabajo();
         try {
             imprimir.ImprimirOrdenDeTrabajo(recibo, listadoDet, detallePagos);
         } catch (IOException ex) {
