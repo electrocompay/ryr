@@ -42,6 +42,16 @@ public class Proveedores implements Personalizable{
     private String numeroIngresosBrutos;
     private Double saldo=0.00;
     private static ConcurrentHashMap listadoProv=new ConcurrentHashMap();
+    private String anexo;
+
+    public String getAnexo() {
+        return anexo;
+    }
+
+    public void setAnexo(String anexo) {
+        this.anexo = anexo;
+    }
+    
 
     public String getCuit() {
         return cuit;
@@ -200,6 +210,7 @@ public class Proveedores implements Personalizable{
                 prov.setCelular(rr.getString("celular"));
                 prov.setDescripcionLocalidad(rr.getString("nomL"));
                 prov.setCuit(rr.getString("cuit"));
+                prov.setAnexo(rr.getString("anexo"));
               //  if(Inicio.coneccionRemota)prov.setSaldo(rr.getDouble("saldo"));
                 //prov.setCondicionDeIva(rr.getInt("condicionIva"));
                 //prov.setNumeroDeCuit(rr.getString("numeroCuit"));
@@ -240,6 +251,7 @@ public class Proveedores implements Personalizable{
                 prov.setCelular(rr.getString("celular"));
                 prov.setDescripcionLocalidad(rr.getString("nomL"));
                 prov.setCuit(rr.getString("cuit"));
+                prov.setAnexo(rr.getString("anexo"));
               //  if(Inicio.coneccionRemota)prov.setSaldo(rr.getDouble("saldo"));
                 //prov.setCondicionDeIva(rr.getInt("condicionIva"));
                 //prov.setNumeroDeCuit(rr.getString("numeroCuit"));
@@ -278,7 +290,7 @@ public class Proveedores implements Personalizable{
     public Integer agregar(Object objeto) {
        Proveedores prov=(Proveedores)objeto;
        Boolean veri=false;
-       String sql="insert into proveedores (NOMBRE,DOMICILIO,LOCALIDAD,TELEFONO,mail,responsable,celular,cuit) values ('"+prov.getNombre()+"','"+prov.getDireccion()+"','"+prov.getLocalidad()+"','"+prov.getTelefono()+"','"+prov.getMail()+"','"+prov.getResponsable()+"','"+prov.getCelular()+"','"+prov.getCuit()+"')";
+       String sql="insert into proveedores (NOMBRE,DOMICILIO,LOCALIDAD,TELEFONO,mail,responsable,celular,cuit,anexo) values ('"+prov.getNombre()+"','"+prov.getDireccion()+"','"+prov.getLocalidad()+"','"+prov.getTelefono()+"','"+prov.getMail()+"','"+prov.getResponsable()+"','"+prov.getCelular()+"','"+prov.getCuit()+"','"+prov.getAnexo()+"')";
        Transaccionable tra=new Conecciones();
        if(tra.guardarRegistro(sql)){
            int numero=0;
@@ -306,7 +318,7 @@ public class Proveedores implements Personalizable{
     public Boolean modificar(Object objeto) {
        Boolean veri=false;
        Proveedores prov=(Proveedores)objeto;
-       String sql="update proveedores set NOMBRE='"+prov.getNombre()+"',cuit='"+prov.getCuit()+"',celular='"+prov.getCelular()+"',responsable='"+prov.getResponsable()+"',DOMICILIO='"+prov.getDireccion()+"',LOCALIDAD='"+prov.getLocalidad()+"',TELEFONO='"+prov.getTelefono()+"',mail='"+prov.getMail()+"' where ID="+prov.getNumero();
+       String sql="update proveedores set NOMBRE='"+prov.getNombre()+"',cuit='"+prov.getCuit()+"',celular='"+prov.getCelular()+"',responsable='"+prov.getResponsable()+"',DOMICILIO='"+prov.getDireccion()+"',LOCALIDAD='"+prov.getLocalidad()+"',TELEFONO='"+prov.getTelefono()+"',mail='"+prov.getMail()+"',anexo='"+prov.getAnexo()+"' where ID="+prov.getNumero();
        Transaccionable tra=new Conecciones();
        if(tra.guardarRegistro(sql)){}else{
            veri=false;
@@ -347,6 +359,7 @@ public class Proveedores implements Personalizable{
                 prov.setDescripcionLocalidad(rr.getString("nomL"));
                 prov.setCuit(rr.getString("cuit"));
                 prov.setSaldo(rr.getDouble("saldo"));
+                prov.setAnexo(rr.getString("anexo"));
                 //prov.setCondicionDeIva(rr.getInt("condicionIva"));
                 //prov.setNumeroDeCuit(rr.getString("numeroCuit"));
                 //prov.setCondicionIngresosBrutos(rr.getInt("condicionIb"));
@@ -379,6 +392,7 @@ public class Proveedores implements Personalizable{
                 prov.setDescripcionLocalidad(rr.getString("nomL"));
                 prov.setCuit(rr.getString("cuit"));
                 prov.setSaldo(rr.getDouble("saldo"));
+                prov.setAnexo(rr.getString("anexo"));
                 /*
                 prov.setCondicionDeIva(rr.getInt("condicionIva"));
                 prov.setNumeroDeCuit(rr.getString("numeroCuit"));
@@ -413,6 +427,7 @@ public class Proveedores implements Personalizable{
                 prov.setDescripcionLocalidad(rr.getString("nomL"));
                 prov.setCuit(rr.getString("cuit"));
                 prov.setSaldo(rr.getDouble("saldo"));
+                prov.setAnexo(rr.getString("anexo"));
                 /*
                 prov.setCondicionDeIva(rr.getInt("condicionIva"));
                 prov.setNumeroDeCuit(rr.getString("numeroCuit"));
@@ -471,7 +486,7 @@ public class Proveedores implements Personalizable{
                 prov.setDescripcionLocalidad(rr.getString("nomL"));
                 prov.setCuit(rr.getString("cuit"));
                 prov.setSaldo(rr.getDouble("saldo"));
-                
+                prov.setAnexo(rr.getString("anexo"));
                 /*
                 prov.setCondicionDeIva(rr.getInt("condicionIva"));
                 prov.setNumeroDeCuit(rr.getString("numeroCuit"));
@@ -508,6 +523,7 @@ public class Proveedores implements Personalizable{
                 prov.setDescripcionLocalidad(rr.getString("nomL"));
                 prov.setCuit(rr.getString("cuit"));
                 prov.setSaldo(rr.getDouble("saldo"));
+                prov.setAnexo(rr.getString("anexo"));
                 /*
                 prov.setCondicionDeIva(rr.getInt("condicionIva"));
                 prov.setNumeroDeCuit(rr.getString("numeroCuit"));
