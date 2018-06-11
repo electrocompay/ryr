@@ -179,6 +179,7 @@ public class ImprimirRemitos {
         //formulario derecho
         
         //pagina.drawImage(imagen,363,20,174,93,null);
+        pagina.setFont(fuente11);
         pagina.drawString("DOMICILIO: "+cotizacion.getDomicilioDeEntrega(),40,700);
         pagina.drawString("LOCALIDAD: "+cotizacion.getLocalidad(), 40,710);
         String tipo="";
@@ -196,6 +197,7 @@ public class ImprimirRemitos {
         pagina.drawString("CANTIDAD "+tipo+": "+cotizacion.getCantidadBultos(),40,720);
         pagina.drawString("OBSERVACIONES: "+cotizacion.getObservaciones(),40,730);
         pagina.drawLine(20, 740, 600,740);
+        pagina.setFont(fuente6);
         pagina.drawString("TRANSPORTE: "+transporte.getDescripcion(),40,750);
         pagina.drawString("ENCARGADO: "+transporte.getEncargado(),350,750);
         pagina.drawString("DIRECCION: "+transporte.getDireccion()+"- ("+transporte.getCodigoPostal()+") "+transporte.getLocalidad(),40,760);
