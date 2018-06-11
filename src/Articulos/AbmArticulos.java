@@ -64,11 +64,11 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
         columna.setMaxWidth(50);
         
         columna1=this.jTable1.getColumn("Precio");
-        columna1.setPreferredWidth(50);
-        columna1.setMaxWidth(50);
+        columna1.setPreferredWidth(70);
+        columna1.setMaxWidth(70);
         columna2=this.jTable1.getColumn("Costo");
-        columna2.setPreferredWidth(50);
-        columna2.setMaxWidth(50);
+        columna2.setPreferredWidth(70);
+        columna2.setMaxWidth(70);
         columna3=this.jTable1.getColumn("% de Ganancia");
         columna3.setPreferredWidth(80);
         columna3.setMaxWidth(80);
@@ -376,11 +376,11 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
         columna.setMaxWidth(50);
         
         columna1=this.jTable1.getColumn("Precio");
-        columna1.setPreferredWidth(50);
-        columna1.setMaxWidth(50);
+        columna1.setPreferredWidth(70);
+        columna1.setMaxWidth(70);
         columna2=this.jTable1.getColumn("Costo");
-        columna2.setPreferredWidth(50);
-        columna2.setMaxWidth(50);
+        columna2.setPreferredWidth(70);
+        columna2.setMaxWidth(70);
         columna3=this.jTable1.getColumn("% de Ganancia");
         columna3.setPreferredWidth(80);
         columna3.setMaxWidth(80);
@@ -475,11 +475,11 @@ public class AbmArticulos extends javax.swing.JInternalFrame {
         columna.setMaxWidth(50);
         
         columna1=this.jTable1.getColumn("Precio");
-        columna1.setPreferredWidth(50);
-        columna1.setMaxWidth(50);
+        columna1.setPreferredWidth(70);
+        columna1.setMaxWidth(70);
         columna2=this.jTable1.getColumn("Costo");
-        columna2.setPreferredWidth(50);
-        columna2.setMaxWidth(50);
+        columna2.setPreferredWidth(70);
+        columna2.setMaxWidth(70);
         columna3=this.jTable1.getColumn("% de Ganancia");
         columna3.setPreferredWidth(80);
         columna3.setMaxWidth(80);

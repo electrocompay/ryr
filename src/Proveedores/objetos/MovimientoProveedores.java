@@ -214,7 +214,7 @@ public class MovimientoProveedores implements FacturableE{
         Integer id=0;
         MovimientoProveedores mov=(MovimientoProveedores) Fe;
         Transaccionable tra=new Conecciones();
-        String sql="insert into movimientosproveedores (numeroProveedor,monto,numeroComprobante,idUsuario,tipoComprobante,subtotal,saldo) values ("+mov.getIdProveedor()+",round("+mov.getMonto()+",4),'"+mov.getNumeroComprobante()+"',"+Inicio.usuario.getNumeroId()+","+mov.getTipoComprobante()+","+mov.getSubTotal()+","+mov.getSaldo()+")";
+        String sql="insert into movimientosproveedores (numeroProveedor,monto,numeroComprobante,idUsuario,tipoComprobante,subtotal,saldo,fecha) values ("+mov.getIdProveedor()+",round("+mov.getMonto()+",4),'"+mov.getNumeroComprobante()+"',"+Inicio.usuario.getNumeroId()+","+mov.getTipoComprobante()+","+mov.getSubTotal()+","+mov.getSaldo()+",'"+mov.getFecha()+"')";
         tra.guardarRegistro(sql);
         sql="select LAST_INSERT_ID()";
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
@@ -308,9 +308,11 @@ public class MovimientoProveedores implements FacturableE{
         Iterator it=listado.listIterator();
         MovimientoProveedores mov;
         Double montt=0.00;
+        String fecM="";
         while(it.hasNext()){
             mov=(MovimientoProveedores) it.next();
-            fila[0]=mov.getFecha();
+            fecM=mov.getFecha().substring(0, 10);
+            fila[0]=fecM;
             fila[1]=mov.getDescripcionTipoComprobante();
             fila[2]=mov.getNumeroComprobante();
             if(mov.getMonto() < 0){

@@ -825,29 +825,10 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
         
         
         //comp.setArticulos(detalleDelPedido);
-        DecimalFormat fr=new DecimalFormat("00");
-        Calendar c1=Calendar.getInstance();
-	Calendar c2=new GregorianCalendar();
-	String dia=Integer.toString(c2.get(Calendar.DAY_OF_MONTH));
-	String mes=Integer.toString(c2.get(Calendar.MONTH));
-	String ano=Integer.toString(c2.get(Calendar.YEAR));
-	
-        int da=Integer.parseInt(dia);
-        int me=Integer.parseInt(mes);
-        me++;
-        dia=fr.format(da);
-        mes=fr.format(me);
-        String fecha=dia+"/"+mes+"/"+ano;
-        String fecha2=ano+"-"+mes+"-"+dia;
-        me++;
-        if(me > 12){
-            me=1;
-            Integer anio=Integer.parseInt(ano);
-            anio++;
-            ano=String.valueOf(anio);
-        }    
-        mes=fr.format(me);
-        String vencimiento=ano+"-"+mes+"-"+dia;
+        LstFechas fechaF=new LstFechas(null,true);
+        fechaF.setVisible(true);
+        String fecha2=fechaF.fechaPedido;
+        //String vencimiento=ano+"-"+mes+"-"+dia;
         //comp.setFechaComprobante(fecha2);
         //comp.setFechaComprobante(fecha);
         //int comprobanteTipo=4;
@@ -883,6 +864,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
         }else{
             comprobante1.setSaldo(montoTotal);
         }
+        comprobante1.setFecha(fecha2);
         //System.out.println("subtotal "+montoTotal+" descuento "+descuen+" total "+subTotal);
         FacturableE fact=new MovimientoProveedores();
         Integer idComprobante=fact.guardar(comprobante1);
