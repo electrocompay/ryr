@@ -8,11 +8,8 @@ package Remitos;
 
 
 
-import Conversores.Numeros;
-import Depositos.RemitosInternos;
-import Sucursales.Cajas;
+import com.itextpdf.awt.geom.Rectangle2D;
 import facturacion.clientes.Clientes;
-import interfaceGraficas.Inicio;
 import interfacesPrograma.Facturar;
 import java.awt.Color;
 import java.awt.Font;
@@ -20,16 +17,13 @@ import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.PrintJob;
 import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
-import javax.imageio.ImageIO;
-import Articulos.Articulos;
 import interfaces.Personalizable;
+import javax.swing.JOptionPane;
 import objetos.Transportes;
 
 
@@ -88,6 +82,7 @@ public class ImprimirRemitos {
         Transportes transporte=new Transportes();
         Personalizable perT=new Transportes();
         transporte=(Transportes) perT.buscarPorNumero(cliente.getIdTransporte());
+        String valorDeclarado=JOptionPane.showInputDialog(null,"Ingrese por favor el Valor Declarado", "Valor Declarado", 0);
         Calendar fecha=new GregorianCalendar();
         int dia=fecha.get(Calendar.DAY_OF_MONTH);
         int mes=fecha.get(Calendar.MONTH);
@@ -179,8 +174,11 @@ public class ImprimirRemitos {
         //formulario derecho
         
         //pagina.drawImage(imagen,363,20,174,93,null);
+        //Rectangle2D rect=new Rectangle2D.Double(40,690,300,50);
+        pagina.draw3DRect(20,680, 560, 60, true);
         pagina.setFont(fuente11);
         pagina.drawString("DOMICILIO: "+cotizacion.getDomicilioDeEntrega(),40,700);
+        pagina.drawString("VALOR DECLARADO: $"+valorDeclarado, 300, 700);
         pagina.drawString("LOCALIDAD: "+cotizacion.getLocalidad(), 40,710);
         String tipo="";
         switch (cotizacion.getTipoBulto()){

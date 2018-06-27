@@ -136,7 +136,7 @@ public class pdfsJavaGenerador {
             bf = BaseFont.createFont(BaseFont.COURIER,BaseFont.CP1252,BaseFont.NOT_EMBEDDED);
             cb.setFontAndSize(bf,10);
             Iterator itl=listado.listIterator();
-            vencimiento="Esta cotización tendrá vigencia 30 días ";
+            vencimiento=doc.getAclaracionAlPie();
             Double montoCIva=0.00;
             Double descuento=0.00;
             Double descUnitario=0.00;

@@ -146,6 +146,16 @@ public class ImpuestosAbm extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
+        jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTable1KeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -210,6 +220,24 @@ public class ImpuestosAbm extends javax.swing.JInternalFrame {
             if(per.agregar(impuesto) > 0)this.dispose();
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1KeyPressed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        
+        int posicion=this.jTable1.getSelectedRow();
+        this.jPanel2.setVisible(true);
+        impuesto=(Impuestos) listadoI.get(posicion);
+        this.jTextField1.setText(impuesto.getDescripcion());
+        nuevo=0;
+        Double porciento=impuesto.getTasa() * 100;
+        porciento=Math.round(porciento * 100.0) /100.0;
+        this.jTextField2.setText(String.valueOf(porciento));
+        this.jTextField1.selectAll();
+        this.jTextField1.requestFocus();
+    }//GEN-LAST:event_jTable1MouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

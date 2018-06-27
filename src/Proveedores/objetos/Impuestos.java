@@ -92,7 +92,10 @@ public class Impuestos implements Personalizable,Componable,Proveer{
 
     @Override
     public Boolean modificar(Object objeto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Impuestos impu=(Impuestos) objeto;
+        String sql="update impuestos set descripcion='"+impu.descripcion+"', tasa="+impu.tasa+" where id="+impu.id;
+        Transaccionable tra=new Conecciones();
+        return tra.guardarRegistro(sql);
     }
 
     @Override

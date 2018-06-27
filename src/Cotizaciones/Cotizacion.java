@@ -37,7 +37,34 @@ public class Cotizacion implements Cotizable{
     private Double subTotal;
     private Double descuento;
     private Double porcentajeDescuento;
+    private String aclaracionAlPie;
 
+    public Cotizacion() {
+        Transaccionable tra=new Conecciones();
+        String sql="select pie from tipocomprobantes where id=4";
+        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        try {
+            while(rs.next()){
+                this.aclaracionAlPie=rs.getString("pie");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Cotizacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
+    public String getAclaracionAlPie() {
+        return aclaracionAlPie;
+    }
+
+    public void setAclaracionAlPie(String aclaracionAlPie) {
+        Transaccionable tra=new Conecciones();
+        String sql="update tipocomprobantes set pie='"+aclaracionAlPie+"' where id=4";
+        tra.guardarRegistro(sql);
+        this.aclaracionAlPie = aclaracionAlPie;
+    }
+    
+    
     public Double getPorcentajeDescuento() {
         return porcentajeDescuento;
     }
