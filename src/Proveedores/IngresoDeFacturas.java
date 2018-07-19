@@ -106,6 +106,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
         Proveer prov=new Articulos();
         cliT=(Proveedores)clienteTango;
         detalleDelPedido=prov.ListarDetalleFactura(pedido.getId(),2);
+        porcentajeDescuento=pedido.getPorcentajeDescuento();
         //detalleDelPedido=detP.convertirAArticulos(listadoPed);
         lstImpuestos=new ArrayList();
         Proveer pImp=new Impuestos();
@@ -113,7 +114,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
 //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
         initComponents();
-        porcentajeDescuento=0.00;
+        //porcentajeDescuento=0.00;
         subTotal=0.00;
         Iterator irP=detalleDelPedido.listIterator();
         int fil=0;
@@ -146,6 +147,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
          this.jButton6.setVisible(false);
           this.jButton4.setVisible(false);
            this.jButton7.setVisible(false);
+           this.jButton8.setVisible(false);
            this.jLabel10.setVisible(false);
            this.jLabel2.setVisible(false);
            this.jLabel3.setVisible(false);
@@ -187,6 +189,7 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
         jButton6 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -284,6 +287,13 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton8.setText("Ingresar Descuento");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -304,7 +314,8 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
                     .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(17, 17, 17))
         );
         jPanel1Layout.setVerticalGroup(
@@ -320,14 +331,19 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 11, Short.MAX_VALUE))
+                        .addGap(0, 8, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox2)
-                    .addComponent(jButton1)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE))
-                .addGap(22, 22, 22))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jCheckBox2)
+                            .addComponent(jButton1)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE))
+                        .addGap(22, 22, 22))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         jPanel2.setMaximumSize(new java.awt.Dimension(570, 230));
@@ -865,6 +881,11 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
             comprobante1.setSaldo(montoTotal);
         }
         comprobante1.setFecha(fecha2);
+        if(porcentajeDescuento != null){
+            comprobante1.setPorcentajeDescuento(porcentajeDescuento);
+        }else{
+            comprobante1.setPorcentajeDescuento(0.00);
+        }
         //System.out.println("subtotal "+montoTotal+" descuento "+descuen+" total "+subTotal);
         FacturableE fact=new MovimientoProveedores();
         Integer idComprobante=fact.guardar(comprobante1);
@@ -1099,6 +1120,13 @@ public class IngresoDeFacturas extends javax.swing.JInternalFrame {
         lstImpuestos.remove(poss);
         agregarRenglonTabla();
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        Double descuento=Double.parseDouble(JOptionPane.showInputDialog("Ingrese por favor el porcentaje de descuento realizado.Gracias"));
+        descuento=descuento / 100;
+        porcentajeDescuento=descuento;
+        agregarRenglonTabla();
+    }//GEN-LAST:event_jButton8ActionPerformed
 private void cargarLista(ArrayList lista){
     DefaultTableModel modelo=new DefaultTableModel();
     Iterator il=lista.listIterator();
@@ -1184,10 +1212,7 @@ private void agregarRenglonTabla(){
         Double ivv=subTotal;
         Double sub=montoTotal * 0.21;
         Double tot=montoTotal + sub;
-        if(porcentajeDescuento > 0.00){
-            sub = sub * porcentajeDescuento;
-            sub= tot - sub;
-        }
+        
         
         fila[0]="";
         fila[1]="<html><strong>SUBTOTAL</strong></html>";
@@ -1223,6 +1248,31 @@ private void agregarRenglonTabla(){
         //fila[4]="";
         
         fila[4]="<html><strong> "+Numeros.ConvertirNumero(sub)+"</strong></html>";
+        busC.addRow(fila);
+        String desc;
+        String montoD;
+        if(porcentajeDescuento != null){
+            desc=Numeros.ConvertirNumero(porcentajeDescuento * 100);
+            Double ds=0.00;
+            if(porcentajeDescuento > 0.00){
+                ds = tot * porcentajeDescuento;
+                //ds=Math.round(ds / 10000.0) * 10000.0;
+                tot= tot - ds;
+                ds=ds * (-1);
+                
+            }
+            montoD=Numeros.ConvertirNumero(ds);
+        }else{
+            desc="0.00";
+            montoD="0.00";
+        }
+        fila[0]="";
+        fila[1]="<html><strong>DESC. "+desc+"%</strong></html>";
+        fila[2]="";
+        fila[3]="";
+        //fila[4]="";
+        
+        fila[4]="<html><strong>"+montoD+"</strong></html>";
         busC.addRow(fila);
         fila[0]="";
         fila[1]="<html><strong>TOTAL</strong></html>";
@@ -1300,6 +1350,7 @@ private void verificar(){
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JCheckBox jCheckBox1;
     public static javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JComboBox jComboBox2;

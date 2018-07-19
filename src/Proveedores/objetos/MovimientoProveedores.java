@@ -31,6 +31,16 @@ public class MovimientoProveedores implements FacturableE{
     private Double subTotal;
     private Double saldo;
     private Integer idComprobante;
+    private Double porcentajeDescuento;
+
+    public Double getPorcentajeDescuento() {
+        return porcentajeDescuento;
+    }
+
+    public void setPorcentajeDescuento(Double porcentajeDescuento) {
+        this.porcentajeDescuento = porcentajeDescuento;
+    }
+    
 
     public Integer getIdComprobante() {
         return idComprobante;
@@ -214,7 +224,7 @@ public class MovimientoProveedores implements FacturableE{
         Integer id=0;
         MovimientoProveedores mov=(MovimientoProveedores) Fe;
         Transaccionable tra=new Conecciones();
-        String sql="insert into movimientosproveedores (numeroProveedor,monto,numeroComprobante,idUsuario,tipoComprobante,subtotal,saldo,fecha) values ("+mov.getIdProveedor()+",round("+mov.getMonto()+",4),'"+mov.getNumeroComprobante()+"',"+Inicio.usuario.getNumeroId()+","+mov.getTipoComprobante()+","+mov.getSubTotal()+","+mov.getSaldo()+",'"+mov.getFecha()+"')";
+        String sql="insert into movimientosproveedores (numeroProveedor,monto,numeroComprobante,idUsuario,tipoComprobante,subtotal,saldo,fecha,porcentajedescuento) values ("+mov.getIdProveedor()+",round("+mov.getMonto()+",4),'"+mov.getNumeroComprobante()+"',"+Inicio.usuario.getNumeroId()+","+mov.getTipoComprobante()+","+mov.getSubTotal()+","+mov.getSaldo()+",'"+mov.getFecha()+"',"+mov.getPorcentajeDescuento()+")";
         tra.guardarRegistro(sql);
         sql="select LAST_INSERT_ID()";
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
@@ -253,6 +263,7 @@ public class MovimientoProveedores implements FacturableE{
                 mov.setTipoComprobante(rs.getInt("tipoComprobante"));
                 mov.setSaldo(rs.getDouble("saldo"));
                 mov.setIdComprobante(rs.getInt("idcomprobante"));
+                mov.setPorcentajeDescuento(rs.getDouble("porcentajedescuento"));
                 if(mov.getTipoComprobante()==1)mov.setDescripcionTipoComprobante("FACTURA PROVEEDOR");
                 if(mov.getTipoComprobante()==2)mov.setDescripcionTipoComprobante("ORDEN DE PAGO");
                 
@@ -284,6 +295,7 @@ public class MovimientoProveedores implements FacturableE{
                 mov.setTipoComprobante(rs.getInt("tipoComprobante"));
                 mov.setSaldo(rs.getDouble("saldo"));
                 mov.setIdComprobante(rs.getInt("idcomprobante"));
+                mov.setPorcentajeDescuento(rs.getDouble("porcentajedescuento"));
                 if(mov.getTipoComprobante()==1)mov.setDescripcionTipoComprobante("FACTURA PROVEEDOR");
                 if(mov.getTipoComprobante()==2)mov.setDescripcionTipoComprobante("ORDEN DE PAGO");
                 

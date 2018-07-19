@@ -589,6 +589,7 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
         } catch (PropertyVetoException ex) {
             Logger.getLogger(NuevoCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
+        factu.setTitle("Ingreso de Factura de Proveedores - FACTURA N° "+comprobante.getNumeroComprobante().toUpperCase());
         factu.setVisible(true);
         factu.toFront();
     }//GEN-LAST:event_jButton15ActionPerformed

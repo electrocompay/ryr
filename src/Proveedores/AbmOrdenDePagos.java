@@ -15,6 +15,7 @@ import Recibos.Formable;
 import Recibos.FormasDePago;
 import Recibos.Recidable;
 import facturacion.clientes.Clientes;
+import interfaceGraficas.Inicio;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -483,7 +484,11 @@ public class AbmOrdenDePagos extends javax.swing.JDialog {
             pago.setIdRecibo(recibo.getId());
             //pago.setBanco(this.jTextField2.getText());
             pago.setIdTipoComprobante(2);
-            
+            if(pago.getVencimiento()!=null){
+                
+            }else{
+                pago.setVencimiento(Inicio.fechaDia);
+            }
             ff.guardarPagoAProveedores(pago);
             montt=montt + pago.getMonto();
         }
