@@ -1210,10 +1210,37 @@ private void agregarRenglonTabla(){
         }
         subTotal=montoTotal;
         Double ivv=subTotal;
-        Double sub=montoTotal * 0.21;
-        Double tot=montoTotal + sub;
         
         
+        
+        String desc;
+        String montoD;
+        if(porcentajeDescuento != null){
+            desc=Numeros.ConvertirNumero(porcentajeDescuento * 100);
+            Double ds=0.00;
+            if(porcentajeDescuento > 0.00){
+                ds = ivv * porcentajeDescuento;
+                //ds=Math.round(ds / 10000.0) * 10000.0;
+                ivv= ivv - ds;
+                ds=ds * (-1);
+                
+            }
+            montoD=Numeros.ConvertirNumero(ds);
+        }else{
+            desc="0.00";
+            montoD="0.00";
+        }
+        fila[0]="";
+        fila[1]="<html><strong>DESC. "+desc+"%</strong></html>";
+        fila[2]="";
+        fila[3]="";
+        //fila[4]="";
+        
+        fila[4]="<html><strong>"+montoD+"</strong></html>";
+        
+        busC.addRow(fila);
+        Double sub=ivv * 0.21;
+        Double tot=ivv + sub;
         fila[0]="";
         fila[1]="<html><strong>SUBTOTAL</strong></html>";
         fila[2]="";
@@ -1223,6 +1250,10 @@ private void agregarRenglonTabla(){
         fila[4]="<html><strong>"+Numeros.ConvertirNumero(ivv)+"</strong></html>";
         Double descuen=tot - sub;
         busC.addRow(fila);
+        
+        
+        
+        
         //ACA VA EL BUCLE QUE LEE LOS IMPUESTOS AGREGADOS, ES UN ARRAY
         Iterator itImp=lstImpuestos.listIterator();
         Impuestos impu=new Impuestos();
@@ -1249,31 +1280,8 @@ private void agregarRenglonTabla(){
         
         fila[4]="<html><strong> "+Numeros.ConvertirNumero(sub)+"</strong></html>";
         busC.addRow(fila);
-        String desc;
-        String montoD;
-        if(porcentajeDescuento != null){
-            desc=Numeros.ConvertirNumero(porcentajeDescuento * 100);
-            Double ds=0.00;
-            if(porcentajeDescuento > 0.00){
-                ds = tot * porcentajeDescuento;
-                //ds=Math.round(ds / 10000.0) * 10000.0;
-                tot= tot - ds;
-                ds=ds * (-1);
-                
-            }
-            montoD=Numeros.ConvertirNumero(ds);
-        }else{
-            desc="0.00";
-            montoD="0.00";
-        }
-        fila[0]="";
-        fila[1]="<html><strong>DESC. "+desc+"%</strong></html>";
-        fila[2]="";
-        fila[3]="";
-        //fila[4]="";
         
-        fila[4]="<html><strong>"+montoD+"</strong></html>";
-        busC.addRow(fila);
+        //busC.addRow(fila);
         fila[0]="";
         fila[1]="<html><strong>TOTAL</strong></html>";
         fila[2]="";
