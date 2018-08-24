@@ -20,6 +20,8 @@ public class AbmCotizaciones extends javax.swing.JInternalFrame {
         initComponents();
         cotizacion=new Cotizacion();
         this.jTextField1.setText(cotizacion.getAclaracionAlPie());
+        this.jTextField2.setText(cotizacion.getAclaracionAlPie1());
+        this.jTextField3.setText(cotizacion.getAclaracionAlPie2());
         
     }
 
@@ -36,6 +38,8 @@ public class AbmCotizaciones extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jTextField2 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
 
         setClosable(true);
         setTitle("Parámetros de Cotizaciones");
@@ -61,7 +65,9 @@ public class AbmCotizaciones extends javax.swing.JInternalFrame {
                     .addComponent(jTextField1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jTextField2)
+                    .addComponent(jTextField3))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -72,8 +78,12 @@ public class AbmCotizaciones extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(124, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -98,6 +108,8 @@ public class AbmCotizaciones extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         cotizacion.setAclaracionAlPie(this.jTextField1.getText());
+        cotizacion.setAclaracionAlPie1(this.jTextField2.getText());
+        cotizacion.setAclaracionAlPie2(this.jTextField3.getText());
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -107,5 +119,7 @@ public class AbmCotizaciones extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
 }

@@ -44,6 +44,7 @@ public class AbmOrdenDePagos extends javax.swing.JDialog {
     private Proveedores cliP;
     private MovimientoProveedores mov;
     private int origen;
+    public int guardado;
 
     
     /**
@@ -59,6 +60,7 @@ public class AbmOrdenDePagos extends javax.swing.JDialog {
         this.jLabel2.setText(" $"+montoTotal);
         saldo=montoTotal;
         this.jLabel9.setText("Saldo: $"+saldo);
+        guardado=0;
     }
 
     public AbmOrdenDePagos(ArrayList listado,Double monto,Clientes cliente) {
@@ -73,8 +75,10 @@ public class AbmOrdenDePagos extends javax.swing.JDialog {
         this.jLabel2.setText(" $"+montoTotal);
         saldo=montoTotal;
         this.jLabel9.setText("Saldo: $"+saldo);
+        guardado=0;
     }
-    public AbmOrdenDePagos(Double monto,Proveedores cliente) {
+    public AbmOrdenDePagos(java.awt.Frame parent, boolean modal,Double monto,Proveedores cliente) {
+        super(parent, modal);
         listadoFc=new ArrayList();
         origen=1;
         initComponents();
@@ -90,6 +94,7 @@ public class AbmOrdenDePagos extends javax.swing.JDialog {
         this.jLabel2.setText(" $"+montoTotal);
         saldo=montoTotal;
         this.jLabel9.setText("Saldo: $"+saldo);
+        guardado=0;
     }
 
     /**
@@ -502,6 +507,7 @@ public class AbmOrdenDePagos extends javax.swing.JDialog {
         } catch (IOException ex) {
             Logger.getLogger(AbmOrdenDePagos.class.getName()).log(Level.SEVERE, null, ex);
         }
+        guardado=1;
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -613,7 +619,7 @@ public class AbmOrdenDePagos extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    public static javax.swing.JButton jButton1;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;

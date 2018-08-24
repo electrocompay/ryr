@@ -273,6 +273,12 @@ public class pdfsJavaGenerador {
             renglon=renglon - 60;
             cb.setTextMatrix(40,renglon);
             cb.showText(vencimiento);
+            renglon=renglon - 10;
+            cb.setTextMatrix(40,renglon);
+            cb.showText(doc.getAclaracionAlPie1());
+            renglon=renglon - 10;
+            cb.setTextMatrix(40,renglon);
+            cb.showText(doc.getAclaracionAlPie2());
             cb.endText();
             documento.close();
             

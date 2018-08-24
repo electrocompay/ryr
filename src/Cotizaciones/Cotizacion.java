@@ -38,6 +38,8 @@ public class Cotizacion implements Cotizable{
     private Double descuento;
     private Double porcentajeDescuento;
     private String aclaracionAlPie;
+    private String aclaracionAlPie1;
+    private String aclaracionAlPie2;
 
     public Cotizacion() {
         Transaccionable tra=new Conecciones();
@@ -51,6 +53,28 @@ public class Cotizacion implements Cotizable{
             Logger.getLogger(Cotizacion.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+    }
+
+    public String getAclaracionAlPie1() {
+        return aclaracionAlPie1;
+    }
+
+    public void setAclaracionAlPie1(String aclaracionAlPie1) {
+         Transaccionable tra=new Conecciones();
+        String sql="update tipocomprobantes set pie1='"+aclaracionAlPie1+"' where id=4";
+        tra.guardarRegistro(sql);
+        this.aclaracionAlPie1 = aclaracionAlPie1;
+    }
+
+    public String getAclaracionAlPie2() {
+        return aclaracionAlPie2;
+    }
+
+    public void setAclaracionAlPie2(String aclaracionAlPie2) {
+         Transaccionable tra=new Conecciones();
+        String sql="update tipocomprobantes set pie2='"+aclaracionAlPie2+"' where id=4";
+        tra.guardarRegistro(sql);
+        this.aclaracionAlPie2 = aclaracionAlPie2;
     }
     
     public String getAclaracionAlPie() {

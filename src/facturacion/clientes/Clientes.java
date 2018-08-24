@@ -854,7 +854,8 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
 
     @Override
     public Object cargarPorCodigoAsignado(Integer id) {
-        String sql="select *,(select condicionesiva.tipocomprobante from condicionesiva where condicionesiva.id=clientes.tipo_iva)as tipocomprobante,(select localidades.localidad from localidades where localidades.id=clientes.localidad)as localidadD,(select localidades.codigo_postal from localidades where localidades.id=clientes.localidad)as postal,(select condicionesiva.descripcion from condicionesiva where condicionesiva.id=clientes.tipo_iva)as tipocondicion from clientes where id="+id;
+        String sql="select *,(select condicionesiva.tipocomprobante from condicionesiva where condicionesiva.id=clientes.tipo_iva)as tipocomprobante,(select localidades.localidad from localidades where localidades.id=clientes.localidad)as localidadD,(select localidades.codigo_postal from localidades where localidades.id=clientes.localidad)as postal,(select condicionesiva.descripcion from condicionesiva where condicionesiva.id=clientes.tipo_iva)as tipocondicion,(SELECT sum(movimientosclientes.monto) from movimientosclientes where movimientosclientes.pagado=0 and movimientosclientes.numeroProveedor=clientes.id)as saldo1 from clientes where id="+id;
+        System.out.println(sql);
         String sql1="";
         Clientes cli=new Clientes();
         
@@ -888,7 +889,9 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
                     cli.setIdTransporte(rs.getInt("idtransporte"));
                     // if(Inicio.usuario.getNivelDeAutorizacion()==1){
                     System.out.println("ACTUALIZACION :"+Inicio.actualizacionesClientes);
-                    
+                    cli.setSaldo(rs.getDouble("saldo1"));
+                    cli.setSaldoActual(rs.getDouble("saldo1"));
+                    System.out.println("SALDO CLIENTE: "+cli.getSaldo());
                     /*
                     }else{
                     cli.setSaldo(rs.getDouble("saldo"));

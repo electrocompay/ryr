@@ -520,9 +520,20 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         MovimientoProveedores mov=new MovimientoProveedores();
         listadoFac=mov.listarFacturasProveedor(cliTa.getNumero());
-        AbmOrdenDePagos recibo=new AbmOrdenDePagos(cliTa.getSaldo(),cliTa);
+        AbmOrdenDePagos recibo=new AbmOrdenDePagos(null,true,cliTa.getSaldo(),cliTa);
+        //Inicio.jDesktopPane1.add(recibo);
         recibo.setVisible(true);
         recibo.toFront();
+        
+        if(recibo.guardado==1){
+            
+           listadoCot.clear();
+            FacturableE factu=new MovimientoProveedores();
+
+            listadoCot=factu.listarPorEstado(cliTa.getNumero());
+            this.jTable3.setModel(factu.mostrarListado(listadoCot));
+        }
+        
         //Inicio.jDesktopPane1.add(recibo);
         /*
         ArrayList listadoParaRecibo=new ArrayList();
@@ -599,7 +610,7 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
     }//GEN-LAST:event_formComponentShown
 
     private void formFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusGained
-    //        System.out.println(" debería recargar los datos acá");
+           System.out.println(" debería recargar los datos acá los datos de la tabla");
     }//GEN-LAST:event_formFocusGained
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
@@ -615,6 +626,7 @@ public class NuevoProveedor extends javax.swing.JInternalFrame implements Intern
     }//GEN-LAST:event_jButton16ActionPerformed
 
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
+        listadoCot.clear();
         FacturableE factu=new MovimientoProveedores();
         
         listadoCot=factu.listarPorEstado(cliTa.getNumero());
