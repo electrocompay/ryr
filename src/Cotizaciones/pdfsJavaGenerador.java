@@ -123,6 +123,8 @@ public class pdfsJavaGenerador {
                 cb.showText("COD");
                 cb.setTextMatrix(70,renglon);
                 cb.showText("DESCRIPCION");
+                cb.setTextMatrix(310,renglon);
+                cb.showText("DESC");
                 cb.setTextMatrix(380,renglon);
                 cb.showText("P. UNIT.");
                 cb.setTextMatrix(450,renglon);
@@ -141,6 +143,7 @@ public class pdfsJavaGenerador {
             Double descuento=0.00;
             Double descUnitario=0.00;
             Double descTotal=0.00;
+            Double porcientoD=0.00;
             String descripcionArt=null;
             while(itl.hasNext()){
                 saldo=(DetalleCotizacion)itl.next();
@@ -163,6 +166,11 @@ public class pdfsJavaGenerador {
                 descripcionArt=saldo.getDescripcionArticulo();
             }
                 cb.showText(descripcionArt);
+                cb.setTextMatrix(310,renglon);
+                porcientoD=0.00;
+                porcientoD=saldo.getPorcentajeDescuento();
+                //porcientoD=Math.round(porcientoD * 100) / 100;
+                cb.showText(porcientoD+" %");
                 cb.setTextMatrix(380,renglon);
                 cb.showText(monto);
                 cb.setTextMatrix(450,renglon);

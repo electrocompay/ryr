@@ -140,6 +140,7 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jButton8 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -241,6 +242,14 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
 
         jLabel1.setText("TOTAL FACTURA :");
 
+        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/excel_v2.png"))); // NOI18N
+        jButton8.setText("Aplicar descuento");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -252,11 +261,13 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 979, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButton7, javax.swing.GroupLayout.Alignment.TRAILING))
                             .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jButton7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                .addComponent(jButton6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(15, 15, 15))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -265,8 +276,7 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
                         .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -277,6 +287,8 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -858,9 +870,14 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
             
             detalle.setDescuento(articulo.getDescuento());
             if(articulo.getMontoDescuento()!=null){
-            detalle.setMontoDescuento(articulo.getMontoDescuento());
+                detalle.setMontoDescuento(articulo.getMontoDescuento());
             }else{
                 detalle.setMontoDescuento(0.00);
+            }
+            if(articulo.getPorcentajeDeDescuento() != null){
+                detalle.setPorcentajeDescuento(articulo.getPorcentajeDeDescuento());
+            }else{
+                detalle.setPorcentajeDescuento(0.00);
             }
             det.nuevaCotizacion(detalle);
             
@@ -1138,6 +1155,34 @@ public class IngresoDeCotizacion extends javax.swing.JInternalFrame {
             
         }
     }//GEN-LAST:event_jTextField3KeyPressed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        int posicion=this.jTable1.getSelectedRow();
+        Articulos pedidos;
+        pedidos=(Articulos)detalleDelPedido.get(posicion);
+        Double precioU=0.00;
+        Double precio=Double.parseDouble(JOptionPane.showInputDialog("Ingrese el porcentaje de Descuento a Aplicar en el Producto",precioU));
+        //Double cantidad=Double.parseDouble(JOptionPane.showInputDialog("Ingrese la cantidad",pedidos.getCantidad()));
+        //pedidos.setCantidad(cantidad);
+        
+        pedidos.setPorcentajeDeDescuento(precio);
+        precio=precio / 100;
+        Double descuento=pedidos.getPrecioUnitarioNeto() * precio;
+        Double precioF=pedidos.getPrecioUnitarioNeto() - descuento;
+        pedidos.setPrecioUnitarioNeto(precioF);
+        /*
+        if(descuento > 0){
+            pedidos.setMontoDescuento(descuento * cantidad);
+        }
+        pedidos.setDescuento(1);
+        */
+        //detalleDelPedido.clear();
+        agregarRenglonTabla();
+        System.out.println("total "+montoTotal);
+        montrarMonto();
+        jTextField1.setText("");
+        jTextField1.requestFocus();
+    }//GEN-LAST:event_jButton8ActionPerformed
 private void cargarLista(ArrayList lista){
     DefaultTableModel modelo=new DefaultTableModel();
     Iterator il=lista.listIterator();
@@ -1176,10 +1221,11 @@ private void agregarRenglonTabla(){
         busC.addColumn("COSTO");
         busC.addColumn("PRECIO UNITARIO S/IVA");
         busC.addColumn("CANTIDAD");
+        busC.addColumn("DESC");
         busC.addColumn("PRECIO TOTAL");
         busC.addColumn("IVA");
         busC.addColumn("PRECIO FINAL");
-        Object[] fila=new Object[8];
+        Object[] fila=new Object[9];
         Iterator irP=detalleDelPedido.listIterator();
         while(irP.hasNext()){
             pedidos=new Articulos();
@@ -1204,15 +1250,15 @@ private void agregarRenglonTabla(){
             montoTotal=montoTotal + valor;
             //precioUnitario=precioUnitario * cliT.getCoeficienteListaDeprecios();
             //fila[2]=cant;
-            
-            fila[5]=val;
+            fila[5]=pedidos.getPorcentajeDeDescuento();
+            fila[6]=val;
             fila[3]=Numeros.ConvertirNumero(precioUnitario);
             fila[2]=Numeros.ConvertirNumero(pedidos.getPrecioDeCosto());
             Double iva=valor * 0.21;
-            fila[6]=Numeros.ConvertirNumero(iva);
+            fila[7]=Numeros.ConvertirNumero(iva);
             fila[4]=cant;
             Double pFinal=valor + iva;
-            fila[7]=Numeros.ConvertirNumero(pFinal);
+            fila[8]=Numeros.ConvertirNumero(pFinal);
             busC.addRow(fila);
         }
         subTotal=montoTotal;
@@ -1230,7 +1276,8 @@ private void agregarRenglonTabla(){
         fila[4]="";
         fila[5]="";
         fila[6]="";
-        fila[7]="<html><strong>"+Numeros.ConvertirNumero(tot)+"</strong></html>";
+        fila[7]="";
+        fila[8]="<html><strong>"+Numeros.ConvertirNumero(tot)+"</strong></html>";
         Double descuen=tot - sub;
         busC.addRow(fila);
         fila[0]="";
@@ -1240,7 +1287,8 @@ private void agregarRenglonTabla(){
         fila[4]="";
         fila[5]="";
         fila[6]="";
-        fila[7]="<html><strong> - "+Numeros.ConvertirNumero(descuen)+"</strong></html>";
+        fila[7]="";
+        fila[8]="<html><strong> - "+Numeros.ConvertirNumero(descuen)+"</strong></html>";
         busC.addRow(fila);
         fila[0]="";
         fila[1]="<html><strong>TOTAL</strong></html>";
@@ -1249,7 +1297,8 @@ private void agregarRenglonTabla(){
         fila[4]="";
         fila[5]="";
         fila[6]="";
-        fila[7]="<html><strong>"+Numeros.ConvertirNumero(sub)+"</strong></html>";
+        fila[7]="";
+        fila[8]="<html><strong>"+Numeros.ConvertirNumero(sub)+"</strong></html>";
         busC.addRow(fila);
         columnaCodigo=this.jTable1.getColumn("CODIGO");
         columnaCodigo.setPreferredWidth(40);
@@ -1309,6 +1358,7 @@ private void verificar(){
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JCheckBox jCheckBox1;
     public static javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JComboBox jComboBox2;

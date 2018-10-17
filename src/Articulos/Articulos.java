@@ -6,7 +6,6 @@ package Articulos;
 
 import Conversores.Numeros;
 import Proveedores.objetos.Proveer;
-import com.mysql.jdbc.CommunicationsException;
 import interfaceGraficas.Inicio;
 import interfaces.Comparables;
 import interfaces.Editables;
@@ -16,14 +15,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import objetos.Conecciones;
 import tablas.MiModeloTablaContacto;
@@ -75,6 +70,16 @@ public class Articulos implements Facturar,Editables,Comparables,Modificable,Pro
     private static Double totalVenta;
     private static Double totalCosto;
     private Double montoDescuento;
+    private Double porcentajeDeDescuento;
+
+    public Double getPorcentajeDeDescuento() {
+        return porcentajeDeDescuento;
+    }
+
+    public void setPorcentajeDeDescuento(Double porcentajeDeDescuento) {
+        this.porcentajeDeDescuento = porcentajeDeDescuento;
+    }
+    
 
     public Double getMontoDescuento() {
         return montoDescuento;

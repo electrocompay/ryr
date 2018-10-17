@@ -39,6 +39,7 @@ public class Pedidos implements Pedable{
     private Double subTotal;
     private Double descuento;
     private Double porcentajeDescuento;
+    
 
     public Double getSubTotal() {
         return subTotal;
