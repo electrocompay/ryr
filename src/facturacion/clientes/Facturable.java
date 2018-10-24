@@ -28,7 +28,8 @@ public interface Facturable {
     public ArrayList convertirAArticulos(ArrayList detalle);
     public ArrayList listarPorClienteNoRemitidas(Integer idClient);
     public ArrayList listarAdeudadaas(Integer idClient);
-    public Boolean identificarPedidoAFactura(Integer idPedido,Integer idFactura);
+    public Boolean identificarPedidoAFactura(Integer idPedido,Integer idFactura,Integer numeroFactura);
     public void actualizadorDeEstado(Object factu);
     public Object cargarIdFactura(Integer id);
+   
 }

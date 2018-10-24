@@ -270,6 +270,7 @@ public class DetalleCotizacion implements Cotizable{
             articulo.setPrecioUnitarioNeto(detalle.getPrecioUnitario());
             articulo.setCantidad(detalle.getCantidad());
             articulo.setIdRenglon(detalle.getId());
+            articulo.setPorcentajeDeDescuento(detalle.getPorcentajeDescuento());
             listadoA.add(articulo);
         }
         

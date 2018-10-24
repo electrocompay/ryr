@@ -4,20 +4,13 @@
  */
 package Remitos;
 
-import Pedidos.IngresoDePedidos;
 import Conversores.Numeros;
 import facturacion.clientes.Clientes;
-import interfaceGraficas.NuevoCliente;
-import facturacion.pantallas.SeleccionDeClientes;
 
 import interfaceGraficas.Inicio;
-import interfacesPrograma.Facturar;
 import java.awt.event.KeyEvent;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -26,7 +19,6 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
 import Articulos.Articulos;
 import Pedidos.DetallePedidos;
 import Pedidos.Pedable;
@@ -35,8 +27,6 @@ import facturacion.clientes.DetalleFacturas;
 import facturacion.clientes.Facturable;
 import facturacion.clientes.MovimientoProveedores;
 import objetos.Comprobantes;
-import objetos.Conecciones;
-import tablas.MiModeloTablaBuscarCliente;
 import tablas.MiModeloTablaFacturacion;
 
 
@@ -55,9 +45,10 @@ public class IngresoDeRemitos extends javax.swing.JInternalFrame {
     private static ArrayList listadoDeBusqueda=new ArrayList();
     private static Double montoTotal=0.00;
     private static Comprobantes comp=new Comprobantes();
-    private Integer fc;
-    private MovimientoProveedores factura=new MovimientoProveedores();
-    private Pedidos pedido=new Pedidos();
+    private Integer fcx;
+    private Integer pedx;
+    private MovimientoProveedores factura;
+    private Pedidos pedido;
     
     
     public IngresoDeRemitos() {
@@ -74,9 +65,10 @@ public class IngresoDeRemitos extends javax.swing.JInternalFrame {
     public IngresoDeRemitos(Clientes ccl,Object fc) {
         cliT=(Clientes)ccl;
         factura=(MovimientoProveedores)fc;
-        fc=factura.getId();
+        fcx=factura.getId();
+        pedx=factura.getIdPedido();
         Facturable fac=new DetalleFacturas();
-        listadoDeBusqueda=fac.cargarDetallefactura((Integer) fc);
+        listadoDeBusqueda=fac.cargarDetallefactura((Integer) fcx);
         detalleDelPedido=fac.convertirAArticulos(listadoDeBusqueda);
         //detalleDelPedido=listado;
         initComponents();
@@ -86,7 +78,9 @@ public class IngresoDeRemitos extends javax.swing.JInternalFrame {
     }
     public IngresoDeRemitos(Clientes ccl,Pedidos fc) {
         cliT=(Clientes)ccl;
+        //pedido=new Pedidos();
         pedido=(Pedidos)fc;
+        pedx=pedido.getId();
         //fc=pedido.getId();
         DetallePedidos detallePedido=new DetallePedidos();
         Pedable detP=new DetallePedidos();
@@ -94,8 +88,8 @@ public class IngresoDeRemitos extends javax.swing.JInternalFrame {
         detalleDelPedido=detP.convertirAArticulos(listadoDeBusqueda);
         //detalleDelPedido=listado;
         initComponents();
-        factura.setNumeroFactura(pedido.getId());
-        factura.setIdPedido(pedido.getId());
+        //factura.setNumeroFactura(pedido.getId());
+        //factura.setIdPedido(pedido.getId());
         agregarRenglonTabla();
         this.jTextField1.setText(cliT.getDireccionDeEntrega());
         this.jTextField2.setText(cliT.getLocalidad());
@@ -347,12 +341,11 @@ public class IngresoDeRemitos extends javax.swing.JInternalFrame {
         String fecha2=ano+"-"+mes+"-"+dia;
         //comp.setFechaComprobante(fecha2);
         //comp.setFechaComprobante(fecha);
-        int comprobanteTipo;
-        if(pedido!=null){
-            comprobanteTipo=5;
-        }else{
-        comprobanteTipo=7;
-        }
+        int comprobanteTipo=5;
+        if(pedido != null)comprobanteTipo=5;
+       
+        if(factura != null) comprobanteTipo=factura.getTipo();
+        
         
         Comprobantes comprobante=new Comprobantes();
         comprobante.setCliente(cliT);
@@ -373,13 +366,19 @@ public class IngresoDeRemitos extends javax.swing.JInternalFrame {
         remito.setNumeroDeRemito(numeroCaja);
         remito.setTipoComprobantte(comprobanteTipo);
         remito.setObservaciones(this.jTextField4.getText());
+        remito.setIdPedido(pedx);
+        remito.setIdFactura(fcx);
         /*
         if(factura.getNumeroFiscal()!=null){
             
             remito.setIdComprobante(Integer.parseInt(factura.getNumeroFiscal()));
         }else{
-          */  
-            remito.setIdComprobante(factura.getNumeroFactura());
+          */
+        if(pedx > 0){
+            remito.setIdComprobante(pedx);
+        }else{
+            remito.setIdComprobante(fcx);
+        }
         //}
         remito.setDomicilioDeEntrega(this.jTextField1.getText());
         remito.setLocalidad(this.jTextField2.getText());
@@ -403,7 +402,7 @@ public class IngresoDeRemitos extends javax.swing.JInternalFrame {
             arr=(Articulos)itD.next();
             detalleR=new DetalleRemitos();
             detalleR.setIdRemito(remito.getId());
-            if(pedido.getId()!= null){
+            if(pedido != null){
             detalleR.setIdPedido(pedido.getId());    
             }else{
             detalleR.setIdFactura(factura.getId());
@@ -421,20 +420,7 @@ public class IngresoDeRemitos extends javax.swing.JInternalFrame {
         } catch (IOException ex) {
             Logger.getLogger(IngresoDeRemitos.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //Facturar fat=new Comprobantes();
-        //fat.guardar(comprobante);
-        /*
-         * ACA DEVO LIMPIAR TODOS LOS CAMPOS Y VARIABLES DE LA PANTALLA
-         * 
-         */
-        //comp.setTipoComprobante(comprobanteTipo);
-        //comp.setMontoTotal(montoTotal);
-        detalleDelPedido.clear();
-        agregarRenglonTabla();
         
-        listadoDeBusqueda.clear();
-        cargarLista(listadoDeBusqueda);
-        //cliT=new Clientes("999999");
         this.dispose();
         
     }//GEN-LAST:event_jButton1ActionPerformed

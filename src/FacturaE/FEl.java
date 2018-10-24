@@ -2,12 +2,10 @@ package FacturaE;
 
 import Configuracion.Propiedades;
 import Conversores.Numeros;
-import Objetos.FacturaElectronica;
 import facturacion.clientes.Clientes;
 import facturacion.clientes.Facturable;
 import facturacion.clientes.MovimientoProveedores;
 import interfaces.Transaccionable;
-import interfacesPrograma.Busquedas;
 import interfacesPrograma.Facturar;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,7 +17,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.PasswordAuthentication;
 import java.net.URL;
-import java.net.URLConnection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -38,9 +35,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import Interface.Electronicable;
-import java.io.File;
-import static java.lang.Thread.sleep;
 
 
 
@@ -246,129 +240,7 @@ public class FEl implements FacturableE{
     
     
     public Object leer(Object comp) throws MalformedURLException, IOException, ParserConfigurationException, SAXException, InterruptedException{
-        Comprobantes compro=new Comprobantes();
-        compro=(Comprobantes)comp;
-        Runtime jpfBatch=Runtime.getRuntime();
-        String resultadoA="Error";
-        
-        
-        String cuit=compro.getCliente().getNumeroDeCuit().trim();
-        Integer tipDocumento=0;
-        Integer tipComprobante=0;
-        //FEl fE=new FEl();
-        FacturaElectronica fact=new FacturaElectronica();
-        Electronicable fBle=new FacturaElectronica();
-        FEl fE=new FEl();
-        String idCliente=compro.getCliente().getNumeroDeCuit();
-        fE.setEstado(compro.getPagado());
-        if(idCliente.length() == 8 || idCliente.length()==11){
-            
-        }else{
-            idCliente=JOptionPane.showInputDialog(null,"Ingrese numero de CUIT/CUIL o DNI Sin puntos ni guiones ",idCliente);
-        }
-        idCliente=idCliente.replace("-","");
-        idCliente=idCliente.trim();
-        Integer cantCuit=idCliente.length();
-        switch(cantCuit){
-            case 11:
-                if(compro.getTipoComprobante()==2)tipDocumento=80;
-                if(compro.getTipoComprobante()==1)tipDocumento=86;
-                break;
-            case 8:
-                tipDocumento=96;
-                break;
-            
-        }
-        String tipoDocumento=String.valueOf(tipDocumento);
-        if(compro.getTipoComprobante()==1)tipComprobante=6;
-        if(compro.getTipoComprobante()==2)tipComprobante=1;
-        if(compro.getTipoComprobante()==9)tipComprobante=2;
-        if(compro.getTipoComprobante()==10)tipComprobante=3;
-        if(compro.getTipoComprobante()==11)tipComprobante=7;
-        if(compro.getTipoComprobante()==12)tipComprobante=8;
-        
-        String tipoComprobante=String.valueOf(tipComprobante);
-        String importeTotal=Numeros.ConvertirNumeroAfip(compro.getMontoTotal());
-        String importeNeto=Numeros.ConvertirNumeroAfip(compro.getSubTotal());
-        String importeTotalConcepto="0.00";
-        String importeEx="0.00";
-        String impuestoLiq=Numeros.ConvertirNumeroAfip(compro.getMontoIva());
-        String importeTributo="0.00";
-        String idIva="5";
-         /*   
-        String sentencia="java -jar FacturaElectronica.jar "+tipoComprobante+" "+tipoDocumento+" "+idCliente+" "+importeTotal+" "+importeTotalConcepto+" "+importeNeto+" "+impuestoLiq+" "+importeTributo+" "+importeEx+" "+idIva;
-        System.out.println(sentencia);
-        jpfBatch.exec("java -jar FacturaElectronica.jar "+tipoComprobante+" "+tipoDocumento+" "+idCliente+" "+importeTotal+" "+importeTotalConcepto+" "+importeNeto+" "+impuestoLiq+" "+importeTributo+" "+importeEx+" "+idIva);
-        //jpfBatch.wait(1000);
-        
-//wait(1000);
-        //sleep(10000);
-        File salida=new File("fe.out");
-        if(salida.exists()){
-            resultadoA="OK";
-            JOptionPane.showMessageDialog(null,"POR FIN");
-            
-        }
-        */
-         
-        fact.setPuntoDeVenta(Propiedades.getPUNTODEVENTA());
-        fact.setTipoComprobante(tipoComprobante);//11
-        fact.setArchivoCrt(Propiedades.getARCHIVOBCRT());
-        fact.setArchivoKey(Propiedades.getARCHIVOKEY());
-        fact.setCuit(Propiedades.getCUIT());
-        fact.setConcepto("1");
-        fact.setTipoDocumento(tipoDocumento);
-        fact.setNumeroDocumento(idCliente);
-        if(fact.getTipoComprobante().equals("11")){
-            fact.setImporteTotal(importeTotal);
-            fact.setImporteTotalConcepto("0.00");
-            fact.setImporteNeto(importeTotal);
-            fact.setImporteIva("0.00");
-            fact.setImporteTributo("0.00");
-            fact.setImporteOperacionesExp("0.00");
-        }else{
-            fact.setImporteTotal(importeTotal);
-            fact.setImporteTotalConcepto(importeTotalConcepto);
-            fact.setImporteNeto(importeNeto);
-            fact.setImporteIva(impuestoLiq);
-            fact.setImporteTributo(importeTributo);
-            fact.setImporteOperacionesExp(importeEx);
-        }
-        fact.setIvaId(idIva);
-        fact.setIdFactura(compro.getIdFactura());
-        fact.setIdCliente(compro.getCliente().getCodigoId());
-        fact=(FacturaElectronica) fBle.Solicitar(fact);
-        if(fact.getCae()!=null){
-            
-        
-            fE.setAfipPlastCbte(fact.getAfipPlastCbte());
-            fE.setAfipPlastId(fact.getAfipPlastId());
-            fE.setAfipQty(fact.getAfipQty());
-            fE.setCae(fact.getCae());
-            fE.setCaeVto(fact.getCaeVto());
-            fE.setCustomerTypeDoc(fact.getTipoComprobante());
-            fE.setCustomerTypeDoc(fact.getTipoDocumento());
-            fE.setFecha(fact.getFechaCae());
-            fE.setFechaCae(fact.getFechaCae());
-            //fE.setIdCliente(idCliente);
-            fE.setImporteNeto(fact.getImporteNeto());
-            fE.setImporteTotal(fact.getImporteTotal());
-            fE.setImpuestoLiquido(fact.getImporteIva());
-            fE.setResultado(fact.getResultado());
-            fE.setTipoComprobante(fact.getTipoComprobante());
-            fE.setIdFactura(fact.getIdFactura());
-            fE.setIdCliente(fact.getIdCliente());
-            fE.setId(guardar(fE));
-            fE.setRespuesta("OK");
-            
-
-        }else{
-               JOptionPane.showMessageDialog(null,fact.getRespuesta());
-                }
-      return fE;
-      
-        //fE.setRespuesta(resultadoA);
-      //return fE;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -378,77 +250,17 @@ public class FEl implements FacturableE{
 
     @Override
     public Integer guardar(Object Fe) {
-        Transaccionable tra=new Conecciones();
-        FEl ffE=new FEl();
-        ffE=(FEl)Fe;
-        Integer estado=0;
-        Integer id=0;
-        if(ffE.getResultado().equals("R"))estado=1;
-        String sql="insert into facturaelectronica (cae,cae_vto,fecha_cae,afipqty,afipplastid,afipplastcbte,idfactura,idcliente,estado,customerid,customertypedoc,tipo_comprobante,importe_total,importe_neto,impto_liq) values ('"+ffE.getCae()+"','"+ffE.getCaeVto()+"','"+ffE.getFechaCae()+"','"+ffE.getAfipQty()+"','"+ffE.getAfipPlastId()+"','"+ffE.getAfipPlastCbte()+"',"+ffE.getIdFactura()+","+ffE.getIdCliente()+","+estado+",'"+ffE.getCustomerId()+"','"+ffE.getCustomerTypeDoc()+"','"+ffE.getTipoComprobante()+"','"+ffE.getImporteTotal()+"','"+ffE.getImporteNeto()+"','"+ffE.getImpuestoLiquido()+"')";
-        System.out.println(sql);
-        tra.guardarRegistro(sql);
-        sql="select LAST_INSERT_ID()";
-        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
-        try {
-            while(rs.next()){
-                id=rs.getInt(1);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(FEl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-                return id;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Object modificar(Object Fe) {
-        FEl fE=new FEl();
-        fE=(FEl)Fe;
-        String sql="update facturaelectronica set cae='"+fE.getCae()+"',cae_vto='"+fE.getCaeVto()+"',fecha_cae='"+fE.getFechaCae()+"',afipqty='"+fE.getAfipQty()+"',afipplastid='"+fE.getAfipPlastId()+"',afipplastcbte='"+fE.getAfipPlastCbte()+"', estado=1 where id="+fE.getId();
-        Transaccionable tra=new Conecciones();
-        tra.guardarRegistro(sql);
-        return fE;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public ArrayList listarPorEstado(Integer estado) {
-        ArrayList listado=new ArrayList();
-        String sql="select * from facturaelectronica where estado="+estado;
-        Transaccionable tra=new Conecciones();
-        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
-        FEl factE;
-        try {
-            while(rs.next()){
-                factE=new FEl();
-                factE.setId(rs.getInt("id"));
-                factE.setCae(rs.getString("cae"));
-                factE.setCaeVto(rs.getString("cae_vto"));
-                factE.setFechaCae(rs.getString("fecha_cae"));
-                factE.setAfipQty(rs.getString("afipqty"));
-                factE.setAfipPlastId(rs.getString("afipplastid"));
-                factE.setAfipPlastCbte(rs.getString("afipplastcbte"));
-                factE.setIdFactura(rs.getInt("idfactura"));
-                factE.setIdCliente(rs.getInt("idcliente"));
-                factE.setFecha(rs.getString("fecha"));
-                factE.setCustomerId(rs.getString("customerid"));
-                factE.setCustomerTypeDoc(rs.getString("customertypedoc"));
-                factE.setTipoComprobante(rs.getString("tipo_comprobante"));
-                factE.setImporteTotal(rs.getString("importe_total"));
-                factE.setImporteNeto(rs.getString("importe_neto"));
-                factE.setImpuestoLiquido(rs.getString("impto_liq"));
-                if(rs.getInt("estado")==1){
-                    factE.setRespuesta("OK");
-                }else{
-                    factE.setRespuesta("ERROR");
-                }
-                listado.add(factE);
-                
-            }
-            rs.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(FEl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        return listado;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -458,38 +270,7 @@ public class FEl implements FacturableE{
 
     @Override
     public DefaultTableModel mostrarListado(ArrayList listadoC) {
-        MiModeloTablaArticulos listado=new MiModeloTablaArticulos();
-        FEl cotizacion;
-        Clientes cliente;
-        Facturar bus=new Clientes();
-        Facturable ff=new MovimientoProveedores();
-        MovimientoProveedores factura;
-        Iterator iL=listadoC.listIterator();
-        listado.addColumn("Fecha");
-        listado.addColumn("Cliente");
-        listado.addColumn("dni/cuit/cuil");
-        listado.addColumn("Monto");
-        listado.addColumn("Estado");
-        Object[] fila=new Object[5];
-        while(iL.hasNext()){
-            cotizacion=(FEl)iL.next();
-            cliente=new Clientes();
-            factura=new MovimientoProveedores();
-            fila[0]=String.valueOf(cotizacion.getFecha());
-            cliente=(Clientes)bus.cargarPorCodigoAsignado(cotizacion.getIdCliente());
-            fila[1]=cliente.getRazonSocial();
-            fila[2]=cliente.getNumeroDeCuit();
-            //factura=(MovimientoProveedores)ff.
-            fila[3]=String.valueOf(cotizacion.getImporteTotal());
-            if(cotizacion.getRespuesta().equals("OK")){
-                fila[4]="Aprobada";
-            }else{
-                fila[4]="Pendiente";
-            }
-            listado.addRow(fila);
-        }
-        
-        return listado;
+       throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

@@ -137,7 +137,7 @@ public class CotizacionEnExcel {
             
         
         //texto+="\r\n";
-        String ruta=Inicio.fechaDia+"_"+cliente.getRazonSocial()+"_Lista de Precios.xls";
+        String ruta="Listas/"+Inicio.fechaDia+"_"+cliente.getRazonSocial()+"_Lista de Precios.xls";
         try {
             FileOutputStream elFichero=new FileOutputStream(ruta);
             try {

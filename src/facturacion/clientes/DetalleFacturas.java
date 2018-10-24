@@ -220,7 +220,7 @@ public class DetalleFacturas implements Facturable{
     }
 
     @Override
-    public Boolean identificarPedidoAFactura(Integer idPedido, Integer idFactura) {
+    public Boolean identificarPedidoAFactura(Integer idPedido, Integer idFactura,Integer numeroFactura) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

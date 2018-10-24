@@ -36,6 +36,8 @@ import ListasDePrecios.ArticulosAsignados;
 import Pedidos.DetallePedidos;
 import Pedidos.Pedable;
 import Pedidos.Pedidos;
+import facturacion.clientes.DetalleFacturas;
+import facturacion.clientes.Facturable;
 import facturacion.clientes.MovimientoProveedores;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
@@ -94,24 +96,24 @@ public class NotaDeCredito extends javax.swing.JInternalFrame {
     }
     public NotaDeCredito(Object ped){
         factura=new MovimientoProveedores();
-        Pedidos pedido=new Pedidos();
+        //Pedidos pedido=new Pedidos();
         ArrayList listadoPed=new ArrayList();
-        pedido=(Pedidos)ped;
+        factura=(MovimientoProveedores)ped;
         Facturar fact=new Clientes();
-        Pedable peda=new Pedidos();
-        DetallePedidos detallePedido=new DetallePedidos();
-        Pedable detP=new DetallePedidos();
-        factura.setIdPedido(pedido.getId());
+        //Pedable peda=new Pedidos();
+        //DetallePedidos detallePedido=new DetallePedidos();
+        Facturable detP=new DetalleFacturas();
+        //factura.setIdPedido(pedido.getId());
         cliT=new Clientes();
         //ListasDePrecios lista=new ListasDePrecios(cliT.getListaDePrecios());
-        cliT=(Clientes)fact.cargarPorCodigoAsignado(pedido.getIdCliente());
-        listadoPed=detP.cargarDetallePedido(pedido.getId());
+        cliT=(Clientes)fact.cargarPorCodigoAsignado(factura.getIdCliente());
+        listadoPed=detP.cargarDetallefactura(factura.getId());
         detalleDelPedido=detP.convertirAArticulos(listadoPed);
         
 //cliT=(ClientesTango)oob;
         //comp.setCliente(cliT);
         initComponents();
-        porcentajeDescuento=pedido.getPorcentajeDescuento();
+        //porcentajeDescuento=pedido.getPorcentajeDescuento();
         subTotal=0.00;
         Iterator irP=detalleDelPedido.listIterator();
         int fil=0;
@@ -1215,7 +1217,7 @@ private void agregarRenglonTabla(){
         Double ivv=subTotal *0.21;
         Double sub=subTotal + ivv;
         Double tot=montoTotal + ivv;
-        if(porcentajeDescuento > 0.00){
+        if(porcentajeDescuento != null){
             sub = sub * porcentajeDescuento;
             sub= tot - sub;
         }

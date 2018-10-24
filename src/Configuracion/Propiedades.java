@@ -30,6 +30,49 @@ public class Propiedades {
     static String ARCHIVOKEY;
     static String PUNTODEVENTA;
     static String CUIT;
+    static String ARCHIVOCRT;
+    static String CONDICIONIVA;
+    static String TIPODEVENTA;
+    static String NOMBRECOMERCIO;
+    static String DIRECCION;
+    static String TELEFONO;
+    static String INGBRUTOS;
+    static String INICIOACT;
+
+    public static String getNOMBRECOMERCIO() {
+        return NOMBRECOMERCIO;
+    }
+
+    public static String getDIRECCION() {
+        return DIRECCION;
+    }
+
+    public static String getTELEFONO() {
+        return TELEFONO;
+    }
+
+    public static String getINGBRUTOS() {
+        return INGBRUTOS;
+    }
+
+    public static String getINICIOACT() {
+        return INICIOACT;
+    }
+    
+
+    public static String getARCHIVOCRT() {
+        return ARCHIVOCRT;
+    }
+
+    public static String getCONDICIONIVA() {
+        return CONDICIONIVA;
+    }
+
+    public static String getTIPODEVENTA() {
+        return TIPODEVENTA;
+    }
+    
+    
 
     public static String getSERVER() {
         return SERVER;
@@ -107,18 +150,22 @@ public class Propiedades {
                     
                     
                             CREADA=p.getProperty("CREADA");
-                        
-                            
-                            
                             CUIT=p.getProperty("CUIT");
                             SERVER=p.getProperty("SERVER");
                             BD=p.getProperty("BD");
                             USUARIO=p.getProperty("USUARIO");
                             CLAVE=p.getProperty("CLAVE");
-                            ARCHIVOBCRT=p.getProperty("ARCHIVOBCRT");
+                            ARCHIVOCRT=p.getProperty("ARCHIVOCRT");
                             ARCHIVOKEY=p.getProperty("ARCHIVOKEY");
                             PUNTODEVENTA=p.getProperty("PUNTODEVENTA");
-                            
+                            CONDICIONIVA=p.getProperty("CONDICIONIVA");
+                            PUNTODEVENTA=p.getProperty("PUNTODEVENTA");
+                            TIPODEVENTA=p.getProperty("TIPODEVENTA");
+                            NOMBRECOMERCIO=p.getProperty("NOMBRECOMERCIO");
+                            DIRECCION=p.getProperty("DIRECCION");
+                            TELEFONO=p.getProperty("TELEFONO");
+                            INGBRUTOS=p.getProperty("INGBRUTOS");
+                            INICIOACT=p.getProperty("INICIOACT");
                             
                         
             

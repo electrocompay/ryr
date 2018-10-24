@@ -280,11 +280,9 @@ public class MovimientoProveedores implements Facturable{
             cotizacion=(MovimientoProveedores)iL.next();
             fila[0]=false;
             fila[1]=String.valueOf(cotizacion.getFecha());
-            if(cotizacion.getNumeroFiscal()!=null){
-            fila[2]=String.valueOf(cotizacion.getNumeroFactura());
-            }else{
-                fila[2]=String.valueOf(cotizacion.getNumeroFiscal());
-            }
+            
+                fila[2]=String.valueOf(cotizacion.getNumeroFactura());
+            
             fila[3]=String.valueOf(cotizacion.getMontoOriginal());
             fila[4]=Numeros.ConvertirNumero(cotizacion.getTotal());
             fila[5]=String.valueOf(cotizacion.getIdRemito());
@@ -316,7 +314,7 @@ public class MovimientoProveedores implements Facturable{
     @Override
     public ArrayList listarPorClienteNoRemitidas(Integer idClient) {
        ArrayList listado=new ArrayList();
-       String sql="select *,(select tipocomprobantes.descripcion from tipocomprobantes where tipocomprobantes.id=facturas.tipo)as descripcionTipo,(select remitos.numeroremito from remitos where remitos.id=idremito)as remito,(SELECT facturaelectronica.afipplastcbte from facturaelectronica where facturaelectronica.idfactura=facturas.id)as fiscal from facturas where estado < 2 and idcliente="+idClient;
+       String sql="select *,(select tipocomprobantes.descripcion from tipocomprobantes where tipocomprobantes.id=facturas.tipo)as descripcionTipo,(select remitos.numeroremito from remitos where remitos.id=idremito)as remito,(SELECT facturaelectronica.afipplastcbte from facturaelectronica where facturaelectronica.idfactura=facturas.id)as fiscal from facturas where idcliente="+idClient;
        System.out.println(sql);
        Transaccionable tra=new Conecciones();
        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
@@ -354,11 +352,11 @@ public class MovimientoProveedores implements Facturable{
     }
 
     @Override
-    public Boolean identificarPedidoAFactura(Integer idPedido, Integer idFactura) {
+    public Boolean identificarPedidoAFactura(Integer idPedido, Integer idFactura,Integer numeroFactura) {
         String sql="update pedidos set idfactura="+idFactura+" where id="+idPedido;
         Transaccionable tra=new Conecciones();
         tra.guardarRegistro(sql);
-        sql="update facturas set idpedido="+idPedido+" where id="+idFactura;
+        sql="update facturas set idpedido="+idPedido+",numerofactura="+numeroFactura+" where id="+idFactura;
         tra.guardarRegistro(sql);
         
         return true;

@@ -33,8 +33,27 @@ public class Remitos implements Remitable{
     private Integer tipoBulto;
     
     private String sql;
-    private static Transaccionable tra=new Conecciones();
+    private static Transaccionable tra;
     private static ResultSet rs;
+    private Integer idPedido;
+    private Integer idFactura;
+
+    public Integer getIdPedido() {
+        return idPedido;
+    }
+
+    public void setIdPedido(Integer idPedido) {
+        this.idPedido = idPedido;
+    }
+
+    public Integer getIdFactura() {
+        return idFactura;
+    }
+
+    public void setIdFactura(Integer idFactura) {
+        this.idFactura = idFactura;
+    }
+    
 
     public String getDomicilioDeEntrega() {
         return domicilioDeEntrega;
@@ -129,6 +148,7 @@ public class Remitos implements Remitable{
 
     @Override
     public Integer nuevo(Object remi) {
+       tra=new Conecciones();
         Remitos remito=new Remitos();
         remito=(Remitos)remi;
         //System.out.println("es una prueba de carga :"+this.getIdCliente()+" observaciones: "+this.getObservaciones());
@@ -148,11 +168,15 @@ public class Remitos implements Remitable{
         sql="update tipocomprobantes set numeroactivo=numeroactivo +1 where id=7";
         tra.guardarRegistro(sql);
         if(remito.getTipoComprobantte()==5){
-            sql="update pedidos set estado=2, idremito="+numeroId+" where id="+remito.getIdComprobante();
+            sql="update pedidos set estado=2, idremito="+numeroId+" where id="+remito.getIdPedido();
+            tra.guardarRegistro(sql);
         }else{
-            sql="update facturas set estado=2,idremito="+numeroId+" where id="+remito.getIdComprobante();
+            sql="update facturas set estado=2,idremito="+numeroId+" where id="+remito.getIdFactura();
+            tra.guardarRegistro(sql);
+            sql="update pedidos set estado=2, idremito="+numeroId+" where id="+remito.getIdPedido();
+            tra.guardarRegistro(sql);
         }
-        tra.guardarRegistro(sql);
+        
         return numeroId;
     }
 
@@ -188,6 +212,7 @@ public class Remitos implements Remitable{
 
     @Override
     public Object carga(Integer id) {
+        tra=new Conecciones();
         Remitos remito=new Remitos();
         sql="select * from remitos where id="+id;
         rs=tra.leerConjuntoDeRegistros(sql);

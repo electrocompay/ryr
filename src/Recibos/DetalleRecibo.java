@@ -5,7 +5,9 @@
  */
 package Recibos;
 
+import Pedidos.Pedidos;
 import facturacion.clientes.MovimientoProveedores;
+import interfaceGraficas.Inicio;
 import interfaces.Transaccionable;
 
 import java.sql.Date;
@@ -125,6 +127,8 @@ public class DetalleRecibo implements Recidable{
         detalle=(DetalleRecibo)rec;
         sql="insert into detallerecibos (idrecibo,idcliente,monto,idfactura) values ("+detalle.getIdRecibo()+","+detalle.getIdCliente()+","+detalle.getMonto()+","+detalle.getIdFactura()+")";
         tra.guardarRegistro(sql);
+        sql="insert into movimientosclientes (numeroProveedor,monto,pagado,numeroComprobante,idUsuario,idCaja,idSucursal,tipoComprobante) values ("+detalle.idCliente+",round("+detalle.monto+" * (-1),4),0,"+detalle.idRecibo+","+Inicio.usuario.getNumeroId()+","+Inicio.caja.getNumero()+","+Inicio.sucursal.getNumero()+",8)";
+        tra.guardarRegistro(sql);
         return 0;
     }
 
@@ -135,9 +139,9 @@ public class DetalleRecibo implements Recidable{
 
     @Override
     public Double imputarAFactura(Object rec) {
-        MovimientoProveedores factura=new MovimientoProveedores();
-        factura=(MovimientoProveedores)rec;
-        sql="update facturas set saldo=(total - "+factura.getTotal()+") where id="+factura.getId();
+        Pedidos factura=new Pedidos();
+        factura=(Pedidos)rec;
+        sql="update pedidos set saldo=(total - "+factura.getTotal()+") where id="+factura.getId();
         System.out.println(sql);
         tra.guardarRegistro(sql);
         return 0.00;
@@ -146,7 +150,7 @@ public class DetalleRecibo implements Recidable{
     @Override
     public DefaultTableModel mostrarARecibir(ArrayList listado) {
         MiModeloTablaContacto listado1=new MiModeloTablaContacto();
-        MovimientoProveedores cotizacion;
+        Pedidos cotizacion;
         Iterator iL=listado.listIterator();
         listado1.addColumn("Recibo");
         listado1.addColumn("Fecha");
@@ -157,13 +161,17 @@ public class DetalleRecibo implements Recidable{
         Object[] fila=new Object[5];
         while(iL.hasNext()){
             
-            cotizacion=(MovimientoProveedores)iL.next();
+            cotizacion=(Pedidos)iL.next();
             fila[0]=false;
             
             fila[1]=String.valueOf(cotizacion.getFecha());
-            fila[2]=String.valueOf(cotizacion.getNumeroFactura());
-            fila[3]=String.valueOf(cotizacion.getMontoOriginal());
-            fila[4]=String.valueOf(cotizacion.getTotal());
+            if(cotizacion.getIdFactura() > 0){
+                fila[2]=cotizacion.getNumeroFactura();
+            }else{
+                fila[2]="PED. "+cotizacion.getId();
+            }
+            fila[3]=String.valueOf(cotizacion.getTotal());
+            fila[4]=String.valueOf(cotizacion.getSaldo());
             listado1.addRow(fila);
         }
         return listado1;

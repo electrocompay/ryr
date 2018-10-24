@@ -6,6 +6,7 @@
 package Pedidos;
 
 import Conversores.Numeros;
+import interfaceGraficas.Inicio;
 import interfaces.Transaccionable;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -14,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
 import objetos.Conecciones;
 
@@ -39,6 +39,37 @@ public class Pedidos implements Pedable{
     private Double subTotal;
     private Double descuento;
     private Double porcentajeDescuento;
+    private Integer numeroRemito;
+    private Double saldo;
+    private String numeroFactura;
+
+    public String getNumeroFactura() {
+        return numeroFactura;
+    }
+
+    public void setNumeroFactura(String numeroFactura) {
+        this.numeroFactura = numeroFactura;
+    }
+    
+    
+    public Double getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(Double saldo) {
+        this.saldo = saldo;
+    }
+    
+    
+
+    public Integer getNumeroRemito() {
+        return numeroRemito;
+    }
+
+    public void setNumeroRemito(Integer numeroRemito) {
+        this.numeroRemito = numeroRemito;
+    }
+    
     
 
     public Double getSubTotal() {
@@ -161,9 +192,16 @@ public class Pedidos implements Pedable{
             while(rs.next()){
                 verif=rs.getInt(1);
             }
+            sql="insert into movimientosclientes (numeroProveedor,monto,pagado,numeroComprobante,idUsuario,idCaja,idSucursal,tipoComprobante) values ("+pedido.idCliente+",round("+pedido.total+",4),0,"+verif+","+Inicio.usuario.getNumeroId()+","+Inicio.caja.getNumero()+","+Inicio.sucursal.getNumero()+",5)";
+            tra.guardarRegistro(sql);
+            
         } catch (SQLException ex) {
             Logger.getLogger(Pedidos.class.getName()).log(Level.SEVERE, null, ex);
         }
+        /*
+            ACA DEBO CARGAR LOS CAMPOS CORRESPONDIENTES A LA TABLA DE MOVIMIENTO DE CLIENTES
+        */
+        
         return verif;
     }
 
@@ -176,7 +214,7 @@ public class Pedidos implements Pedable{
     public Object cargarEncabezadoPedido(Integer idPed) {
         Pedidos pedido=new Pedidos();
         //ArrayList listado=new ArrayList();
-        sql="select * from pedidos where id="+idPed;
+        sql="select pedidos.*,remitos.numeroremito from pedidos left join remitos on remitos.id=pedidos.idremito where id="+idPed;
         
         rs=tra.leerConjuntoDeRegistros(sql);
         try {
@@ -189,6 +227,7 @@ public class Pedidos implements Pedable{
                 pedido.setIdCotizacion(rs.getInt("idcotizacion"));
                 pedido.setIdFactura(rs.getInt("idfactura"));
                 pedido.setIdRemito(rs.getInt("idremito"));
+                pedido.setNumeroRemito(rs.getInt("numeroremito"));
                 pedido.setIdUsuario(rs.getInt("idusuario"));
                 pedido.setTotal(rs.getDouble("total"));
                 pedido.setSubTotal(rs.getDouble("subtotal"));
@@ -207,7 +246,7 @@ public class Pedidos implements Pedable{
     public ArrayList listar() {
         Pedidos pedido;
         ArrayList listado=new ArrayList();
-        sql="select * from pedidos order by id desc";
+        sql="select pedidos.*,remitos.numeroremito from pedidos left join remitos on remitos.id=pedidos.idremito order by id desc";
         
         rs=tra.leerConjuntoDeRegistros(sql);
         try {
@@ -220,6 +259,7 @@ public class Pedidos implements Pedable{
                 pedido.setIdCotizacion(rs.getInt("idcotizacion"));
                 pedido.setIdFactura(rs.getInt("idfactura"));
                 pedido.setIdRemito(rs.getInt("idremito"));
+                pedido.setNumeroRemito(rs.getInt("numeroremito"));
                 pedido.setIdUsuario(rs.getInt("idusuario"));
                 pedido.setTotal(rs.getDouble("total"));
                 pedido.setSubTotal(rs.getDouble("subtotal"));
@@ -238,7 +278,7 @@ public class Pedidos implements Pedable{
     public ArrayList listarPorCliente(Integer idClient) {
         Pedidos pedido;
         ArrayList listado=new ArrayList();
-        String sql="select * from pedidos where idcliente="+idClient+" order by id desc";
+        String sql="select pedidos.*,remitos.numeroremito from pedidos left join remitos on remitos.id=pedidos.idremito where idcliente="+idClient+" order by id desc";
         
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {
@@ -251,11 +291,13 @@ public class Pedidos implements Pedable{
                 pedido.setIdCotizacion(rs.getInt("idcotizacion"));
                 pedido.setIdFactura(rs.getInt("idfactura"));
                 pedido.setIdRemito(rs.getInt("idremito"));
+                pedido.setNumeroRemito(rs.getInt("numeroremito"));
                 pedido.setIdUsuario(rs.getInt("idusuario"));
                 pedido.setTotal(rs.getDouble("total"));
                 pedido.setSubTotal(rs.getDouble("subtotal"));
                 pedido.setDescuento(rs.getDouble("descuento"));
                 pedido.setPorcentajeDescuento(rs.getDouble("porcentajed"));
+                pedido.setSaldo(rs.getDouble("total") - rs.getDouble("saldo"));
                 listado.add(pedido);
             }
         } catch (SQLException ex) {
@@ -269,7 +311,7 @@ public class Pedidos implements Pedable{
     public ArrayList listarPorEstado(Integer idClient, int estado) {
         Pedidos pedido;
         ArrayList listado=new ArrayList();
-        String sql="select *,(select facturas.numerofactura from facturas where facturas.id=pedidos.idfactura)as factura from pedidos where idcliente="+idClient+" and idfactura=0 order by id desc";
+        String sql="select pedidos.*,remitos.numeroremito from pedidos left join remitos on remitos.id=pedidos.idremito where pedidos.idcliente="+idClient+" and pedidos.idfactura=0 order by pedidos.id desc";
         
         ResultSet rs=tra.leerConjuntoDeRegistros(sql);
         try {
@@ -280,8 +322,9 @@ public class Pedidos implements Pedable{
                 pedido.setFecha(rs.getDate("fecha"));
                 pedido.setIdCliente(rs.getInt("idcliente"));
                 pedido.setIdCotizacion(rs.getInt("idcotizacion"));
-                pedido.setIdFactura(rs.getInt("factura"));
+                pedido.setIdFactura(rs.getInt("idfactura"));
                 pedido.setIdRemito(rs.getInt("idremito"));
+                pedido.setNumeroRemito(rs.getInt("numeroremito"));
                 pedido.setIdUsuario(rs.getInt("idusuario"));
                 pedido.setTotal(rs.getDouble("total"));
                 pedido.setSubTotal(rs.getDouble("subtotal"));
@@ -330,7 +373,7 @@ public class Pedidos implements Pedable{
             fila[0]=String.valueOf(cotizacion.getId());
             fila[1]=String.valueOf(cotizacion.getFecha());
             fila[2]=String.valueOf(cotizacion.getIdFactura());
-            fila[3]=String.valueOf(cotizacion.getIdRemito());
+            fila[3]=String.valueOf(cotizacion.getNumeroRemito());
             fila[4]=Numeros.ConvertirNumero(cotizacion.getTotal());
             if(cotizacion.getEstado()==0){
                 fila[5]="Pendiente";
@@ -364,6 +407,40 @@ public class Pedidos implements Pedable{
     @Override
     public ArrayList convertirAArticulos(ArrayList detalle) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList listarConSaldo(Integer idCliente) {
+        Pedidos pedido;
+        ArrayList<Pedidos> listado=new ArrayList();
+        String sql="select pedidos.*,remitos.numeroremito,facturas.numerofactura,facturas.tipo,tipocomprobantes.descripcion from pedidos left join remitos on remitos.id=pedidos.idremito LEFT join facturas on facturas.id=pedidos.idfactura LEFT join tipocomprobantes on tipocomprobantes.id=facturas.tipo where pedidos.idcliente="+idCliente+" and (pedidos.total - pedidos.saldo) > 0 order by pedidos.id desc";
+        
+        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
+        try {
+            while(rs.next()){
+                pedido=new Pedidos();
+                pedido.setId(rs.getInt("id"));
+                pedido.setEstado(rs.getInt("estado"));
+                pedido.setFecha(rs.getDate("fecha"));
+                pedido.setIdCliente(rs.getInt("idcliente"));
+                pedido.setIdCotizacion(rs.getInt("idcotizacion"));
+                pedido.setIdFactura(rs.getInt("idfactura"));
+                pedido.setIdRemito(rs.getInt("idremito"));
+                pedido.setNumeroRemito(rs.getInt("numeroremito"));
+                pedido.setIdUsuario(rs.getInt("idusuario"));
+                pedido.setTotal(rs.getDouble("total"));
+                pedido.setSubTotal(rs.getDouble("subtotal"));
+                pedido.setDescuento(rs.getDouble("descuento"));
+                pedido.setPorcentajeDescuento(rs.getDouble("porcentajed"));
+                pedido.setSaldo(rs.getDouble("total")- rs.getDouble("saldo"));
+                pedido.setNumeroFactura(rs.getString("descripcion")+" - "+rs.getString("numerofactura"));
+                listado.add(pedido);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Pedidos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return listado;
     }
     
     

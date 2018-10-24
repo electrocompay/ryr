@@ -6,7 +6,6 @@
 package Pedidos;
 
 import java.util.ArrayList;
-import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -27,4 +26,5 @@ public interface Pedable {
     public void transformarEnCotizacion(Object ped,ArrayList detalle);
     public void transformarEnRemito(Object ped,ArrayList detalle);
     public ArrayList convertirAArticulos(ArrayList detalle);
+    public ArrayList listarConSaldo(Integer idCliente);
 }

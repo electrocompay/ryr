@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
 import Articulos.Articulos;
+import interfaceGraficas.Inicio;
 import objetos.Conecciones;
 
 /**
@@ -133,6 +134,7 @@ public class DetallePedidos implements Pedable{
         Transaccionable tra=new Conecciones();
         tra.guardarRegistro(sql);
         
+        
         return numero;
     }
 
@@ -249,6 +251,11 @@ public class DetallePedidos implements Pedable{
         }
         
         return listadoA;
+    }
+
+    @Override
+    public ArrayList listarConSaldo(Integer idCliente) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

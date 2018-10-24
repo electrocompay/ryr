@@ -11,20 +11,16 @@ import interfaces.Adeudable;
 import interfaces.Transaccionable;
 import interfacesPrograma.Busquedas;
 import interfacesPrograma.Facturar;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import objetos.Comprobantes;
-import objetos.ConeccionLocal;
 import objetos.Conecciones;
 
 
