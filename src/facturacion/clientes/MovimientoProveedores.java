@@ -314,7 +314,7 @@ public class MovimientoProveedores implements Facturable{
     @Override
     public ArrayList listarPorClienteNoRemitidas(Integer idClient) {
        ArrayList listado=new ArrayList();
-       String sql="select *,(select tipocomprobantes.descripcion from tipocomprobantes where tipocomprobantes.id=facturas.tipo)as descripcionTipo,(select remitos.numeroremito from remitos where remitos.id=idremito)as remito,(SELECT facturaelectronica.afipplastcbte from facturaelectronica where facturaelectronica.idfactura=facturas.id)as fiscal from facturas where idcliente="+idClient;
+       String sql="select facturas.*,pedidos.saldo as saldo1,tipocomprobantes.descripcion as descripcionTipo,remitos.numeroremito as remito from facturas left join pedidos on pedidos.idfactura=facturas.id join tipocomprobantes on tipocomprobantes.id=facturas.tipo left join remitos on remitos.id=facturas.idremito where facturas.idcliente="+idClient;
        System.out.println(sql);
        Transaccionable tra=new Conecciones();
        ResultSet rs=tra.leerConjuntoDeRegistros(sql);
@@ -331,10 +331,10 @@ public class MovimientoProveedores implements Facturable{
                 factura.setNumeroFactura(rs.getInt("numerofactura"));
                 factura.setIdRemito(rs.getInt("remito"));
                 factura.setTipo(rs.getInt("tipo"));
-                factura.setTotal(rs.getDouble("saldo"));
+                factura.setTotal(rs.getDouble("saldo1"));
                 factura.setMontoOriginal(rs.getDouble("total"));
                 factura.setDescripcionTipo(rs.getString("descripciontipo"));
-                factura.setNumeroFiscal(rs.getString("fiscal"));
+                factura.setNumeroFiscal(rs.getString("numerofactura"));
                 factura.setSubTotal(rs.getDouble("subtotal"));
                 factura.setDescuento(rs.getDouble("descuento"));
                 factura.setPorcentajeDescuento(rs.getDouble("porcentajeD"));

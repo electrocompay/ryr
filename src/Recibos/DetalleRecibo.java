@@ -6,7 +6,6 @@
 package Recibos;
 
 import Pedidos.Pedidos;
-import facturacion.clientes.MovimientoProveedores;
 import interfaceGraficas.Inicio;
 import interfaces.Transaccionable;
 
@@ -33,7 +32,7 @@ public class DetalleRecibo implements Recidable{
     private Date fecha;
     private Integer idFactura;
     private Integer idPedido;
-    private Integer numeroFc;
+    private String numeroFc;
     private static Transaccionable tra=new Conecciones();
     private static ResultSet rs;
     private String sql;
@@ -48,11 +47,11 @@ public class DetalleRecibo implements Recidable{
     }
     
 
-    public Integer getNumeroFc() {
+    public String getNumeroFc() {
         return numeroFc;
     }
 
-    public void setNumeroFc(Integer numeroFc) {
+    public void setNumeroFc(String numeroFc) {
         this.numeroFc = numeroFc;
     }
 
