@@ -49,13 +49,13 @@ public class pdfsJavaGenerador {
     public void run(){
         Document documento=new Document();
         int i=1;
-        String arch="Listas/"+Inicio.fechaDia+"_"+cliente.getRazonSocial()+"_Lista de Precios.pdf";
+        String arch="Listas\\"+Inicio.fechaDia+"_"+cliente.getRazonSocial()+"_Lista de Precios.pdf";
         
         
         File fich=new File(arch);
         while(fich.exists()){
             i++;
-            arch="Listas/"+Inicio.fechaDia+"_"+cliente.getRazonSocial()+i+"_Lista de Precios.pdf";
+            arch="Listas\\"+Inicio.fechaDia+"_"+cliente.getRazonSocial()+i+"_Lista de Precios.pdf";
             fich=new File(arch);
         }
         FileOutputStream fichero;

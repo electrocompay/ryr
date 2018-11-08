@@ -136,7 +136,7 @@ public class pdfsJavaGenerador {
             
             //fin encabezados
             bf = BaseFont.createFont(BaseFont.COURIER,BaseFont.CP1252,BaseFont.NOT_EMBEDDED);
-            cb.setFontAndSize(bf,10);
+            cb.setFontAndSize(bf,8);
             Iterator itl=listado.listIterator();
             vencimiento=doc.getAclaracionAlPie();
             Double montoCIva=0.00;
@@ -160,13 +160,15 @@ public class pdfsJavaGenerador {
                 cb.setTextMatrix(40,renglon);
                 cb.showText(String.valueOf(saldo.getIdArticulo()));
                 cb.setTextMatrix(70,renglon);
-                if(saldo.getDescripcionArticulo().length() > 35){
-                    descripcionArt=saldo.getDescripcionArticulo().substring(0, 35);
+                if(saldo.getDescripcionArticulo().length() > 60){
+                    descripcionArt=saldo.getDescripcionArticulo().substring(0, 60);
                 }else{
                     descripcionArt=saldo.getDescripcionArticulo();
                 }
+                cb.setFontAndSize(bf,6);
                 cb.showText(descripcionArt);
                 cb.setTextMatrix(310,renglon);
+                cb.setFontAndSize(bf,8);
                 porcientoD=0.00;
                 porcientoD=saldo.getPorcentajeDescuento();
                 //porcientoD=Math.round(porcientoD * 100) / 100;
@@ -252,7 +254,7 @@ public class pdfsJavaGenerador {
             
             //fin encabezados
             bf = BaseFont.createFont(BaseFont.COURIER,BaseFont.CP1252,BaseFont.NOT_EMBEDDED);
-            cb.setFontAndSize(bf,10);
+            cb.setFontAndSize(bf,8);
                     
                 }
                 
