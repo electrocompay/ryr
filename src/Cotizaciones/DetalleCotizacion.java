@@ -211,7 +211,9 @@ public class DetalleCotizacion implements Cotizable{
        DetalleCotizacion detalle=new DetalleCotizacion();
        detalle=(DetalleCotizacion)coti;
        int dev=0;
-       String sql="insert into detallecotizaciones (idcotizacion,idarticulo,descripcionarticulo,idcliente,cantidad,preciounitario,descuento,observaciones,montoDescuento,porcentajedescuento) values ("+detalle.getIdCotizacion()+","+detalle.getIdArticulo()+",'"+detalle.getDescripcionArticulo()+"',"+detalle.getIdCliente()+","+detalle.getCantidad()+",round("+detalle.getPrecioUnitario()+",4),"+detalle.getDescuento()+",'xx',"+detalle.getMontoDescuento()+","+detalle.getPorcentajeDescuento()+")";
+       Double detD=0.00;
+       if(detalle.getPorcentajeDescuento() !=null)detD=detalle.getPorcentajeDescuento();
+       String sql="insert into detallecotizaciones (idcotizacion,idarticulo,descripcionarticulo,idcliente,cantidad,preciounitario,descuento,observaciones,montoDescuento,porcentajedescuento) values ("+detalle.getIdCotizacion()+","+detalle.getIdArticulo()+",'"+detalle.getDescripcionArticulo()+"',"+detalle.getIdCliente()+","+detalle.getCantidad()+",round("+detalle.getPrecioUnitario()+",4),"+detalle.getDescuento()+",'xx',"+detalle.getMontoDescuento()+","+detD+")";
        Transaccionable tra=new Conecciones();
        tra.guardarRegistro(sql);
        

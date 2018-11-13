@@ -214,7 +214,7 @@ public class Pedidos implements Pedable{
     public Object cargarEncabezadoPedido(Integer idPed) {
         Pedidos pedido=new Pedidos();
         //ArrayList listado=new ArrayList();
-        sql="select pedidos.*,remitos.numeroremito from pedidos left join remitos on remitos.id=pedidos.idremito where id="+idPed;
+        sql="select pedidos.*,remitos.numeroremito from pedidos left join remitos on remitos.id=pedidos.idremito where pedidos.id="+idPed;
         
         rs=tra.leerConjuntoDeRegistros(sql);
         try {
