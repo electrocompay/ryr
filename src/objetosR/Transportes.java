@@ -1,5 +1,5 @@
 
-package objetos;
+package objetosR;
 
 import interfaces.Componable;
 import interfaces.Personalizable;

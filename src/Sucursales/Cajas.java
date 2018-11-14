@@ -22,10 +22,10 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import Articulos.Articulos;
-import objetos.Comprobantes;
-import objetos.ConeccionLocal;
-import objetos.Conecciones;
-import objetos.Operaciones;
+import objetosR.Comprobantes;
+import objetosR.ConeccionLocal;
+import objetosR.Conecciones;
+import objetosR.Operaciones;
 
 /**
  *

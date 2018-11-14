@@ -31,7 +31,7 @@ import javax.imageio.ImageIO;
 import Articulos.Articulos;
 import Conversores.NumberToLetterConverter;
 import interfaces.Personalizable;
-import objetos.Localidades;
+import objetosR.Localidades;
 
 
 

@@ -4,7 +4,7 @@
  */
 package bbsgestion;
 
-import Configuracion.Propiedades;
+import ConfiguracionR.Propiedades;
 import interfaceGraficas.LoguinBbsGestion;
 import java.io.BufferedReader;
 import java.io.File;
@@ -15,7 +15,6 @@ import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
 
 /**
  *
@@ -129,41 +128,7 @@ public class BbsGestion {
         
          archivo = new File ("C:\\Gestion\\idEquipo.txt");
         try {
-            /*
-            if(archivo1.exists()){
-            fr = new FileReader (archivo1);
-            br = new BufferedReader(fr);
             
-            Lectura del fichero
-            Integer numeroEquipo;
-            String linea;
-            String host;
-            String usuario;
-            String clv;
-            int a=0;
-            Transaccionable tra=new Conecciones();
-            while((linea=br.readLine())!=null){
-            a++;
-            System.out.println("Equipo Numero :"+linea);
-            switch (a){
-            case 1:
-            numeroEquipo=Integer.parseInt(linea);
-            break;
-            case 2:
-            host=linea;
-            break;
-            case 3:
-            usuario=linea;
-            break;
-            case 4:
-            clv=linea;
-            break;
-            }
-           
-            if(tra.guardarRegistro(linea));
-            }
-            }
-            */
             Propiedades.CargarPropiedades1();
         } catch (ParseException ex) {
             Logger.getLogger(BbsGestion.class.getName()).log(Level.SEVERE, null, ex);

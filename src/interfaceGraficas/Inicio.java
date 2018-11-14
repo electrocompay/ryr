@@ -583,12 +583,12 @@ public class Inicio extends javax.swing.JFrame {
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
        
-       jMenu1.setEnabled(Inicio.usuario.getMenu().getMenu1());
-       jMenu2.setEnabled(Inicio.usuario.getMenu().getMenu2());
-       jMenu3.setEnabled(Inicio.usuario.getMenu().getMenu3());
-       jMenu4.setEnabled(Inicio.usuario.getMenu().getMenu4());
-       jMenu5.setEnabled(Inicio.usuario.getMenu().getMenu5());
-       jMenu6.setEnabled(Inicio.usuario.getMenu().getMenu6());
+       jMenu1.setEnabled(true);
+       jMenu2.setEnabled(true);
+       jMenu3.setEnabled(true);
+       jMenu4.setEnabled(true);
+       jMenu5.setEnabled(true);
+       jMenu6.setEnabled(true);
        //jMenu7.setEnabled(Inicio.usuario.getMenu().getMenu7());
               this.jMenuItem2.setEnabled(true);
        Cajeables caj=new Cajas();

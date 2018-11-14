@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Configuracion;
+package ConfiguracionR;
 
 import java.io.File;
 import java.io.FileReader;
@@ -21,10 +21,10 @@ import java.util.logging.Logger;
  * @author mauro
  */
 public class Propiedades {
-    static String SERVER="localhost";
-    static String BD="bbgestion";
-    static String USUARIO="bambusoft";
-    static String CLAVE="Bghjiit889210}>";
+    static String SERVER;//"localhost";
+    static String BD;//"bbgestion";
+    static String USUARIO;//"bambusoft";
+    static String CLAVE;//"Bghjiit889210}>";
     static String CREADA;
     static String ARCHIVOBCRT;
     static String ARCHIVOKEY;

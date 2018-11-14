@@ -41,7 +41,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.xml.parsers.ParserConfigurationException;
-import objetos.Comprobantes;
+import objetosR.Comprobantes;
 import org.xml.sax.SAXException;
 import tablas.MiModeloTablaFacturacion;
 

@@ -39,8 +39,8 @@ import Sucursales.ListasDePrecios;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import objetos.Comprobantes;
-import objetos.Conecciones;
+import objetosR.Comprobantes;
+import objetosR.Conecciones;
 import tablas.MiModeloTablaBuscarCliente;
 import tablas.MiModeloTablaFacturacion;
 

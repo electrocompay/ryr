@@ -29,7 +29,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableColumn;
-import objetos.Localidades;
+import objetosR.Localidades;
 import tablas.MiModeloTablaArticulos;
 import tablas.MiModeloTablaBuscarCliente;
 

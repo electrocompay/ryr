@@ -10,8 +10,8 @@ import interfaces.Componable;
 import interfaces.Personalizable;
 import java.util.ArrayList;
 import java.util.Iterator;
-import objetos.Localidades;
-import objetos.Transportes;
+import objetosR.Localidades;
+import objetosR.Transportes;
 
 /**
  *

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
-import objetos.Conecciones;
+import objetosR.Conecciones;
 
 /**
  *

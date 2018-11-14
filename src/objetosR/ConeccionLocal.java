@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package objetos;
+package objetosR;
 
 import Articulos.Articulos;
 import Proveedores.Proveedores;
@@ -11,7 +11,6 @@ import Sucursales.Cajas;
 import Sucursales.ListasDePrecios;
 import Sucursales.Sucursales;
 import Sucursales.Usuarios;
-import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import facturacion.clientes.Clientes;
 import interfaceGraficas.Inicio;
 import interfaces.Transaccionable;
@@ -23,12 +22,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLSyntaxErrorException;
-import java.sql.Statement;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -64,7 +58,25 @@ public class ConeccionLocal implements Transaccionable{
 
         
     }
-
+    private Connection obtener(){
+        Connection dbConnection = null;
+ //String strUrl = "jdbc:derby://localhost:1527/respaldo;create=true";
+               String strUrl = "jdbc:derby:\\GestionRyR\\DB\\respaldo.db";
+            
+        try {
+            Class.forName(driver1).newInstance();
+            dbConnection = DriverManager.getConnection (strUrl);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ConeccionLocal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(ConeccionLocal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(ConeccionLocal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ConeccionLocal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         return dbConnection;       
+    }
     @Override
     public Boolean guardarRegistro(String sql) {
         Boolean coneccion=true;
@@ -268,5 +280,10 @@ public class ConeccionLocal implements Transaccionable{
             Logger.getLogger(ConeccionLocal.class.getName()).log(Level.SEVERE, null, ex);
         }
         //return dbConnection;
+    }
+
+    @Override
+    public Connection obtenerConexion() {
+        return this.obtener();
     }
 }

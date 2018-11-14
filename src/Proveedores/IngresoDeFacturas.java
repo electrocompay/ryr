@@ -42,7 +42,7 @@ import interfaces.Personalizable;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import objetos.Comprobantes;
+import objetosR.Comprobantes;
 import tablas.MiModeloTablaFacturacion;
 
 

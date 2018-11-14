@@ -17,8 +17,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import Articulos.Articulos;
-import objetos.ConeccionLocal;
-import objetos.Conecciones;
+import objetosR.ConeccionLocal;
+import objetosR.Conecciones;
 
 /**
  *

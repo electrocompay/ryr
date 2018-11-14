@@ -24,7 +24,7 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import interfaces.Personalizable;
 import javax.swing.JOptionPane;
-import objetos.Transportes;
+import objetosR.Transportes;
 
 
 

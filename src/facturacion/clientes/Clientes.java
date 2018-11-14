@@ -20,8 +20,8 @@ import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import objetos.Comprobantes;
-import objetos.Conecciones;
+import objetosR.Comprobantes;
+import objetosR.Conecciones;
 
 
 /**
@@ -263,7 +263,7 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
                 cli.setTipoComprobante(rs.getInt("tipocomprobante"));
                 cli.setIdTransporte(rs.getInt("idtransporte"));
                // if(Inicio.usuario.getNivelDeAutorizacion()==1){
-                System.out.println("ACTUALIZACION :"+Inicio.actualizacionesClientes);
+                //System.out.println("ACTUALIZACION :"+Inicio.actualizacionesClientes);
                 
                 
             /*    
@@ -627,7 +627,7 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
                 cli.setCodigoPostal(rs.getString("postal"));
                 cli.setIdTransporte(rs.getInt("idtransporte"));
                // if(Inicio.usuario.getNivelDeAutorizacion()==1){
-                System.out.println("ACTUALIZACION :"+Inicio.actualizacionesClientes); 
+                //System.out.println("ACTUALIZACION :"+Inicio.actualizacionesClientes); 
                 ped.add(cli);
                 }
                 rs.close();
@@ -672,7 +672,7 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
                 cli.setTipoComprobante(rs.getInt("tipocomprobante"));
                 cli.setIdTransporte(rs.getInt("idtransporte"));
                // if(Inicio.usuario.getNivelDeAutorizacion()==1){
-                System.out.println("ACTUALIZACION :"+Inicio.actualizacionesClientes); 
+                //System.out.println("ACTUALIZACION :"+Inicio.actualizacionesClientes); 
                 ped.add(cli);
                 }
                 rs.close();
@@ -717,7 +717,7 @@ public class Clientes implements Busquedas,Facturar,Adeudable{
                 cli.setTipoComprobante(rs.getInt("tipocomprobante"));
                 cli.setIdTransporte(rs.getInt("idtransporte"));
                // if(Inicio.usuario.getNivelDeAutorizacion()==1){
-                System.out.println("ACTUALIZACION :"+Inicio.actualizacionesClientes); 
+                //System.out.println("ACTUALIZACION :"+Inicio.actualizacionesClientes); 
                 ped.add(cli);
                 }
                 rs.close();

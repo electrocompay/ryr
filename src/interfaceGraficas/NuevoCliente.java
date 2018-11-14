@@ -44,9 +44,9 @@ import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import objetos.CondicionesIva;
-import objetos.Localidades;
-import objetos.Transportes;
+import objetosR.CondicionesIva;
+import objetosR.Localidades;
+import objetosR.Transportes;
 
 /**
  *

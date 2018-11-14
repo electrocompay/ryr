@@ -21,7 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Timer;
 import Articulos.Articulos;
-import objetos.Conecciones;
+import objetosR.Conecciones;
 
 /**
  *

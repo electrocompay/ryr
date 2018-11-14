@@ -13,7 +13,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 
 import java.util.ArrayList;
-import objetos.Conecciones;
+import objetosR.Conecciones;
 import java.util.Iterator;
 
 import javax.swing.table.DefaultTableModel;

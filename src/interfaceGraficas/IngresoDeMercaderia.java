@@ -25,7 +25,7 @@ import java.util.Iterator;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import Articulos.Articulos;
-import objetos.Comprobantes;
+import objetosR.Comprobantes;
 import tablas.MiModeloTablaFacturacion;
 
 /**

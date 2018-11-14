@@ -26,7 +26,7 @@ import Pedidos.Pedidos;
 import facturacion.clientes.DetalleFacturas;
 import facturacion.clientes.Facturable;
 import facturacion.clientes.MovimientoProveedores;
-import objetos.Comprobantes;
+import objetosR.Comprobantes;
 import tablas.MiModeloTablaFacturacion;
 
 

@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import objetos.ConeccionLocal;
-import objetos.Conecciones;
+import objetosR.ConeccionLocal;
+import objetosR.Conecciones;
 
 /**
  *

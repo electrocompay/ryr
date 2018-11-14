@@ -18,7 +18,7 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
-import objetos.Conecciones;
+import objetosR.Conecciones;
 
 /**
  *
@@ -361,7 +361,7 @@ public class Cotizacion implements Cotizable{
         String sql="update cotizaciones set total=round("+cotizacion.getTotal()+",4),subtotal=round("+cotizacion.getSubTotal()+",4),descuento=round("+cotizacion.getDescuento()+",4),porcentajed="+cotizacion.getPorcentajeDescuento()+", estado="+cotizacion.getEstado()+",idpedido="+cotizacion.getIdPedido()+" where id="+cotizacion.getId();
         Transaccionable tra=new Conecciones();
         tra.guardarRegistro(sql);
-        
+        tra.guardarRegistro("delete from detallecotizaciones where idcotizacion="+cotizacion.getId());
         return cotizacion;
     }
 

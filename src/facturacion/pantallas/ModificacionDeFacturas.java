@@ -28,7 +28,7 @@ import Articulos.Modificable;
 import Articulos.Rubrable;
 import Articulos.Rubros;
 import Articulos.SubRubros;
-import Configuracion.Propiedades;
+import ConfiguracionR.Propiedades;
 import ListasDePrecios.Articulable;
 import ListasDePrecios.ArticulosAsignados;
 import Pedidos.DetallePedidos;
@@ -37,13 +37,15 @@ import Pedidos.Pedidos;
 import facturacion.clientes.Facturable;
 import facturacion.clientes.MovimientoProveedores;
 import interfaces.FacturableE;
+import interfaces.Transaccionable;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import objetos.Comprobantes;
+import objetosR.Comprobantes;
 import objetos.DetalleFacturas;
 import objetos.FacturaElectronica;
 import objetos.TiposIva;
+import objetosR.Conecciones;
 import tablas.MiModeloTablaFacturacion;
 
 
@@ -929,7 +931,8 @@ public class ModificacionDeFacturas extends javax.swing.JInternalFrame {
                 int tipoVta=Integer.parseInt(Propiedades.getTIPODEVENTA());
                 Integer idPed=0;
                 //if(pedido.getId() != null)idPed=pedido.getId();
-                Integer compNum=fact.generar(null, condicion, Propiedades.getARCHIVOKEY(),Propiedades.getARCHIVOCRT(),cliT.getCodigoId(), cliT.getNumeroDeCuit(), comprobante.getTipoComprobante(), montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIva, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle,idPed);
+                Transaccionable tra=new Conecciones();
+                Integer compNum=fact.generar(tra.obtenerConexion(), condicion, Propiedades.getARCHIVOKEY(),Propiedades.getARCHIVOCRT(),cliT.getCodigoId(), cliT.getNumeroDeCuit(), comprobante.getTipoComprobante(), montoTotal, subTotal, montoIva, ptoVta, Propiedades.getCUIT(), tipoVta, listadoIva, listadoTrib, cliT.getRazonSocial(), cliT.getDireccion(), cliT.getCondicionIva(), listadoDetalle,idPed);
                 System.out.println("COMPROBANTE FISCAL N° "+compNum);
                 Facturable ffact=new MovimientoProveedores();
                 

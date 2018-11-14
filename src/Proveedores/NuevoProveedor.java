@@ -28,8 +28,8 @@ import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
-import objetos.CondicionesIva;
-import objetos.Localidades;
+import objetosR.CondicionesIva;
+import objetosR.Localidades;
 
 /**
  *

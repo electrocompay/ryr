@@ -9,7 +9,7 @@ import Articulos.Rubrable;
 import interfaces.Personalizable;
 import java.util.ArrayList;
 import java.util.Iterator;
-import objetos.Localidades;
+import objetosR.Localidades;
 
 /**
  *

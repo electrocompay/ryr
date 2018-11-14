@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package objetos;
+package objetosR;
 
-import Configuracion.Propiedades;
+import ConfiguracionR.Propiedades;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import interfaceGraficas.Inicio;
 import interfaces.Transaccionable;
@@ -102,7 +102,25 @@ public class Conecciones implements Transaccionable{
 
         
     }
-
+    private Connection obtener(){
+        try {
+            MysqlDataSource dataSource=new MysqlDataSource();
+            
+            
+            dataSource.setUser(Propiedades.getUSUARIO());//("ryrsistema");//("root");//
+            dataSource.setDatabaseName(Propiedades.getBD());//ryr
+            dataSource.setPassword(Propiedades.getCLAVE());//("Remoto");//4FTfQRKWPDe4KF9d//("");//
+            dataSource.setServerName(Propiedades.getSERVER());//10.0.0.201//("localhost");//rrpapeles.dyndns.org
+            
+            
+            
+            return dataSource.getConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(Conecciones.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        
+    }
     @Override
     public Boolean guardarRegistro(String sql) {
         Boolean coneccion=true;
@@ -210,6 +228,11 @@ public class Conecciones implements Transaccionable{
         //if(st==null)verificar=false;
         if(con==null)verificar=false;
         return verificar;
+    }
+
+    @Override
+    public Connection obtenerConexion() {
+        return this.obtener();
     }
    
 

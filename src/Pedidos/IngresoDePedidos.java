@@ -36,11 +36,13 @@ import Articulos.SubRubros;
 import ListasDePrecios.Articulable;
 import ListasDePrecios.ArticulosAsignados;
 import Sucursales.ListasDePrecios;
+import java.awt.Dimension;
+import java.awt.Point;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import objetos.Comprobantes;
-import objetos.Conecciones;
+import objetosR.Comprobantes;
+import objetosR.Conecciones;
 import tablas.MiModeloTablaBuscarCliente;
 import tablas.MiModeloTablaFacturacion;
 
@@ -1231,6 +1233,12 @@ private void agregarRenglonTabla(){
         columnaCodigo.setPreferredWidth(80);
         columnaCodigo.setMaxWidth(80);
         montoTotal=montoTotal * 1.21;
+        
+        Dimension tama=this.jTable1.getSize();
+        Point punto=new Point(0,tama.height);
+        this.jScrollPane1.getViewport().setViewPosition(punto);
+        
+        
         String total=String.valueOf(montoTotal);
         this.jLabel1.setText("TOTAL COTIZACION:  "+total);
         listadoDeBusqueda.clear();

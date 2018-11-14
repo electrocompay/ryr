@@ -23,8 +23,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import Articulos.Articulos;
-import objetos.Comprobantes;
-import objetos.Operaciones;
+import objetosR.Comprobantes;
+import objetosR.Operaciones;
 import tablas.MiModeloTablaArticulos;
 
 /**

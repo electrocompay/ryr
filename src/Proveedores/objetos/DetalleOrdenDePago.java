@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
-import objetos.Conecciones;
+import objetosR.Conecciones;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;

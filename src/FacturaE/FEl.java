@@ -1,6 +1,6 @@
 package FacturaE;
 
-import Configuracion.Propiedades;
+import ConfiguracionR.Propiedades;
 import Conversores.Numeros;
 import facturacion.clientes.Clientes;
 import facturacion.clientes.Facturable;
@@ -28,8 +28,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import objetos.Comprobantes;
-import objetos.Conecciones;
+import objetosR.Comprobantes;
+import objetosR.Conecciones;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

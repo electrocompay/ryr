@@ -16,7 +16,7 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
-import objetos.Conecciones;
+import objetosR.Conecciones;
 import tablas.MiModeloTablaContacto;
 
 /**

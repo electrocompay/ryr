@@ -36,7 +36,7 @@ import Sucursales.ListasDePrecios;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import objetos.Comprobantes;
+import objetosR.Comprobantes;
 import tablas.MiModeloTablaFacturacion;
 
 /**
@@ -878,20 +878,7 @@ public class ModificacionDeCotizacion extends javax.swing.JInternalFrame {
         while (iArt.hasNext()) {
             articulo = (Articulos) iArt.next();
             detalle = new DetalleCotizacion();
-            if (articulo.getIdRenglon() > 0) {
-                detalle = (DetalleCotizacion) detPed.get(reng);
-                detalle.setIdArticulo(articulo.getNumeroId());
-                detalle.setDescripcionArticulo(articulo.getDescripcionArticulo());
-                detalle.setCantidad(articulo.getCantidad());
-                detalle.setPrecioUnitario(articulo.getPrecioUnitarioNeto());
-                detalle.setDescuento(articulo.getDescuento());
-                if (articulo.getPorcentajeDeDescuento() != null) {
-                    detalle.setPorcentajeDescuento(articulo.getPorcentajeDeDescuento());
-                } else {
-                    detalle.setPorcentajeDescuento(0.00);
-                }
-                det.modificarCotizacion(detalle);
-            } else {
+            
 
                 detalle.setIdArticulo(articulo.getNumeroId());
                 detalle.setDescripcionArticulo(articulo.getDescripcionArticulo());
@@ -906,7 +893,7 @@ public class ModificacionDeCotizacion extends javax.swing.JInternalFrame {
                 }
                 detalle.setDescuento(articulo.getDescuento());
                 det.nuevaCotizacion(detalle);
-            }
+            
 
             reng++;
         }

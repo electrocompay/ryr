@@ -30,7 +30,7 @@ import javax.imageio.ImageIO;
 import Articulos.Articulos;
 import interfaces.Personalizable;
 import javax.print.attribute.standard.Copies;
-import objetos.Transportes;
+import objetosR.Transportes;
 
 
 

@@ -18,8 +18,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import Articulos.Articulos;
-import objetos.ConeccionLocal;
-import objetos.Conecciones;
+import objetosR.ConeccionLocal;
+import objetosR.Conecciones;
 
 /**
  *

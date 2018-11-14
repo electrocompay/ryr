@@ -9,7 +9,7 @@ import interfaceGraficas.Inicio;
 import interfaces.Personalizable;
 import interfaces.Transaccionable;
 import java.util.ArrayList;
-import objetos.Conecciones;
+import objetosR.Conecciones;
 
 /**
  *

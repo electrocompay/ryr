@@ -8,7 +8,7 @@ import interfaces.Comprobable;
 import interfaces.Transaccionable;
 import java.util.ArrayList;
 import java.util.Date;
-import objetos.Conecciones;
+import objetosR.Conecciones;
 
 /**
  *

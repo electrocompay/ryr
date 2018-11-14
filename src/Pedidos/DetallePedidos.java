@@ -17,7 +17,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
 import Articulos.Articulos;
 import interfaceGraficas.Inicio;
-import objetos.Conecciones;
+import objetosR.Conecciones;
 
 /**
  *

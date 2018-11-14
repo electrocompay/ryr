@@ -4,6 +4,7 @@
  */
 package interfaces;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 public interface Transaccionable {
     public Boolean guardarRegistro(String sql);//puede ser utiliazdo para insert o update
     public Boolean guardarRegistros(ArrayList listadoDeSentencias);//puede ser utiliazdo para insert o update
-    public ResultSet leerConjuntoDeRegistros(String sql);    
+    public ResultSet leerConjuntoDeRegistros(String sql);
+    public Connection obtenerConexion();    
     
 }
