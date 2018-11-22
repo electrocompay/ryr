@@ -160,18 +160,19 @@ public class pdfsJavaGenerador {
                 cb.setTextMatrix(40,renglon);
                 cb.showText(String.valueOf(saldo.getIdArticulo()));
                 cb.setTextMatrix(70,renglon);
-                if(saldo.getDescripcionArticulo().length() > 60){
-                    descripcionArt=saldo.getDescripcionArticulo().substring(0, 60);
+                if(saldo.getDescripcionArticulo().length() > 40){
+                    descripcionArt=saldo.getDescripcionArticulo().substring(0, 40);
                 }else{
                     descripcionArt=saldo.getDescripcionArticulo();
                 }
-                cb.setFontAndSize(bf,6);
+                cb.setFontAndSize(bf,8);
                 cb.showText(descripcionArt);
                 cb.setTextMatrix(310,renglon);
                 cb.setFontAndSize(bf,8);
                 porcientoD=0.00;
                 porcientoD=saldo.getPorcentajeDescuento();
                 //porcientoD=Math.round(porcientoD * 100) / 100;
+                
                 cb.showText(porcientoD+" %");
                 cb.setTextMatrix(380,renglon);
                 cb.showText(monto);
